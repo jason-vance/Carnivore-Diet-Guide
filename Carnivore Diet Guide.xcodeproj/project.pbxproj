@@ -14,6 +14,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Carnivore-Diet-Guide-Info.plist"; sourceTree = SOURCE_ROOT; };
 		56353B522B440C9900C4E972 /* Carnivore Diet Guide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Carnivore Diet Guide.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carnivore_Diet_GuideApp.swift; sourceTree = "<group>"; };
 		56353B572B440C9900C4E972 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -51,6 +52,7 @@
 		56353B542B440C9900C4E972 /* Carnivore Diet Guide */ = {
 			isa = PBXGroup;
 			children = (
+				562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */,
 				56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */,
 				56353B572B440C9900C4E972 /* ContentView.swift */,
 				56353B592B440C9B00C4E972 /* Assets.xcassets */,
@@ -275,6 +277,7 @@
 				DEVELOPMENT_TEAM = QTXW6735S3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Carnivore-Diet-Guide-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -305,6 +308,7 @@
 				DEVELOPMENT_TEAM = QTXW6735S3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Carnivore-Diet-Guide-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
