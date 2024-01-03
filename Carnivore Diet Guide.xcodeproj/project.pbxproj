@@ -33,6 +33,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		562E03E22B4507C500859F81 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
 		56353B492B440C9900C4E972 = {
 			isa = PBXGroup;
 			children = (
@@ -52,6 +59,7 @@
 		56353B542B440C9900C4E972 /* Carnivore Diet Guide */ = {
 			isa = PBXGroup;
 			children = (
+				562E03E22B4507C500859F81 /* Scenes */,
 				562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */,
 				56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */,
 				56353B572B440C9900C4E972 /* ContentView.swift */,
