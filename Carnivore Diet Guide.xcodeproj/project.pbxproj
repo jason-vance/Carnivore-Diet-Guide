@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		562E03E72B450AA000859F81 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E03E62B450AA000859F81 /* HomeView.swift */; };
 		56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */; };
 		56353B582B440C9900C4E972 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56353B572B440C9900C4E972 /* ContentView.swift */; };
 		56353B5A2B440C9B00C4E972 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56353B592B440C9B00C4E972 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 
 /* Begin PBXFileReference section */
 		562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Carnivore-Diet-Guide-Info.plist"; sourceTree = SOURCE_ROOT; };
+		562E03E62B450AA000859F81 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		56353B522B440C9900C4E972 /* Carnivore Diet Guide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Carnivore Diet Guide.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carnivore_Diet_GuideApp.swift; sourceTree = "<group>"; };
 		56353B572B440C9900C4E972 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -36,8 +38,17 @@
 		562E03E22B4507C500859F81 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				562E03E52B450A8900859F81 /* Home */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		562E03E52B450A8900859F81 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				562E03E62B450AA000859F81 /* HomeView.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		56353B492B440C9900C4E972 = {
@@ -147,6 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				562E03E72B450AA000859F81 /* HomeView.swift in Sources */,
 				56353B582B440C9900C4E972 /* ContentView.swift in Sources */,
 				56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */,
 			);
