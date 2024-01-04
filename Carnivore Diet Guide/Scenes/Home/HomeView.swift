@@ -26,12 +26,10 @@ struct HomeView: View {
                     TrendingBlogPostsView()
                 }
             }
-            .background {
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .foregroundStyle(Color.background)
-                    .ignoresSafeArea()
-            }
+            .background(Color.background)
+            .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
         }
+        .background(Color.background)
     }
     
     @ViewBuilder func TrendingBlogPostsView() -> some View {
@@ -167,6 +165,7 @@ struct HomeView: View {
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(height: 200)
+            .offset(y: 16)
     }
     
     @ViewBuilder func TitleView() -> some View {
@@ -188,7 +187,7 @@ struct HomeView: View {
         VStack(spacing: 0) {
             Rectangle()
                 .fill(Color.clear)
-                .frame(height: 64)
+                .frame(height: 48)
             HeroImage()
         }
         .background {
