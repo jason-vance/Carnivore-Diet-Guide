@@ -44,6 +44,7 @@
 		562E03E22B4507C500859F81 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				566B2D692B469B59008627F8 /* Content */,
 				562E03E52B450A8900859F81 /* Home */,
 			);
 			path = Scenes;
@@ -82,7 +83,6 @@
 				562E03E22B4507C500859F81 /* Scenes */,
 				562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */,
 				56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */,
-				56353B572B440C9900C4E972 /* ContentView.swift */,
 				56353B592B440C9B00C4E972 /* Assets.xcassets */,
 				56353B5B2B440C9B00C4E972 /* Preview Content */,
 			);
@@ -95,6 +95,14 @@
 				56353B5C2B440C9B00C4E972 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		566B2D692B469B59008627F8 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				56353B572B440C9900C4E972 /* ContentView.swift */,
+			);
+			path = Content;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
