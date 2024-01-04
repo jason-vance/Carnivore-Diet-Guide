@@ -16,7 +16,7 @@ struct ContentView: View {
         case profile
     }
     
-    @State var selectedTab: Tab = .home
+    @State private var selectedTab: Tab = .home
     
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -28,35 +28,39 @@ struct ContentView: View {
     }
     
     @ViewBuilder func HomeTab() -> some View {
-        HomeView()
+        HomeView(selectedTab: $selectedTab)
             .tabItem {
-                Image(systemName: "house")
-                Text("Home")
+                Label("Home", systemImage: "house")
             }
+            .tag(Tab.home)
+            .toolbarBackground(Color.background, for: .tabBar)
     }
     
     @ViewBuilder func RecipesTab() -> some View {
         Text("Recipe View")
             .tabItem {
-                Image(systemName: "frying.pan")
-                Text("Recipes")
+                Label("Recipes", systemImage: "frying.pan")
             }
+            .tag(Tab.recipes)
+            .toolbarBackground(Color.background, for: .tabBar)
     }
     
     @ViewBuilder func BlogTab() -> some View {
         Text("Blog View")
             .tabItem {
-                Image(systemName: "newspaper")
-                Text("Blog")
+                Label("Blog", systemImage: "newspaper")
             }
+            .tag(Tab.blog)
+            .toolbarBackground(Color.background, for: .tabBar)
     }
     
     @ViewBuilder func ProfileTab() -> some View {
         Text("Profile View")
             .tabItem {
-                Image(systemName: "person.crop.circle")
-                Text("Profile")
+                Label("Profile", systemImage: "person.crop.circle")
             }
+            .tag(Tab.profile)
+            .toolbarBackground(Color.background, for: .tabBar)
     }
 }
 

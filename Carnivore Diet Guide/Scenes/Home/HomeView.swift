@@ -14,6 +14,7 @@ struct HomeView: View {
         case recipe
     }
     
+    @Binding var selectedTab: ContentView.Tab
     
     var body: some View {
         VStack(spacing: 0) {
@@ -25,16 +26,21 @@ struct HomeView: View {
                     TrendingBlogPostsView()
                 }
             }
-            .background(Color.background)
-            .clipShape(.rect(cornerRadius: 16, style: .continuous))
-            .background(Color.black)
-            .ignoresSafeArea()
+            .background {
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .foregroundStyle(Color.background)
+                    .ignoresSafeArea()
+            }
         }
     }
     
     @ViewBuilder func TrendingBlogPostsView() -> some View {
         VStack {
-            SectionTitleView("Trending Blog Posts", theme: .light)
+            SectionTitleView(
+                "Trending Blog Posts",
+                theme: .light,
+                viewAllAction: { selectedTab = .blog }
+            )
             VStack(spacing: 16) {
                 HStack(spacing: 16) {
                     BlogPostThumbnail(
@@ -67,7 +73,11 @@ struct HomeView: View {
     
     @ViewBuilder func TrendingRecipesView() -> some View {
         VStack {
-            SectionTitleView("Trending Recipes", theme: .dark)
+            SectionTitleView(
+                "Trending Recipes",
+                theme: .dark,
+                viewAllAction: { selectedTab = .recipes }
+            )
             VStack(spacing: 16) {
                 HStack(spacing: 16) {
                     RecipeThumbnail(
@@ -102,7 +112,11 @@ struct HomeView: View {
         
     @ViewBuilder func FeaturedContentView() -> some View {
         VStack {
-            SectionTitleView("Recommended For You", theme: .light)
+            SectionTitleView(
+                "Recommended For You",
+                theme: .light,
+                viewAllAction: { }
+            )
             HStack(spacing: 16) {
                 FeaturedContentThumbnail(
                     title: "Getting Started with the Carnivore Diet",
@@ -119,19 +133,28 @@ struct HomeView: View {
         .padding()
     }
     
-    @ViewBuilder func SectionTitleView(_ text: String, theme: UIUserInterfaceStyle) -> some View {
+    @ViewBuilder func SectionTitleView(
+        _ text: String,
+        theme: UIUserInterfaceStyle,
+        viewAllAction: @escaping () -> ()
+    ) -> some View {
         HStack {
             Text(text)
                 .font(.system(size: 24, weight: .bold))
                 .foregroundStyle(theme == .light ? Color.text : Color.background)
             Spacer()
-            ViewAllButton(theme: theme)
+            ViewAllButton(theme: theme) {
+                viewAllAction()
+            }
         }
     }
     
-    @ViewBuilder func ViewAllButton(theme: UIUserInterfaceStyle) -> some View {
+    @ViewBuilder func ViewAllButton(
+        theme: UIUserInterfaceStyle,
+        _ action: @escaping () -> ()
+    ) -> some View {
         Button {
-            
+            action()
         } label: {
             Text("View All")
                 .font(.system(size: 12, weight: .bold))
@@ -180,5 +203,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(selectedTab: .constant(.home))
 }
