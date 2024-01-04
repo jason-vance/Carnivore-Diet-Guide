@@ -34,35 +34,27 @@ struct HomeView: View {
     
     @ViewBuilder func TrendingBlogPostsView() -> some View {
         VStack {
-            HStack {
-                Text("Trending Blog Posts")
-                    .font(.system(size: 24, weight: .bold))
-                    .foregroundStyle(Color.text)
-                Spacer()
-                Text("See More")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(Color.accentText)
-            }
+            SectionTitleView("Trending Blog Posts", theme: .light)
             VStack(spacing: 16) {
                 HStack(spacing: 16) {
-                    BlogPostThumbnailView(
+                    BlogPostThumbnail(
                         title: "Beef Bourguignon",
                         imageName: "BeefBourguignon",
                         upvotes: 65432
                     )
-                    BlogPostThumbnailView(
+                    BlogPostThumbnail(
                         title: "Grilled Salmon with Lemon Butter",
                         imageName: "GrilledSalmonWithLemonButter",
                         upvotes: 7654
                     )
                 }
                 HStack(spacing: 16) {
-                    BlogPostThumbnailView(
+                    BlogPostThumbnail(
                         title: "Spicy Mexican Beef Skillet",
                         imageName: "SpicyMexicanBeefSkillet",
                         upvotes: 876
                     )
-                    BlogPostThumbnailView(
+                    BlogPostThumbnail(
                         title: "Sukiyaki-Style Beef",
                         imageName: "SukiyakiStyleBeef",
                         upvotes: 98
@@ -73,72 +65,29 @@ struct HomeView: View {
         .padding()
     }
     
-    @ViewBuilder func BlogPostThumbnailView(
-        title: String,
-        imageName: String,
-        upvotes: Int
-    ) -> some View {
-        VStack(spacing: 0) {
-            Image(imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .overlay(alignment: .topTrailing) {
-                    HStack(spacing: 0) {
-                        Text("\(upvotes.formatted())")
-                        Image(systemName: "hand.thumbsup.fill")
-                    }
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(Color.background)
-                    .padding(8)
-                    .background(Color.accent)
-                    .clipShape(.rect(bottomLeadingRadius: 16))
-                }
-                .overlay(alignment: .bottom) {
-                    Text(title)
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundStyle(Color.background)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .lineLimit(2)
-                        .padding(8)
-                        .background(Color.text)
-                }
-        }
-        .clipShape(.rect(cornerRadius: 16, style: .continuous))
-        .shadow(color: Color.accentText ,radius: 4)
-        .frame(maxWidth: .infinity)
-    }
-    
     @ViewBuilder func TrendingRecipesView() -> some View {
         VStack {
-            HStack {
-                Text("Trending Recipes")
-                    .font(.system(size: 24, weight: .bold))
-                    .foregroundStyle(Color.background)
-                Spacer()
-                Text("See More")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(Color.cardBackground)
-            }
+            SectionTitleView("Trending Recipes", theme: .dark)
             VStack(spacing: 16) {
                 HStack(spacing: 16) {
-                    RecipeThumbnailView(
+                    RecipeThumbnail(
                         title: "Beef Bourguignon",
                         imageName: "BeefBourguignon",
                         rating: 3.4
                     )
-                    RecipeThumbnailView(
+                    RecipeThumbnail(
                         title: "Grilled Salmon with Lemon Butter",
                         imageName: "GrilledSalmonWithLemonButter",
                         rating: 4.5
                     )
                 }
                 HStack(spacing: 16) {
-                    RecipeThumbnailView(
+                    RecipeThumbnail(
                         title: "Spicy Mexican Beef Skillet",
                         imageName: "SpicyMexicanBeefSkillet",
                         rating: 4.6
                     )
-                    RecipeThumbnailView(
+                    RecipeThumbnail(
                         title: "Sukiyaki-Style Beef",
                         imageName: "SukiyakiStyleBeef",
                         rating: 4.7
@@ -150,119 +99,74 @@ struct HomeView: View {
         .background(Color.text)
         .clipShape(.rect(cornerRadius: 16, style: .continuous))
     }
-    
-    @ViewBuilder func RecipeThumbnailView(
-        title: String,
-        imageName: String,
-        rating: Float
-    ) -> some View {
-        VStack(spacing: 0) {
-            Image(imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .overlay(alignment: .topTrailing) {
-                    HStack(spacing: 0) {
-                        Text(rating.formatted())
-                        Image(systemName: "star.fill")
-                    }
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(Color.background)
-                    .padding(8)
-                    .background(Color.accent)
-                    .clipShape(.rect(bottomLeadingRadius: 16))
-                }
-                .overlay(alignment: .bottom) {
-                    Text(title)
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundStyle(Color.text)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .lineLimit(2)
-                        .padding(8)
-                        .background(Color.background)
-                }
-        }
-        .clipShape(.rect(cornerRadius: 16, style: .continuous))
-        .shadow(color: Color.cardBackground ,radius: 4)
-        .frame(maxWidth: .infinity)
-    }
-    
+        
     @ViewBuilder func FeaturedContentView() -> some View {
         VStack {
-            HStack {
-                Text("Recommended For You")
-                    .font(.system(size: 24, weight: .bold))
-                    .foregroundStyle(Color.text)
-                Spacer()
-                Text("See More")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(Color.accentText)
-            }
+            SectionTitleView("Recommended For You", theme: .light)
             HStack(spacing: 16) {
-                FeaturedItem(
-                    type: .blogPost,
+                FeaturedContentThumbnail(
+                    title: "Getting Started with the Carnivore Diet",
                     imageName: "StartingCarnivoreDiet",
-                    title: "Getting Started with the Carnivore Diet"
+                    type: .blog
                 )
-                FeaturedItem(
-                    type: .recipe,
+                FeaturedContentThumbnail(
+                    title: "Seared Ribeye Steak",
                     imageName: "SearedRibeyeSteak",
-                    title: "Seared Ribeye Steak"
+                    type: .recipe
                 )
             }
         }
         .padding()
     }
     
-    @ViewBuilder func FeaturedItem(
-        type: FeaturedItemType,
-        imageName: String,
-        title: String
-    ) -> some View {
-        VStack(spacing: 16) {
-            VStack(spacing: 0) {
-                Image(imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .overlay(alignment: .topLeading) {
-                        Text(type == .recipe ? "Featured Recipe" : "Featured Blog Post")
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundStyle(Color.background)
-                            .bold()
-                            .padding(8)
-                            .frame(maxWidth: .infinity)
-                            .background(Color.accent)
-                    }
-                    .overlay(alignment: .bottom) {
-                        Text(title)
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundStyle(Color.background)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .lineLimit(2)
-                            .padding(8)
-                            .background(Color.text)
-                    }
-            }
-            .clipShape(.rect(cornerRadius: 16, style: .continuous))
-            .shadow(color: Color.accentText ,radius: 4)
+    @ViewBuilder func SectionTitleView(_ text: String, theme: UIUserInterfaceStyle) -> some View {
+        HStack {
+            Text(text)
+                .font(.system(size: 24, weight: .bold))
+                .foregroundStyle(theme == .light ? Color.text : Color.background)
+            Spacer()
+            ViewAllButton(theme: theme)
         }
-        .frame(maxWidth: .infinity)
+    }
+    
+    @ViewBuilder func ViewAllButton(theme: UIUserInterfaceStyle) -> some View {
+        Button {
+            
+        } label: {
+            Text("View All")
+                .font(.system(size: 12, weight: .bold))
+                .foregroundStyle(theme == .light ? Color.accentText : Color.cardBackground)
+        }
     }
     
     @ViewBuilder func HeroImage() -> some View {
         Image("HomeHero")
             .resizable()
             .aspectRatio(contentMode: .fill)
+            .frame(height: 200)
+    }
+    
+    @ViewBuilder func TitleView() -> some View {
+        VStack(spacing: 0) {
+            Text("Carnivore")
+                .font(.system(size: 48, weight: .black))
+            Text("Diet Guide")
+                .font(.system(size: 40, weight: .black))
+                .offset(y: -12)
+        }
+        .padding(.top, 8)
+        .foregroundStyle(Color.background)
+        .shadow(color: .text, radius: 10, x: 0, y: 4)
+        .shadow(color: .text, radius: 10, x: 0, y: 4)
+        .offset(y: -12)
     }
     
     @ViewBuilder func TitleBarAndHeroImage() -> some View {
         VStack(spacing: 0) {
             Rectangle()
-                .fill(Color.accentColor)
+                .fill(Color.clear)
                 .frame(height: 64)
-            Image("HomeHero")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(height: 200)
+            HeroImage()
         }
         .background {
             Rectangle()
@@ -270,25 +174,7 @@ struct HomeView: View {
                 .ignoresSafeArea(.all)
         }
         .overlay(alignment: .top) {
-            VStack(spacing: 0) {
-                Text("Carnivore")
-                    .font(.system(size: 48, weight: .black))
-                Text("Diet Guide")
-                    .font(.system(size: 40, weight: .black))
-                    .offset(y: -12)
-            }
-            .padding(.top, 8)
-            .foregroundStyle(Color.background)
-            .shadow(color: .text, radius: 10, x: 0, y: 4)
-            .shadow(color: .text, radius: 10, x: 0, y: 4)
-            .offset(y: -12)
-        }
-        .overlay(alignment: .topTrailing) {
-            Image(systemName: "person.circle.fill")
-                .resizable()
-                .foregroundStyle(Color.background)
-                .frame(width: 32, height: 32)
-                .padding()
+            TitleView()
         }
     }
 }
