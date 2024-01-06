@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TabSelectorView: View {
     
-    struct Tab: Identifiable {
+    struct Tab: Identifiable, Equatable {
         let id = UUID()
         let title: String
     }
@@ -30,18 +30,13 @@ struct TabSelectorView: View {
     }
     
     let tabs: [Tab]
-    @State var selectedTab: Tab? = nil
-    
-    init(tabs: [Tab]) {
-        self.tabs = tabs
-        self.selectedTab = tabs[0]
-    }
+    @Binding var selectedTab: Tab
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 2) {
                 ForEach(tabs) { tab in
-                    TabView(tab: tab, isSelected: tab.id == selectedTab?.id)
+                    TabView(tab: tab, isSelected: tab.id == selectedTab.id)
                         .onTapGesture {
                             self.selectedTab = tab
                         }
@@ -56,5 +51,5 @@ struct TabSelectorView: View {
         TabSelectorView.Tab(title: "Ingredients"),
         TabSelectorView.Tab(title: "Steps"),
         TabSelectorView.Tab(title: "Nutritional Info")
-    ])
+    ], selectedTab: .constant(TabSelectorView.Tab(title: "asdf")))
 }

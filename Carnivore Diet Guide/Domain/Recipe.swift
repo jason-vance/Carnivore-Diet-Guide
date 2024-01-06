@@ -12,8 +12,28 @@ struct Recipe {
     var imageName: String
     var ingredients: [String]
     var cookingSteps: [String]
-    var calories: Int
-    var protein: Int
-    var carbohydrates: Int
-    var fat: Int
+    var basicNutritionInfo: BasicNutritionInfo
+}
+
+extension Recipe {
+    static let sample: Recipe = .init(
+        title: "Seared Ribeye Steak",
+        imageName: "SearedRibeyeSteak",
+        ingredients: [
+            "500g spaghetti",
+            "400g ground beef",
+            "1 onion",
+            "1 can of tomato sauce",
+            "1 clove of garlic",
+            "Salt and pepper to taste"
+        ],
+        cookingSteps: [
+            "Boil spaghetti until al dente.",
+            "Brown ground beef with onions and garlic.",
+            "Add tomato sauce and season with salt and pepper.",
+            "Serve sauce over cooked spaghetti.",
+            "Enjoy!",
+        ],
+        basicNutritionInfo: .sample
+    )
 }

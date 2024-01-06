@@ -28,7 +28,7 @@ struct RecipeThumbnail: View {
                 }
         }
         .clipShape(.rect(cornerRadius: 16, style: .continuous))
-        .shadow(color: Color.cardBackground ,radius: 4)
+        .shadow(color: Color.darkAccentText ,radius: 4)
         .frame(maxWidth: .infinity)
     }
 }

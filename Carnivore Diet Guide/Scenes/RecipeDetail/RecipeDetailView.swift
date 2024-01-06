@@ -9,24 +9,28 @@ import SwiftUI
 
 struct RecipeDetailView: View {
     
+    private static let ingredientsTab = TabSelectorView.Tab(title: "Ingredients")
+    private static let stepsTab = TabSelectorView.Tab(title: "Cooking Steps")
+    private static let nutritionTab = TabSelectorView.Tab(title: "Nutritional Info")
+    
     var recipe: Recipe
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
+    @State private var selectedTab: TabSelectorView.Tab = ingredientsTab
+
     var body: some View {
         VStack {
             RecipeImage()
             VStack(spacing: 0) {
                 RecipeTitle()
-                ScrollView {
-                    VStack {
-                        IngredientList()
-                        CookingSteps()
-                        NutritionalInformation()
-                    }
-                }
+                TabSelectorView(
+                    tabs: [Self.ingredientsTab, Self.stepsTab, Self.nutritionTab],
+                    selectedTab: $selectedTab
+                )
+                RecipeContentView()
             }
-            .background(Color.background)
+            .background(Color.text)
             .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
         }
         .background(Color.background)
@@ -44,43 +48,103 @@ struct RecipeDetailView: View {
     }
     
     @ViewBuilder func RecipeTitle() -> some View {
-        Text(recipe.title)
-            .font(.system(size: 24, weight: .bold))
-            .foregroundStyle(Color.background)
-            .frame(maxWidth: .infinity)
+        VStack {
+            Text(recipe.title)
+                .font(.system(size: 24, weight: .bold))
+                .foregroundStyle(Color.background)
+            Text("Serves \(recipe.basicNutritionInfo.servings)")
+                .font(.system(size: 12, weight: .bold))
+                .foregroundStyle(Color.darkAccentText)
+        }
+        .frame(maxWidth: .infinity)
+        .background(Color.text)
+        .padding()
+    }
+    
+    @ViewBuilder func RecipeContentView() -> some View {
+        ScrollView {
+            VStack {
+                switch selectedTab {
+                case Self.ingredientsTab:
+                    IngredientList()
+                case Self.stepsTab:
+                    CookingSteps()
+                case Self.nutritionTab:
+                    NutritionalInformation()
+                default:
+                    Text("")
+                }
+            }
             .padding()
-            .background(Color.text)
+            .frame(maxWidth: .infinity)
+            .foregroundStyle(Color.text)
+        }
+        .background(Color.background)
     }
     
     @ViewBuilder func IngredientList() -> some View {
-        VStack(alignment: .leading) {
-            SectionTitleView("Ingredients:")
+        VStack() {
             ForEach(recipe.ingredients, id: \.self) { ingredient in
-                Text(ingredient)
+                HStack {
+                    Circle()
+                        .frame(width: 8, height: 8)
+                    Text(ingredient)
+                    Spacer()
+                }
             }
         }
     }
     
     @ViewBuilder func CookingSteps() -> some View {
-        VStack(alignment: .leading) {
-            Text("Cooking Steps:")
-                .font(.headline)
-            
+        VStack(spacing: 12) {
             ForEach(recipe.cookingSteps.indices, id: \.self) { index in
-                Text("\(index + 1). \(recipe.cookingSteps[index])")
+                HStack(alignment: .top) {
+                    Text("\(index + 1).")
+                    Text(recipe.cookingSteps[index])
+                    Spacer()
+                }
             }
         }
     }
     
     @ViewBuilder func NutritionalInformation() -> some View {
-        VStack(alignment: .leading) {
-            Text("Nutritional Information:")
-                .font(.headline)
-            
-            Text("Calories: \(recipe.calories) kcal")
-            Text("Protein: \(recipe.protein) g")
-            Text("Carbohydrates: \(recipe.carbohydrates) g")
-            Text("Fat: \(recipe.fat) g")
+        VStack(spacing: 12) {
+            Text("Per Serving")
+            NutritionInformationItem(
+                "Calories",
+                value: "\(recipe.basicNutritionInfo.calories)",
+                unit: "kcal"
+            )
+            Rectangle().frame(height: 2)
+            NutritionInformationItem(
+                "Protein",
+                value: "\(recipe.basicNutritionInfo.protein)",
+                unit: "g"
+            )
+            Rectangle().frame(height: 1)
+            NutritionInformationItem(
+                "Fat",
+                value: "\(recipe.basicNutritionInfo.fat)",
+                unit: "g"
+            )
+            Rectangle().frame(height: 1)
+            NutritionInformationItem(
+                "Carbohydrates",
+                value: "\(recipe.basicNutritionInfo.carbohydrates)",
+                unit: "g"
+            )
+        }
+    }
+    
+    @ViewBuilder func NutritionInformationItem(_ name: String, value: String, unit: String) -> some View {
+        HStack(alignment: .bottom, spacing: 0) {
+            Text(name)
+                .font(.system(size: 18, weight: .semibold))
+            Spacer()
+            Text(value)
+                .font(.system(size: 18))
+            Text(unit)
+                .font(.system(size: 12, weight: .bold))
         }
     }
     
@@ -91,12 +155,12 @@ struct RecipeDetailView: View {
             ZStack {
                 Circle()
                     .foregroundStyle(Color.accent)
-                    .frame(width: 32, height: 32)
+                    .frame(width: 44, height: 44)
                 Image(systemName: "xmark")
                     .resizable()
                     .bold()
                     .foregroundStyle(Color.background)
-                    .frame(width: 16, height: 16)
+                    .frame(width: 18, height: 18)
             }
         }
     }
@@ -116,15 +180,5 @@ struct RecipeDetailView: View {
     }}
 
 #Preview {
-    RecipeDetailView(recipe: Recipe(
-            title: "Seared Ribeye Steak",
-            imageName: "SearedRibeyeSteak",
-            ingredients: ["500g spaghetti", "400g ground beef", "1 onion", "1 can of tomato sauce", "1 clove of garlic", "Salt and pepper to taste"],
-            cookingSteps: ["Boil spaghetti until al dente.", "Brown ground beef with onions and garlic.", "Add tomato sauce and season with salt and pepper.", "Serve sauce over cooked spaghetti."],
-            calories: 300,
-            protein: 10,
-            carbohydrates: 40,
-            fat: 12
-        )
-    )
+    RecipeDetailView(recipe: .sample)
 }

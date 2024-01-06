@@ -148,7 +148,7 @@ struct HomeView: View {
         } label: {
             Text("View All")
                 .font(.system(size: 12, weight: .bold))
-                .foregroundStyle(theme == .light ? Color.accentText : Color.cardBackground)
+                .foregroundStyle(theme == .light ? Color.accentText : Color.darkAccentText)
         }
     }
     
