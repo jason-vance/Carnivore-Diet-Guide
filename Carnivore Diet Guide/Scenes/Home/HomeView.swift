@@ -17,19 +17,21 @@ struct HomeView: View {
     @Binding var selectedTab: ContentView.Tab
     
     var body: some View {
-        VStack(spacing: 0) {
-            TitleBarAndHeroImage()
-            ScrollView {
-                VStack {
-                    FeaturedContentView()
-                    TrendingRecipesView()
-                    TrendingBlogPostsView()
+        NavigationStack {
+            VStack(spacing: 0) {
+                TitleBarAndHeroImage()
+                ScrollView {
+                    VStack {
+                        FeaturedContentView()
+                        TrendingRecipesView()
+                        TrendingBlogPostsView()
+                    }
                 }
+                .background(Color.background)
+                .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
             }
             .background(Color.background)
-            .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
         }
-        .background(Color.background)
     }
     
     @ViewBuilder func TrendingBlogPostsView() -> some View {
@@ -74,24 +76,40 @@ struct HomeView: View {
             )
             VStack(spacing: 16) {
                 HStack(spacing: 16) {
-                    RecipeThumbnail(
-                        title: "Beef Bourguignon",
-                        imageName: "BeefBourguignon"
-                    )
-                    RecipeThumbnail(
-                        title: "Grilled Salmon with Lemon Butter",
-                        imageName: "GrilledSalmonWithLemonButter"
-                    )
+                    NavigationLink {
+                        RecipeDetailView(recipe: .sample)
+                    } label: {
+                        RecipeThumbnail(
+                            title: "Beef Bourguignon",
+                            imageName: "BeefBourguignon"
+                        )
+                    }
+                    NavigationLink {
+                        RecipeDetailView(recipe: .sample)
+                    } label: {
+                        RecipeThumbnail(
+                            title: "Grilled Salmon with Lemon Butter",
+                            imageName: "GrilledSalmonWithLemonButter"
+                        )
+                    }
                 }
                 HStack(spacing: 16) {
-                    RecipeThumbnail(
-                        title: "Spicy Mexican Beef Skillet",
-                        imageName: "SpicyMexicanBeefSkillet"
-                    )
-                    RecipeThumbnail(
-                        title: "Sukiyaki-Style Beef",
-                        imageName: "SukiyakiStyleBeef"
-                    )
+                    NavigationLink {
+                        RecipeDetailView(recipe: .sample)
+                    } label: {
+                        RecipeThumbnail(
+                            title: "Spicy Mexican Beef Skillet",
+                            imageName: "SpicyMexicanBeefSkillet"
+                        )
+                    }
+                    NavigationLink {
+                        RecipeDetailView(recipe: .sample)
+                    } label: {
+                        RecipeThumbnail(
+                            title: "Sukiyaki-Style Beef",
+                            imageName: "SukiyakiStyleBeef"
+                        )
+                    }
                 }
             }
         }
@@ -113,11 +131,15 @@ struct HomeView: View {
                     imageName: "StartingCarnivoreDiet",
                     type: .blog
                 )
-                FeaturedContentThumbnail(
-                    title: "Seared Ribeye Steak",
-                    imageName: "SearedRibeyeSteak",
-                    type: .recipe
-                )
+                NavigationLink {
+                    RecipeDetailView(recipe: .sample)
+                } label: {
+                    FeaturedContentThumbnail(
+                        title: "Seared Ribeye Steak",
+                        imageName: "SearedRibeyeSteak",
+                        type: .recipe
+                    )
+                }
             }
         }
         .padding()

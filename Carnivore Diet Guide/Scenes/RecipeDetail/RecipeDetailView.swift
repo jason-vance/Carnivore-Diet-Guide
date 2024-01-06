@@ -34,6 +34,7 @@ struct RecipeDetailView: View {
             .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
         }
         .background(Color.background)
+        .navigationBarBackButtonHidden()
     }
     
     @ViewBuilder func RecipeImage() -> some View {
@@ -43,7 +44,8 @@ struct RecipeDetailView: View {
             .frame(height: 200)
             .overlay(alignment: .bottomLeading) {
                 CloseButton()
-                    .padding()
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
             }
     }
     
