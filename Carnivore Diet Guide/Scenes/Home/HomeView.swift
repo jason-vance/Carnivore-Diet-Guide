@@ -43,25 +43,21 @@ struct HomeView: View {
                 HStack(spacing: 16) {
                     BlogPostThumbnail(
                         title: "Beef Bourguignon",
-                        imageName: "BeefBourguignon",
-                        upvotes: 65432
+                        imageName: "BeefBourguignon"
                     )
                     BlogPostThumbnail(
                         title: "Grilled Salmon with Lemon Butter",
-                        imageName: "GrilledSalmonWithLemonButter",
-                        upvotes: 7654
+                        imageName: "GrilledSalmonWithLemonButter"
                     )
                 }
                 HStack(spacing: 16) {
                     BlogPostThumbnail(
                         title: "Spicy Mexican Beef Skillet",
-                        imageName: "SpicyMexicanBeefSkillet",
-                        upvotes: 876
+                        imageName: "SpicyMexicanBeefSkillet"
                     )
                     BlogPostThumbnail(
                         title: "Sukiyaki-Style Beef",
-                        imageName: "SukiyakiStyleBeef",
-                        upvotes: 98
+                        imageName: "SukiyakiStyleBeef"
                     )
                 }
             }
@@ -80,25 +76,21 @@ struct HomeView: View {
                 HStack(spacing: 16) {
                     RecipeThumbnail(
                         title: "Beef Bourguignon",
-                        imageName: "BeefBourguignon",
-                        rating: 3.4
+                        imageName: "BeefBourguignon"
                     )
                     RecipeThumbnail(
                         title: "Grilled Salmon with Lemon Butter",
-                        imageName: "GrilledSalmonWithLemonButter",
-                        rating: 4.5
+                        imageName: "GrilledSalmonWithLemonButter"
                     )
                 }
                 HStack(spacing: 16) {
                     RecipeThumbnail(
                         title: "Spicy Mexican Beef Skillet",
-                        imageName: "SpicyMexicanBeefSkillet",
-                        rating: 4.6
+                        imageName: "SpicyMexicanBeefSkillet"
                     )
                     RecipeThumbnail(
                         title: "Sukiyaki-Style Beef",
-                        imageName: "SukiyakiStyleBeef",
-                        rating: 4.7
+                        imageName: "SukiyakiStyleBeef"
                     )
                 }
             }

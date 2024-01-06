@@ -11,24 +11,12 @@ struct RecipeThumbnail: View {
     
     @State var title: String
     @State var imageName: String
-    @State var rating: Float
     
     var body: some View {
         VStack(spacing: 0) {
             Image(imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .overlay(alignment: .topTrailing) {
-                    HStack(spacing: 0) {
-                        Text(rating.formatted())
-                        Image(systemName: "star.fill")
-                    }
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(Color.background)
-                    .padding(8)
-                    .background(Color.accent)
-                    .clipShape(.rect(bottomLeadingRadius: 16))
-                }
                 .overlay(alignment: .bottom) {
                     Text(title)
                         .font(.system(size: 14, weight: .bold))
@@ -51,25 +39,21 @@ struct RecipeThumbnail: View {
             HStack(spacing: 16) {
                 RecipeThumbnail(
                     title: "Beef Bourguignon",
-                    imageName: "BeefBourguignon",
-                    rating: 3.4
+                    imageName: "BeefBourguignon"
                 )
                 RecipeThumbnail(
                     title: "Grilled Salmon with Lemon Butter",
-                    imageName: "GrilledSalmonWithLemonButter",
-                    rating: 4.5
+                    imageName: "GrilledSalmonWithLemonButter"
                 )
             }
             HStack(spacing: 16) {
                 RecipeThumbnail(
                     title: "Spicy Mexican Beef Skillet",
-                    imageName: "SpicyMexicanBeefSkillet",
-                    rating: 4.6
+                    imageName: "SpicyMexicanBeefSkillet"
                 )
                 RecipeThumbnail(
                     title: "Sukiyaki-Style Beef",
-                    imageName: "SukiyakiStyleBeef",
-                    rating: 4.7
+                    imageName: "SukiyakiStyleBeef"
                 )
             }
         }
