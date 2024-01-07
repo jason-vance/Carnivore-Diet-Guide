@@ -21,7 +21,7 @@ struct RecipeThumbnail: View {
                     Text(title)
                         .font(.system(size: 14, weight: .bold))
                         .foregroundStyle(Color.text)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity)
                         .lineLimit(2)
                         .padding(8)
                         .background(Color.background)

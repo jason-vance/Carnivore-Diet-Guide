@@ -21,7 +21,7 @@ struct BlogPostThumbnail: View {
                     Text(title)
                         .font(.system(size: 14, weight: .bold))
                         .foregroundStyle(Color.background)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity)
                         .lineLimit(2)
                         .padding(8)
                         .background(Color.text)
