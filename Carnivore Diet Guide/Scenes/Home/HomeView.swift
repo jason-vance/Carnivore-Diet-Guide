@@ -95,7 +95,7 @@ struct HomeView: View {
                     NavigationLink {
                         RecipeDetailView(recipe: .sample)
                     } label: {
-                        RecipeThumbnail(
+                        HomeRecipeThumbnail(
                             title: "Beef Bourguignon",
                             imageName: "BeefBourguignon"
                         )
@@ -103,7 +103,7 @@ struct HomeView: View {
                     NavigationLink {
                         RecipeDetailView(recipe: .sample)
                     } label: {
-                        RecipeThumbnail(
+                        HomeRecipeThumbnail(
                             title: "Grilled Salmon with Lemon Butter",
                             imageName: "GrilledSalmonWithLemonButter"
                         )
@@ -113,7 +113,7 @@ struct HomeView: View {
                     NavigationLink {
                         RecipeDetailView(recipe: .sample)
                     } label: {
-                        RecipeThumbnail(
+                        HomeRecipeThumbnail(
                             title: "Spicy Mexican Beef Skillet",
                             imageName: "SpicyMexicanBeefSkillet"
                         )
@@ -121,7 +121,7 @@ struct HomeView: View {
                     NavigationLink {
                         RecipeDetailView(recipe: .sample)
                     } label: {
-                        RecipeThumbnail(
+                        HomeRecipeThumbnail(
                             title: "Sukiyaki-Style Beef",
                             imageName: "SukiyakiStyleBeef"
                         )

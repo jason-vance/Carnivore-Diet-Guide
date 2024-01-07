@@ -17,28 +17,51 @@ struct Recipe: Identifiable {
 }
 
 extension Recipe {
-    static let sample: Recipe = .init(
-        title: "Seared Ribeye Steak",
-        imageName: "SearedRibeyeSteak",
-        ingredients: [
-            "500g spaghetti",
-            "400g ground beef",
-            "1 onion",
-            "1 can of tomato sauce",
-            "1 clove of garlic",
-            "Salt and pepper to taste"
-        ],
-        cookingSteps: [
-            "Boil spaghetti until al dente.",
-            "Brown ground beef with onions and garlic.",
-            "Add tomato sauce and season with salt and pepper.",
-            "Serve sauce over cooked spaghetti.",
-            "Enjoy!",
-        ],
-        basicNutritionInfo: .sample
-    )
+    static var sample: Recipe {
+        .init(
+            title: "Seared Ribeye Steak",
+            imageName: "SearedRibeyeSteak",
+            ingredients: [
+                "500g spaghetti",
+                "400g ground beef",
+                "1 onion",
+                "1 can of tomato sauce",
+                "1 clove of garlic",
+                "Salt and pepper to taste"
+            ],
+            cookingSteps: [
+                "Boil spaghetti until al dente.",
+                "Brown ground beef with onions and garlic.",
+                "Add tomato sauce and season with salt and pepper.",
+                "Serve sauce over cooked spaghetti.",
+                "Enjoy!",
+            ],
+            basicNutritionInfo: .sample
+        )
+    }
     
-    static let samples: [Recipe] = [
-        sample, sample, sample, sample
-    ]
+    static var longNamedSample: Recipe {
+        .init(
+            title: "Grilled Salmon with Lemon Butter and Various Garnishes",
+            imageName: "GrilledSalmonWithLemonButter",
+            ingredients: [
+                "500g spaghetti",
+                "400g ground beef",
+                "1 onion",
+                "1 can of tomato sauce",
+                "1 clove of garlic",
+                "Salt and pepper to taste"
+            ],
+            cookingSteps: [
+                "Boil spaghetti until al dente.",
+                "Brown ground beef with onions and garlic.",
+                "Add tomato sauce and season with salt and pepper.",
+                "Serve sauce over cooked spaghetti.",
+                "Enjoy!",
+            ],
+            basicNutritionInfo: .sample
+        )
+    }
+    
+    static let samples: [Recipe] = [sample, longNamedSample, sample, longNamedSample]
 }

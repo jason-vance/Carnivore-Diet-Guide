@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeLibraryView: View {
     
-    @State private var recipes: [Recipe] = []
+    @State private var recipes: [Recipe] = Recipe.samples
     
     var body: some View {
         NavigationStack {
@@ -62,8 +62,14 @@ struct RecipeLibraryView: View {
     @ViewBuilder func RecipesList() -> some View {
         LazyVStack {
             ForEach(recipes) { recipe in
+                NavigationLink {
+                    RecipeDetailView(recipe: recipe)
+                } label: {
+                    LibraryRecipeThumbnail(recipe: recipe)
+                }
             }
         }
+        .padding()
     }
 }
 

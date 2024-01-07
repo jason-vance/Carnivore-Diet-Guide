@@ -1,5 +1,5 @@
 //
-//  RecipeThumbnail.swift
+//  HomeRecipeThumbnail.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 1/3/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecipeThumbnail: View {
+struct HomeRecipeThumbnail: View {
     
     @State var title: String
     @State var imageName: String
@@ -37,21 +37,21 @@ struct RecipeThumbnail: View {
     ScrollView {
         VStack(spacing: 16) {
             HStack(spacing: 16) {
-                RecipeThumbnail(
+                HomeRecipeThumbnail(
                     title: "Beef Bourguignon",
                     imageName: "BeefBourguignon"
                 )
-                RecipeThumbnail(
+                HomeRecipeThumbnail(
                     title: "Grilled Salmon with Lemon Butter",
                     imageName: "GrilledSalmonWithLemonButter"
                 )
             }
             HStack(spacing: 16) {
-                RecipeThumbnail(
+                HomeRecipeThumbnail(
                     title: "Spicy Mexican Beef Skillet",
                     imageName: "SpicyMexicanBeefSkillet"
                 )
-                RecipeThumbnail(
+                HomeRecipeThumbnail(
                     title: "Sukiyaki-Style Beef",
                     imageName: "SukiyakiStyleBeef"
                 )
