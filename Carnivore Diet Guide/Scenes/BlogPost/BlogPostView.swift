@@ -10,62 +10,96 @@ import SwiftUI
 struct BlogPostView: View {
     
     let blogPost: BlogPost
+    
+    @Environment(\.dismiss) private var dismiss: DismissAction
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 8) {
-                BlogPostTitle()
-                BlogPostByLine()
-                BlogPostContent()
+        VStack(spacing: 0) {
+            BlogPostHeader()
+            ZStack(alignment: .top) {
+                Rectangle()
+                    .foregroundStyle(Color.text)
+                ScrollView {
+                    BlogPostContent()
+                        .padding()
+                }
+                .background(Color.background)
+                .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
             }
-            .padding()
         }
+        .background(Color.background)
+        .navigationBarBackButtonHidden()
     }
     
-    @ViewBuilder func BlogPostTitle() -> some View {
-        Text(blogPost.title)
-            .font(.title)
-    }
-    
-    @ViewBuilder func BlogPostByLine() -> some View {
+    @ViewBuilder func BlogPostHeader() -> some View {
         VStack(alignment: .leading) {
-            Text("By \(blogPost.author)")
-                .font(.subheadline)
-                .foregroundColor(.gray)
+            Text(blogPost.title)
+                .font(.title).bold()
+                .foregroundStyle(Color.background)
+            Text("By: \(blogPost.author)")
+                .font(.subheadline).bold()
+                .foregroundStyle(Color.darkAccentText)
             Text(blogPost.publicationDate, style: .date)
-                .font(.footnote)
-                .foregroundColor(.secondary)
+                .font(.caption).bold()
+                .foregroundStyle(Color.background)
+            CloseButton()
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(Color.text, ignoresSafeAreaEdges: .top)
     }
     
     @ViewBuilder func BlogPostContent() -> some View {
-        ForEach(blogPost.content, id: \.id) { item in
-            if let textItem = item as? BlogPost.TextItem {
-                TextContent(textItem)
-            } else if let imageItem = item as? BlogPost.ImageItem {
-                ImageContent(imageItem)
+        VStack(spacing: 16) {
+            ForEach(blogPost.content, id: \.id) { item in
+                if let textItem = item as? BlogPost.TextItem {
+                    TextContent(textItem)
+                } else if let imageItem = item as? BlogPost.ImageItem {
+                    ImageContent(imageItem)
+                }
             }
         }
     }
     
     @ViewBuilder func TextContent(_ textItem: BlogPost.TextItem) -> some View {
         Text(textItem.text)
+            .foregroundStyle(Color.text)
     }
     
     @ViewBuilder func ImageContent(_ imageItem: BlogPost.ImageItem) -> some View {
-        AsyncImage(url: URL(string: imageItem.url)) { image in
-            image
-                .resizable()
-                .clipShape(.rect(cornerRadius: 16))
-        } placeholder: {
-            ProgressView()
+        VStack(spacing: 0) {
+            AsyncImage(url: URL(string: imageItem.url)) { image in
+                image
+                    .resizable()
+                    .clipShape(.rect(cornerRadius: 16))
+                    .aspectRatio(contentMode: .fit)
+            } placeholder: {
+                ProgressView()
+            }
+            
+            if let caption = imageItem.caption {
+                Text(caption)
+                    .font(.caption)
+                    .foregroundStyle(Color.text)
+            }
         }
-        .aspectRatio(contentMode: .fit)
-        
-        if let caption = imageItem.caption {
-            Text(caption)
-                .font(.caption)
-                .foregroundColor(.secondary)
+    }
+    
+    @ViewBuilder func CloseButton() -> some View {
+        Button {
+            dismiss()
+        } label: {
+            ZStack {
+                Circle()
+                    .foregroundStyle(Color.accent)
+                    .frame(width: 44, height: 44)
+                Image(systemName: "chevron.left")
+                    .resizable()
+                    .bold()
+                    .foregroundStyle(Color.background)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 18, height: 18)
+            }
         }
     }
 }

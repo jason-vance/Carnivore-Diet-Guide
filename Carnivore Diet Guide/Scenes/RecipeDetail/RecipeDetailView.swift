@@ -158,10 +158,11 @@ struct RecipeDetailView: View {
                 Circle()
                     .foregroundStyle(Color.accent)
                     .frame(width: 44, height: 44)
-                Image(systemName: "xmark")
+                Image(systemName: "chevron.left")
                     .resizable()
                     .bold()
                     .foregroundStyle(Color.background)
+                    .aspectRatio(contentMode: .fit)
                     .frame(width: 18, height: 18)
             }
         }

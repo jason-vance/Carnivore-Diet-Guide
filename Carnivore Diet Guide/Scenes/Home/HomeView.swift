@@ -43,24 +43,40 @@ struct HomeView: View {
             )
             VStack(spacing: 16) {
                 HStack(spacing: 16) {
-                    BlogPostThumbnail(
-                        title: "Beef Bourguignon",
-                        imageName: "BeefBourguignon"
-                    )
-                    BlogPostThumbnail(
-                        title: "Grilled Salmon with Lemon Butter",
-                        imageName: "GrilledSalmonWithLemonButter"
-                    )
+                    NavigationLink {
+                        BlogPostView(blogPost: .sample)
+                    } label: {
+                        BlogPostThumbnail(
+                            title: "Beef Bourguignon",
+                            imageName: "BeefBourguignon"
+                        )
+                    }
+                    NavigationLink {
+                        BlogPostView(blogPost: .sample)
+                    } label: {
+                        BlogPostThumbnail(
+                            title: "Grilled Salmon with Lemon Butter",
+                            imageName: "GrilledSalmonWithLemonButter"
+                        )
+                    }
                 }
                 HStack(spacing: 16) {
-                    BlogPostThumbnail(
-                        title: "Spicy Mexican Beef Skillet",
-                        imageName: "SpicyMexicanBeefSkillet"
-                    )
-                    BlogPostThumbnail(
-                        title: "Sukiyaki-Style Beef",
-                        imageName: "SukiyakiStyleBeef"
-                    )
+                    NavigationLink {
+                        BlogPostView(blogPost: .sample)
+                    } label: {
+                        BlogPostThumbnail(
+                            title: "Spicy Mexican Beef Skillet",
+                            imageName: "SpicyMexicanBeefSkillet"
+                        )
+                    }
+                    NavigationLink {
+                        BlogPostView(blogPost: .sample)
+                    } label: {
+                        BlogPostThumbnail(
+                            title: "Sukiyaki-Style Beef",
+                            imageName: "SukiyakiStyleBeef"
+                        )
+                    }
                 }
             }
         }
@@ -126,11 +142,15 @@ struct HomeView: View {
                 viewAllAction: { }
             )
             HStack(spacing: 16) {
-                FeaturedContentThumbnail(
-                    title: "Getting Started with the Carnivore Diet",
-                    imageName: "StartingCarnivoreDiet",
-                    type: .blog
-                )
+                NavigationLink {
+                    BlogPostView(blogPost: .sample)
+                } label: {
+                    FeaturedContentThumbnail(
+                        title: "Getting Started with the Carnivore Diet",
+                        imageName: "StartingCarnivoreDiet",
+                        type: .blog
+                    )
+                }
                 NavigationLink {
                     RecipeDetailView(recipe: .sample)
                 } label: {

@@ -25,6 +25,7 @@ struct BlogPost {
     }
     
     var title: String
+    var imageName: String
     var author: String
     var content: [any BlogPostContentItem]
     var publicationDate: Date
@@ -33,8 +34,9 @@ struct BlogPost {
 
 extension BlogPost {
     static let sample: BlogPost = BlogPost(
-        title: "Example Post",
-        author: "Carnivore Diet Guide Team",
+        title: "Getting Started with the Carnivore Diet",
+        imageName: "StartingCarnivoreDiet",
+        author: "The Carnivore Diet Guide Team",
         content: [
             BlogPost.TextItem(
                 text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -48,6 +50,9 @@ extension BlogPost {
             ),
             BlogPost.ImageItem(
                 url: "https://ancestralsupplements.com/cdn/shop/articles/Carnivore_Diet_Macros.png?v=1698544380"
+            ),
+            BlogPost.TextItem(
+                text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
             )
         ],
         publicationDate: Date(),
