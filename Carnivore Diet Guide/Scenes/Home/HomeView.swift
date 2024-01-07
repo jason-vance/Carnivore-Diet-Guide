@@ -194,12 +194,17 @@ struct HomeView: View {
         }
     }
     
-    @ViewBuilder func HeroImage() -> some View {
-        Image("HomeHero")
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(height: 200)
-            .offset(y: 16)
+    @ViewBuilder func TitleBarAndHeroImage() -> some View {
+        VStack(spacing: 0) {
+            Rectangle()
+                .foregroundStyle(Color.accent)
+                .frame(height: 48)
+            HeroImage()
+        }
+        .overlay(alignment: .top) {
+            TitleView()
+        }
+        .background(Color.accent)
     }
     
     @ViewBuilder func TitleView() -> some View {
@@ -210,28 +215,20 @@ struct HomeView: View {
                 .font(.system(size: 40, weight: .black))
                 .offset(y: -12)
         }
-        .padding(.top, 8)
         .foregroundStyle(Color.background)
         .shadow(color: .text, radius: 10, x: 0, y: 4)
         .shadow(color: .text, radius: 10, x: 0, y: 4)
-        .offset(y: -12)
+        .frame(maxWidth: .infinity)
     }
     
-    @ViewBuilder func TitleBarAndHeroImage() -> some View {
-        VStack(spacing: 0) {
-            Rectangle()
-                .fill(Color.clear)
-                .frame(height: 48)
-            HeroImage()
-        }
-        .background {
-            Rectangle()
-                .fill(Color.accentColor)
-                .ignoresSafeArea(.all)
-        }
-        .overlay(alignment: .top) {
-            TitleView()
-        }
+    @ViewBuilder func HeroImage() -> some View {
+        Image("HomeHero")
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(height: 200)
+            .clipped()
+            .offset(y: 16)
+            .zIndex(-1)
     }
 }
 

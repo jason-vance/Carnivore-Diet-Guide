@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Recipe {
+struct Recipe: Identifiable {
+    var id: UUID = .init()
     var title: String
     var imageName: String
     var ingredients: [String]
@@ -36,4 +37,8 @@ extension Recipe {
         ],
         basicNutritionInfo: .sample
     )
+    
+    static let samples: [Recipe] = [
+        sample, sample, sample, sample
+    ]
 }

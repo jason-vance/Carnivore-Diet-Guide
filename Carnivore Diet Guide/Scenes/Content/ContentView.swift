@@ -37,7 +37,7 @@ struct ContentView: View {
     }
     
     @ViewBuilder func RecipesTab() -> some View {
-        Text("Recipe View")
+        RecipeLibraryView()
             .tabItem {
                 Label("Recipes", systemImage: "frying.pan")
             }
