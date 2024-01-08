@@ -23,7 +23,6 @@ struct ContentView: View {
             HomeTab()
             RecipesTab()
             BlogTab()
-            ProfileTab()
         }
     }
     
@@ -51,15 +50,6 @@ struct ContentView: View {
                 Label("Blog", systemImage: "newspaper")
             }
             .tag(Tab.blog)
-            .toolbarBackground(Color.background, for: .tabBar)
-    }
-    
-    @ViewBuilder func ProfileTab() -> some View {
-        Text("Profile View")
-            .tabItem {
-                Label("Profile", systemImage: "person.crop.circle")
-            }
-            .tag(Tab.profile)
             .toolbarBackground(Color.background, for: .tabBar)
     }
 }
