@@ -46,7 +46,7 @@ struct ContentView: View {
     }
     
     @ViewBuilder func BlogTab() -> some View {
-        Text("Blog View")
+        BlogLibraryView()
             .tabItem {
                 Label("Blog", systemImage: "newspaper")
             }

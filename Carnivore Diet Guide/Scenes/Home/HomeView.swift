@@ -46,7 +46,7 @@ struct HomeView: View {
                     NavigationLink {
                         BlogPostView(blogPost: .sample)
                     } label: {
-                        BlogPostThumbnail(
+                        HomeBlogPostThumbnail(
                             title: "Beef Bourguignon",
                             imageName: "BeefBourguignon"
                         )
@@ -54,7 +54,7 @@ struct HomeView: View {
                     NavigationLink {
                         BlogPostView(blogPost: .sample)
                     } label: {
-                        BlogPostThumbnail(
+                        HomeBlogPostThumbnail(
                             title: "Grilled Salmon with Lemon Butter",
                             imageName: "GrilledSalmonWithLemonButter"
                         )
@@ -64,7 +64,7 @@ struct HomeView: View {
                     NavigationLink {
                         BlogPostView(blogPost: .sample)
                     } label: {
-                        BlogPostThumbnail(
+                        HomeBlogPostThumbnail(
                             title: "Spicy Mexican Beef Skillet",
                             imageName: "SpicyMexicanBeefSkillet"
                         )
@@ -72,7 +72,7 @@ struct HomeView: View {
                     NavigationLink {
                         BlogPostView(blogPost: .sample)
                     } label: {
-                        BlogPostThumbnail(
+                        HomeBlogPostThumbnail(
                             title: "Sukiyaki-Style Beef",
                             imageName: "SukiyakiStyleBeef"
                         )

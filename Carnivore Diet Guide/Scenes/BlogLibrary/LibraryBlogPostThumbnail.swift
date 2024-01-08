@@ -1,5 +1,5 @@
 //
-//  LibraryRecipeThumbnail.swift
+//  LibraryBlogPostThumbnail.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 1/7/24.
@@ -7,30 +7,26 @@
 
 import SwiftUI
 
-struct LibraryRecipeThumbnail: View {
+struct LibraryBlogPostThumbnail: View {
     
-    @State var recipe: Recipe
+    @State var blogPost: BlogPost
     
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
-                Text(recipe.title)
+                Text(blogPost.title)
                     .font(.system(size: 18, weight: .heavy))
-                    .lineLimit(1)
+                    .lineLimit(2)
                     .multilineTextAlignment(.leading)
                     .foregroundStyle(Color.background)
-                HStack {
-                    Text("Serves \(recipe.basicNutritionInfo.servings)")
-                    Rectangle().frame(width: 1)
-                    Text("\(recipe.basicNutritionInfo.calories) kcal")
-                }
-                .font(.system(size: 12, weight: .semibold))
-                .foregroundStyle(Color.darkAccentText)
+                Text(blogPost.publicationDate, style: .date)
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(Color.darkAccentText)
             }
             .padding(8)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Color.text)
-            Image(recipe.imageName)
+            Image(blogPost.imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(height: 200)
@@ -46,9 +42,9 @@ struct LibraryRecipeThumbnail: View {
 #Preview {
     ScrollView {
         VStack {
-            LibraryRecipeThumbnail(recipe: .sample)
-            LibraryRecipeThumbnail(recipe: .longNamedSample)
-            LibraryRecipeThumbnail(recipe: .sample)
+            LibraryBlogPostThumbnail(blogPost: .sample)
+            LibraryBlogPostThumbnail(blogPost: .longNamedSample)
+            LibraryBlogPostThumbnail(blogPost: .sample)
         }
         .padding()
     }
