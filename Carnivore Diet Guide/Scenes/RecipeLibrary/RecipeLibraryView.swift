@@ -60,7 +60,7 @@ struct RecipeLibraryView: View {
     }
     
     @ViewBuilder func RecipesList() -> some View {
-        LazyVStack {
+        LazyVStack(spacing: 16) {
             ForEach(recipes) { recipe in
                 NavigationLink {
                     RecipeDetailView(recipe: recipe)

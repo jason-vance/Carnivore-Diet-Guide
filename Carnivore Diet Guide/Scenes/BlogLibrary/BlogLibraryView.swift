@@ -60,7 +60,7 @@ struct BlogLibraryView: View {
     }
     
     @ViewBuilder func BlogPostList() -> some View {
-        LazyVStack {
+        LazyVStack(spacing: 16) {
             ForEach(blogPosts) { blogPost in
                 NavigationLink {
                     BlogPostView(blogPost: blogPost)
