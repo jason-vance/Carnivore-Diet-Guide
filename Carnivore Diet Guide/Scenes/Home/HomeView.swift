@@ -138,8 +138,7 @@ struct HomeView: View {
         VStack {
             SectionTitleView(
                 "Recommended For You",
-                theme: .light,
-                viewAllAction: { }
+                theme: .light
             )
             HStack(spacing: 16) {
                 NavigationLink {
@@ -168,15 +167,17 @@ struct HomeView: View {
     @ViewBuilder func SectionTitleView(
         _ text: String,
         theme: UIUserInterfaceStyle,
-        viewAllAction: @escaping () -> ()
+        viewAllAction: (() -> ())? = nil
     ) -> some View {
         HStack {
             Text(text)
                 .font(.system(size: 24, weight: .bold))
                 .foregroundStyle(theme == .light ? Color.text : Color.background)
             Spacer()
-            ViewAllButton(theme: theme) {
-                viewAllAction()
+            if let viewAllAction = viewAllAction {
+                ViewAllButton(theme: theme) {
+                    viewAllAction()
+                }
             }
         }
     }
