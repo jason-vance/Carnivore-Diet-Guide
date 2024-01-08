@@ -53,6 +53,13 @@
 		56E3054B2B4BE4470098079A /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 56E3054A2B4BE4470098079A /* FirebaseRemoteConfigSwift */; };
 		56E3054D2B4BE4470098079A /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 56E3054C2B4BE4470098079A /* FirebaseStorage */; };
 		56E3054F2B4BE4470098079A /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 56E3054E2B4BE4470098079A /* FirebaseStorageCombine-Community */; };
+		56E305532B4BED1B0098079A /* BlogLibraryContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305522B4BED1B0098079A /* BlogLibraryContentProvider.swift */; };
+		56E305562B4BF0E70098079A /* FirebaseBlogLibraryContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305552B4BF0E70098079A /* FirebaseBlogLibraryContentProvider.swift */; };
+		56E305592B4BF6F80098079A /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 56E305582B4BF6F80098079A /* Swinject */; };
+		56E3055E2B4BF7190098079A /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 56E3055D2B4BF7190098079A /* SwinjectAutoregistration */; };
+		56E305622B4BF77A0098079A /* DependencyConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305612B4BF77A0098079A /* DependencyConfigurator.swift */; };
+		56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305632B4BF7890098079A /* MockDependencyConfigurator.swift */; };
+		56E305682B4BF83C0098079A /* PreviewContainerWithSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305672B4BF83C0098079A /* PreviewContainerWithSetup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +84,11 @@
 		56E305102B4B71400098079A /* BlogLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogLibraryView.swift; sourceTree = "<group>"; };
 		56E305152B4B74BC0098079A /* LibraryBlogPostThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryBlogPostThumbnail.swift; sourceTree = "<group>"; };
 		56E305172B4BE3C40098079A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		56E305522B4BED1B0098079A /* BlogLibraryContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogLibraryContentProvider.swift; sourceTree = "<group>"; };
+		56E305552B4BF0E70098079A /* FirebaseBlogLibraryContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseBlogLibraryContentProvider.swift; sourceTree = "<group>"; };
+		56E305612B4BF77A0098079A /* DependencyConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyConfigurator.swift; sourceTree = "<group>"; };
+		56E305632B4BF7890098079A /* MockDependencyConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDependencyConfigurator.swift; sourceTree = "<group>"; };
+		56E305672B4BF83C0098079A /* PreviewContainerWithSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainerWithSetup.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +112,7 @@
 				56E3053D2B4BE4470098079A /* FirebaseInAppMessaging-Beta in Frameworks */,
 				56E3052F2B4BE4470098079A /* FirebaseDatabaseSwift in Frameworks */,
 				56E305392B4BE4470098079A /* FirebaseFunctions in Frameworks */,
+				56E3055E2B4BF7190098079A /* SwinjectAutoregistration in Frameworks */,
 				56E3054F2B4BE4470098079A /* FirebaseStorageCombine-Community in Frameworks */,
 				56E305492B4BE4470098079A /* FirebaseRemoteConfig in Frameworks */,
 				56E305252B4BE4470098079A /* FirebaseAppDistribution-Beta in Frameworks */,
@@ -107,6 +120,7 @@
 				56E305472B4BE4470098079A /* FirebasePerformance in Frameworks */,
 				56E3053F2B4BE4470098079A /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 				56E3054D2B4BE4470098079A /* FirebaseStorage in Frameworks */,
+				56E305592B4BF6F80098079A /* Swinject in Frameworks */,
 				56E305312B4BE4470098079A /* FirebaseDynamicLinks in Frameworks */,
 				56E305352B4BE4470098079A /* FirebaseFirestoreCombine-Community in Frameworks */,
 				56E305452B4BE4470098079A /* FirebaseMessaging in Frameworks */,
@@ -160,11 +174,14 @@
 		56353B542B440C9900C4E972 /* Carnivore Diet Guide */ = {
 			isa = PBXGroup;
 			children = (
+				56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */,
+				56E305612B4BF77A0098079A /* DependencyConfigurator.swift */,
+				56E305632B4BF7890098079A /* MockDependencyConfigurator.swift */,
 				5676A1342B47792B009C1DA6 /* Domain */,
 				562E03E22B4507C500859F81 /* Scenes */,
+				56E305652B4BF8220098079A /* SwiftUI */,
 				562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */,
 				56E305172B4BE3C40098079A /* GoogleService-Info.plist */,
-				56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */,
 				56353B592B440C9B00C4E972 /* Assets.xcassets */,
 				56353B5B2B440C9B00C4E972 /* Preview Content */,
 			);
@@ -226,10 +243,36 @@
 		56E3050F2B4B71320098079A /* BlogLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				56E305542B4BF0C30098079A /* ContentProvider */,
 				56E305102B4B71400098079A /* BlogLibraryView.swift */,
 				56E305152B4B74BC0098079A /* LibraryBlogPostThumbnail.swift */,
 			);
 			path = BlogLibrary;
+			sourceTree = "<group>";
+		};
+		56E305542B4BF0C30098079A /* ContentProvider */ = {
+			isa = PBXGroup;
+			children = (
+				56E305522B4BED1B0098079A /* BlogLibraryContentProvider.swift */,
+				56E305552B4BF0E70098079A /* FirebaseBlogLibraryContentProvider.swift */,
+			);
+			path = ContentProvider;
+			sourceTree = "<group>";
+		};
+		56E305652B4BF8220098079A /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				56E305662B4BF8260098079A /* Previews */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		56E305662B4BF8260098079A /* Previews */ = {
+			isa = PBXGroup;
+			children = (
+				56E305672B4BF83C0098079A /* PreviewContainerWithSetup.swift */,
+			);
+			path = Previews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,6 +319,8 @@
 				56E3054A2B4BE4470098079A /* FirebaseRemoteConfigSwift */,
 				56E3054C2B4BE4470098079A /* FirebaseStorage */,
 				56E3054E2B4BE4470098079A /* FirebaseStorageCombine-Community */,
+				56E305582B4BF6F80098079A /* Swinject */,
+				56E3055D2B4BF7190098079A /* SwinjectAutoregistration */,
 			);
 			productName = "Carnivore Diet Guide";
 			productReference = 56353B522B440C9900C4E972 /* Carnivore Diet Guide.app */;
@@ -307,6 +352,8 @@
 			mainGroup = 56353B492B440C9900C4E972;
 			packageReferences = (
 				56E305192B4BE4470098079A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				56E305572B4BF6F80098079A /* XCRemoteSwiftPackageReference "Swinject" */,
+				56E3055C2B4BF7190098079A /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */,
 			);
 			productRefGroup = 56353B532B440C9900C4E972 /* Products */;
 			projectDirPath = "";
@@ -337,16 +384,21 @@
 			files = (
 				5676A1332B477913009C1DA6 /* RecipeDetailView.swift in Sources */,
 				566B2D682B469A35008627F8 /* HomeBlogPostThumbnail.swift in Sources */,
+				56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */,
 				56E3050E2B4B6B060098079A /* LibraryRecipeThumbnail.swift in Sources */,
 				566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */,
 				56E305072B4A982E0098079A /* BlogPost.swift in Sources */,
 				56E305112B4B71400098079A /* BlogLibraryView.swift in Sources */,
 				566B2D642B4694C6008627F8 /* FeaturedContentThumbnail.swift in Sources */,
 				562E03E72B450AA000859F81 /* HomeView.swift in Sources */,
+				56E305532B4BED1B0098079A /* BlogLibraryContentProvider.swift in Sources */,
 				56E3050C2B4B60360098079A /* RecipeLibraryView.swift in Sources */,
+				56E305682B4BF83C0098079A /* PreviewContainerWithSetup.swift in Sources */,
 				56353B582B440C9900C4E972 /* ContentView.swift in Sources */,
+				56E305562B4BF0E70098079A /* FirebaseBlogLibraryContentProvider.swift in Sources */,
 				5676A1382B47811E009C1DA6 /* TabSelectorView.swift in Sources */,
 				56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */,
+				56E305622B4BF77A0098079A /* DependencyConfigurator.swift in Sources */,
 				56E305162B4B74BC0098079A /* LibraryBlogPostThumbnail.swift in Sources */,
 				5676A1362B477933009C1DA6 /* Recipe.swift in Sources */,
 				56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */,
@@ -570,6 +622,22 @@
 				minimumVersion = 10.19.1;
 			};
 		};
+		56E305572B4BF6F80098079A /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
+		56E3055C2B4BF7190098079A /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/SwinjectAutoregistration.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -707,6 +775,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 56E305192B4BE4470098079A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		56E305582B4BF6F80098079A /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 56E305572B4BF6F80098079A /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+		56E3055D2B4BF7190098079A /* SwinjectAutoregistration */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 56E3055C2B4BF7190098079A /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */;
+			productName = SwinjectAutoregistration;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

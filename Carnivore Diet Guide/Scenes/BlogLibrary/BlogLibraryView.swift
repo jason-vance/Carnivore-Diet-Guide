@@ -6,22 +6,37 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct BlogLibraryView: View {
     
-    @State private var blogPosts: [BlogPost] = BlogPost.samples
+    let contentProvider = iocContainer~>BlogLibraryContentProvider.self
+    
+    @State private var blogPosts: [BlogPost] = []
+    @State private var showError: Bool = false
+    @State private var errorMessage: String = ""
+    
+    private func loadBlogPosts() {
+        contentProvider.loadBlogPosts { blogPosts in
+            self.blogPosts = blogPosts
+        } onError: { error in
+            self.showError = true
+            self.errorMessage = error.localizedDescription
+        }
+    }
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 TitleBarAndHeroImage()
-                ScrollView {
-                    BlogPostList()
-                }
-                .background(Color.background)
-                .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
+                BlogPostList()
+                    .background(Color.background)
+                    .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
             }
             .background(Color.background)
+        }
+        .onAppear {
+            loadBlogPosts()
         }
     }
     
@@ -60,19 +75,34 @@ struct BlogLibraryView: View {
     }
     
     @ViewBuilder func BlogPostList() -> some View {
-        LazyVStack(spacing: 16) {
-            ForEach(blogPosts) { blogPost in
-                NavigationLink {
-                    BlogPostView(blogPost: blogPost)
-                } label: {
-                    LibraryBlogPostThumbnail(blogPost: blogPost)
+        if blogPosts.isEmpty {
+            ZStack {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .tint(Color.accent)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else {
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    ForEach(blogPosts) { blogPost in
+                        NavigationLink {
+                            BlogPostView(blogPost: blogPost)
+                        } label: {
+                            LibraryBlogPostThumbnail(blogPost: blogPost)
+                        }
+                    }
                 }
+                .padding()
             }
         }
-        .padding()
     }
 }
 
 #Preview {
-    BlogLibraryView()
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        BlogLibraryView()
+    }
 }

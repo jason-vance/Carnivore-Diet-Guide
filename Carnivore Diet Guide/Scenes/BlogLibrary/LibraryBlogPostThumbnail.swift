@@ -26,12 +26,29 @@ struct LibraryBlogPostThumbnail: View {
             .padding(8)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Color.text)
-            Image(blogPost.imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(height: 200)
-                .offset(y: 20)
-                .clipped()
+            if let imageName = blogPost.imageName {
+                Image(imageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: 200)
+                    .offset(y: 20)
+                    .clipped()
+            }
+            if let imageUrl = blogPost.imageUrl {
+                AsyncImage(url: URL(string: imageUrl)) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: 200)
+                        .offset(y: 20)
+                        .clipped()
+                        .id(imageUrl)
+                } placeholder: {
+                    Rectangle()
+                        .foregroundStyle(Color.background)
+                        .frame(height: 200)
+                }
+            }
         }
         .clipShape(.rect(cornerRadius: 16, style: .continuous))
         .shadow(color: Color.darkAccentText ,radius: 4)

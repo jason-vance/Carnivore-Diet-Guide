@@ -26,11 +26,11 @@ struct BlogPost: Identifiable {
     
     var id: UUID = .init()
     var title: String
-    var imageName: String
+    var imageName: String?
+    var imageUrl: String?
     var author: String
     var content: [any BlogPostContentItem]
     var publicationDate: Date
-    var tags: [String]
 }
 
 extension BlogPost {
@@ -57,11 +57,7 @@ extension BlogPost {
                     text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 )
             ],
-            publicationDate: Date(),
-            tags: [
-                "SwiftUI",
-                "iOS"
-            ]
+            publicationDate: Date()
         )
     }
     static var longNamedSample: BlogPost {
@@ -78,11 +74,7 @@ extension BlogPost {
                     caption: "An example image"
                 )
             ],
-            publicationDate: Date(),
-            tags: [
-                "SwiftUI",
-                "iOS"
-            ]
+            publicationDate: Date()
         )
     }
     
