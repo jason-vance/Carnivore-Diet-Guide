@@ -87,7 +87,7 @@ extension BlogPost {
     static var markdownSample: BlogPost {
         .init(
             title: "What is the Carnivore Diet?",
-            imageName: "",
+            imageName: "WhatIsTheCarnivoreDiet",
             author: "The Carnivore Diet Guide Team",
             content: [
                 BlogPost.MarkdownItem(

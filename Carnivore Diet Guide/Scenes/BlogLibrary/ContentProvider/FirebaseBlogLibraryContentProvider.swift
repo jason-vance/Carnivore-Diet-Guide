@@ -10,18 +10,29 @@ import FirebaseFirestore
 
 class FirebaseBlogLibraryContentProvider: BlogLibraryContentProvider {
     
+    private enum ContentType: String, Codable {
+        case text
+        case image
+        case markdown
+    }
+    
     private struct BlogPostDoc: Codable {
         struct ContentItem: Codable {
-            var type: String?
+            var type: ContentType?
             var text: String?
+            var markdown: String?
             var url: String?
             var caption: String?
             
             func toBlogPostContentItem() -> (any BlogPostContentItem)? {
                 switch type {
-                case "image":
+                case .image:
                     if let url = url {
                         return BlogPost.ImageItem(url: url, caption: caption)
+                    }
+                case .markdown:
+                    if let markdown = markdown {
+                        return BlogPost.MarkdownItem(markdown: markdown.replacingOccurrences(of: "\\n", with: "\n"))
                     }
                 default:
                     if let text = text {
