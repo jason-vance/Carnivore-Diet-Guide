@@ -232,6 +232,17 @@
         }
       }
     },
+    "The Carnivore Diet Guide Team" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "肉食主义者饮食指南团队"
+          }
+        }
+      }
+    },
     "Trending Blog Posts" : {
       "localizations" : {
         "zh-Hans" : {

@@ -17,53 +17,46 @@ class FirebaseBlogLibraryContentProvider: BlogLibraryContentProvider {
     }
     
     private struct BlogPostDoc: Codable {
-        struct ContentItem: Codable {
-            var type: ContentType?
-            var text: String?
-            var markdown: String?
-            var url: String?
-            var caption: String?
+
+        struct Localization: Codable {
+            static let defaultLanguage: String = "default"
             
-            func toBlogPostContentItem() -> (any BlogPostContentItem)? {
-                switch type {
-                case .image:
-                    if let url = url {
-                        return BlogPost.ImageItem(url: url, caption: caption)
-                    }
-                case .markdown:
-                    if let markdown = markdown {
-                        return BlogPost.MarkdownItem(markdown: markdown.replacingOccurrences(of: "\\n", with: "\n"))
-                    }
-                default:
-                    if let text = text {
-                        return BlogPost.TextItem(text: text)
-                    }
-                }
-                
-                return nil
-            }
+            var language: String?
+            var title: String?
+            var markdownContent: String?
         }
         
         @DocumentID var id: String?
         var publicationDate: Date?
-        var title: String?
         var author: String?
         var imageUrl: String?
-        var content: [ContentItem]
+        var localizations: [Localization]
         
         func toBlogPost() -> BlogPost? {
-            guard let title = title else { return nil }
+            let localization: Localization? = {
+                let languageCode = Locale.current.language.languageCode?.identifier
+                
+                if let localization = (localizations.first { $0.language == languageCode }) {
+                    return localization
+                } else if let localization = (localizations.first { $0.language == Localization.defaultLanguage }) {
+                    return localization
+                } else {
+                    return localizations.first
+                }
+            }()
+            guard let localization = localization else { return nil}
+            
+            guard let title = localization.title else { return nil }
             guard let imageUrl = imageUrl else { return nil }
             guard let author = author else { return nil }
             guard let publicationDate = publicationDate else { return nil }
-            
-            let content = content.compactMap { $0.toBlogPostContentItem() }
+            guard let markdownContent = localization.markdownContent else { return nil }
 
             return .init(
                 title: title,
                 imageUrl: imageUrl,
                 author: author,
-                content: content,
+                markdownContent: markdownContent.replacingOccurrences(of: "\\n", with: "\n"),
                 publicationDate: publicationDate
             )
         }
@@ -80,11 +73,12 @@ class FirebaseBlogLibraryContentProvider: BlogLibraryContentProvider {
                     .order(by: "publicationDate", descending: true)
                     .getDocuments()
                 
-                let blogPosts = snapshot.documents
-                    .compactMap { (try? $0.data(as: BlogPostDoc.self))?.toBlogPost() }
+                let blogPosts = try snapshot.documents
+                    .compactMap { try $0.data(as: BlogPostDoc.self).toBlogPost() }
                 
                 onUpdate(blogPosts)
             } catch {
+                print(error)
                 onError(error)
             }
         }

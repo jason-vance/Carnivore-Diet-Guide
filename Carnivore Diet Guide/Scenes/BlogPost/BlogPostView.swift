@@ -37,7 +37,7 @@ struct BlogPostView: View {
             Text(blogPost.title)
                 .font(.title).bold()
                 .foregroundStyle(Color.background)
-            Text("By: \(blogPost.author)")
+            Text("By: \(String(localized: .init(blogPost.author)))")
                 .font(.subheadline).bold()
                 .foregroundStyle(Color.darkAccentText)
             Text(blogPost.publicationDate, style: .date)
@@ -51,48 +51,10 @@ struct BlogPostView: View {
     }
     
     @ViewBuilder func BlogPostContent() -> some View {
-        VStack(spacing: 16) {
-            ForEach(blogPost.content, id: \.id) { item in
-                if let textItem = item as? BlogPost.TextItem {
-                    TextContent(textItem)
-                } else if let markdownItem = item as? BlogPost.MarkdownItem {
-                    MarkdownContent(markdownItem)
-                } else if let imageItem = item as? BlogPost.ImageItem {
-                    ImageContent(imageItem)
-                }
-            }
-        }
-    }
-    
-    @ViewBuilder func TextContent(_ textItem: BlogPost.TextItem) -> some View {
-        Text(textItem.text)
-            .foregroundStyle(Color.text)
-    }
-    
-    @ViewBuilder func MarkdownContent(_ markdownItem: BlogPost.MarkdownItem) -> some View {
-        Markdown(markdownItem.markdown)
+        Markdown(blogPost.markdownContent)
             .markdownTextStyle {
                 ForegroundColor(Color.text)
             }
-    }
-    
-    @ViewBuilder func ImageContent(_ imageItem: BlogPost.ImageItem) -> some View {
-        VStack(spacing: 0) {
-            AsyncImage(url: URL(string: imageItem.url)) { image in
-                image
-                    .resizable()
-                    .clipShape(.rect(cornerRadius: 16))
-                    .aspectRatio(contentMode: .fit)
-            } placeholder: {
-                ProgressView()
-            }
-            
-            if let caption = imageItem.caption {
-                Text(caption)
-                    .font(.caption)
-                    .foregroundStyle(Color.text)
-            }
-        }
     }
     
     @ViewBuilder func CloseButton() -> some View {
@@ -115,5 +77,5 @@ struct BlogPostView: View {
 }
 
 #Preview {
-    BlogPostView(blogPost: .markdownSample)
+    BlogPostView(blogPost: .sample)
 }
