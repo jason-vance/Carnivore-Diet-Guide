@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
 struct BlogPostView: View {
     
@@ -54,6 +55,8 @@ struct BlogPostView: View {
             ForEach(blogPost.content, id: \.id) { item in
                 if let textItem = item as? BlogPost.TextItem {
                     TextContent(textItem)
+                } else if let markdownItem = item as? BlogPost.MarkdownItem {
+                    MarkdownContent(markdownItem)
                 } else if let imageItem = item as? BlogPost.ImageItem {
                     ImageContent(imageItem)
                 }
@@ -64,6 +67,13 @@ struct BlogPostView: View {
     @ViewBuilder func TextContent(_ textItem: BlogPost.TextItem) -> some View {
         Text(textItem.text)
             .foregroundStyle(Color.text)
+    }
+    
+    @ViewBuilder func MarkdownContent(_ markdownItem: BlogPost.MarkdownItem) -> some View {
+        Markdown(markdownItem.markdown)
+            .markdownTextStyle {
+                ForegroundColor(Color.text)
+            }
     }
     
     @ViewBuilder func ImageContent(_ imageItem: BlogPost.ImageItem) -> some View {
@@ -105,5 +115,5 @@ struct BlogPostView: View {
 }
 
 #Preview {
-    BlogPostView(blogPost: .sample)
+    BlogPostView(blogPost: .markdownSample)
 }

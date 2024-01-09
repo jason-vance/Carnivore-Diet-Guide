@@ -60,6 +60,7 @@
 		56E305622B4BF77A0098079A /* DependencyConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305612B4BF77A0098079A /* DependencyConfigurator.swift */; };
 		56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305632B4BF7890098079A /* MockDependencyConfigurator.swift */; };
 		56E305682B4BF83C0098079A /* PreviewContainerWithSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305672B4BF83C0098079A /* PreviewContainerWithSetup.swift */; };
+		56E3056B2B4CCFA40098079A /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 56E3056A2B4CCFA40098079A /* MarkdownUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +106,7 @@
 				56E305432B4BE4470098079A /* FirebaseMLModelDownloader in Frameworks */,
 				56E305372B4BE4470098079A /* FirebaseFirestoreSwift in Frameworks */,
 				56E305232B4BE4470098079A /* FirebaseAppCheck in Frameworks */,
+				56E3056B2B4CCFA40098079A /* MarkdownUI in Frameworks */,
 				56E305212B4BE4470098079A /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				56E305272B4BE4470098079A /* FirebaseAuth in Frameworks */,
 				56E3052B2B4BE4470098079A /* FirebaseCrashlytics in Frameworks */,
@@ -321,6 +323,7 @@
 				56E3054E2B4BE4470098079A /* FirebaseStorageCombine-Community */,
 				56E305582B4BF6F80098079A /* Swinject */,
 				56E3055D2B4BF7190098079A /* SwinjectAutoregistration */,
+				56E3056A2B4CCFA40098079A /* MarkdownUI */,
 			);
 			productName = "Carnivore Diet Guide";
 			productReference = 56353B522B440C9900C4E972 /* Carnivore Diet Guide.app */;
@@ -354,6 +357,7 @@
 				56E305192B4BE4470098079A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				56E305572B4BF6F80098079A /* XCRemoteSwiftPackageReference "Swinject" */,
 				56E3055C2B4BF7190098079A /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */,
+				56E305692B4CCFA40098079A /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = 56353B532B440C9900C4E972 /* Products */;
 			projectDirPath = "";
@@ -638,6 +642,14 @@
 				minimumVersion = 2.8.3;
 			};
 		};
+		56E305692B4CCFA40098079A /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -785,6 +797,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 56E3055C2B4BF7190098079A /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */;
 			productName = SwinjectAutoregistration;
+		};
+		56E3056A2B4CCFA40098079A /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 56E305692B4CCFA40098079A /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

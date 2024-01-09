@@ -55,5 +55,9 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        ContentView()
+    }
 }
