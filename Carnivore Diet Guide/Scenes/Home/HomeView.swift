@@ -37,7 +37,7 @@ struct HomeView: View {
     @ViewBuilder func TrendingBlogPostsView() -> some View {
         VStack {
             SectionTitleView(
-                "Trending Blog Posts",
+                String(localized: "Trending Blog Posts"),
                 theme: .light,
                 viewAllAction: { selectedTab = .blog }
             )
@@ -86,7 +86,7 @@ struct HomeView: View {
     @ViewBuilder func TrendingRecipesView() -> some View {
         VStack {
             SectionTitleView(
-                "Trending Recipes",
+                String(localized: "Trending Recipes"),
                 theme: .dark,
                 viewAllAction: { selectedTab = .recipes }
             )
@@ -137,7 +137,7 @@ struct HomeView: View {
     @ViewBuilder func FeaturedContentView() -> some View {
         VStack {
             SectionTitleView(
-                "Recommended For You",
+                String(localized: "Recommended For You"),
                 theme: .light
             )
             HStack(spacing: 16) {

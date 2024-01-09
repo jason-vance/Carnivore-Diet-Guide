@@ -9,9 +9,9 @@ import SwiftUI
 
 struct RecipeDetailView: View {
     
-    private static let ingredientsTab = TabSelectorView.Tab(title: "Ingredients")
-    private static let stepsTab = TabSelectorView.Tab(title: "Cooking Steps")
-    private static let nutritionTab = TabSelectorView.Tab(title: "Nutritional Info")
+    private static let ingredientsTab = TabSelectorView.Tab(title: String(localized: "Ingredients"))
+    private static let stepsTab = TabSelectorView.Tab(title: String(localized: "Cooking Steps"))
+    private static let nutritionTab = TabSelectorView.Tab(title: String(localized: "Nutritional Info"))
     
     var recipe: Recipe
     
@@ -113,27 +113,27 @@ struct RecipeDetailView: View {
         VStack(spacing: 12) {
             Text("Per Serving")
             NutritionInformationItem(
-                "Calories",
+                String(localized: "Calories"),
                 value: "\(recipe.basicNutritionInfo.calories)",
-                unit: "kcal"
+                unit: String(localized: "kcal")
             )
             Rectangle().frame(height: 2)
             NutritionInformationItem(
-                "Protein",
+                String(localized: "Protein"),
                 value: "\(recipe.basicNutritionInfo.protein)",
-                unit: "g"
+                unit: String(localized: "g", comment: "grams")
             )
             Rectangle().frame(height: 1)
             NutritionInformationItem(
-                "Fat",
+                String(localized: "Fat"),
                 value: "\(recipe.basicNutritionInfo.fat)",
-                unit: "g"
+                unit: String(localized: "g", comment: "grams")
             )
             Rectangle().frame(height: 1)
             NutritionInformationItem(
-                "Carbohydrates",
+                String(localized: "Carbohydrates"),
                 value: "\(recipe.basicNutritionInfo.carbohydrates)",
-                unit: "g"
+                unit: String(localized: "g", comment: "grams")
             )
         }
     }

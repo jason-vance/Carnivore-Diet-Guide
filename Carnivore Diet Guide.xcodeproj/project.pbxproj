@@ -61,6 +61,8 @@
 		56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305632B4BF7890098079A /* MockDependencyConfigurator.swift */; };
 		56E305682B4BF83C0098079A /* PreviewContainerWithSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305672B4BF83C0098079A /* PreviewContainerWithSetup.swift */; };
 		56E3056B2B4CCFA40098079A /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 56E3056A2B4CCFA40098079A /* MarkdownUI */; };
+		56E305712B4D310A0098079A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 56E305702B4D310A0098079A /* Localizable.xcstrings */; };
+		56E305732B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 56E305722B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +92,8 @@
 		56E305612B4BF77A0098079A /* DependencyConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyConfigurator.swift; sourceTree = "<group>"; };
 		56E305632B4BF7890098079A /* MockDependencyConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDependencyConfigurator.swift; sourceTree = "<group>"; };
 		56E305672B4BF83C0098079A /* PreviewContainerWithSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainerWithSetup.swift; sourceTree = "<group>"; };
+		56E305702B4D310A0098079A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		56E305722B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = "Carnivore-Diet-Guide-InfoPlist.xcstrings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +188,8 @@
 				56E305652B4BF8220098079A /* SwiftUI */,
 				562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */,
 				56E305172B4BE3C40098079A /* GoogleService-Info.plist */,
+				56E305702B4D310A0098079A /* Localizable.xcstrings */,
+				56E305722B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings */,
 				56353B592B440C9B00C4E972 /* Assets.xcassets */,
 				56353B5B2B440C9B00C4E972 /* Preview Content */,
 			);
@@ -351,6 +357,15 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				ja,
+				de,
+				fr,
+				"pt-BR",
+				ar,
+				ko,
+				ru,
+				es,
 			);
 			mainGroup = 56353B492B440C9900C4E972;
 			packageReferences = (
@@ -373,8 +388,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56E305732B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings in Resources */,
 				56353B5D2B440C9B00C4E972 /* Preview Assets.xcassets in Resources */,
 				56353B5A2B440C9B00C4E972 /* Assets.xcassets in Resources */,
+				56E305712B4D310A0098079A /* Localizable.xcstrings in Resources */,
 				56E305182B4BE3C40098079A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
