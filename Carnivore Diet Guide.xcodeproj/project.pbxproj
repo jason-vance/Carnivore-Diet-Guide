@@ -369,6 +369,7 @@
 				ko,
 				ru,
 				es,
+				hi,
 			);
 			mainGroup = 56353B492B440C9900C4E972;
 			packageReferences = (

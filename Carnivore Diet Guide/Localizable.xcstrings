@@ -21,6 +21,12 @@
             "value" : ""
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47,6 +53,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld kcal"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld किलोकैलोरी"
           }
         },
         "zh-Hans" : {
@@ -77,6 +89,12 @@
             "value" : "%lld."
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -103,6 +121,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Blog"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ब्लॉग"
           }
         },
         "zh-Hans" : {
@@ -133,6 +157,12 @@
             "value" : "Par : %@"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "द्वारा: %@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -161,6 +191,12 @@
             "value" : "Calories"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कैलोरी"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -187,6 +223,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Glucides"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कार्बोहाइड्रेट"
           }
         },
         "zh-Hans" : {
@@ -218,6 +260,12 @@
             "value" : "Guide du"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "मांसाहारी"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -244,6 +292,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Étapes de Cuisson"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "खाना पकाने के चरण"
           }
         },
         "zh-Hans" : {
@@ -275,6 +329,12 @@
             "value" : "Régime Carnivore"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आहार मार्गदर्शिका"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -301,6 +361,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lipides"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "वसा"
           }
         },
         "zh-Hans" : {
@@ -331,6 +397,12 @@
             "value" : "Article Vedette du Blog"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "विशेष ब्लॉग पोस्ट"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -357,6 +429,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recette Vedette"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "विशेष व्यंजन"
           }
         },
         "zh-Hans" : {
@@ -388,6 +466,12 @@
             "value" : "g"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ग्रा"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -414,6 +498,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Accueil"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "होम"
           }
         },
         "zh-Hans" : {
@@ -444,6 +534,12 @@
             "value" : "Ingrédients"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सामग्री"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -470,6 +566,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "kcal"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "किलोकैलोरी"
           }
         },
         "zh-Hans" : {
@@ -500,6 +602,12 @@
             "value" : "Informations Nutritionnelles"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "पोषण संबंधी जानकारी"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -526,6 +634,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Par Portion"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "प्रति सर्विंग"
           }
         },
         "zh-Hans" : {
@@ -556,6 +670,12 @@
             "value" : "Protéine"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "प्रोटीन"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -582,6 +702,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recettes"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "व्यंजनों"
           }
         },
         "zh-Hans" : {
@@ -612,6 +738,12 @@
             "value" : "Recommandé Pour Vous"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपके लिए अनुशंसित"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -638,6 +770,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pour %lld personnes"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सर्व करता है %lld"
           }
         },
         "zh-Hans" : {
@@ -669,6 +807,12 @@
             "value" : "L'Équipe du Guide du Régime Carnivore"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "मांसाहारी आहार मार्गदर्शिका टीम"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -695,6 +839,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Articles de Blog Tendances"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "चर्चित ब्लॉग पोस्ट"
           }
         },
         "zh-Hans" : {
@@ -725,6 +875,12 @@
             "value" : "Recettes Tendances"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "चर्चित व्यंजन"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -751,6 +907,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Voir Tout"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सभी देखें"
           }
         },
         "zh-Hans" : {

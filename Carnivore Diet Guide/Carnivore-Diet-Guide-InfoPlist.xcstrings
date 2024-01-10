@@ -29,6 +29,12 @@
             "value" : "Guide du Régime Carnivore"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "मांसाहारी आहार मार्गदर्शिका"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
