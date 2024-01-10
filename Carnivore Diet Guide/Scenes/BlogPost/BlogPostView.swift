@@ -23,6 +23,7 @@ struct BlogPostView: View {
                 ScrollView {
                     BlogPostContent()
                         .padding()
+                        .frame(maxWidth: .infinity)
                 }
                 .background(Color.background)
                 .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
