@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct LibraryBlogPostThumbnail: View {
+    
+    let imageHeight: CGFloat = 200
+    let imageOffset: CGFloat = 20
     
     @State var blogPost: BlogPost
     
@@ -30,24 +34,24 @@ struct LibraryBlogPostThumbnail: View {
                 Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(height: 200)
-                    .offset(y: 20)
+                    .frame(height: imageHeight)
+                    .offset(y: imageOffset)
                     .clipped()
             }
             if let imageUrl = blogPost.imageUrl {
-                AsyncImage(url: URL(string: imageUrl)) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(height: 200)
-                        .offset(y: 20)
-                        .clipped()
-                        .id(imageUrl)
-                } placeholder: {
-                    Rectangle()
-                        .foregroundStyle(Color.background)
-                        .frame(height: 200)
-                }
+                KFImage(URL(string: imageUrl))
+                    .resizable()
+                    .placeholder {
+                        Rectangle()
+                            .foregroundStyle(Color.background)
+                            .frame(height: imageHeight)
+                            .offset(y: -imageOffset)
+                    }
+                    .forceRefresh()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: imageHeight)
+                    .offset(y: imageOffset)
+                    .clipped()
             }
         }
         .clipShape(.rect(cornerRadius: 16, style: .continuous))
