@@ -11,6 +11,12 @@
             "value" : "دليل نظام اللحوم الغذائي"
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leitfaden zur Carnivore-Diät"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
