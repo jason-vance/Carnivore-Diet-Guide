@@ -158,7 +158,7 @@ struct RecipeDetailView: View {
                 Circle()
                     .foregroundStyle(Color.accent)
                     .frame(width: 44, height: 44)
-                Image(systemName: "chevron.left")
+                Image(systemName: "chevron.backward")
                     .resizable()
                     .bold()
                     .foregroundStyle(Color.background)

@@ -5,6 +5,12 @@
       "comment" : "Bundle name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دليل نظام اللحوم الغذائي"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",

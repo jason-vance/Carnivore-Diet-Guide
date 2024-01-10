@@ -210,9 +210,9 @@ struct HomeView: View {
     
     @ViewBuilder func TitleView() -> some View {
         VStack(spacing: 0) {
-            Text("Carnivore")
+            Text("Carnivore", comment: "First line of the app name on the home screen. ie\n\"Carnivore\nDiet Guide\"")
                 .font(.system(size: 48, weight: .black))
-            Text("Diet Guide")
+            Text("Diet Guide", comment: "Second line of the app name on the home screen. ie\n\"Carnivore\nDiet Guide\"")
                 .font(.system(size: 40, weight: .black))
                 .offset(y: -12)
         }
