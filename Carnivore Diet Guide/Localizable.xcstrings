@@ -27,6 +27,12 @@
             "value" : ""
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -59,6 +65,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld किलोकैलोरी"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lldキロカロリー"
           }
         },
         "zh-Hans" : {
@@ -95,6 +107,12 @@
             "value" : ""
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -127,6 +145,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ब्लॉग"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブログ"
           }
         },
         "zh-Hans" : {
@@ -163,6 +187,12 @@
             "value" : "द्वारा: %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "著者：%@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -197,6 +227,12 @@
             "value" : "कैलोरी"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カロリー"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -229,6 +265,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "कार्बोहाइड्रेट"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "炭水化物"
           }
         },
         "zh-Hans" : {
@@ -266,6 +308,12 @@
             "value" : "मांसाहारी"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "肉食"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -298,6 +346,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "खाना पकाने के चरण"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "調理手順"
           }
         },
         "zh-Hans" : {
@@ -335,6 +389,12 @@
             "value" : "आहार मार्गदर्शिका"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダイエットガイド"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -367,6 +427,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "वसा"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "脂質"
           }
         },
         "zh-Hans" : {
@@ -403,6 +469,12 @@
             "value" : "विशेष ब्लॉग पोस्ट"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特集ブログ記事"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -435,6 +507,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "विशेष व्यंजन"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特集レシピ"
           }
         },
         "zh-Hans" : {
@@ -472,6 +550,12 @@
             "value" : "ग्रा"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "g"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -504,6 +588,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "होम"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホーム"
           }
         },
         "zh-Hans" : {
@@ -540,6 +630,12 @@
             "value" : "सामग्री"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "材料"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -572,6 +668,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "किलोकैलोरी"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キロカロリー"
           }
         },
         "zh-Hans" : {
@@ -608,6 +710,12 @@
             "value" : "पोषण संबंधी जानकारी"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "栄養情報"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -640,6 +748,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "प्रति सर्विंग"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一人前あたり"
           }
         },
         "zh-Hans" : {
@@ -676,6 +790,12 @@
             "value" : "प्रोटीन"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タンパク質"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -708,6 +828,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "व्यंजनों"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "レシピ"
           }
         },
         "zh-Hans" : {
@@ -744,6 +870,12 @@
             "value" : "आपके लिए अनुशंसित"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "おすすめ"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -776,6 +908,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "सर्व करता है %lld"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld人分"
           }
         },
         "zh-Hans" : {
@@ -813,6 +951,12 @@
             "value" : "मांसाहारी आहार मार्गदर्शिका टीम"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "肉食ダイエットガイドチーム"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -845,6 +989,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "चर्चित ब्लॉग पोस्ट"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トレンドブログ記事"
           }
         },
         "zh-Hans" : {
@@ -881,6 +1031,12 @@
             "value" : "चर्चित व्यंजन"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トレンドレシピ"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -913,6 +1069,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "सभी देखें"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全て見る"
           }
         },
         "zh-Hans" : {

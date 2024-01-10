@@ -35,6 +35,12 @@
             "value" : "मांसाहारी आहार मार्गदर्शिका"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "肉食ダイエットガイド"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
