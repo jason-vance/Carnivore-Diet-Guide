@@ -33,6 +33,12 @@
             "value" : ""
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -71,6 +77,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lldキロカロリー"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 킬로칼로리"
           }
         },
         "zh-Hans" : {
@@ -113,6 +125,12 @@
             "value" : "%lld."
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -151,6 +169,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ブログ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "블로그"
           }
         },
         "zh-Hans" : {
@@ -193,6 +217,12 @@
             "value" : "著者：%@"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "작성자: %@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -233,6 +263,12 @@
             "value" : "カロリー"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "칼로리"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -271,6 +307,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "炭水化物"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "탄수화물"
           }
         },
         "zh-Hans" : {
@@ -314,6 +356,12 @@
             "value" : "肉食"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "육식"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -352,6 +400,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "調理手順"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "요리 단계"
           }
         },
         "zh-Hans" : {
@@ -395,6 +449,12 @@
             "value" : "ダイエットガイド"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다이어트 가이드"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -433,6 +493,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "脂質"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지방"
           }
         },
         "zh-Hans" : {
@@ -475,6 +541,12 @@
             "value" : "特集ブログ記事"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "추천 블로그 포스트"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -515,6 +587,12 @@
             "value" : "特集レシピ"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "추천 레시피"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -551,6 +629,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "g"
+          }
+        },
+        "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "g"
@@ -596,6 +680,12 @@
             "value" : "ホーム"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "홈"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -634,6 +724,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "材料"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "재료"
           }
         },
         "zh-Hans" : {
@@ -676,6 +772,12 @@
             "value" : "キロカロリー"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "킬로칼로리"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -714,6 +816,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "栄養情報"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "영양 정보"
           }
         },
         "zh-Hans" : {
@@ -756,6 +864,12 @@
             "value" : "一人前あたり"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1인분당"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -794,6 +908,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "タンパク質"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "단백질"
           }
         },
         "zh-Hans" : {
@@ -836,6 +956,12 @@
             "value" : "レシピ"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "레시피"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -876,6 +1002,12 @@
             "value" : "おすすめ"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "당신을 위한 추천"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -914,6 +1046,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld人分"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld인분"
           }
         },
         "zh-Hans" : {
@@ -957,6 +1095,12 @@
             "value" : "肉食ダイエットガイドチーム"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "육식 다이어트 가이드 팀"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -995,6 +1139,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "トレンドブログ記事"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인기 블로그 포스트"
           }
         },
         "zh-Hans" : {
@@ -1037,6 +1187,12 @@
             "value" : "トレンドレシピ"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "인기 레시피"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1075,6 +1231,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "全て見る"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모두 보기"
           }
         },
         "zh-Hans" : {

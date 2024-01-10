@@ -41,6 +41,12 @@
             "value" : "肉食ダイエットガイド"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "육식 다이어트 가이드"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
