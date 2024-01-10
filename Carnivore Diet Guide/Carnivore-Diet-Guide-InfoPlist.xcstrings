@@ -17,6 +17,12 @@
             "value" : "Carnivore Diet Guide"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guide du Régime Carnivore"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",

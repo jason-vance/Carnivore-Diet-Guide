@@ -9,6 +9,12 @@
             "value" : ""
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25,6 +31,12 @@
             "value" : "%lld كيلو كالوري"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld kcal"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -36,6 +48,12 @@
     "%lld." : {
       "localizations" : {
         "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld."
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld."
@@ -57,6 +75,12 @@
             "value" : "مدونة"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blog"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -71,6 +95,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "بواسطة: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par : %@"
           }
         },
         "zh-Hans" : {
@@ -89,6 +119,12 @@
             "value" : "سعرات حرارية"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calories"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -103,6 +139,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "كربوهيدرات"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Glucides"
           }
         },
         "zh-Hans" : {
@@ -122,6 +164,12 @@
             "value" : "دليل نظام"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guide du"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -136,6 +184,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "خطوات الطهي"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Étapes de Cuisson"
           }
         },
         "zh-Hans" : {
@@ -155,6 +209,12 @@
             "value" : "اللحوم الغذائي"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Régime Carnivore"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -169,6 +229,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "دهون"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lipides"
           }
         },
         "zh-Hans" : {
@@ -187,6 +253,12 @@
             "value" : "مقال مميز في المدونة"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Article Vedette du Blog"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -201,6 +273,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "وصفة مميزة"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recette Vedette"
           }
         },
         "zh-Hans" : {
@@ -220,6 +298,12 @@
             "value" : "جم"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "g"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -234,6 +318,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "الرئيسية"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accueil"
           }
         },
         "zh-Hans" : {
@@ -252,6 +342,12 @@
             "value" : "مكونات"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingrédients"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -266,6 +362,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "كيلو كالوري"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kcal"
           }
         },
         "zh-Hans" : {
@@ -284,6 +386,12 @@
             "value" : "معلومات غذائية"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informations Nutritionnelles"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -298,6 +406,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "لكل حصة"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par Portion"
           }
         },
         "zh-Hans" : {
@@ -316,6 +430,12 @@
             "value" : "بروتين"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protéine"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -330,6 +450,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "وصفات"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recettes"
           }
         },
         "zh-Hans" : {
@@ -348,6 +474,12 @@
             "value" : "الموصى بها لك"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recommandé Pour Vous"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -362,6 +494,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "يكفي لـ %lld أشخاص"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour %lld personnes"
           }
         },
         "zh-Hans" : {
@@ -381,6 +519,12 @@
             "value" : "فريق دليل نظام اللحوم الغذائي"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'Équipe du Guide du Régime Carnivore"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -395,6 +539,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "المقالات الشائعة في المدونة"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Articles de Blog Tendances"
           }
         },
         "zh-Hans" : {
@@ -413,6 +563,12 @@
             "value" : "وصفات رائجة"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recettes Tendances"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -427,6 +583,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "عرض الكل"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voir Tout"
           }
         },
         "zh-Hans" : {
