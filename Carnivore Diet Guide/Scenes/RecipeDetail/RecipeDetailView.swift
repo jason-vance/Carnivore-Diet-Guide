@@ -6,30 +6,36 @@
 //
 
 import SwiftUI
+import Kingfisher
+import MarkdownUI
 
 struct RecipeDetailView: View {
     
-    private static let ingredientsTab = TabSelectorView.Tab(title: String(localized: "Ingredients"))
-    private static let stepsTab = TabSelectorView.Tab(title: String(localized: "Cooking Steps"))
-    private static let nutritionTab = TabSelectorView.Tab(title: String(localized: "Nutritional Info"))
+    let imageHeight: CGFloat = 200
     
     var recipe: Recipe
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
-    @State private var selectedTab: TabSelectorView.Tab = ingredientsTab
-
     var body: some View {
         VStack {
             RecipeImage()
             VStack(spacing: 0) {
                 RecipeTitle()
-                TabSelectorView(
-                    tabs: [Self.ingredientsTab, Self.stepsTab, Self.nutritionTab],
-                    selectedTab: $selectedTab
-                )
-                RecipeContentView()
-            }
+                ZStack(alignment: .top) {
+                    Rectangle()
+                        .foregroundStyle(Color.text)
+                    ScrollView {
+                        VStack {
+                            RecipeContentView()
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                            NutritionalInformation()
+                        }
+                    }
+                    .background(Color.background)
+                    .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
+                }            }
             .background(Color.text)
             .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
         }
@@ -38,15 +44,34 @@ struct RecipeDetailView: View {
     }
     
     @ViewBuilder func RecipeImage() -> some View {
-        Image(recipe.imageName)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(height: 200)
-            .overlay(alignment: .bottomLeading) {
-                CloseButton()
-                    .padding(.horizontal)
-                    .padding(.vertical, 8)
-            }
+        if let imageName = recipe.imageName {
+            Image(imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(height: imageHeight)
+                .overlay(alignment: .bottomLeading) {
+                    CloseButton()
+                        .padding(.horizontal)
+                        .padding(.vertical, 8)
+                }
+        }
+        if let imageUrl = recipe.imageUrl {
+            KFImage(URL(string: imageUrl))
+                .resizable()
+                .placeholder {
+                    Rectangle()
+                        .foregroundStyle(Color.background)
+                        .frame(height: imageHeight)
+                }
+                .forceRefresh()
+                .aspectRatio(contentMode: .fill)
+                .frame(height: imageHeight)
+                .overlay(alignment: .bottomLeading) {
+                    CloseButton()
+                        .padding(.horizontal)
+                        .padding(.vertical, 8)
+                }
+        }
     }
     
     @ViewBuilder func RecipeTitle() -> some View {
@@ -64,53 +89,16 @@ struct RecipeDetailView: View {
     }
     
     @ViewBuilder func RecipeContentView() -> some View {
-        ScrollView {
-            VStack {
-                switch selectedTab {
-                case Self.ingredientsTab:
-                    IngredientList()
-                case Self.stepsTab:
-                    CookingSteps()
-                case Self.nutritionTab:
-                    NutritionalInformation()
-                default:
-                    Text("")
-                }
+        Markdown(recipe.markdownContent)
+            .markdownTextStyle {
+                ForegroundColor(Color.text)
             }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .foregroundStyle(Color.text)
-        }
-        .background(Color.background)
-    }
-    
-    @ViewBuilder func IngredientList() -> some View {
-        VStack() {
-            ForEach(recipe.ingredients, id: \.self) { ingredient in
-                HStack {
-                    Circle()
-                        .frame(width: 8, height: 8)
-                    Text(ingredient)
-                    Spacer()
-                }
-            }
-        }
-    }
-    
-    @ViewBuilder func CookingSteps() -> some View {
-        VStack(spacing: 12) {
-            ForEach(recipe.cookingSteps.indices, id: \.self) { index in
-                HStack(alignment: .top) {
-                    Text("\(index + 1).")
-                    Text(recipe.cookingSteps[index])
-                    Spacer()
-                }
-            }
-        }
     }
     
     @ViewBuilder func NutritionalInformation() -> some View {
         VStack(spacing: 12) {
+            Text("Nutritional Info")
+                .font(.system(size: 24, weight: .bold))
             Text("Per Serving")
             NutritionInformationItem(
                 String(localized: "Calories"),
@@ -136,6 +124,13 @@ struct RecipeDetailView: View {
                 unit: String(localized: "g", comment: "grams")
             )
         }
+        .foregroundStyle(Color.text)
+        .padding()
+        .overlay {
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.text, lineWidth: 1)
+        }
+        .padding()
     }
     
     @ViewBuilder func NutritionInformationItem(_ name: String, value: String, unit: String) -> some View {

@@ -17,7 +17,6 @@
 		566B2D682B469A35008627F8 /* HomeBlogPostThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D672B469A35008627F8 /* HomeBlogPostThumbnail.swift */; };
 		5676A1332B477913009C1DA6 /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5676A1322B477913009C1DA6 /* RecipeDetailView.swift */; };
 		5676A1362B477933009C1DA6 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5676A1352B477933009C1DA6 /* Recipe.swift */; };
-		5676A1382B47811E009C1DA6 /* TabSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5676A1372B47811E009C1DA6 /* TabSelectorView.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* BlogPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* BlogPostView.swift */; };
 		56E305072B4A982E0098079A /* BlogPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* BlogPost.swift */; };
@@ -79,7 +78,6 @@
 		566B2D672B469A35008627F8 /* HomeBlogPostThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBlogPostThumbnail.swift; sourceTree = "<group>"; };
 		5676A1322B477913009C1DA6 /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
 		5676A1352B477933009C1DA6 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
-		5676A1372B47811E009C1DA6 /* TabSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectorView.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* BlogPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPostView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* BlogPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPost.swift; sourceTree = "<group>"; };
@@ -218,7 +216,6 @@
 			isa = PBXGroup;
 			children = (
 				5676A1322B477913009C1DA6 /* RecipeDetailView.swift */,
-				5676A1372B47811E009C1DA6 /* TabSelectorView.swift */,
 			);
 			path = RecipeDetail;
 			sourceTree = "<group>";
@@ -422,7 +419,6 @@
 				56E305682B4BF83C0098079A /* PreviewContainerWithSetup.swift in Sources */,
 				56353B582B440C9900C4E972 /* ContentView.swift in Sources */,
 				56E305562B4BF0E70098079A /* FirebaseBlogLibraryContentProvider.swift in Sources */,
-				5676A1382B47811E009C1DA6 /* TabSelectorView.swift in Sources */,
 				56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */,
 				56E305622B4BF77A0098079A /* DependencyConfigurator.swift in Sources */,
 				56E305162B4B74BC0098079A /* LibraryBlogPostThumbnail.swift in Sources */,

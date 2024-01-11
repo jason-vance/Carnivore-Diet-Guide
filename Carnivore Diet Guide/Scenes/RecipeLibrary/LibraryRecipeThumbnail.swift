@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct LibraryRecipeThumbnail: View {
+    
+    let imageHeight: CGFloat = 200
+    let imageOffset: CGFloat = 20
     
     @State var recipe: Recipe
     
@@ -30,12 +34,29 @@ struct LibraryRecipeThumbnail: View {
             .padding(8)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Color.text)
-            Image(recipe.imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(height: 200)
-                .offset(y: 20)
-                .clipped()
+            if let imageName = recipe.imageName {
+                Image(imageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: imageHeight)
+                    .offset(y: imageOffset)
+                    .clipped()
+            }
+            if let imageUrl = recipe.imageUrl {
+                KFImage(URL(string: imageUrl))
+                    .resizable()
+                    .placeholder {
+                        Rectangle()
+                            .foregroundStyle(Color.background)
+                            .frame(height: imageHeight)
+                            .offset(y: -imageOffset)
+                    }
+                    .forceRefresh()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: imageHeight)
+                    .offset(y: imageOffset)
+                    .clipped()
+            }
         }
         .clipShape(.rect(cornerRadius: 16, style: .continuous))
         .shadow(color: Color.darkAccentText ,radius: 4)
