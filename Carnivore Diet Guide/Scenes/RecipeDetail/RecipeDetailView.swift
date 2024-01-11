@@ -79,7 +79,7 @@ struct RecipeDetailView: View {
             Text(recipe.title)
                 .font(.system(size: 24, weight: .bold))
                 .foregroundStyle(Color.background)
-            Text("Serves \(recipe.basicNutritionInfo.servings)")
+            Text("Serves \(recipe.servings)")
                 .font(.system(size: 12, weight: .bold))
                 .foregroundStyle(Color.darkAccentText)
         }
@@ -96,41 +96,43 @@ struct RecipeDetailView: View {
     }
     
     @ViewBuilder func NutritionalInformation() -> some View {
-        VStack(spacing: 12) {
-            Text("Nutritional Info")
-                .font(.system(size: 24, weight: .bold))
-            Text("Per Serving")
-            NutritionInformationItem(
-                String(localized: "Calories"),
-                value: "\(recipe.basicNutritionInfo.calories)",
-                unit: String(localized: "kcal")
-            )
-            Rectangle().frame(height: 2)
-            NutritionInformationItem(
-                String(localized: "Protein"),
-                value: "\(recipe.basicNutritionInfo.protein)",
-                unit: String(localized: "g", comment: "grams")
-            )
-            Rectangle().frame(height: 1)
-            NutritionInformationItem(
-                String(localized: "Fat"),
-                value: "\(recipe.basicNutritionInfo.fat)",
-                unit: String(localized: "g", comment: "grams")
-            )
-            Rectangle().frame(height: 1)
-            NutritionInformationItem(
-                String(localized: "Carbohydrates"),
-                value: "\(recipe.basicNutritionInfo.carbohydrates)",
-                unit: String(localized: "g", comment: "grams")
-            )
+        if let basicNutritionInfo = recipe.basicNutritionInfo {
+            VStack(spacing: 12) {
+                Text("Nutritional Info")
+                    .font(.system(size: 24, weight: .bold))
+                Text("Per Serving")
+                NutritionInformationItem(
+                    String(localized: "Calories"),
+                    value: "\(basicNutritionInfo.calories)",
+                    unit: String(localized: "kcal")
+                )
+                Rectangle().frame(height: 2)
+                NutritionInformationItem(
+                    String(localized: "Protein"),
+                    value: "\(basicNutritionInfo.protein)",
+                    unit: String(localized: "g", comment: "grams")
+                )
+                Rectangle().frame(height: 1)
+                NutritionInformationItem(
+                    String(localized: "Fat"),
+                    value: "\(basicNutritionInfo.fat)",
+                    unit: String(localized: "g", comment: "grams")
+                )
+                Rectangle().frame(height: 1)
+                NutritionInformationItem(
+                    String(localized: "Carbohydrates"),
+                    value: "\(basicNutritionInfo.carbohydrates)",
+                    unit: String(localized: "g", comment: "grams")
+                )
+            }
+            .foregroundStyle(Color.text)
+            .padding()
+            .overlay {
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color.text, lineWidth: 1)
+            }
+            .padding()
         }
-        .foregroundStyle(Color.text)
-        .padding()
-        .overlay {
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.text, lineWidth: 1)
-        }
-        .padding()
     }
     
     @ViewBuilder func NutritionInformationItem(_ name: String, value: String, unit: String) -> some View {

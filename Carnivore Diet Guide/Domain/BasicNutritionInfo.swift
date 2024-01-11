@@ -8,7 +8,6 @@
 import Foundation
 
 struct BasicNutritionInfo {
-    var servings: Int
     var calories: Int
     var protein: Int
     var fat: Int
@@ -17,7 +16,6 @@ struct BasicNutritionInfo {
 
 extension BasicNutritionInfo {
     static let sample: BasicNutritionInfo = .init(
-        servings: 5,
         calories: 300,
         protein: 10,
         fat: 12,

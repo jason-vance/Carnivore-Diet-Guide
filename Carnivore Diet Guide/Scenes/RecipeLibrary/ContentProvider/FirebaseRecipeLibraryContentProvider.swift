@@ -1,16 +1,16 @@
 //
-//  FirebaseBlogLibraryContentProvider.swift
+//  FirebaseRecipeLibraryContentProvider.swift
 //  Carnivore Diet Guide
 //
-//  Created by Jason Vance on 1/7/24.
+//  Created by Jason Vance on 1/10/24.
 //
 
 import Foundation
 import FirebaseFirestore
 
-class FirebaseBlogLibraryContentProvider: BlogLibraryContentProvider {
+class FirebaseRecipeLibraryContentProvider: RecipeLibraryContentProvider {
     
-    private struct BlogPostDoc: Codable {
+    private struct RecipeDoc: Codable {
 
         struct Localization: Codable {
             static let defaultLanguage: String = "default"
@@ -25,8 +25,27 @@ class FirebaseBlogLibraryContentProvider: BlogLibraryContentProvider {
         var author: String?
         var imageUrl: String?
         var localizations: [Localization]
+        var servings: Int?
+        var calories: Int?
+        var protein: Int?
+        var fat: Int?
+        var carbohydrates: Int?
         
-        func toBlogPost() -> BlogPost? {
+        private var basicNutritionInfo: BasicNutritionInfo? {
+            guard let calories = calories else { return nil }
+            guard let protein = protein else { return nil }
+            guard let fat = fat else { return nil }
+            guard let carbohydrates = carbohydrates else { return nil }
+            
+            return .init(
+                calories: calories,
+                protein: protein,
+                fat: fat,
+                carbohydrates: carbohydrates
+            )
+        }
+
+        func toRecipe() -> Recipe? {
             let localization: Localization? = {
                 let languageCode = Locale.current.language.languageCode?.identifier
                 
@@ -43,6 +62,7 @@ class FirebaseBlogLibraryContentProvider: BlogLibraryContentProvider {
             guard let title = localization.title else { return nil }
             guard let imageUrl = imageUrl else { return nil }
             guard let author = author else { return nil }
+            guard let servings = servings else { return nil }
             guard let publicationDate = publicationDate else { return nil }
             guard let markdownContent = localization.markdownContent else { return nil }
 
@@ -50,27 +70,29 @@ class FirebaseBlogLibraryContentProvider: BlogLibraryContentProvider {
                 title: title,
                 imageUrl: imageUrl,
                 author: author,
+                servings: servings,
                 markdownContent: markdownContent.replacingOccurrences(of: "\\n", with: "\n"),
-                publicationDate: publicationDate
+                publicationDate: publicationDate,
+                basicNutritionInfo: basicNutritionInfo
             )
         }
     }
     
-    static let BLOG_POSTS = "BlogPosts"
+    static let RECIPES = "Recipes"
     
-    let blogPostsCollection = Firestore.firestore().collection(BLOG_POSTS)
+    let recipesCollection = Firestore.firestore().collection(RECIPES)
     
-    func loadBlogPosts(onUpdate: @escaping ([BlogPost]) -> (), onError: @escaping (Error) -> ()) {
+    func loadRecipes(onUpdate: @escaping ([Recipe]) -> (), onError: @escaping (Error) -> ()) {
         Task {
             do {
-                let snapshot = try await blogPostsCollection
+                let snapshot = try await recipesCollection
                     .order(by: "publicationDate", descending: true)
                     .getDocuments()
                 
-                let blogPosts = try snapshot.documents
-                    .compactMap { try $0.data(as: BlogPostDoc.self).toBlogPost() }
+                let recipes = try snapshot.documents
+                    .compactMap { try $0.data(as: RecipeDoc.self).toRecipe() }
                 
-                onUpdate(blogPosts)
+                onUpdate(recipes)
             } catch {
                 print(error)
                 onError(error)
@@ -78,3 +100,4 @@ class FirebaseBlogLibraryContentProvider: BlogLibraryContentProvider {
         }
     }
 }
+

@@ -13,9 +13,10 @@ struct Recipe: Identifiable {
     var imageName: String?
     var imageUrl: String?
     var author: String
+    var servings: Int
     var markdownContent: String
     var publicationDate: Date
-    var basicNutritionInfo: BasicNutritionInfo
+    var basicNutritionInfo: BasicNutritionInfo?
 }
 
 extension Recipe {
@@ -24,6 +25,7 @@ extension Recipe {
             title: "Seared Ribeye Steak",
             imageName: "SearedRibeyeSteak",
             author: "The Carnivore Diet Guide Team",
+            servings: 5,
             markdownContent: """
 ### Ingredients
 
@@ -52,6 +54,7 @@ extension Recipe {
             title: "Grilled Salmon with Lemon Butter and Various Garnishes",
             imageName: "GrilledSalmonWithLemonButter",
             author: "The Carnivore Diet Guide Team",
+            servings: 5,
             markdownContent: """
 ### Ingredients
 

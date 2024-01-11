@@ -16,6 +16,9 @@ let iocContainer: Container = {
 }()
 
 fileprivate func setup(iocContainer: Container) {
+    //Recipe Library
+    iocContainer.autoregister(RecipeLibraryContentProvider.self, initializer: FirebaseRecipeLibraryContentProvider.init)
+    
     //Blog Library
     iocContainer.autoregister(BlogLibraryContentProvider.self, initializer: FirebaseBlogLibraryContentProvider.init)
 }

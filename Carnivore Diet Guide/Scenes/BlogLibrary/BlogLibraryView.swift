@@ -38,6 +38,7 @@ struct BlogLibraryView: View {
         .onAppear {
             loadBlogPosts()
         }
+        .alert(errorMessage, isPresented: $showError) {}
     }
     
     @ViewBuilder func TitleBarAndHeroImage() -> some View {

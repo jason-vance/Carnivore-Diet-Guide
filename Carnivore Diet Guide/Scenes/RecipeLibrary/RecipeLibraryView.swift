@@ -6,23 +6,39 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct RecipeLibraryView: View {
     
-    @State private var recipes: [Recipe] = Recipe.samples
+    let contentProvider = iocContainer~>RecipeLibraryContentProvider.self
+    
+    @State private var recipes: [Recipe] = []
+    @State private var showError: Bool = false
+    @State private var errorMessage: String = ""
+    
+    private func loadRecipes() {
+        contentProvider.loadRecipes { recipes in
+            self.recipes = recipes
+        } onError: { error in
+            self.showError = true
+            self.errorMessage = error.localizedDescription
+        }
+    }
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 TitleBarAndHeroImage()
-                ScrollView {
-                    RecipesList()
-                }
-                .background(Color.background)
-                .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
+                RecipesList()
+                    .background(Color.background)
+                    .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
             }
             .background(Color.background)
         }
+        .onAppear {
+            loadRecipes()
+        }
+        .alert(errorMessage, isPresented: $showError) {}
     }
     
     @ViewBuilder func TitleBarAndHeroImage() -> some View {
@@ -60,19 +76,34 @@ struct RecipeLibraryView: View {
     }
     
     @ViewBuilder func RecipesList() -> some View {
-        LazyVStack(spacing: 16) {
-            ForEach(recipes) { recipe in
-                NavigationLink {
-                    RecipeDetailView(recipe: recipe)
-                } label: {
-                    LibraryRecipeThumbnail(recipe: recipe)
+        if recipes.isEmpty {
+            ZStack {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .tint(Color.accent)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else {
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    ForEach(recipes) { recipe in
+                        NavigationLink {
+                            RecipeDetailView(recipe: recipe)
+                        } label: {
+                            LibraryRecipeThumbnail(recipe: recipe)
+                        }
+                    }
                 }
+                .padding()
             }
         }
-        .padding()
     }
 }
 
 #Preview {
-    RecipeLibraryView()
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        RecipeLibraryView()
+    }
 }

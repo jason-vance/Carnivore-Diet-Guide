@@ -10,6 +10,9 @@ import Swinject
 import SwinjectAutoregistration
 
 func setupMockIocContainer(_ iocContainer: Container) {
+    //Recipe Library
+    iocContainer.autoregister(RecipeLibraryContentProvider.self, initializer: MockRecipeLibraryContentProvider.init)
+    
     //Blog Library
     iocContainer.autoregister(BlogLibraryContentProvider.self, initializer: MockBlogLibraryContentProvider.init)
 }

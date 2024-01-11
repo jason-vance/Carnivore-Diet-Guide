@@ -24,9 +24,11 @@ struct LibraryRecipeThumbnail: View {
                     .multilineTextAlignment(.leading)
                     .foregroundStyle(Color.background)
                 HStack {
-                    Text("Serves \(recipe.basicNutritionInfo.servings)")
-                    Rectangle().frame(width: 1)
-                    Text("\(recipe.basicNutritionInfo.calories) kcal")
+                    Text("Serves \(recipe.servings)")
+                    if let calories = recipe.basicNutritionInfo?.calories {
+                        Rectangle().frame(width: 1)
+                        Text("\(calories) kcal")
+                    }
                 }
                 .font(.system(size: 12, weight: .semibold))
                 .foregroundStyle(Color.darkAccentText)
