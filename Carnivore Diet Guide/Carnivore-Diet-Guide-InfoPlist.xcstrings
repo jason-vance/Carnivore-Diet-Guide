@@ -47,6 +47,18 @@
             "value" : "육식 다이어트 가이드"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guia da Dieta Carnívora"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Руководство по диете хищника"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",

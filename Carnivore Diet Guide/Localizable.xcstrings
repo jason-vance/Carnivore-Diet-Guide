@@ -45,6 +45,12 @@
             "value" : ""
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -97,6 +103,12 @@
             "value" : "%lld kcal"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld ккал"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -144,6 +156,12 @@
           }
         },
         "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld."
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld."
@@ -201,6 +219,12 @@
             "value" : "Blog"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Блог"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -251,6 +275,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Por: %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Автор: %@"
           }
         },
         "zh-Hans" : {
@@ -305,6 +335,12 @@
             "value" : "Calorias"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Калории"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -355,6 +391,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Carboidratos"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Углеводы"
           }
         },
         "zh-Hans" : {
@@ -410,6 +452,12 @@
             "value" : "Guia da"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Руководство"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -460,6 +508,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Etapas de Preparo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Этапы приготовления"
           }
         },
         "zh-Hans" : {
@@ -515,6 +569,12 @@
             "value" : "Dieta Carnívora"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "по диете хищника"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -565,6 +625,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gordura"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Жиры"
           }
         },
         "zh-Hans" : {
@@ -619,6 +685,12 @@
             "value" : "Post em Destaque no Blog"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Избранный пост в блоге"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -669,6 +741,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Receita em Destaque"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Избранный рецепт"
           }
         },
         "zh-Hans" : {
@@ -724,6 +802,12 @@
             "value" : "g"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "г"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -774,6 +858,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Início"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Главная"
           }
         },
         "zh-Hans" : {
@@ -828,6 +918,12 @@
             "value" : "Ingredientes"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ингредиенты"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -878,6 +974,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "kcal"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ккал"
           }
         },
         "zh-Hans" : {
@@ -932,6 +1034,12 @@
             "value" : "Informações Nutricionais"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пищевая ценность"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -982,6 +1090,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Por Porção"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "На порцию"
           }
         },
         "zh-Hans" : {
@@ -1036,6 +1150,12 @@
             "value" : "Proteína"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Белки"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1086,6 +1206,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Receitas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рецепты"
           }
         },
         "zh-Hans" : {
@@ -1140,6 +1266,12 @@
             "value" : "Recomendado Para Você"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рекомендуемые для вас"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1190,6 +1322,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Serve %lld pessoas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "На %lld человек"
           }
         },
         "zh-Hans" : {
@@ -1245,6 +1383,12 @@
             "value" : "Equipe do Guia da Dieta Carnívora"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Команда руководства по диете хищника"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1295,6 +1439,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Posts de Blog em Alta"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Популярные посты в блоге"
           }
         },
         "zh-Hans" : {
@@ -1349,6 +1499,12 @@
             "value" : "Receitas em Alta"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Популярные рецепты"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1399,6 +1555,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ver Todos"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Посмотреть все"
           }
         },
         "zh-Hans" : {
