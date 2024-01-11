@@ -15,6 +15,12 @@
             "value" : ""
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -68,6 +74,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld kcal"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld kcal"
@@ -131,6 +143,12 @@
             "value" : "%lld."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -184,6 +202,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blog"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Blog"
@@ -247,6 +271,12 @@
             "value" : "Von: %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por: %@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -305,6 +335,12 @@
             "value" : "Kalorien"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calorías"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -361,6 +397,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kohlenhydrate"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carbohidratos"
           }
         },
         "fr" : {
@@ -422,6 +464,12 @@
             "value" : "Leitfaden zur"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guía de la"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -478,6 +526,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kochschritte"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pasos de Cocina"
           }
         },
         "fr" : {
@@ -539,6 +593,12 @@
             "value" : "Carnivore-Diät"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieta Carnívora"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -595,6 +655,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fett"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grasa"
           }
         },
         "fr" : {
@@ -655,6 +721,12 @@
             "value" : "Ausgewählter Blogbeitrag"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrada Destacada del Blog"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -713,6 +785,12 @@
             "value" : "Ausgewähltes Rezept"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Receta Destacada"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -767,6 +845,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "g"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "g"
@@ -830,6 +914,12 @@
             "value" : "Startseite"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicio"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -888,6 +978,12 @@
             "value" : "Zutaten"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingredientes"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -941,6 +1037,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kcal"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "kcal"
@@ -1004,6 +1106,12 @@
             "value" : "Nährwertangaben"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información Nutricional"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1060,6 +1168,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pro Portion"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por Porción"
           }
         },
         "fr" : {
@@ -1120,6 +1234,12 @@
             "value" : "Protein"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proteína"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1176,6 +1296,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rezepte"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recetas"
           }
         },
         "fr" : {
@@ -1236,6 +1362,12 @@
             "value" : "Empfohlen für dich"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomendado Para Ti"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1292,6 +1424,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Für %lld Personen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sirve para %lld personas"
           }
         },
         "fr" : {
@@ -1353,6 +1491,12 @@
             "value" : "Das Team des Carnivore-Diät-Leitfadens"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El Equipo de la Guía de la Dieta Carnívora"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1409,6 +1553,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trendige Blogbeiträge"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Publicaciones Populares del Blog"
           }
         },
         "fr" : {
@@ -1469,6 +1619,12 @@
             "value" : "Trendige Rezepte"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recetas Populares"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1525,6 +1681,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alle anzeigen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver Todos"
           }
         },
         "fr" : {

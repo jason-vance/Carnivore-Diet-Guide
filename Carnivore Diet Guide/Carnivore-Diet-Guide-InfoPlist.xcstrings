@@ -23,6 +23,12 @@
             "value" : "Carnivore Diet Guide"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guía de la Dieta Carnívora"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
