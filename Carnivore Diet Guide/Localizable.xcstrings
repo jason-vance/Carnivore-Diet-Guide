@@ -39,6 +39,12 @@
             "value" : ""
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -83,6 +89,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld 킬로칼로리"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld kcal"
           }
         },
         "zh-Hans" : {
@@ -131,6 +143,12 @@
             "value" : ""
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -175,6 +193,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "블로그"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blog"
           }
         },
         "zh-Hans" : {
@@ -223,6 +247,12 @@
             "value" : "작성자: %@"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por: %@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -269,6 +299,12 @@
             "value" : "칼로리"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calorias"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -313,6 +349,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "탄수화물"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Carboidratos"
           }
         },
         "zh-Hans" : {
@@ -362,6 +404,12 @@
             "value" : "육식"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guia da"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -406,6 +454,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "요리 단계"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etapas de Preparo"
           }
         },
         "zh-Hans" : {
@@ -455,6 +509,12 @@
             "value" : "다이어트 가이드"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieta Carnívora"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -499,6 +559,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "지방"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gordura"
           }
         },
         "zh-Hans" : {
@@ -547,6 +613,12 @@
             "value" : "추천 블로그 포스트"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Post em Destaque no Blog"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -593,6 +665,12 @@
             "value" : "추천 레시피"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Receita em Destaque"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -635,6 +713,12 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "g"
+          }
+        },
+        "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "g"
@@ -686,6 +770,12 @@
             "value" : "홈"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Início"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -730,6 +820,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "재료"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingredientes"
           }
         },
         "zh-Hans" : {
@@ -778,6 +874,12 @@
             "value" : "킬로칼로리"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kcal"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -822,6 +924,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "영양 정보"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informações Nutricionais"
           }
         },
         "zh-Hans" : {
@@ -870,6 +978,12 @@
             "value" : "1인분당"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Por Porção"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -914,6 +1028,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "단백질"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proteína"
           }
         },
         "zh-Hans" : {
@@ -962,6 +1082,12 @@
             "value" : "레시피"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Receitas"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1008,6 +1134,12 @@
             "value" : "당신을 위한 추천"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomendado Para Você"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1052,6 +1184,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld인분"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Serve %lld pessoas"
           }
         },
         "zh-Hans" : {
@@ -1101,6 +1239,12 @@
             "value" : "육식 다이어트 가이드 팀"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Equipe do Guia da Dieta Carnívora"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1145,6 +1289,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "인기 블로그 포스트"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posts de Blog em Alta"
           }
         },
         "zh-Hans" : {
@@ -1193,6 +1343,12 @@
             "value" : "인기 레시피"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Receitas em Alta"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1237,6 +1393,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "모두 보기"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver Todos"
           }
         },
         "zh-Hans" : {
