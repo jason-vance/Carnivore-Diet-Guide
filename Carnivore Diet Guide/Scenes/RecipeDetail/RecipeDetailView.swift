@@ -78,6 +78,7 @@ struct RecipeDetailView: View {
         VStack {
             Text(recipe.title)
                 .font(.system(size: 24, weight: .bold))
+                .multilineTextAlignment(.center)
                 .foregroundStyle(Color.background)
             Text("Serves \(recipe.servings)")
                 .font(.system(size: 12, weight: .bold))
