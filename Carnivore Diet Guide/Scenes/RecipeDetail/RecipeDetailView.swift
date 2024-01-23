@@ -63,7 +63,6 @@ struct RecipeDetailView: View {
                         .foregroundStyle(Color.background)
                         .frame(height: imageHeight)
                 }
-                .forceRefresh()
                 .aspectRatio(contentMode: .fill)
                 .frame(height: imageHeight)
                 .overlay(alignment: .bottomLeading) {

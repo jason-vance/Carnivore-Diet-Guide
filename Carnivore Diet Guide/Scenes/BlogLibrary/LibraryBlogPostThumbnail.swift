@@ -47,7 +47,6 @@ struct LibraryBlogPostThumbnail: View {
                             .frame(height: imageHeight)
                             .offset(y: -imageOffset)
                     }
-                    .forceRefresh()
                     .aspectRatio(contentMode: .fill)
                     .frame(height: imageHeight)
                     .offset(y: imageOffset)
