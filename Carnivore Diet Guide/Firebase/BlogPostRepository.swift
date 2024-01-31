@@ -61,10 +61,14 @@ class FirebaseBlogPostRepository {
     
     let blogPostsCollection = Firestore.firestore().collection(BLOG_POSTS)
     
-    func getBlogPostsNewestToOldest() async throws -> [BlogPost] {
-        let snapshot = try await blogPostsCollection
+    func getBlogPostsNewestToOldest(limit: Int? = nil) async throws -> [BlogPost] {
+        var query = blogPostsCollection
             .order(by: PUBLICATION_DATE, descending: true)
-            .getDocuments()
+        if let limit = limit {
+            query = query.limit(to: limit)
+        }
+        
+        let snapshot = try await query.getDocuments()
         
         return try snapshot.documents
             .compactMap { try $0.data(as: BlogPostDoc.self).toBlogPost() }

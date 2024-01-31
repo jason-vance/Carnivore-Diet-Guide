@@ -83,10 +83,14 @@ class FirebaseRecipeRepository {
 
     let recipesCollection = Firestore.firestore().collection(RECIPES)
     
-    func getRecipesNewestToOldest() async throws -> [Recipe] {
-        let snapshot = try await recipesCollection
+    func getRecipesNewestToOldest(limit: Int? = nil) async throws -> [Recipe] {
+        var query = recipesCollection
             .order(by: PUBLICATION_DATE, descending: true)
-            .getDocuments()
+        if let limit = limit {
+            query = query.limit(to: limit)
+        }
+        
+        let snapshot = try await query.getDocuments()
         
         return try snapshot.documents
             .compactMap { try $0.data(as: RecipeDoc.self).toRecipe() }
