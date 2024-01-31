@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		56025D1B2B6AED1900F31A07 /* HomeViewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D1A2B6AED1900F31A07 /* HomeViewContent.swift */; };
 		56025D1D2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D1C2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift */; };
+		56025D202B6B006600F31A07 /* RecipeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D1F2B6B006600F31A07 /* RecipeRepository.swift */; };
+		56025D222B6B01E800F31A07 /* BlogPostRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D212B6B01E800F31A07 /* BlogPostRepository.swift */; };
 		562E03E72B450AA000859F81 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E03E62B450AA000859F81 /* HomeView.swift */; };
 		56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */; };
 		56353B582B440C9900C4E972 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56353B572B440C9900C4E972 /* ContentView.swift */; };
@@ -73,6 +75,8 @@
 /* Begin PBXFileReference section */
 		56025D1A2B6AED1900F31A07 /* HomeViewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewContent.swift; sourceTree = "<group>"; };
 		56025D1C2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHomeViewContentProvider.swift; sourceTree = "<group>"; };
+		56025D1F2B6B006600F31A07 /* RecipeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeRepository.swift; sourceTree = "<group>"; };
+		56025D212B6B01E800F31A07 /* BlogPostRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPostRepository.swift; sourceTree = "<group>"; };
 		562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Carnivore-Diet-Guide-Info.plist"; sourceTree = SOURCE_ROOT; };
 		562E03E62B450AA000859F81 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		56353B522B440C9900C4E972 /* Carnivore Diet Guide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Carnivore Diet Guide.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,6 +151,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		56025D1E2B6B005300F31A07 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				56025D1F2B6B006600F31A07 /* RecipeRepository.swift */,
+				56025D212B6B01E800F31A07 /* BlogPostRepository.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 		562E03E22B4507C500859F81 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +208,7 @@
 				56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */,
 				56E305612B4BF77A0098079A /* DependencyConfigurator.swift */,
 				56E305632B4BF7890098079A /* MockDependencyConfigurator.swift */,
+				56025D1E2B6B005300F31A07 /* Firebase */,
 				5676A1342B47792B009C1DA6 /* Domain */,
 				562E03E22B4507C500859F81 /* Scenes */,
 				56E305652B4BF8220098079A /* SwiftUI */,
@@ -438,6 +452,7 @@
 			files = (
 				5676A1332B477913009C1DA6 /* RecipeDetailView.swift in Sources */,
 				567E87F82B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift in Sources */,
+				56025D222B6B01E800F31A07 /* BlogPostRepository.swift in Sources */,
 				566B2D682B469A35008627F8 /* HomeBlogPostThumbnail.swift in Sources */,
 				56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */,
 				56E3050E2B4B6B060098079A /* LibraryRecipeThumbnail.swift in Sources */,
@@ -459,6 +474,7 @@
 				56E305162B4B74BC0098079A /* LibraryBlogPostThumbnail.swift in Sources */,
 				5676A1362B477933009C1DA6 /* Recipe.swift in Sources */,
 				567E87F62B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift in Sources */,
+				56025D202B6B006600F31A07 /* RecipeRepository.swift in Sources */,
 				56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */,
 				56E305052B4A55E00098079A /* BlogPostView.swift in Sources */,
 			);
