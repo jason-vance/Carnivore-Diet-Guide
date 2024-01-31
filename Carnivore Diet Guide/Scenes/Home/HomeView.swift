@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct HomeView: View {
     
@@ -14,23 +15,59 @@ struct HomeView: View {
         case recipe
     }
     
+    private let contentProvider = iocContainer~>HomeViewContentProvider.self
+    
     @Binding var selectedTab: ContentView.Tab
+    
+    @State var content: HomeViewContent? = nil
+    
+    func loadContent() {
+        Task {
+            content = await contentProvider.loadContent()
+        }
+    }
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 TitleBarAndHeroImage()
-                ScrollView {
-                    VStack {
-                        FeaturedContentView()
-                        TrendingRecipesView()
-                        TrendingBlogPostsView()
-                    }
-                }
-                .background(Color.background)
-                .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
+                ContentView()
+                    .background(Color.background)
+                    .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
             }
             .background(Color.background)
+        }
+        .onAppear {
+            loadContent()
+        }
+    }
+    
+    @ViewBuilder func ContentView() -> some View {
+        if content == nil {
+            LoadingView()
+        } else {
+            LoadedContentView()
+        }
+    }
+    
+    @ViewBuilder func LoadingView() -> some View {
+        ZStack {
+            ZStack {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .tint(Color.accent)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+    
+    @ViewBuilder func LoadedContentView() -> some View {
+        ScrollView {
+            VStack {
+                FeaturedContentView()
+                TrendingRecipesView()
+                TrendingBlogPostsView()
+            }
         }
     }
     
@@ -234,5 +271,9 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(selectedTab: .constant(.home))
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        HomeView(selectedTab: .constant(.home))
+    }
 }

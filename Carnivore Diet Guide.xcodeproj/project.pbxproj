@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		56025D1B2B6AED1900F31A07 /* HomeViewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D1A2B6AED1900F31A07 /* HomeViewContent.swift */; };
+		56025D1D2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D1C2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift */; };
 		562E03E72B450AA000859F81 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E03E62B450AA000859F81 /* HomeView.swift */; };
 		56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */; };
 		56353B582B440C9900C4E972 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56353B572B440C9900C4E972 /* ContentView.swift */; };
 		56353B5A2B440C9B00C4E972 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56353B592B440C9B00C4E972 /* Assets.xcassets */; };
 		56353B5D2B440C9B00C4E972 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56353B5C2B440C9B00C4E972 /* Preview Assets.xcassets */; };
+		56554F8A2B6053A00070C079 /* HomeViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56554F892B6053A00070C079 /* HomeViewContentProvider.swift */; };
 		566B2D642B4694C6008627F8 /* FeaturedContentThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */; };
 		566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */; };
 		566B2D682B469A35008627F8 /* HomeBlogPostThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D672B469A35008627F8 /* HomeBlogPostThumbnail.swift */; };
@@ -68,6 +71,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		56025D1A2B6AED1900F31A07 /* HomeViewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewContent.swift; sourceTree = "<group>"; };
+		56025D1C2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHomeViewContentProvider.swift; sourceTree = "<group>"; };
 		562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Carnivore-Diet-Guide-Info.plist"; sourceTree = SOURCE_ROOT; };
 		562E03E62B450AA000859F81 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		56353B522B440C9900C4E972 /* Carnivore Diet Guide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Carnivore Diet Guide.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,6 +80,7 @@
 		56353B572B440C9900C4E972 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		56353B592B440C9B00C4E972 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		56353B5C2B440C9B00C4E972 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		56554F892B6053A00070C079 /* HomeViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewContentProvider.swift; sourceTree = "<group>"; };
 		566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedContentThumbnail.swift; sourceTree = "<group>"; };
 		566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecipeThumbnail.swift; sourceTree = "<group>"; };
 		566B2D672B469A35008627F8 /* HomeBlogPostThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBlogPostThumbnail.swift; sourceTree = "<group>"; };
@@ -157,6 +163,7 @@
 		562E03E52B450A8900859F81 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				56554F882B6053790070C079 /* ContentProvider */,
 				562E03E62B450AA000859F81 /* HomeView.swift */,
 				566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */,
 				566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */,
@@ -206,6 +213,16 @@
 				56353B5C2B440C9B00C4E972 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		56554F882B6053790070C079 /* ContentProvider */ = {
+			isa = PBXGroup;
+			children = (
+				56554F892B6053A00070C079 /* HomeViewContentProvider.swift */,
+				56025D1A2B6AED1900F31A07 /* HomeViewContent.swift */,
+				56025D1C2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift */,
+			);
+			path = ContentProvider;
 			sourceTree = "<group>";
 		};
 		566B2D692B469B59008627F8 /* Content */ = {
@@ -425,9 +442,12 @@
 				56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */,
 				56E3050E2B4B6B060098079A /* LibraryRecipeThumbnail.swift in Sources */,
 				566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */,
+				56554F8A2B6053A00070C079 /* HomeViewContentProvider.swift in Sources */,
+				56025D1B2B6AED1900F31A07 /* HomeViewContent.swift in Sources */,
 				56E305072B4A982E0098079A /* BlogPost.swift in Sources */,
 				56E305112B4B71400098079A /* BlogLibraryView.swift in Sources */,
 				566B2D642B4694C6008627F8 /* FeaturedContentThumbnail.swift in Sources */,
+				56025D1D2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift in Sources */,
 				562E03E72B450AA000859F81 /* HomeView.swift in Sources */,
 				56E305532B4BED1B0098079A /* BlogLibraryContentProvider.swift in Sources */,
 				56E3050C2B4B60360098079A /* RecipeLibraryView.swift in Sources */,
