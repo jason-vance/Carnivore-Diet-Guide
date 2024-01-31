@@ -20,10 +20,17 @@ struct HomeView: View {
     @Binding var selectedTab: ContentView.Tab
     
     @State var content: HomeViewContent? = nil
+    @State var showError: Bool = false
+    @State var errorMessage: String = ""
     
     func loadContent() {
         Task {
-            content = await contentProvider.loadContent()
+            do {
+                content = try await contentProvider.loadContent()
+            } catch {
+                showError = true
+                errorMessage = "Unable to load: \(error.localizedDescription)"
+            }
         }
     }
     
@@ -37,6 +44,7 @@ struct HomeView: View {
             }
             .background(Color.background)
         }
+        .alert(errorMessage, isPresented: $showError) {}
         .onAppear {
             loadContent()
         }

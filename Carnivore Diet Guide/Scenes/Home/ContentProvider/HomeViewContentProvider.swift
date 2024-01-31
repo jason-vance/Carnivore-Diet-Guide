@@ -8,11 +8,11 @@
 import Foundation
 
 protocol HomeViewContentProvider {
-    func loadContent() async -> HomeViewContent
+    func loadContent() async throws -> HomeViewContent
 }
 
 class MockHomeViewContentProvider: HomeViewContentProvider {
-    func loadContent() async -> HomeViewContent {
+    func loadContent() async throws -> HomeViewContent {
         .sample
     }
 }
