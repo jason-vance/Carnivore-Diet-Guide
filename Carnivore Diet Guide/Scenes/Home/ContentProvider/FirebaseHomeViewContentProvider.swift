@@ -9,6 +9,6 @@ import Foundation
 
 class FirebaseHomeViewContentProvider: HomeViewContentProvider {
     func loadContent() async -> HomeViewContent {
-        .init()
+        .sample
     }
 }

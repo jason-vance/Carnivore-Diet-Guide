@@ -71,6 +71,79 @@ struct HomeView: View {
         }
     }
     
+    @ViewBuilder func FeaturedContentView() -> some View {
+        VStack(spacing: 0) {
+            SectionTitleView(
+                String(localized: "Recommended For You"),
+                theme: .light
+            )
+            .padding(.top)
+            .padding(.horizontal)
+            ScrollView(.horizontal) {
+                HStack(spacing: 16) {
+                    let featuredBlogPost = content!.featuredBlogPost
+                    let featuredRecipe = content!.featuredRecipe
+                    
+                    NavigationLink {
+                        BlogPostView(blogPost: featuredBlogPost)
+                    } label: {
+                        FeaturedContentThumbnail(
+                            title: featuredBlogPost.title,
+                            imageUrl: featuredBlogPost.imageUrl,
+                            imageName: featuredBlogPost.imageName,
+                            type: .blog
+                        )
+                    }
+                    NavigationLink {
+                        RecipeDetailView(recipe: .sample)
+                    } label: {
+                        FeaturedContentThumbnail(
+                            title: featuredRecipe.title,
+                            imageUrl: featuredRecipe.imageUrl,
+                            imageName: featuredRecipe.imageName,
+                            type: .recipe
+                        )
+                    }
+                }
+                .padding()
+            }
+            .scrollIndicators(.hidden)
+        }
+        .padding(.bottom)
+    }
+    
+    @ViewBuilder func TrendingRecipesView() -> some View {
+        VStack(spacing: 0) {
+            SectionTitleView(
+                String(localized: "Trending Recipes"),
+                theme: .dark,
+                viewAllAction: { selectedTab = .recipes }
+            )
+            .padding(.top)
+            .padding(.horizontal)
+            ScrollView(.horizontal) {
+                HStack(spacing: 16) {
+                    ForEach(content!.trendingRecipes) { recipe in
+                        NavigationLink {
+                            RecipeDetailView(recipe: recipe)
+                        } label: {
+                            HomeRecipeThumbnail(
+                                title: recipe.title,
+                                imageUrl: recipe.imageUrl,
+                                imageName: recipe.imageName
+                            )
+                        }
+                    }
+                }
+                .padding()
+            }
+        }
+        .scrollIndicators(.hidden)
+        .padding(.bottom)
+        .background(Color.text)
+        .clipShape(.rect(cornerRadius: 16, style: .continuous))
+    }
+    
     @ViewBuilder func TrendingBlogPostsView() -> some View {
         VStack {
             SectionTitleView(
@@ -78,127 +151,27 @@ struct HomeView: View {
                 theme: .light,
                 viewAllAction: { selectedTab = .blog }
             )
-            VStack(spacing: 16) {
+            .padding(.top)
+            .padding(.horizontal)
+            ScrollView(.horizontal) {
                 HStack(spacing: 16) {
-                    NavigationLink {
-                        BlogPostView(blogPost: .sample)
-                    } label: {
-                        HomeBlogPostThumbnail(
-                            title: "Beef Bourguignon",
-                            imageName: "BeefBourguignon"
-                        )
-                    }
-                    NavigationLink {
-                        BlogPostView(blogPost: .sample)
-                    } label: {
-                        HomeBlogPostThumbnail(
-                            title: "Grilled Salmon with Lemon Butter",
-                            imageName: "GrilledSalmonWithLemonButter"
-                        )
+                    ForEach(content!.trendingBlogPosts) { blogPost in
+                        NavigationLink {
+                            BlogPostView(blogPost: blogPost)
+                        } label: {
+                            HomeBlogPostThumbnail(
+                                title: blogPost.title,
+                                imageUrl: blogPost.imageUrl,
+                                imageName: blogPost.imageName
+                            )
+                        }
                     }
                 }
-                HStack(spacing: 16) {
-                    NavigationLink {
-                        BlogPostView(blogPost: .sample)
-                    } label: {
-                        HomeBlogPostThumbnail(
-                            title: "Spicy Mexican Beef Skillet",
-                            imageName: "SpicyMexicanBeefSkillet"
-                        )
-                    }
-                    NavigationLink {
-                        BlogPostView(blogPost: .sample)
-                    } label: {
-                        HomeBlogPostThumbnail(
-                            title: "Sukiyaki-Style Beef",
-                            imageName: "SukiyakiStyleBeef"
-                        )
-                    }
-                }
+                .padding()
             }
         }
-        .padding()
-    }
-    
-    @ViewBuilder func TrendingRecipesView() -> some View {
-        VStack {
-            SectionTitleView(
-                String(localized: "Trending Recipes"),
-                theme: .dark,
-                viewAllAction: { selectedTab = .recipes }
-            )
-            VStack(spacing: 16) {
-                HStack(spacing: 16) {
-                    NavigationLink {
-                        RecipeDetailView(recipe: .sample)
-                    } label: {
-                        HomeRecipeThumbnail(
-                            title: "Beef Bourguignon",
-                            imageName: "BeefBourguignon"
-                        )
-                    }
-                    NavigationLink {
-                        RecipeDetailView(recipe: .sample)
-                    } label: {
-                        HomeRecipeThumbnail(
-                            title: "Grilled Salmon with Lemon Butter",
-                            imageName: "GrilledSalmonWithLemonButter"
-                        )
-                    }
-                }
-                HStack(spacing: 16) {
-                    NavigationLink {
-                        RecipeDetailView(recipe: .sample)
-                    } label: {
-                        HomeRecipeThumbnail(
-                            title: "Spicy Mexican Beef Skillet",
-                            imageName: "SpicyMexicanBeefSkillet"
-                        )
-                    }
-                    NavigationLink {
-                        RecipeDetailView(recipe: .sample)
-                    } label: {
-                        HomeRecipeThumbnail(
-                            title: "Sukiyaki-Style Beef",
-                            imageName: "SukiyakiStyleBeef"
-                        )
-                    }
-                }
-            }
-        }
-        .padding()
-        .background(Color.text)
-        .clipShape(.rect(cornerRadius: 16, style: .continuous))
-    }
-        
-    @ViewBuilder func FeaturedContentView() -> some View {
-        VStack {
-            SectionTitleView(
-                String(localized: "Recommended For You"),
-                theme: .light
-            )
-            HStack(spacing: 16) {
-                NavigationLink {
-                    BlogPostView(blogPost: .sample)
-                } label: {
-                    FeaturedContentThumbnail(
-                        title: "Getting Started with the Carnivore Diet",
-                        imageName: "StartingCarnivoreDiet",
-                        type: .blog
-                    )
-                }
-                NavigationLink {
-                    RecipeDetailView(recipe: .sample)
-                } label: {
-                    FeaturedContentThumbnail(
-                        title: "Seared Ribeye Steak",
-                        imageName: "SearedRibeyeSteak",
-                        type: .recipe
-                    )
-                }
-            }
-        }
-        .padding()
+        .scrollIndicators(.hidden)
+        .padding(.bottom)
     }
     
     @ViewBuilder func SectionTitleView(
