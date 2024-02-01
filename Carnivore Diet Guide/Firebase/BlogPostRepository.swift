@@ -61,8 +61,9 @@ class FirebaseBlogPostRepository {
     
     let blogPostsCollection = Firestore.firestore().collection(BLOG_POSTS)
     
-    func getBlogPostsNewestToOldest(limit: Int? = nil) async throws -> [BlogPost] {
+    func getPublishedBlogPostsNewestToOldest(limit: Int? = nil) async throws -> [BlogPost] {
         var query = blogPostsCollection
+            .whereField(PUBLICATION_DATE, isLessThan: Date.now)
             .order(by: PUBLICATION_DATE, descending: true)
         if let limit = limit {
             query = query.limit(to: limit)

@@ -14,7 +14,7 @@ class FirebaseBlogLibraryContentProvider: BlogLibraryContentProvider {
     func loadBlogPosts(onUpdate: @escaping ([BlogPost]) -> (), onError: @escaping (Error) -> ()) {
         Task {
             do {
-                let blogPosts = try await blogPostRepo.getBlogPostsNewestToOldest()
+                let blogPosts = try await blogPostRepo.getPublishedBlogPostsNewestToOldest()
                 onUpdate(blogPosts)
             } catch {
                 print(error)

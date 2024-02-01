@@ -14,7 +14,7 @@ class FirebaseRecipeLibraryContentProvider: RecipeLibraryContentProvider {
     func loadRecipes(onUpdate: @escaping ([Recipe]) -> (), onError: @escaping (Error) -> ()) {
         Task {
             do {
-                let recipes = try await recipeRepo.getRecipesNewestToOldest()
+                let recipes = try await recipeRepo.getPublishedRecipesNewestToOldest()
                 onUpdate(recipes)
             } catch {
                 print(error)

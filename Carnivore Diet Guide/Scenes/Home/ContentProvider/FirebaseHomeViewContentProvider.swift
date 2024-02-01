@@ -15,8 +15,8 @@ class FirebaseHomeViewContentProvider: HomeViewContentProvider {
     private let blogPostsRepo = FirebaseBlogPostRepository()
     
     func loadContent() async throws -> HomeViewContent {
-        let recipes = try await recipesRepo.getRecipesNewestToOldest(limit: itemLimit)
-        let blogPosts = try await blogPostsRepo.getBlogPostsNewestToOldest(limit: itemLimit)
+        let recipes = try await recipesRepo.getPublishedRecipesNewestToOldest(limit: itemLimit)
+        let blogPosts = try await blogPostsRepo.getPublishedBlogPostsNewestToOldest(limit: itemLimit)
         
         guard let featuredBlogPost = blogPosts.first else { throw "Could not find any featured content" }
         guard let featuredRecipe = recipes.first else { throw "Could not find any featured recipes" }

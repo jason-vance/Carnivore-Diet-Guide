@@ -83,8 +83,9 @@ class FirebaseRecipeRepository {
 
     let recipesCollection = Firestore.firestore().collection(RECIPES)
     
-    func getRecipesNewestToOldest(limit: Int? = nil) async throws -> [Recipe] {
+    func getPublishedRecipesNewestToOldest(limit: Int? = nil) async throws -> [Recipe] {
         var query = recipesCollection
+            .whereField(PUBLICATION_DATE, isLessThan: Date.now)
             .order(by: PUBLICATION_DATE, descending: true)
         if let limit = limit {
             query = query.limit(to: limit)
