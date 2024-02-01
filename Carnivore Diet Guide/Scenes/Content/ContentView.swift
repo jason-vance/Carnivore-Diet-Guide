@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct ContentView: View {
     
@@ -16,9 +17,31 @@ struct ContentView: View {
         case profile
     }
     
+    private let authProvider = iocContainer~>ContentAuthenticationProvider.self
+    
+    @State private var userAuthState: UserAuthState = .working
     @State private var selectedTab: Tab = .home
     
     var body: some View {
+        Group {
+            if userAuthState == .loggedIn {
+                LoggedInView()
+            } else {
+                LoggedOutView()
+            }
+        }
+        .onReceive(authProvider.userAuthStatePublisher) { newAuthState in
+            withAnimation(.snappy) {
+                userAuthState = newAuthState
+            }
+        }
+    }
+    
+    @ViewBuilder func LoggedOutView() -> some View {
+        SignInView()
+    }
+    
+    @ViewBuilder func LoggedInView() -> some View {
         TabView(selection: $selectedTab) {
             HomeTab()
             RecipesTab()
@@ -54,9 +77,23 @@ struct ContentView: View {
     }
 }
 
-#Preview {
+#Preview("Logged Out") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
+    } content: {
+        ContentView()
+    }
+}
+
+#Preview("Logged In") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+        
+        iocContainer.autoregister(ContentAuthenticationProvider.self) {
+            let mock = MockContentAuthenticationProvider()
+            mock.userAuthState = .loggedIn
+            return mock
+        }
     } content: {
         ContentView()
     }

@@ -26,6 +26,14 @@
 		5676A1362B477933009C1DA6 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5676A1352B477933009C1DA6 /* Recipe.swift */; };
 		567E87F62B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567E87F52B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift */; };
 		567E87F82B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567E87F72B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift */; };
+		56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A062B6C4DEC00C4C0DB /* SignInView.swift */; };
+		56B88A092B6C4E6E00C4C0DB /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A082B6C4E6E00C4C0DB /* BundleExtensions.swift */; };
+		56B88A0C2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A0B2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift */; };
+		56B88A102B6C50AE00C4C0DB /* UserAuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A0F2B6C50AE00C4C0DB /* UserAuthState.swift */; };
+		56B88A122B6C541F00C4C0DB /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A112B6C541F00C4C0DB /* SignInViewModel.swift */; };
+		56B88A142B6C557B00C4C0DB /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A132B6C557B00C4C0DB /* ViewExtensions.swift */; };
+		56B88A162B6C5AA400C4C0DB /* ContentAuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A152B6C5AA400C4C0DB /* ContentAuthenticationProvider.swift */; };
+		56B88A192B6C5FE400C4C0DB /* FirebaseAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A182B6C5FE400C4C0DB /* FirebaseAuthentication.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* BlogPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* BlogPostView.swift */; };
 		56E305072B4A982E0098079A /* BlogPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* BlogPost.swift */; };
@@ -96,6 +104,15 @@
 		5676A1352B477933009C1DA6 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		567E87F52B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeLibraryContentProvider.swift; sourceTree = "<group>"; };
 		567E87F72B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRecipeLibraryContentProvider.swift; sourceTree = "<group>"; };
+		56B88A062B6C4DEC00C4C0DB /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		56B88A082B6C4E6E00C4C0DB /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
+		56B88A0B2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAuthenticationProvider.swift; sourceTree = "<group>"; };
+		56B88A0F2B6C50AE00C4C0DB /* UserAuthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthState.swift; sourceTree = "<group>"; };
+		56B88A112B6C541F00C4C0DB /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		56B88A132B6C557B00C4C0DB /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		56B88A152B6C5AA400C4C0DB /* ContentAuthenticationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentAuthenticationProvider.swift; sourceTree = "<group>"; };
+		56B88A172B6C5F0700C4C0DB /* Carnivore Diet Guide.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Carnivore Diet Guide.entitlements"; sourceTree = "<group>"; };
+		56B88A182B6C5FE400C4C0DB /* FirebaseAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthentication.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* BlogPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPostView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* BlogPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPost.swift; sourceTree = "<group>"; };
@@ -160,6 +177,7 @@
 			children = (
 				56025D1F2B6B006600F31A07 /* RecipeRepository.swift */,
 				56025D212B6B01E800F31A07 /* BlogPostRepository.swift */,
+				56B88A182B6C5FE400C4C0DB /* FirebaseAuthentication.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -168,6 +186,8 @@
 			isa = PBXGroup;
 			children = (
 				56025D252B6B04AB00F31A07 /* StringExtensions.swift */,
+				56B88A082B6C4E6E00C4C0DB /* BundleExtensions.swift */,
+				56B88A132B6C557B00C4C0DB /* ViewExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -184,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				566B2D692B469B59008627F8 /* Content */,
+				56B88A052B6C4DD000C4C0DB /* SignIn */,
 				562E03E52B450A8900859F81 /* Home */,
 				56E3050A2B4B601B0098079A /* RecipeLibrary */,
 				5676A1312B477853009C1DA6 /* RecipeDetail */,
@@ -225,11 +246,13 @@
 		56353B542B440C9900C4E972 /* Carnivore Diet Guide */ = {
 			isa = PBXGroup;
 			children = (
+				56B88A172B6C5F0700C4C0DB /* Carnivore Diet Guide.entitlements */,
 				56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */,
 				56E305612B4BF77A0098079A /* DependencyConfigurator.swift */,
 				56E305632B4BF7890098079A /* MockDependencyConfigurator.swift */,
 				56025D1E2B6B005300F31A07 /* Firebase */,
 				5676A1342B47792B009C1DA6 /* Domain */,
+				56B88A0D2B6C509800C4C0DB /* Workers */,
 				56025D242B6B049D00F31A07 /* Extensions */,
 				562E03E22B4507C500859F81 /* Scenes */,
 				56E305652B4BF8220098079A /* SwiftUI */,
@@ -265,6 +288,7 @@
 			isa = PBXGroup;
 			children = (
 				56353B572B440C9900C4E972 /* ContentView.swift */,
+				56B88A152B6C5AA400C4C0DB /* ContentAuthenticationProvider.swift */,
 			);
 			path = Content;
 			sourceTree = "<group>";
@@ -294,6 +318,40 @@
 				567E87F72B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift */,
 			);
 			path = ContentProvider;
+			sourceTree = "<group>";
+		};
+		56B88A052B6C4DD000C4C0DB /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				56B88A0A2B6C4FC900C4C0DB /* AuthenticationProvider */,
+				56B88A062B6C4DEC00C4C0DB /* SignInView.swift */,
+				56B88A112B6C541F00C4C0DB /* SignInViewModel.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		56B88A0A2B6C4FC900C4C0DB /* AuthenticationProvider */ = {
+			isa = PBXGroup;
+			children = (
+				56B88A0B2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift */,
+			);
+			path = AuthenticationProvider;
+			sourceTree = "<group>";
+		};
+		56B88A0D2B6C509800C4C0DB /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				56B88A0E2B6C50A100C4C0DB /* Authentication */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+		56B88A0E2B6C50A100C4C0DB /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				56B88A0F2B6C50AE00C4C0DB /* UserAuthState.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		56E305032B4A55BD0098079A /* BlogPost */ = {
@@ -474,11 +532,13 @@
 			files = (
 				5676A1332B477913009C1DA6 /* RecipeDetailView.swift in Sources */,
 				567E87F82B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift in Sources */,
+				56B88A0C2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift in Sources */,
 				56025D222B6B01E800F31A07 /* BlogPostRepository.swift in Sources */,
 				566B2D682B469A35008627F8 /* HomeBlogPostThumbnail.swift in Sources */,
 				56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */,
 				56E3050E2B4B6B060098079A /* LibraryRecipeThumbnail.swift in Sources */,
 				566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */,
+				56B88A142B6C557B00C4C0DB /* ViewExtensions.swift in Sources */,
 				56554F8A2B6053A00070C079 /* HomeViewContentProvider.swift in Sources */,
 				56025D1B2B6AED1900F31A07 /* HomeViewContent.swift in Sources */,
 				56E305072B4A982E0098079A /* BlogPost.swift in Sources */,
@@ -490,16 +550,22 @@
 				56E3050C2B4B60360098079A /* RecipeLibraryView.swift in Sources */,
 				56E305682B4BF83C0098079A /* PreviewContainerWithSetup.swift in Sources */,
 				56353B582B440C9900C4E972 /* ContentView.swift in Sources */,
+				56B88A102B6C50AE00C4C0DB /* UserAuthState.swift in Sources */,
 				56E305562B4BF0E70098079A /* FirebaseBlogLibraryContentProvider.swift in Sources */,
 				56025D292B6B8CD000F31A07 /* UI.swift in Sources */,
 				56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */,
+				56B88A092B6C4E6E00C4C0DB /* BundleExtensions.swift in Sources */,
 				56E305622B4BF77A0098079A /* DependencyConfigurator.swift in Sources */,
+				56B88A192B6C5FE400C4C0DB /* FirebaseAuthentication.swift in Sources */,
 				56E305162B4B74BC0098079A /* LibraryBlogPostThumbnail.swift in Sources */,
+				56B88A122B6C541F00C4C0DB /* SignInViewModel.swift in Sources */,
 				5676A1362B477933009C1DA6 /* Recipe.swift in Sources */,
+				56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */,
 				567E87F62B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift in Sources */,
 				56025D262B6B04AB00F31A07 /* StringExtensions.swift in Sources */,
 				56025D202B6B006600F31A07 /* RecipeRepository.swift in Sources */,
 				56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */,
+				56B88A162B6C5AA400C4C0DB /* ContentAuthenticationProvider.swift in Sources */,
 				56E305052B4A55E00098079A /* BlogPostView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -633,6 +699,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Carnivore Diet Guide/Carnivore Diet Guide.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Carnivore Diet Guide/Preview Content\"";
@@ -668,6 +735,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Carnivore Diet Guide/Carnivore Diet Guide.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Carnivore Diet Guide/Preview Content\"";

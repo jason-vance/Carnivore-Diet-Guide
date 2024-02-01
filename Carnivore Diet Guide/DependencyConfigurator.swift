@@ -16,6 +16,12 @@ let iocContainer: Container = {
 }()
 
 fileprivate func setup(iocContainer: Container) {
+    //Content
+    iocContainer.autoregister(ContentAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }
+    
+    //Sign In
+    iocContainer.autoregister(SignInAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }
+
     //Home
     iocContainer.autoregister(HomeViewContentProvider.self, initializer: FirebaseHomeViewContentProvider.init)
     
