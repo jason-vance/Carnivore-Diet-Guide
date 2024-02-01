@@ -56,7 +56,7 @@ struct BlogLibraryView: View {
     
     @ViewBuilder func TitleView() -> some View {
         VStack(spacing: 0) {
-            Text("Blog")
+            Text("Knowledge")
                 .font(.system(size: 48, weight: .black))
         }
         .foregroundStyle(Color.background)
