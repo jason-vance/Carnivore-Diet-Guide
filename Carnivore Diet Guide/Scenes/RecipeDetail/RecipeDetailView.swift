@@ -34,10 +34,10 @@ struct RecipeDetailView: View {
                         }
                     }
                     .background(Color.background)
-                    .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
+                    .clipShape(.rect(topLeadingRadius: Corners.radius, topTrailingRadius: Corners.radius))
                 }            }
             .background(Color.text)
-            .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
+            .clipShape(.rect(topLeadingRadius: Corners.radius, topTrailingRadius: Corners.radius))
         }
         .background(Color.background)
         .navigationBarBackButtonHidden()
@@ -128,7 +128,7 @@ struct RecipeDetailView: View {
             .foregroundStyle(Color.text)
             .padding()
             .overlay {
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: Corners.radius)
                     .stroke(Color.text, lineWidth: 1)
             }
             .padding()

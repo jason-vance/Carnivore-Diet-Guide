@@ -40,7 +40,7 @@ struct HomeView: View {
                 TitleBarAndHeroImage()
                 ContentView()
                     .background(Color.background)
-                    .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
+                    .clipShape(.rect(topLeadingRadius: Corners.radius, topTrailingRadius: Corners.radius))
             }
             .background(Color.background)
         }
@@ -149,7 +149,7 @@ struct HomeView: View {
         .scrollIndicators(.hidden)
         .padding(.bottom)
         .background(Color.text)
-        .clipShape(.rect(cornerRadius: 16, style: .continuous))
+        .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
     }
     
     @ViewBuilder func TrendingBlogPostsView() -> some View {

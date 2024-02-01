@@ -29,7 +29,7 @@ struct HomeBlogPostThumbnail: View {
                         .background(Color.text)
                 }
         }
-        .clipShape(.rect(cornerRadius: 16, style: .continuous))
+        .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
         .shadow(color: Color.accentText ,radius: 4)
         .frame(width: imageSize, height: imageSize)
     }

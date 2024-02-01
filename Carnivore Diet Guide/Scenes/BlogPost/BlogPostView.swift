@@ -26,7 +26,7 @@ struct BlogPostView: View {
                         .frame(maxWidth: .infinity)
                 }
                 .background(Color.background)
-                .clipShape(.rect(topLeadingRadius: 16, topTrailingRadius: 16))
+                .clipShape(.rect(topLeadingRadius: Corners.radius, topTrailingRadius: Corners.radius))
             }
         }
         .background(Color.background)

@@ -59,7 +59,7 @@ struct LibraryRecipeThumbnail: View {
                     .clipped()
             }
         }
-        .clipShape(.rect(cornerRadius: 16, style: .continuous))
+        .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
         .shadow(color: Color.darkAccentText ,radius: 4)
         .frame(maxWidth: .infinity)
     }
