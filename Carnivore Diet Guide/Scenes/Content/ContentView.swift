@@ -48,6 +48,9 @@ struct ContentView: View {
             BlogTab()
             UserProfileTab()
         }
+        .onAppear {
+            selectedTab = .home
+        }
     }
     
     @ViewBuilder func HomeTab() -> some View {
