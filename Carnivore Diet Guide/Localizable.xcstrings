@@ -195,6 +195,12 @@
         }
       }
     },
+    "Account Information" : {
+
+    },
+    "Are you sure you want to logout?" : {
+
+    },
     "Blog" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -259,6 +265,9 @@
           }
         }
       }
+    },
+    "Bookmarked Articles" : {
+
     },
     "By: %@" : {
       "localizations" : {
@@ -387,6 +396,9 @@
           }
         }
       }
+    },
+    "Cancel" : {
+
     },
     "Carbohydrates" : {
       "localizations" : {
@@ -582,6 +594,9 @@
         }
       }
     },
+    "Dave McMeaterton" : {
+
+    },
     "Diet Guide" : {
       "comment" : "Second line of the app name on the home screen. ie\n\"Carnivore\nDiet Guide\"",
       "localizations" : {
@@ -710,6 +725,12 @@
           }
         }
       }
+    },
+    "Favorite Recipes" : {
+
+    },
+    "Favorites" : {
+
     },
     "Featured Blog Post" : {
       "localizations" : {
@@ -1161,6 +1182,12 @@
         }
       }
     },
+    "Logout" : {
+
+    },
+    "mcMeat" : {
+
+    },
     "Nutritional Info" : {
       "localizations" : {
         "ar" : {
@@ -1288,6 +1315,9 @@
           }
         }
       }
+    },
+    "Profile" : {
+
     },
     "Protein" : {
       "localizations" : {
@@ -1544,6 +1574,9 @@
           }
         }
       }
+    },
+    "Settings" : {
+
     },
     "The Carnivore Diet Guide Team" : {
       "extractionState" : "manual",
