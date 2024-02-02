@@ -9,7 +9,7 @@ import Foundation
 import FirebaseAuth
 import AuthenticationServices
 
-class FirebaseAuthenticationProvider: ContentAuthenticationProvider, SignInAuthenticationProvider {
+class FirebaseAuthenticationProvider: ContentAuthenticationProvider, SignInAuthenticationProvider, UserProfileSignOutService {
     
     @Published var currentUser: User?
     var currentUserId: String { currentUser?.uid ?? "" }

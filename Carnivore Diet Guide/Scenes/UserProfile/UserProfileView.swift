@@ -6,16 +6,28 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 import Kingfisher
 
 struct UserProfileView: View {
+    
+    private let signOutService = iocContainer~>UserProfileSignOutService.self
     
     @State private var showLogoutDialog: Bool = false
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
     private func confirmedLogout() {
-        //authProvider.logout()
+        do {
+            try signOutService.signOut()
+        } catch {
+            show(errorMessage: "Unable to logout: \(error.localizedDescription)")
+        }
+    }
+    
+    private func show(errorMessage: String) {
+        showError = true
+        self.errorMessage = errorMessage
     }
     
     var body: some View {
@@ -209,5 +221,9 @@ struct UserProfileView: View {
 }
 
 #Preview {
-    UserProfileView()
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        UserProfileView()
+    }
 }

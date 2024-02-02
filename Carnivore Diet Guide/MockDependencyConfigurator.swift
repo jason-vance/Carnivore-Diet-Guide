@@ -21,4 +21,7 @@ func setupMockIocContainer(_ iocContainer: Container) {
     
     //Blog Library
     iocContainer.autoregister(BlogLibraryContentProvider.self, initializer: MockBlogLibraryContentProvider.init)
+    
+    //User Profile
+    iocContainer.autoregister(UserProfileSignOutService.self, initializer: MockUserProfileSignOutService.init)
 }

@@ -30,4 +30,7 @@ fileprivate func setup(iocContainer: Container) {
     
     //Blog Library
     iocContainer.autoregister(BlogLibraryContentProvider.self, initializer: FirebaseBlogLibraryContentProvider.init)
+    
+    //User Profile
+    iocContainer.autoregister(UserProfileSignOutService.self) { FirebaseAuthenticationProvider.instance }
 }
