@@ -2,7 +2,6 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -194,9 +193,6 @@
           }
         }
       }
-    },
-    "Account Information" : {
-
     },
     "Are you sure you want to logout?" : {
 
@@ -594,9 +590,6 @@
         }
       }
     },
-    "Dave McMeaterton" : {
-
-    },
     "Diet Guide" : {
       "comment" : "Second line of the app name on the home screen. ie\n\"Carnivore\nDiet Guide\"",
       "localizations" : {
@@ -661,6 +654,12 @@
           }
         }
       }
+    },
+    "Edit Profile" : {
+
+    },
+    "Error" : {
+
     },
     "Fat" : {
       "localizations" : {
@@ -1185,9 +1184,6 @@
     "Logout" : {
 
     },
-    "mcMeat" : {
-
-    },
     "Nutritional Info" : {
       "localizations" : {
         "ar" : {
@@ -1510,6 +1506,9 @@
           }
         }
       }
+    },
+    "Save" : {
+
     },
     "Serves %lld" : {
       "localizations" : {

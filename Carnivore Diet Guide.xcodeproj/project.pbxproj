@@ -36,6 +36,24 @@
 		56B88A192B6C5FE400C4C0DB /* FirebaseAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A182B6C5FE400C4C0DB /* FirebaseAuthentication.swift */; };
 		56B88A1C2B6C650600C4C0DB /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A1B2B6C650600C4C0DB /* UserProfileView.swift */; };
 		56B88A1F2B6CE4F100C4C0DB /* UserProfileSignOutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A1E2B6CE4F100C4C0DB /* UserProfileSignOutService.swift */; };
+		56B88A232B6CE7E500C4C0DB /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A222B6CE7E500C4C0DB /* ImagePickerView.swift */; };
+		56B88A262B6CE8A600C4C0DB /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 56B88A252B6CE8A600C4C0DB /* YPImagePicker */; };
+		56B88A2B2B6CE94600C4C0DB /* ProfileFormPictureField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A2A2B6CE94600C4C0DB /* ProfileFormPictureField.swift */; };
+		56B88A2D2B6CE9EF00C4C0DB /* UserProfileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A2C2B6CE9EF00C4C0DB /* UserProfileData.swift */; };
+		56B88A302B6CEA7000C4C0DB /* PersonName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A2F2B6CEA7000C4C0DB /* PersonName.swift */; };
+		56B88A322B6CEA7C00C4C0DB /* Username.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A312B6CEA7C00C4C0DB /* Username.swift */; };
+		56B88A342B6CEA8700C4C0DB /* EmailAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A332B6CEA8700C4C0DB /* EmailAddress.swift */; };
+		56B88A372B6CEC8D00C4C0DB /* ValueOf in Frameworks */ = {isa = PBXBuildFile; productRef = 56B88A362B6CEC8D00C4C0DB /* ValueOf */; };
+		56B88A392B6CED5600C4C0DB /* StatefulPreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A382B6CED5600C4C0DB /* StatefulPreviewContainer.swift */; };
+		56B88A3B2B6CEE0100C4C0DB /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A3A2B6CEE0100C4C0DB /* ProfileImageView.swift */; };
+		56B88A3D2B6CF0B800C4C0DB /* ProfileFormNameField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A3C2B6CF0B800C4C0DB /* ProfileFormNameField.swift */; };
+		56B88A402B6CF0F100C4C0DB /* FormTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A3F2B6CF0F100C4C0DB /* FormTextField.swift */; };
+		56B88A422B6CF10700C4C0DB /* FormFieldOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A412B6CF10700C4C0DB /* FormFieldOverlay.swift */; };
+		56B88A442B6CF14000C4C0DB /* FormFieldErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A432B6CF14000C4C0DB /* FormFieldErrorView.swift */; };
+		56B88A472B6CF53A00C4C0DB /* EditUserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A462B6CF53A00C4C0DB /* EditUserProfileView.swift */; };
+		56B88A492B6CF89E00C4C0DB /* EditUserProfileFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A482B6CF89E00C4C0DB /* EditUserProfileFormData.swift */; };
+		56B88A4B2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A4A2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift */; };
+		56B88A4E2B6CFAE000C4C0DB /* ProfileFormUsernameAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A4D2B6CFAE000C4C0DB /* ProfileFormUsernameAvailabilityChecker.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* BlogPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* BlogPostView.swift */; };
 		56E305072B4A982E0098079A /* BlogPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* BlogPost.swift */; };
@@ -117,6 +135,22 @@
 		56B88A182B6C5FE400C4C0DB /* FirebaseAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthentication.swift; sourceTree = "<group>"; };
 		56B88A1B2B6C650600C4C0DB /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		56B88A1E2B6CE4F100C4C0DB /* UserProfileSignOutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileSignOutService.swift; sourceTree = "<group>"; };
+		56B88A222B6CE7E500C4C0DB /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		56B88A2A2B6CE94600C4C0DB /* ProfileFormPictureField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFormPictureField.swift; sourceTree = "<group>"; };
+		56B88A2C2B6CE9EF00C4C0DB /* UserProfileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileData.swift; sourceTree = "<group>"; };
+		56B88A2F2B6CEA7000C4C0DB /* PersonName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonName.swift; sourceTree = "<group>"; };
+		56B88A312B6CEA7C00C4C0DB /* Username.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Username.swift; sourceTree = "<group>"; };
+		56B88A332B6CEA8700C4C0DB /* EmailAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAddress.swift; sourceTree = "<group>"; };
+		56B88A382B6CED5600C4C0DB /* StatefulPreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewContainer.swift; sourceTree = "<group>"; };
+		56B88A3A2B6CEE0100C4C0DB /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		56B88A3C2B6CF0B800C4C0DB /* ProfileFormNameField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFormNameField.swift; sourceTree = "<group>"; };
+		56B88A3F2B6CF0F100C4C0DB /* FormTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextField.swift; sourceTree = "<group>"; };
+		56B88A412B6CF10700C4C0DB /* FormFieldOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFieldOverlay.swift; sourceTree = "<group>"; };
+		56B88A432B6CF14000C4C0DB /* FormFieldErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFieldErrorView.swift; sourceTree = "<group>"; };
+		56B88A462B6CF53A00C4C0DB /* EditUserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileView.swift; sourceTree = "<group>"; };
+		56B88A482B6CF89E00C4C0DB /* EditUserProfileFormData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileFormData.swift; sourceTree = "<group>"; };
+		56B88A4A2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFormUsernameField.swift; sourceTree = "<group>"; };
+		56B88A4D2B6CFAE000C4C0DB /* ProfileFormUsernameAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFormUsernameAvailabilityChecker.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* BlogPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPostView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* BlogPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPost.swift; sourceTree = "<group>"; };
@@ -157,11 +191,13 @@
 				56E3052F2B4BE4470098079A /* FirebaseDatabaseSwift in Frameworks */,
 				56E305392B4BE4470098079A /* FirebaseFunctions in Frameworks */,
 				56E3055E2B4BF7190098079A /* SwinjectAutoregistration in Frameworks */,
+				56B88A372B6CEC8D00C4C0DB /* ValueOf in Frameworks */,
 				56E3054F2B4BE4470098079A /* FirebaseStorageCombine-Community in Frameworks */,
 				56E305492B4BE4470098079A /* FirebaseRemoteConfig in Frameworks */,
 				56E305252B4BE4470098079A /* FirebaseAppDistribution-Beta in Frameworks */,
 				56E305292B4BE4470098079A /* FirebaseAuthCombine-Community in Frameworks */,
 				56E305472B4BE4470098079A /* FirebasePerformance in Frameworks */,
+				56B88A262B6CE8A600C4C0DB /* YPImagePicker in Frameworks */,
 				56E3053F2B4BE4470098079A /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 				56E305762B4D4DC50098079A /* Kingfisher in Frameworks */,
 				56E3054D2B4BE4470098079A /* FirebaseStorage in Frameworks */,
@@ -215,6 +251,7 @@
 				56E3050F2B4B71320098079A /* BlogLibrary */,
 				56E305032B4A55BD0098079A /* BlogPost */,
 				56B88A1A2B6C64F200C4C0DB /* UserProfile */,
+				56B88A452B6CF51B00C4C0DB /* EditUserProfile */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -262,6 +299,7 @@
 				562E03E22B4507C500859F81 /* Scenes */,
 				56E305652B4BF8220098079A /* SwiftUI */,
 				56025D272B6B8C9C00F31A07 /* Values */,
+				56B88A212B6CE7D100C4C0DB /* Views */,
 				562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */,
 				56E305172B4BE3C40098079A /* GoogleService-Info.plist */,
 				56E305702B4D310A0098079A /* Localizable.xcstrings */,
@@ -309,6 +347,7 @@
 		5676A1342B47792B009C1DA6 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				56B88A2E2B6CEA6500C4C0DB /* Users */,
 				5676A1352B477933009C1DA6 /* Recipe.swift */,
 				56E305012B4952800098079A /* BasicNutritionInfo.swift */,
 				56E305062B4A982E0098079A /* BlogPost.swift */,
@@ -364,6 +403,7 @@
 			children = (
 				56B88A1D2B6CE4C400C4C0DB /* Workers */,
 				56B88A1B2B6C650600C4C0DB /* UserProfileView.swift */,
+				56B88A2C2B6CE9EF00C4C0DB /* UserProfileData.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";
@@ -372,6 +412,65 @@
 			isa = PBXGroup;
 			children = (
 				56B88A1E2B6CE4F100C4C0DB /* UserProfileSignOutService.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+		56B88A212B6CE7D100C4C0DB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				56B88A3E2B6CF0E100C4C0DB /* FormFields */,
+				56B88A222B6CE7E500C4C0DB /* ImagePickerView.swift */,
+				56B88A3A2B6CEE0100C4C0DB /* ProfileImageView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		56B88A292B6CE92900C4C0DB /* FormFields */ = {
+			isa = PBXGroup;
+			children = (
+				56B88A2A2B6CE94600C4C0DB /* ProfileFormPictureField.swift */,
+				56B88A3C2B6CF0B800C4C0DB /* ProfileFormNameField.swift */,
+				56B88A4A2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift */,
+			);
+			path = FormFields;
+			sourceTree = "<group>";
+		};
+		56B88A2E2B6CEA6500C4C0DB /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				56B88A2F2B6CEA7000C4C0DB /* PersonName.swift */,
+				56B88A312B6CEA7C00C4C0DB /* Username.swift */,
+				56B88A332B6CEA8700C4C0DB /* EmailAddress.swift */,
+			);
+			path = Users;
+			sourceTree = "<group>";
+		};
+		56B88A3E2B6CF0E100C4C0DB /* FormFields */ = {
+			isa = PBXGroup;
+			children = (
+				56B88A3F2B6CF0F100C4C0DB /* FormTextField.swift */,
+				56B88A412B6CF10700C4C0DB /* FormFieldOverlay.swift */,
+				56B88A432B6CF14000C4C0DB /* FormFieldErrorView.swift */,
+			);
+			path = FormFields;
+			sourceTree = "<group>";
+		};
+		56B88A452B6CF51B00C4C0DB /* EditUserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				56B88A4C2B6CFAD700C4C0DB /* Workers */,
+				56B88A292B6CE92900C4C0DB /* FormFields */,
+				56B88A462B6CF53A00C4C0DB /* EditUserProfileView.swift */,
+				56B88A482B6CF89E00C4C0DB /* EditUserProfileFormData.swift */,
+			);
+			path = EditUserProfile;
+			sourceTree = "<group>";
+		};
+		56B88A4C2B6CFAD700C4C0DB /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				56B88A4D2B6CFAE000C4C0DB /* ProfileFormUsernameAvailabilityChecker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -425,6 +524,7 @@
 			isa = PBXGroup;
 			children = (
 				56E305672B4BF83C0098079A /* PreviewContainerWithSetup.swift */,
+				56B88A382B6CED5600C4C0DB /* StatefulPreviewContainer.swift */,
 			);
 			path = Previews;
 			sourceTree = "<group>";
@@ -477,6 +577,8 @@
 				56E3055D2B4BF7190098079A /* SwinjectAutoregistration */,
 				56E3056A2B4CCFA40098079A /* MarkdownUI */,
 				56E305752B4D4DC50098079A /* Kingfisher */,
+				56B88A252B6CE8A600C4C0DB /* YPImagePicker */,
+				56B88A362B6CEC8D00C4C0DB /* ValueOf */,
 			);
 			productName = "Carnivore Diet Guide";
 			productReference = 56353B522B440C9900C4E972 /* Carnivore Diet Guide.app */;
@@ -522,6 +624,8 @@
 				56E3055C2B4BF7190098079A /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */,
 				56E305692B4CCFA40098079A /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				56E305742B4D4DC50098079A /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				56B88A242B6CE8A600C4C0DB /* XCRemoteSwiftPackageReference "YPImagePicker" */,
+				56B88A352B6CEC8D00C4C0DB /* XCRemoteSwiftPackageReference "valueof" */,
 			);
 			productRefGroup = 56353B532B440C9900C4E972 /* Products */;
 			projectDirPath = "";
@@ -553,31 +657,44 @@
 			buildActionMask = 2147483647;
 			files = (
 				5676A1332B477913009C1DA6 /* RecipeDetailView.swift in Sources */,
+				56B88A3B2B6CEE0100C4C0DB /* ProfileImageView.swift in Sources */,
 				567E87F82B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift in Sources */,
 				56B88A0C2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift in Sources */,
 				56025D222B6B01E800F31A07 /* BlogPostRepository.swift in Sources */,
+				56B88A232B6CE7E500C4C0DB /* ImagePickerView.swift in Sources */,
 				566B2D682B469A35008627F8 /* HomeBlogPostThumbnail.swift in Sources */,
 				56B88A1C2B6C650600C4C0DB /* UserProfileView.swift in Sources */,
+				56B88A302B6CEA7000C4C0DB /* PersonName.swift in Sources */,
+				56B88A2D2B6CE9EF00C4C0DB /* UserProfileData.swift in Sources */,
 				56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */,
 				56E3050E2B4B6B060098079A /* LibraryRecipeThumbnail.swift in Sources */,
+				56B88A4B2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift in Sources */,
 				566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */,
 				56B88A142B6C557B00C4C0DB /* ViewExtensions.swift in Sources */,
 				56554F8A2B6053A00070C079 /* HomeViewContentProvider.swift in Sources */,
 				56025D1B2B6AED1900F31A07 /* HomeViewContent.swift in Sources */,
+				56B88A322B6CEA7C00C4C0DB /* Username.swift in Sources */,
+				56B88A3D2B6CF0B800C4C0DB /* ProfileFormNameField.swift in Sources */,
 				56E305072B4A982E0098079A /* BlogPost.swift in Sources */,
 				56E305112B4B71400098079A /* BlogLibraryView.swift in Sources */,
+				56B88A402B6CF0F100C4C0DB /* FormTextField.swift in Sources */,
+				56B88A472B6CF53A00C4C0DB /* EditUserProfileView.swift in Sources */,
 				566B2D642B4694C6008627F8 /* FeaturedContentThumbnail.swift in Sources */,
 				56025D1D2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift in Sources */,
 				562E03E72B450AA000859F81 /* HomeView.swift in Sources */,
 				56E305532B4BED1B0098079A /* BlogLibraryContentProvider.swift in Sources */,
+				56B88A342B6CEA8700C4C0DB /* EmailAddress.swift in Sources */,
 				56E3050C2B4B60360098079A /* RecipeLibraryView.swift in Sources */,
 				56E305682B4BF83C0098079A /* PreviewContainerWithSetup.swift in Sources */,
+				56B88A422B6CF10700C4C0DB /* FormFieldOverlay.swift in Sources */,
 				56353B582B440C9900C4E972 /* ContentView.swift in Sources */,
 				56B88A102B6C50AE00C4C0DB /* UserAuthState.swift in Sources */,
 				56E305562B4BF0E70098079A /* FirebaseBlogLibraryContentProvider.swift in Sources */,
 				56025D292B6B8CD000F31A07 /* UI.swift in Sources */,
 				56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */,
 				56B88A092B6C4E6E00C4C0DB /* BundleExtensions.swift in Sources */,
+				56B88A442B6CF14000C4C0DB /* FormFieldErrorView.swift in Sources */,
+				56B88A392B6CED5600C4C0DB /* StatefulPreviewContainer.swift in Sources */,
 				56E305622B4BF77A0098079A /* DependencyConfigurator.swift in Sources */,
 				56B88A192B6C5FE400C4C0DB /* FirebaseAuthentication.swift in Sources */,
 				56E305162B4B74BC0098079A /* LibraryBlogPostThumbnail.swift in Sources */,
@@ -587,10 +704,13 @@
 				56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */,
 				567E87F62B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift in Sources */,
 				56025D262B6B04AB00F31A07 /* StringExtensions.swift in Sources */,
+				56B88A492B6CF89E00C4C0DB /* EditUserProfileFormData.swift in Sources */,
 				56025D202B6B006600F31A07 /* RecipeRepository.swift in Sources */,
 				56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */,
+				56B88A4E2B6CFAE000C4C0DB /* ProfileFormUsernameAvailabilityChecker.swift in Sources */,
 				56B88A162B6C5AA400C4C0DB /* ContentAuthenticationProvider.swift in Sources */,
 				56E305052B4A55E00098079A /* BlogPostView.swift in Sources */,
+				56B88A2B2B6CE94600C4C0DB /* ProfileFormPictureField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,6 +852,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Carnivore-Diet-Guide-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Carnivore Diet";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Used for capturing a profile pic";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Used for selecting a profile pic";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -768,6 +890,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Carnivore-Diet-Guide-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Carnivore Diet";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Used for capturing a profile pic";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Used for selecting a profile pic";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -814,6 +938,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		56B88A242B6CE8A600C4C0DB /* XCRemoteSwiftPackageReference "YPImagePicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/LawrenceNorman/YPImagePicker.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		56B88A352B6CEC8D00C4C0DB /* XCRemoteSwiftPackageReference "valueof" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://bitbucket.org/jasonvance77/valueof";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		56E305192B4BE4470098079A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -857,6 +997,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		56B88A252B6CE8A600C4C0DB /* YPImagePicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 56B88A242B6CE8A600C4C0DB /* XCRemoteSwiftPackageReference "YPImagePicker" */;
+			productName = YPImagePicker;
+		};
+		56B88A362B6CEC8D00C4C0DB /* ValueOf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 56B88A352B6CEC8D00C4C0DB /* XCRemoteSwiftPackageReference "valueof" */;
+			productName = ValueOf;
+		};
 		56E3051A2B4BE4470098079A /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 56E305192B4BE4470098079A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

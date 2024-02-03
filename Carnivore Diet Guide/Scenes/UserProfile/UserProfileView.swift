@@ -13,6 +13,9 @@ struct UserProfileView: View {
     
     private let signOutService = iocContainer~>UserProfileSignOutService.self
     
+    @State private var userProfileData: UserProfileData = .sample
+    
+    @State private var showEditProfile: Bool = false
     @State private var showLogoutDialog: Bool = false
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
@@ -39,7 +42,7 @@ struct UserProfileView: View {
                         ProfileImage()
                         FullName()
                         Username()
-                        AccountInformationButton()
+                        EditProfileButton()
 //                        FavoriteRecipesButton()
 //                        BookmarkedArticlesButton()
 //                        SettingsButton()
@@ -58,6 +61,9 @@ struct UserProfileView: View {
         ) {
             ConfirmLogoutButton()
             CancelLogoutButton()
+        }
+        .popover(isPresented: $showEditProfile) {
+            EditUserProfileView()
         }
     }
     
@@ -99,33 +105,30 @@ struct UserProfileView: View {
     }
     
     @ViewBuilder func ProfileImage() -> some View {
-        KFImage(URL(string: "https://images.theconversation.com/files/453023/original/file-20220318-13-f1w6ml.jpg?ixlib=rb-1.1.0&rect=0%2C528%2C7360%2C3680&q=45&auto=format&w=1356&h=668&fit=crop")!)
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .clipShape(Circle())
-            .frame(width: 200, height: 200)
-            .padding(4)
-            .background(Circle().fill(Color.text))
+        ProfileImageView(userProfileData.profileImageUrl)
     }
     
     @ViewBuilder func FullName() -> some View {
-        Text("Dave McMeaterton")
+        Text(userProfileData.fullName)
             .font(.system(size: 32, weight: .bold))
             .foregroundStyle(Color.text)
     }
     
     @ViewBuilder func Username() -> some View {
-        Text("mcMeat")
+        Text(userProfileData.username)
             .font(.system(size: 18))
             .foregroundStyle(Color.text)
     }
     
-    @ViewBuilder func AccountInformationButton() -> some View {
-        ProfileNavigationLink(
-            String(localized: "Account Information"),
-            icon: "person.fill"
-        ) {
-            Text("Account Information")
+    @ViewBuilder func EditProfileButton() -> some View {
+        Button {
+            showEditProfile = true
+        } label: {
+            ProfileControlLabel(
+                String(localized: "Edit Profile"),
+                icon: "person.fill",
+                showNavigationAccessories: true
+            )
         }
     }
     

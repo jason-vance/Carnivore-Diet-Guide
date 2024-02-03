@@ -24,4 +24,7 @@ func setupMockIocContainer(_ iocContainer: Container) {
     
     //User Profile
     iocContainer.autoregister(UserProfileSignOutService.self, initializer: MockUserProfileSignOutService.init)
+    
+    //Edit User Profile
+    iocContainer.autoregister(ProfileFormUsernameAvailabilityChecker.self, initializer: MockProfileFormUsernameAvailabilityChecker.init)
 }
