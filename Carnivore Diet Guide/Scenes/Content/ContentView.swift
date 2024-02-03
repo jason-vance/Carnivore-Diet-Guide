@@ -19,6 +19,7 @@ struct ContentView: View {
     
     private let authProvider = iocContainer~>ContentAuthenticationProvider.self
     
+    @State private var currentUserId: String = ""
     @State private var userAuthState: UserAuthState = .working
     @State private var selectedTab: Tab = .home
     
@@ -34,6 +35,9 @@ struct ContentView: View {
             withAnimation(.snappy) {
                 userAuthState = newAuthState
             }
+        }
+        .onReceive(authProvider.currentUserIdPublisher) { newUserId in
+            currentUserId = newUserId ?? ""
         }
     }
     
@@ -81,7 +85,7 @@ struct ContentView: View {
     }
     
     @ViewBuilder func UserProfileTab() -> some View {
-        UserProfileView()
+        UserProfileView(userId: currentUserId)
             .tabItem {
                 Label("Profile", systemImage: "person")
             }

@@ -194,6 +194,9 @@
         }
       }
     },
+    "Albums" : {
+      "comment" : "Photo Albums"
+    },
     "Are you sure you want to logout?" : {
 
     },
@@ -392,6 +395,9 @@
           }
         }
       }
+    },
+    "Camera" : {
+
     },
     "Cancel" : {
 
@@ -654,6 +660,9 @@
           }
         }
       }
+    },
+    "Done" : {
+
     },
     "Edit Profile" : {
 
@@ -1181,7 +1190,13 @@
         }
       }
     },
+    "Library" : {
+      "comment" : "Photo Library"
+    },
     "Logout" : {
+
+    },
+    "Next" : {
 
     },
     "Nutritional Info" : {
@@ -1247,6 +1262,9 @@
           }
         }
       }
+    },
+    "OK" : {
+
     },
     "Per Serving" : {
       "localizations" : {

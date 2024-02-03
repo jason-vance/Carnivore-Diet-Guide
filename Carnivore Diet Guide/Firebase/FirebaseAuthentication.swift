@@ -11,9 +11,14 @@ import AuthenticationServices
 
 class FirebaseAuthenticationProvider: ContentAuthenticationProvider, SignInAuthenticationProvider, UserProfileSignOutService {
     
-    @Published var currentUser: User?
-    var currentUserId: String { currentUser?.uid ?? "" }
-    
+    @Published var currentUser: User? {
+        didSet {
+            currentUserId = currentUser?.uid
+        }
+    }
+    @Published var currentUserId: String?
+    var currentUserIdPublisher: Published<String?>.Publisher { $currentUserId }
+
     @Published var userAuthState: UserAuthState = .working
     var userAuthStatePublisher: Published<UserAuthState>.Publisher { $userAuthState }
     

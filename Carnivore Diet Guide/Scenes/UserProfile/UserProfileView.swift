@@ -11,14 +11,21 @@ import Kingfisher
 
 struct UserProfileView: View {
     
+    private let userDataProvider = iocContainer~>UserProfileDataProvider.self
     private let signOutService = iocContainer~>UserProfileSignOutService.self
     
-    @State private var userProfileData: UserProfileData = .sample
+    var userId: String
+    
+    @State private var userProfileData: UserProfileData = .empty
     
     @State private var showEditProfile: Bool = false
     @State private var showLogoutDialog: Bool = false
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
+    
+    private func listenForUserProfileData() {
+        userDataProvider.startListeningToUser(withId: userId)
+    }
     
     private func confirmedLogout() {
         do {
@@ -64,6 +71,12 @@ struct UserProfileView: View {
         }
         .popover(isPresented: $showEditProfile) {
             EditUserProfileView()
+        }
+        .onAppear {
+            listenForUserProfileData()
+        }
+        .onReceive(userDataProvider.userProfileDataPublisher) { newData in
+            userProfileData = newData
         }
     }
     
@@ -227,6 +240,6 @@ struct UserProfileView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        UserProfileView()
+        UserProfileView(userId: "userId")
     }
 }
