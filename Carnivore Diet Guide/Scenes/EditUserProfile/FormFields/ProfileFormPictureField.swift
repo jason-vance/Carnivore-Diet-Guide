@@ -10,11 +10,11 @@ import SwiftUI
 struct ProfileFormPictureField: View {
     
     @Binding var profileImage: UIImage
-    var profileImageSize: CGFloat = 200
     var profileImageUrl: URL?
+    var profileImageSize: CGFloat = 200
     
     @State private var showImagePicker: Bool = false
-
+    
     var body: some View {
         Button {
             showImagePicker = true
@@ -76,7 +76,6 @@ struct ProfileFormPictureField: View {
     StatefulPreviewContainer(UIImage()) { image in
         ProfileFormPictureField(
             profileImage: image,
-            profileImageSize: 200,
             profileImageUrl: UserData.sample.profileImageUrl
         )
     }
@@ -85,8 +84,7 @@ struct ProfileFormPictureField: View {
 #Preview("Without Image Url") {
     StatefulPreviewContainer(UIImage()) { image in
         ProfileFormPictureField(
-            profileImage: image,
-            profileImageSize: 200
+            profileImage: image
         )
     }
 }
