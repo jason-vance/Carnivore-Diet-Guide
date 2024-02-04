@@ -69,8 +69,8 @@ struct UserProfileView: View {
             ConfirmLogoutButton()
             CancelLogoutButton()
         }
-        .popover(isPresented: $showEditProfile) {
-            EditUserProfileView()
+        .sheet(isPresented: $showEditProfile) {
+            EditUserProfileView(userId: userId)
         }
         .onAppear {
             listenForUserData()

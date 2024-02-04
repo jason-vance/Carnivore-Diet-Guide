@@ -33,9 +33,6 @@ struct ContentView: View {
                 LoggedOutView()
             }
         }
-        .popover(isPresented: .constant(isOnboardingRequired == .notOnboarded)) {
-            EditUserProfileView(dismissable: false)
-        }
         .onReceive(authProvider.userAuthStatePublisher) { newAuthState in
             withAnimation(.snappy) {
                 userAuthState = newAuthState
@@ -59,6 +56,9 @@ struct ContentView: View {
             RecipesTab()
             BlogTab()
             UserProfileTab()
+        }
+        .sheet(isPresented: .constant(isOnboardingRequired == .notOnboarded)) {
+            EditUserProfileView(userId: currentUserId, dismissable: false)
         }
         .onAppear {
             selectedTab = .home

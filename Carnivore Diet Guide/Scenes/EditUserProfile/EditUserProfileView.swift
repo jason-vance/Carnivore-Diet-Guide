@@ -89,8 +89,8 @@ struct EditUserProfileView: View {
         setupMockIocContainer(iocContainer)
     } content: {
         Rectangle()
-            .popover(isPresented: .constant(true), content: {
-                EditUserProfileView()
+            .sheet(isPresented: .constant(true), content: {
+                EditUserProfileView(userId: "userId")
             })
     }
 }
