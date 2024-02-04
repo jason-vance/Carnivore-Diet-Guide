@@ -63,6 +63,8 @@
 		56B88A622B6F346F00C4C0DB /* FirestorePostDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A612B6F346F00C4C0DB /* FirestorePostDoc.swift */; };
 		56B88A642B6F896000C4C0DB /* ProfileImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A632B6F896000C4C0DB /* ProfileImageUploader.swift */; };
 		56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift */; };
+		56B88A682B6FA6C100C4C0DB /* TaskAwareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A672B6FA6C100C4C0DB /* TaskAwareButton.swift */; };
+		56B88A6A2B6FA73000C4C0DB /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A692B6FA73000C4C0DB /* Shake.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* BlogPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* BlogPostView.swift */; };
 		56E305072B4A982E0098079A /* BlogPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* BlogPost.swift */; };
@@ -169,6 +171,8 @@
 		56B88A612B6F346F00C4C0DB /* FirestorePostDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorePostDoc.swift; sourceTree = "<group>"; };
 		56B88A632B6F896000C4C0DB /* ProfileImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageUploader.swift; sourceTree = "<group>"; };
 		56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseProfileImageUploader.swift; sourceTree = "<group>"; };
+		56B88A672B6FA6C100C4C0DB /* TaskAwareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAwareButton.swift; sourceTree = "<group>"; };
+		56B88A692B6FA73000C4C0DB /* Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shake.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* BlogPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPostView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* BlogPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPost.swift; sourceTree = "<group>"; };
@@ -426,6 +430,8 @@
 				56B88A3E2B6CF0E100C4C0DB /* FormFields */,
 				56B88A222B6CE7E500C4C0DB /* ImagePickerView.swift */,
 				56B88A3A2B6CEE0100C4C0DB /* ProfileImageView.swift */,
+				56B88A672B6FA6C100C4C0DB /* TaskAwareButton.swift */,
+				56B88A692B6FA73000C4C0DB /* Shake.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -713,6 +719,7 @@
 				56B88A2D2B6CE9EF00C4C0DB /* UserData.swift in Sources */,
 				56B88A552B6F275700C4C0DB /* ContentUserOnboardingStateProvider.swift in Sources */,
 				56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */,
+				56B88A6A2B6FA73000C4C0DB /* Shake.swift in Sources */,
 				56E3050E2B4B6B060098079A /* LibraryRecipeThumbnail.swift in Sources */,
 				56B88A4B2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift in Sources */,
 				566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */,
@@ -749,6 +756,7 @@
 				56B88A1F2B6CE4F100C4C0DB /* UserProfileSignOutService.swift in Sources */,
 				5676A1362B477933009C1DA6 /* Recipe.swift in Sources */,
 				56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */,
+				56B88A682B6FA6C100C4C0DB /* TaskAwareButton.swift in Sources */,
 				56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift in Sources */,
 				567E87F62B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift in Sources */,
 				56B88A5F2B6F335800C4C0DB /* FirestoreRecipeDoc.swift in Sources */,
@@ -910,7 +918,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -948,7 +956,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
