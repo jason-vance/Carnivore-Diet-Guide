@@ -20,16 +20,10 @@ struct ProfileFormUsernameField: View {
     
     private let usernameChecker = iocContainer~>ProfileFormUsernameAvailabilityChecker.self
     
-    @State var usernameAvailability: UsernameAvailability = .undetermined
-    @State var usernameStr: String = "" {
-        willSet {
-            if newValue != usernameStr {
-                usernameAvailability = .undetermined
-            }
-        }
-    }
-    
     private var username: Binding<Username?>
+    
+    @State private var usernameAvailability: UsernameAvailability = .undetermined
+    @State private var usernameStr: String = ""
     private var isUsernameValid: Bool { username.wrappedValue != nil }
     
     init(_ username: Binding<Username?>) {
@@ -53,6 +47,21 @@ struct ProfileFormUsernameField: View {
         }
     }
     
+    private func onUpdate(usernameStr: String) {
+        usernameAvailability = .undetermined
+        username.wrappedValue = Username(usernameStr)
+    }
+    
+    private func onUpdate(username: Username?) {
+        guard let username = username else { return }
+        
+        // Make sure it is not already set to the new value
+        // Otherwise changing `usernameStr` causes changes to `username` in an infinite loop
+        guard usernameStr != username.value else { return }
+        
+        usernameStr = username.value
+    }
+    
     var body: some View {
         FormTextField(
             text: $usernameStr,
@@ -65,15 +74,12 @@ struct ProfileFormUsernameField: View {
         .onAppear {
             usernameStr = username.wrappedValue?.value ?? ""
         }
-        .onChange(of: usernameStr, perform: { value in
-            guard username.wrappedValue?.value != value else { return }
-            username.wrappedValue = Username(value)
-        })
-        .onChange(of: username.wrappedValue, perform: { value in
-            guard let value = value else { return }
-            guard usernameStr != value.value else { return }
-            usernameStr = value.value
-        })
+        .onChange(of: usernameStr) { newUsernameStr in
+            onUpdate(usernameStr: newUsernameStr)
+        }
+        .onChange(of: username.wrappedValue) { newUsername in
+            onUpdate(username: newUsername)
+        }
     }
     
     @ViewBuilder func UsernameErrorView() -> some View {
