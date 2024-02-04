@@ -6,18 +6,53 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct EditUserProfileView: View {
     
-    @Environment(\.dismiss) var dismiss: DismissAction
+    private let imageUploader = iocContainer~>ProfileImageUploader.self
+    
+    var userId: String
+    
+    @Environment(\.dismiss) private var dismiss: DismissAction
     
     @State var dismissable: Bool = true
-    @State var profileImage: UIImage = .init()
-    @State var usersFullName: PersonName? = nil
-    @State var username: Username? = nil
+    @State private var profileImage: UIImage = .init()
+    @State private var fullName: PersonName? = nil
+    @State private var username: Username? = nil
     
-    private func saveProfileData() {
-        //TODO: Implement saveProfileData()
+    @State private var showError: Bool = false
+    @State private var errorMessage: String = ""
+    
+    private var isSaveDisabled: Bool {
+        profileImage == .init() || fullName == nil || username == nil
+    }
+    
+    private func saveProfileData() async -> TaskStatus {
+        //TODO: Fully implement saveProfileData()
+        do {
+            guard let fullName = fullName else { return .failed("Name is invalid") }
+            guard let username = username else { return .failed("Username is invalid") }
+            
+            let profileImageUrl = try await imageUploader.upload(profileImage: profileImage, for: userId)
+            
+            let userData = UserData(
+                id: userId,
+                fullName: fullName,
+                username: username,
+                profileImageUrl: profileImageUrl
+            )
+            
+            //try await userDataSaver.save(userData: userData)
+            return .success
+        } catch {
+            return .failed("Unable to save profile data: \(error.localizedDescription)")
+        }        
+    }
+    
+    private func show(errorMessage: String) {
+        showError = true
+        self.errorMessage = errorMessage
     }
     
     var body: some View {
@@ -29,10 +64,14 @@ struct EditUserProfileView: View {
                         VStack(spacing: 16) {
                             ProfileFormPictureField(profileImage: $profileImage)
                                 .padding(.bottom, 16)
-                            ProfileFormNameField($usersFullName)
+                            ProfileFormNameField($fullName)
                             ProfileFormUsernameField($username)
+                            Spacer()
+                            SaveButton()
+                                .padding(.top, 16)
                         }
                         .padding()
+                        .padding(.bottom, 100)
                     }
                     .overlay(alignment: .top) {
                         Rectangle()
@@ -43,10 +82,12 @@ struct EditUserProfileView: View {
             }
             .background(Color.background)
         }
+        .interactiveDismissDisabled(!dismissable)
         .presentationDetents([.large])
         .toolbar(.visible, for: .navigationBar)
         .toolbarRole(.automatic)
         .navigationBarBackButtonHidden()
+        .alert(errorMessage, isPresented: $showError) {}
     }
     
     @ViewBuilder func TitleBar() -> some View {
@@ -59,9 +100,6 @@ struct EditUserProfileView: View {
                     CancelButton()
                 }
             }
-            .overlay(alignment: .trailing) {
-                SaveButton()
-            }
             .padding()
     }
     
@@ -69,18 +107,20 @@ struct EditUserProfileView: View {
         Button {
             dismiss()
         } label: {
-            Text("Cancel")
+            Image(systemName: "chevron.backward")
+                .bold()
         }
     }
     
     @ViewBuilder func SaveButton() -> some View {
-        Button {
-            saveProfileData()
+        TaskAwareButton {
+            await saveProfileData()
         } label: {
             Text("Save")
                 .foregroundStyle(Color.background)
+                .frame(maxWidth: .infinity)
         }
-        .buttonStyle(.borderedProminent)
+        .disabled(isSaveDisabled)
     }
 }
 

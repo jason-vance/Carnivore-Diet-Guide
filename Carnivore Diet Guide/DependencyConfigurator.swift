@@ -18,7 +18,9 @@ let iocContainer: Container = {
 fileprivate func setup(iocContainer: Container) {
     //Content
     iocContainer.autoregister(ContentAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }
-    
+    //TODO: Make a FirebaseContentUserOnboardingStateProvider
+    iocContainer.autoregister(ContentUserOnboardingStateProvider.self, initializer: MockContentUserOnboardingStateProvider.init)
+
     //Sign In
     iocContainer.autoregister(SignInAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }
 
@@ -35,7 +37,9 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(UserProfileSignOutService.self) { FirebaseAuthenticationProvider.instance }
     
     //Edit User Profile
-    //TODO: Make these into something real
+    //TODO: Make a FirebaseProfileFormUsernameAvailabilityChecker
     iocContainer.autoregister(ProfileFormUsernameAvailabilityChecker.self, initializer: MockProfileFormUsernameAvailabilityChecker.init)
+    //TODO: Make a FirebaseUserProfileDataProvider
     iocContainer.autoregister(UserProfileDataProvider.self, initializer: MockUserProfileDataProvider.init)
+    iocContainer.autoregister(ProfileImageUploader.self, initializer: FirebaseProfileImageUploader.init)
 }
