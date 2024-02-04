@@ -61,6 +61,8 @@
 		56B88A5C2B6F311A00C4C0DB /* FirestoreUserDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A5B2B6F311A00C4C0DB /* FirestoreUserDoc.swift */; };
 		56B88A5F2B6F335800C4C0DB /* FirestoreRecipeDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A5E2B6F335800C4C0DB /* FirestoreRecipeDoc.swift */; };
 		56B88A622B6F346F00C4C0DB /* FirestorePostDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A612B6F346F00C4C0DB /* FirestorePostDoc.swift */; };
+		56B88A642B6F896000C4C0DB /* ProfileImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A632B6F896000C4C0DB /* ProfileImageUploader.swift */; };
+		56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* BlogPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* BlogPostView.swift */; };
 		56E305072B4A982E0098079A /* BlogPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* BlogPost.swift */; };
@@ -165,6 +167,8 @@
 		56B88A5B2B6F311A00C4C0DB /* FirestoreUserDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreUserDoc.swift; sourceTree = "<group>"; };
 		56B88A5E2B6F335800C4C0DB /* FirestoreRecipeDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRecipeDoc.swift; sourceTree = "<group>"; };
 		56B88A612B6F346F00C4C0DB /* FirestorePostDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorePostDoc.swift; sourceTree = "<group>"; };
+		56B88A632B6F896000C4C0DB /* ProfileImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageUploader.swift; sourceTree = "<group>"; };
+		56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseProfileImageUploader.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* BlogPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPostView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* BlogPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPost.swift; sourceTree = "<group>"; };
@@ -233,6 +237,7 @@
 				56B88A5D2B6F334100C4C0DB /* Recipes */,
 				56B88A5A2B6F310B00C4C0DB /* Users */,
 				56B88A182B6C5FE400C4C0DB /* FirebaseAuthentication.swift */,
+				56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -473,6 +478,7 @@
 			isa = PBXGroup;
 			children = (
 				56B88A4D2B6CFAE000C4C0DB /* ProfileFormUsernameAvailabilityChecker.swift */,
+				56B88A632B6F896000C4C0DB /* ProfileImageUploader.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -743,8 +749,10 @@
 				56B88A1F2B6CE4F100C4C0DB /* UserProfileSignOutService.swift in Sources */,
 				5676A1362B477933009C1DA6 /* Recipe.swift in Sources */,
 				56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */,
+				56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift in Sources */,
 				567E87F62B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift in Sources */,
 				56B88A5F2B6F335800C4C0DB /* FirestoreRecipeDoc.swift in Sources */,
+				56B88A642B6F896000C4C0DB /* ProfileImageUploader.swift in Sources */,
 				56025D262B6B04AB00F31A07 /* StringExtensions.swift in Sources */,
 				56B88A492B6CF89E00C4C0DB /* EditUserProfileFormData.swift in Sources */,
 				56025D202B6B006600F31A07 /* FirebaseRecipeRepository.swift in Sources */,
