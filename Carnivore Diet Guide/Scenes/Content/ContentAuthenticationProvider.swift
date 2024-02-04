@@ -13,7 +13,7 @@ protocol ContentAuthenticationProvider {
 }
 
 class MockContentAuthenticationProvider: ContentAuthenticationProvider {
-    @Published var userAuthState: UserAuthState = .loggedOut
+    @Published var userAuthState: UserAuthState = .loggedIn
     var userAuthStatePublisher: Published<UserAuthState>.Publisher { $userAuthState }
     
     @Published var currentUserId: String? = "userId"

@@ -18,7 +18,9 @@ struct ContentView: View {
     }
     
     private let authProvider = iocContainer~>ContentAuthenticationProvider.self
+    private let onboardingStateProvider = iocContainer~>ContentUserOnboardingStateProvider.self
     
+    @State private var isOnboardingRequired: UserOnboardingState = .unknown
     @State private var currentUserId: String = ""
     @State private var userAuthState: UserAuthState = .working
     @State private var selectedTab: Tab = .home
@@ -31,6 +33,9 @@ struct ContentView: View {
                 LoggedOutView()
             }
         }
+        .popover(isPresented: .constant(isOnboardingRequired == .notOnboarded)) {
+            EditUserProfileView(dismissable: false)
+        }
         .onReceive(authProvider.userAuthStatePublisher) { newAuthState in
             withAnimation(.snappy) {
                 userAuthState = newAuthState
@@ -38,6 +43,9 @@ struct ContentView: View {
         }
         .onReceive(authProvider.currentUserIdPublisher) { newUserId in
             currentUserId = newUserId ?? ""
+        }
+        .onReceive(onboardingStateProvider.userOnboardingStatePublisher) { newState in
+            isOnboardingRequired = newState
         }
     }
     
@@ -94,7 +102,7 @@ struct ContentView: View {
     }
 }
 
-#Preview("Logged Out") {
+#Preview("Logged In") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
@@ -102,13 +110,27 @@ struct ContentView: View {
     }
 }
 
-#Preview("Logged In") {
+#Preview("Logged Out") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
         
         iocContainer.autoregister(ContentAuthenticationProvider.self) {
             let mock = MockContentAuthenticationProvider()
-            mock.userAuthState = .loggedIn
+            mock.userAuthState = .loggedOut
+            return mock
+        }
+    } content: {
+        ContentView()
+    }
+}
+
+#Preview("Not Onboarded") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+        
+        iocContainer.autoregister(ContentUserOnboardingStateProvider.self) {
+            let mock = MockContentUserOnboardingStateProvider()
+            mock.userOnboardingState = .notOnboarded
             return mock
         }
     } content: {

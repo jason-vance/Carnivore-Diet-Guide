@@ -16,14 +16,14 @@ struct UserProfileView: View {
     
     var userId: String
     
-    @State private var userProfileData: UserProfileData = .empty
+    @State private var userData: UserData = .sample
     
     @State private var showEditProfile: Bool = false
     @State private var showLogoutDialog: Bool = false
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
-    private func listenForUserProfileData() {
+    private func listenForUserData() {
         userDataProvider.startListeningToUser(withId: userId)
     }
     
@@ -73,10 +73,10 @@ struct UserProfileView: View {
             EditUserProfileView()
         }
         .onAppear {
-            listenForUserProfileData()
+            listenForUserData()
         }
-        .onReceive(userDataProvider.userProfileDataPublisher) { newData in
-            userProfileData = newData
+        .onReceive(userDataProvider.userDataPublisher) { newData in
+            userData = newData
         }
     }
     
@@ -118,17 +118,17 @@ struct UserProfileView: View {
     }
     
     @ViewBuilder func ProfileImage() -> some View {
-        ProfileImageView(userProfileData.profileImageUrl)
+        ProfileImageView(userData.profileImageUrl)
     }
     
     @ViewBuilder func FullName() -> some View {
-        Text(userProfileData.fullName)
+        Text(userData.fullName.value)
             .font(.system(size: 32, weight: .bold))
             .foregroundStyle(Color.text)
     }
     
     @ViewBuilder func Username() -> some View {
-        Text(userProfileData.username)
+        Text(userData.username.value)
             .font(.system(size: 18))
             .foregroundStyle(Color.text)
     }

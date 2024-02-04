@@ -12,7 +12,8 @@ import SwinjectAutoregistration
 func setupMockIocContainer(_ iocContainer: Container) {
     //Content
     iocContainer.autoregister(ContentAuthenticationProvider.self, initializer: MockContentAuthenticationProvider.init)
-    
+    iocContainer.autoregister(ContentUserOnboardingStateProvider.self, initializer: MockContentUserOnboardingStateProvider.init)
+
     //Sign In
     iocContainer.autoregister(SignInAuthenticationProvider.self, initializer: MockSignInAuthenticationProvider.init)
 

@@ -8,16 +8,16 @@
 import Foundation
 
 protocol UserProfileDataProvider {
-    var userProfileDataPublisher: Published<UserProfileData>.Publisher { get }
+    var userDataPublisher: Published<UserData>.Publisher { get }
     func startListeningToUser(withId id: String)
 }
 
 class MockUserProfileDataProvider: UserProfileDataProvider {
     
-    @Published var userProfileData: UserProfileData = .sample
-    var userProfileDataPublisher: Published<UserProfileData>.Publisher { $userProfileData }
+    @Published var userData: UserData = .sample
+    var userDataPublisher: Published<UserData>.Publisher { $userData }
     
     func startListeningToUser(withId id: String) {
-        userProfileData = userProfileData
+        userData = userData
     }
 }

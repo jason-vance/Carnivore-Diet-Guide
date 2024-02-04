@@ -596,6 +596,9 @@
         }
       }
     },
+    "Create Profile" : {
+
+    },
     "Diet Guide" : {
       "comment" : "Second line of the app name on the home screen. ie\n\"Carnivore\nDiet Guide\"",
       "localizations" : {

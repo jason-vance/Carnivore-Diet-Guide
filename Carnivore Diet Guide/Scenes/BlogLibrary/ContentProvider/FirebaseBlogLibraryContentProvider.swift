@@ -9,13 +9,13 @@ import Foundation
 
 class FirebaseBlogLibraryContentProvider: BlogLibraryContentProvider {
     
-    let blogPostRepo = FirebaseBlogPostRepository()
+    let blogPostRepo = FirebasePostRepository()
     
     func loadBlogPosts(onUpdate: @escaping ([BlogPost]) -> (), onError: @escaping (Error) -> ()) {
         Task {
             do {
-                let blogPosts = try await blogPostRepo.getPublishedBlogPostsNewestToOldest()
-                onUpdate(blogPosts)
+                let posts = try await blogPostRepo.getPublishedPostsNewestToOldest()
+                onUpdate(posts)
             } catch {
                 print(error)
                 onError(error)

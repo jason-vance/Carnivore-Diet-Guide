@@ -77,7 +77,7 @@ struct ProfileFormPictureField: View {
         ProfileFormPictureField(
             profileImage: image,
             profileImageSize: 200,
-            profileImageUrl: UserProfileData.sample.profileImageUrl
+            profileImageUrl: UserData.sample.profileImageUrl
         )
     }
 }

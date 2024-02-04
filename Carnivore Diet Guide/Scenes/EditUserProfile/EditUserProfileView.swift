@@ -11,6 +11,7 @@ struct EditUserProfileView: View {
     
     @Environment(\.dismiss) var dismiss: DismissAction
     
+    @State var dismissable: Bool = true
     @State var profileImage: UIImage = .init()
     @State var usersFullName: PersonName? = nil
     @State var username: Username? = nil
@@ -49,12 +50,14 @@ struct EditUserProfileView: View {
     }
     
     @ViewBuilder func TitleBar() -> some View {
-        Text("Edit Profile")
+        Text(username == nil ? "Create Profile" : "Edit Profile")
             .bold()
             .foregroundStyle(Color.accent)
             .frame(maxWidth: .infinity)
             .overlay(alignment: .leading) {
-                CancelButton()
+                if dismissable {
+                    CancelButton()
+                }
             }
             .overlay(alignment: .trailing) {
                 SaveButton()

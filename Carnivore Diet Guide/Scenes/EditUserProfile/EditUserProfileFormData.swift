@@ -11,11 +11,10 @@ struct EditUserProfileFormData {
     var id: String
     var fullName: PersonName?
     var username: Username?
-    var emailAddress: EmailAddress?
-    var profileImageUrl: URL?
+    var profilePicUrl: URL?
     
     var isValid: Bool {
-        fullName != nil && username != nil && emailAddress != nil && profileImageUrl != nil
+        fullName != nil && username != nil && profilePicUrl != nil
     }
 }
 
@@ -24,15 +23,13 @@ extension EditUserProfileFormData{
         id: "",
         fullName: nil,
         username: nil,
-        emailAddress: nil,
-        profileImageUrl: nil
+        profilePicUrl: nil
     )
     
     static let sample = EditUserProfileFormData(
         id: "id",
         fullName: PersonName("Clive Rosfield"),
         username: Username("ifrit"),
-        emailAddress: EmailAddress("ifrit@rosfield.com"),
-        profileImageUrl: URL(string:"https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/06/final-fantasy-xvi-clive-profile.jpg")
+        profilePicUrl: URL(string:"https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/06/final-fantasy-xvi-clive-profile.jpg")
     )
 }
