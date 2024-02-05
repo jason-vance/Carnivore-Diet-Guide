@@ -48,11 +48,13 @@ struct UserProfileView: View {
                     VStack {
                         ProfileImage()
                         FullName()
-                        Username()
-                        EditProfileButton()
-//                        FavoriteRecipesButton()
-//                        BookmarkedArticlesButton()
-//                        SettingsButton()
+                        VStack {
+                            EditProfileButton()
+//                            FavoriteRecipesButton()
+//                            BookmarkedArticlesButton()
+//                            SettingsButton()
+                        }
+                        .padding(.bottom, 32)
                         LogoutButton()
                     }
                     .padding()
@@ -127,12 +129,6 @@ struct UserProfileView: View {
             .foregroundStyle(Color.text)
     }
     
-    @ViewBuilder func Username() -> some View {
-        Text(userData.username?.value ?? "<Username Unknown>")
-            .font(.system(size: 18))
-            .foregroundStyle(Color.text)
-    }
-    
     @ViewBuilder func EditProfileButton() -> some View {
         Button {
             showEditProfile = true
@@ -179,7 +175,6 @@ struct UserProfileView: View {
         ) {
             showLogoutDialog = true
         }
-        .padding(.top, 32)
     }
     
     @ViewBuilder func ProfileNavigationLink<Content>(

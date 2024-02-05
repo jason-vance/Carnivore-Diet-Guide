@@ -43,8 +43,6 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(UserDataProvider.self, initializer: FirestoreUserDataProvider.init)
 
     //Edit User Profile
-    //TODO: Make a FirebaseProfileFormUsernameAvailabilityChecker
-    iocContainer.autoregister(UsernameAvailabilityChecker.self, initializer: MockUsernameAvailabilityChecker.init)
     iocContainer.autoregister(CurrentUserDataProvider.self, initializer: FirebaseCurrentUserDataProvider.init)
     iocContainer.autoregister(ProfileImageUploader.self, initializer: FirebaseProfileImageUploader.init)
     iocContainer.autoregister(UserDataSaver.self, initializer: FirebaseUserRepository.init)

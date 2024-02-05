@@ -18,7 +18,6 @@ struct EditUserProfileView: View {
     private let userDataProvider = iocContainer~>CurrentUserDataProvider.self
     private let imageUploader = iocContainer~>ProfileImageUploader.self
     private let userDataSaver = iocContainer~>UserDataSaver.self
-    private let usernameAvailabilityChecker = iocContainer~>UsernameAvailabilityChecker.self
     
     var userId: String
     
@@ -28,7 +27,6 @@ struct EditUserProfileView: View {
     @State private var profileImage: UIImage = .init()
     @State private var profileImageUrl: URL? = nil
     @State private var fullName: PersonName? = nil
-    @State private var username: Username? = nil
     @State private var initializationState: InitializationState = .notInitialized
 
     @State private var showBlockingSpinner: Bool = false
@@ -42,7 +40,6 @@ struct EditUserProfileView: View {
                 
                 profileImageUrl = userData.profileImageUrl
                 fullName = userData.fullName
-                username = userData.username
                 
                 initializationState = .initialized
             } catch {
@@ -52,22 +49,16 @@ struct EditUserProfileView: View {
     }
     
     private var isSaveDisabled: Bool {
-        (profileImage == .init() && profileImageUrl == nil) || fullName == nil || username == nil
+        (profileImage == .init() && profileImageUrl == nil) || fullName == nil
     }
     
     private func saveProfileData() async -> TaskStatus {
         do {
             guard let fullName = fullName else { return .failed("Name is invalid") }
-            guard let username = username else { return .failed("Username is invalid") }
-            
-            guard try await usernameAvailabilityChecker.checkIsAvailable(username: username) else {
-                return .failed("Username is not available")
-            }
                         
             var userData = UserData(
                 id: userId,
-                fullName: fullName,
-                username: username
+                fullName: fullName
             )
             
             if profileImage != .init() {
@@ -124,7 +115,6 @@ struct EditUserProfileView: View {
                         )
                         .padding(.bottom, 16)
                         ProfileFormNameField($fullName)
-                        ProfileFormUsernameField($username)
                         Spacer()
                         SaveButton()
                             .padding(.top, 16)
@@ -142,7 +132,7 @@ struct EditUserProfileView: View {
     }
     
     @ViewBuilder func TitleBar() -> some View {
-        Text(username == nil ? "Create Profile" : "Edit Profile")
+        Text(profileImageUrl == nil ? "Create Profile" : "Edit Profile")
             .bold()
             .foregroundStyle(Color.accent)
             .frame(maxWidth: .infinity)

@@ -44,7 +44,6 @@
 		56B88A2B2B6CE94600C4C0DB /* ProfileFormPictureField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A2A2B6CE94600C4C0DB /* ProfileFormPictureField.swift */; };
 		56B88A2D2B6CE9EF00C4C0DB /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A2C2B6CE9EF00C4C0DB /* UserData.swift */; };
 		56B88A302B6CEA7000C4C0DB /* PersonName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A2F2B6CEA7000C4C0DB /* PersonName.swift */; };
-		56B88A322B6CEA7C00C4C0DB /* Username.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A312B6CEA7C00C4C0DB /* Username.swift */; };
 		56B88A342B6CEA8700C4C0DB /* EmailAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A332B6CEA8700C4C0DB /* EmailAddress.swift */; };
 		56B88A372B6CEC8D00C4C0DB /* ValueOf in Frameworks */ = {isa = PBXBuildFile; productRef = 56B88A362B6CEC8D00C4C0DB /* ValueOf */; };
 		56B88A392B6CED5600C4C0DB /* StatefulPreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A382B6CED5600C4C0DB /* StatefulPreviewContainer.swift */; };
@@ -54,8 +53,6 @@
 		56B88A422B6CF10700C4C0DB /* FormFieldOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A412B6CF10700C4C0DB /* FormFieldOverlay.swift */; };
 		56B88A442B6CF14000C4C0DB /* FormFieldErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A432B6CF14000C4C0DB /* FormFieldErrorView.swift */; };
 		56B88A472B6CF53A00C4C0DB /* EditUserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A462B6CF53A00C4C0DB /* EditUserProfileView.swift */; };
-		56B88A4B2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A4A2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift */; };
-		56B88A4E2B6CFAE000C4C0DB /* UsernameAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A4D2B6CFAE000C4C0DB /* UsernameAvailabilityChecker.swift */; };
 		56B88A552B6F275700C4C0DB /* UserOnboardingStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A542B6F275700C4C0DB /* UserOnboardingStateProvider.swift */; };
 		56B88A572B6F27DE00C4C0DB /* UserOnboardingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A562B6F27DE00C4C0DB /* UserOnboardingState.swift */; };
 		56B88A592B6F2C2C00C4C0DB /* FirebaseUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A582B6F2C2C00C4C0DB /* FirebaseUserRepository.swift */; };
@@ -159,7 +156,6 @@
 		56B88A2A2B6CE94600C4C0DB /* ProfileFormPictureField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFormPictureField.swift; sourceTree = "<group>"; };
 		56B88A2C2B6CE9EF00C4C0DB /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		56B88A2F2B6CEA7000C4C0DB /* PersonName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonName.swift; sourceTree = "<group>"; };
-		56B88A312B6CEA7C00C4C0DB /* Username.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Username.swift; sourceTree = "<group>"; };
 		56B88A332B6CEA8700C4C0DB /* EmailAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAddress.swift; sourceTree = "<group>"; };
 		56B88A382B6CED5600C4C0DB /* StatefulPreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewContainer.swift; sourceTree = "<group>"; };
 		56B88A3A2B6CEE0100C4C0DB /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
@@ -168,8 +164,6 @@
 		56B88A412B6CF10700C4C0DB /* FormFieldOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFieldOverlay.swift; sourceTree = "<group>"; };
 		56B88A432B6CF14000C4C0DB /* FormFieldErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFieldErrorView.swift; sourceTree = "<group>"; };
 		56B88A462B6CF53A00C4C0DB /* EditUserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileView.swift; sourceTree = "<group>"; };
-		56B88A4A2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFormUsernameField.swift; sourceTree = "<group>"; };
-		56B88A4D2B6CFAE000C4C0DB /* UsernameAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameAvailabilityChecker.swift; sourceTree = "<group>"; };
 		56B88A542B6F275700C4C0DB /* UserOnboardingStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOnboardingStateProvider.swift; sourceTree = "<group>"; };
 		56B88A562B6F27DE00C4C0DB /* UserOnboardingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOnboardingState.swift; sourceTree = "<group>"; };
 		56B88A582B6F2C2C00C4C0DB /* FirebaseUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserRepository.swift; sourceTree = "<group>"; };
@@ -464,7 +458,6 @@
 			children = (
 				56B88A2A2B6CE94600C4C0DB /* ProfileFormPictureField.swift */,
 				56B88A3C2B6CF0B800C4C0DB /* ProfileFormNameField.swift */,
-				56B88A4A2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift */,
 			);
 			path = FormFields;
 			sourceTree = "<group>";
@@ -473,7 +466,6 @@
 			isa = PBXGroup;
 			children = (
 				56B88A2F2B6CEA7000C4C0DB /* PersonName.swift */,
-				56B88A312B6CEA7C00C4C0DB /* Username.swift */,
 				56B88A332B6CEA8700C4C0DB /* EmailAddress.swift */,
 				56B88A0F2B6C50AE00C4C0DB /* UserAuthState.swift */,
 				56B88A562B6F27DE00C4C0DB /* UserOnboardingState.swift */,
@@ -505,7 +497,6 @@
 		56B88A4C2B6CFAD700C4C0DB /* Workers */ = {
 			isa = PBXGroup;
 			children = (
-				56B88A4D2B6CFAE000C4C0DB /* UsernameAvailabilityChecker.swift */,
 				56B88A632B6F896000C4C0DB /* ProfileImageUploader.swift */,
 				56B88A6B2B70D51D00C4C0DB /* UserDataSaver.swift */,
 			);
@@ -757,7 +748,6 @@
 				56B88A772B70DCFD00C4C0DB /* UserDataProvider.swift in Sources */,
 				56B88A6A2B6FA73000C4C0DB /* Shake.swift in Sources */,
 				56E3050E2B4B6B060098079A /* LibraryRecipeThumbnail.swift in Sources */,
-				56B88A4B2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift in Sources */,
 				566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */,
 				56B88A5C2B6F311A00C4C0DB /* FirestoreUserDoc.swift in Sources */,
 				56B88A142B6C557B00C4C0DB /* ViewExtensions.swift in Sources */,
@@ -765,7 +755,6 @@
 				5677542C2B70E55C0094EB8C /* CurrentUserDataProvider.swift in Sources */,
 				5677542E2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift in Sources */,
 				56025D1B2B6AED1900F31A07 /* HomeViewContent.swift in Sources */,
-				56B88A322B6CEA7C00C4C0DB /* Username.swift in Sources */,
 				56B88A3D2B6CF0B800C4C0DB /* ProfileFormNameField.swift in Sources */,
 				56E305072B4A982E0098079A /* BlogPost.swift in Sources */,
 				56B88A6C2B70D51D00C4C0DB /* UserDataSaver.swift in Sources */,
@@ -806,7 +795,6 @@
 				56B88A6F2B70DB0600C4C0DB /* DefaultOnboardingStateProvider.swift in Sources */,
 				56025D202B6B006600F31A07 /* FirebaseRecipeRepository.swift in Sources */,
 				56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */,
-				56B88A4E2B6CFAE000C4C0DB /* UsernameAvailabilityChecker.swift in Sources */,
 				56B88A162B6C5AA400C4C0DB /* ContentAuthenticationProvider.swift in Sources */,
 				56B88A622B6F346F00C4C0DB /* FirestorePostDoc.swift in Sources */,
 				56E305052B4A55E00098079A /* BlogPostView.swift in Sources */,

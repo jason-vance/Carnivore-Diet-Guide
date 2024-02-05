@@ -39,7 +39,7 @@ class FirestoreUserDataProvider: UserDataProvider {
             if let userData = userDoc?.toUserData() {
                 self.userData = userData
             } else {
-                self.userData = UserData(id: id, fullName: nil, username: nil, profileImageUrl: nil)
+                self.userData = UserData(id: id, fullName: nil, profileImageUrl: nil)
             }
         }
     }
