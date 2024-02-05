@@ -1,5 +1,5 @@
 //
-//  ProfileFormUsernameAvailabilityChecker.swift
+//  UsernameAvailabilityChecker.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 2/2/24.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol ProfileFormUsernameAvailabilityChecker {
+protocol UsernameAvailabilityChecker {
     func checkIsAvailable(username: Username) async throws -> Bool
 }
 
-class MockProfileFormUsernameAvailabilityChecker: ProfileFormUsernameAvailabilityChecker {
+class MockUsernameAvailabilityChecker: UsernameAvailabilityChecker {
     
-    var returnsIsAvailable = true
+    var returnsIsAvailable = false
     var willThrow = false
     
     func checkIsAvailable(username: Username) async throws -> Bool {

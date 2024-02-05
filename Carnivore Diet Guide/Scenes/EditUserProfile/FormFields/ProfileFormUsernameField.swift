@@ -18,7 +18,7 @@ struct ProfileFormUsernameField: View {
         case error
     }
     
-    private let usernameChecker = iocContainer~>ProfileFormUsernameAvailabilityChecker.self
+    private let usernameChecker = iocContainer~>UsernameAvailabilityChecker.self
     
     private var username: Binding<Username?>
     

@@ -18,6 +18,7 @@ struct EditUserProfileView: View {
     private let userDataProvider = iocContainer~>CurrentUserDataProvider.self
     private let imageUploader = iocContainer~>ProfileImageUploader.self
     private let userDataSaver = iocContainer~>UserDataSaver.self
+    private let usernameAvailabilityChecker = iocContainer~>UsernameAvailabilityChecker.self
     
     var userId: String
     
@@ -59,7 +60,9 @@ struct EditUserProfileView: View {
             guard let fullName = fullName else { return .failed("Name is invalid") }
             guard let username = username else { return .failed("Username is invalid") }
             
-            //TODO: Verify username is available
+            guard try await usernameAvailabilityChecker.checkIsAvailable(username: username) else {
+                return .failed("Username is not available")
+            }
                         
             var userData = UserData(
                 id: userId,

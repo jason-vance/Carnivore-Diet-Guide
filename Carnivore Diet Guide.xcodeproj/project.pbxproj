@@ -55,7 +55,7 @@
 		56B88A442B6CF14000C4C0DB /* FormFieldErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A432B6CF14000C4C0DB /* FormFieldErrorView.swift */; };
 		56B88A472B6CF53A00C4C0DB /* EditUserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A462B6CF53A00C4C0DB /* EditUserProfileView.swift */; };
 		56B88A4B2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A4A2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift */; };
-		56B88A4E2B6CFAE000C4C0DB /* ProfileFormUsernameAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A4D2B6CFAE000C4C0DB /* ProfileFormUsernameAvailabilityChecker.swift */; };
+		56B88A4E2B6CFAE000C4C0DB /* UsernameAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A4D2B6CFAE000C4C0DB /* UsernameAvailabilityChecker.swift */; };
 		56B88A502B6E549D00C4C0DB /* UserProfileDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A4F2B6E549D00C4C0DB /* UserProfileDataProvider.swift */; };
 		56B88A552B6F275700C4C0DB /* UserOnboardingStateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A542B6F275700C4C0DB /* UserOnboardingStateProvider.swift */; };
 		56B88A572B6F27DE00C4C0DB /* UserOnboardingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A562B6F27DE00C4C0DB /* UserOnboardingState.swift */; };
@@ -170,7 +170,7 @@
 		56B88A432B6CF14000C4C0DB /* FormFieldErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFieldErrorView.swift; sourceTree = "<group>"; };
 		56B88A462B6CF53A00C4C0DB /* EditUserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserProfileView.swift; sourceTree = "<group>"; };
 		56B88A4A2B6CFA0500C4C0DB /* ProfileFormUsernameField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFormUsernameField.swift; sourceTree = "<group>"; };
-		56B88A4D2B6CFAE000C4C0DB /* ProfileFormUsernameAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFormUsernameAvailabilityChecker.swift; sourceTree = "<group>"; };
+		56B88A4D2B6CFAE000C4C0DB /* UsernameAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameAvailabilityChecker.swift; sourceTree = "<group>"; };
 		56B88A4F2B6E549D00C4C0DB /* UserProfileDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileDataProvider.swift; sourceTree = "<group>"; };
 		56B88A542B6F275700C4C0DB /* UserOnboardingStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOnboardingStateProvider.swift; sourceTree = "<group>"; };
 		56B88A562B6F27DE00C4C0DB /* UserOnboardingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOnboardingState.swift; sourceTree = "<group>"; };
@@ -508,7 +508,7 @@
 		56B88A4C2B6CFAD700C4C0DB /* Workers */ = {
 			isa = PBXGroup;
 			children = (
-				56B88A4D2B6CFAE000C4C0DB /* ProfileFormUsernameAvailabilityChecker.swift */,
+				56B88A4D2B6CFAE000C4C0DB /* UsernameAvailabilityChecker.swift */,
 				56B88A632B6F896000C4C0DB /* ProfileImageUploader.swift */,
 				56B88A6B2B70D51D00C4C0DB /* UserDataSaver.swift */,
 			);
@@ -817,7 +817,7 @@
 				56B88A6F2B70DB0600C4C0DB /* DefaultOnboardingStateProvider.swift in Sources */,
 				56025D202B6B006600F31A07 /* FirebaseRecipeRepository.swift in Sources */,
 				56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */,
-				56B88A4E2B6CFAE000C4C0DB /* ProfileFormUsernameAvailabilityChecker.swift in Sources */,
+				56B88A4E2B6CFAE000C4C0DB /* UsernameAvailabilityChecker.swift in Sources */,
 				56B88A162B6C5AA400C4C0DB /* ContentAuthenticationProvider.swift in Sources */,
 				56B88A622B6F346F00C4C0DB /* FirestorePostDoc.swift in Sources */,
 				56B88A502B6E549D00C4C0DB /* UserProfileDataProvider.swift in Sources */,
