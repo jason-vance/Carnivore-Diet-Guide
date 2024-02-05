@@ -10,6 +10,9 @@ import SwinjectAutoregistration
 
 struct EditUserProfileView: View {
     
+    //TODO: Dismiss on successful save
+    
+    private let userDataProvider = iocContainer~>CurrentUserDataProvider.self
     private let imageUploader = iocContainer~>ProfileImageUploader.self
     private let userDataSaver = iocContainer~>UserDataSaver.self
     
@@ -19,31 +22,50 @@ struct EditUserProfileView: View {
     
     @State var dismissable: Bool = true
     @State private var profileImage: UIImage = .init()
+    @State private var profileImageUrl: URL? = nil
     @State private var fullName: PersonName? = nil
     @State private var username: Username? = nil
     
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
+    private func loadExistingUserData() {
+        Task {
+            do {
+                //TODO: Block UI while loading
+                let userData = try await userDataProvider.fetchCurrentUserData()
+                
+                profileImageUrl = userData.profileImageUrl
+                fullName = userData.fullName
+                username = userData.username
+            } catch {
+                show(errorMessage: "Could not load existing user data. \(error.localizedDescription)")
+            }
+        }
+    }
+    
     private var isSaveDisabled: Bool {
-        profileImage == .init() || fullName == nil || username == nil
+        (profileImage == .init() && profileImageUrl == nil) || fullName == nil || username == nil
     }
     
     private func saveProfileData() async -> TaskStatus {
-        //TODO: Fully implement saveProfileData()
         do {
             guard let fullName = fullName else { return .failed("Name is invalid") }
             guard let username = username else { return .failed("Username is invalid") }
             
-            let profileImageUrl = try await imageUploader.upload(profileImage: profileImage, for: userId)
-            
-            let userData = UserData(
+            //TODO: Verify username is available
+                        
+            var userData = UserData(
                 id: userId,
                 fullName: fullName,
-                username: username,
-                profileImageUrl: profileImageUrl
+                username: username
             )
             
+            if profileImage != .init() {
+                let url = try await imageUploader.upload(profileImage: profileImage, for: userData.id)
+                userData.profileImageUrl = url
+            }
+
             try await userDataSaver.save(userData: userData)
             return .success
         } catch {
@@ -63,8 +85,11 @@ struct EditUserProfileView: View {
                     TitleBar()
                     ScrollView {
                         VStack(spacing: 16) {
-                            ProfileFormPictureField(profileImage: $profileImage)
-                                .padding(.bottom, 16)
+                            ProfileFormPictureField(
+                                profileImage: $profileImage,
+                                profileImageUrl: profileImageUrl
+                            )
+                            .padding(.bottom, 16)
                             ProfileFormNameField($fullName)
                             ProfileFormUsernameField($username)
                             Spacer()
@@ -88,6 +113,9 @@ struct EditUserProfileView: View {
         .toolbarRole(.automatic)
         .navigationBarBackButtonHidden()
         .alert(errorMessage, isPresented: $showError) {}
+        .onAppear {
+            loadExistingUserData()
+        }
     }
     
     @ViewBuilder func TitleBar() -> some View {

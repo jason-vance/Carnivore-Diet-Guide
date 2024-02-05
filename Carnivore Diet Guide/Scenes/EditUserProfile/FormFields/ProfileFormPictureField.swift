@@ -15,6 +15,9 @@ struct ProfileFormPictureField: View {
     
     @State private var showImagePicker: Bool = false
     
+    private var padding: CGFloat { 4 }
+    private var noUrlImageSize: CGFloat { profileImageSize - (2 * padding) }
+    
     var body: some View {
         Button {
             showImagePicker = true
@@ -32,9 +35,9 @@ struct ProfileFormPictureField: View {
             Image(uiImage: profileImage)
                 .resizable()
                 .scaledToFill()
-                .frame(width: profileImageSize, height: profileImageSize)
+                .frame(width: noUrlImageSize, height: noUrlImageSize)
                 .clipShape(Circle())
-                .padding(4)
+                .padding(padding)
                 .background(Circle().fill(Color.text))
         } else if profileImageUrl != nil {
             ProfileImageView(
@@ -44,9 +47,9 @@ struct ProfileFormPictureField: View {
         } else {
             Image(systemName: "person.crop.circle.fill")
                 .resizable()
-                .frame(width: profileImageSize, height: profileImageSize)
+                .frame(width: noUrlImageSize, height: noUrlImageSize)
                 .clipShape(Circle())
-                .padding(4)
+                .padding(padding)
                 .background(Circle().fill(Color.text))
         }
     }
