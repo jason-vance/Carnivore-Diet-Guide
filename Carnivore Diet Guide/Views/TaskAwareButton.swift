@@ -21,7 +21,7 @@ struct TaskAwareButton<Label: View>: View {
     var action: () async -> TaskStatus
     var label: () -> Label
     
-    @State private var isLoading: Bool = false
+    @State private var isWorking: Bool = false
     @State private var taskStatus: TaskStatus = .idle
     @State private var isFailed: Bool = false
     @State private var wiggle: Bool = false
@@ -46,7 +46,7 @@ struct TaskAwareButton<Label: View>: View {
     var body: some View {
         Button {
             Task {
-                isLoading = true
+                isWorking = true
                 taskStatus = await action()
                 
                 switch taskStatus {
@@ -64,15 +64,15 @@ struct TaskAwareButton<Label: View>: View {
                 showPopup = isFailed
                 
                 taskStatus = .idle
-                isLoading = false
+                isWorking = false
             }
         } label: {
             label()
                 .padding()
                 .foregroundColor(contentColor)
-                .opacity(isLoading ? 0 : 1)
+                .opacity(isWorking ? 0 : 1)
                 .lineLimit(1)
-                .frame(width: isLoading ? 48 : nil, height: 48)
+                .frame(width: isWorking ? 48 : nil, height: 48)
                 .background {
                     RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
                         .fill(taskStatus == .idle
@@ -83,7 +83,7 @@ struct TaskAwareButton<Label: View>: View {
                 }
                 .clipped()  // So shadows only apply to capsule shape
                 .overlay {
-                    if isLoading && taskStatus == .idle {
+                    if isWorking && taskStatus == .idle {
                         ProgressView()
                             .tint(contentColor)
                     }
@@ -96,13 +96,13 @@ struct TaskAwareButton<Label: View>: View {
                     }
                 }
         }
-        .disabled(isLoading)
+        .disabled(isWorking)
         .errorPopover(
             isPresented: $showPopup,
             text: popupMessage,
             showAsAlert: showErrorsAsAlert
         )
-        .animation(.snappy(), value: isLoading)
+        .animation(.snappy(), value: isWorking)
         .animation(.snappy(), value: taskStatus)
         .shake($wiggle)
     }
