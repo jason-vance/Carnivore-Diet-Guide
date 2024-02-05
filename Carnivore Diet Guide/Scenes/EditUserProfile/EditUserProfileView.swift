@@ -11,6 +11,7 @@ import SwinjectAutoregistration
 struct EditUserProfileView: View {
     
     private let imageUploader = iocContainer~>ProfileImageUploader.self
+    private let userDataSaver = iocContainer~>UserDataSaver.self
     
     var userId: String
     
@@ -43,7 +44,7 @@ struct EditUserProfileView: View {
                 profileImageUrl: profileImageUrl
             )
             
-            //try await userDataSaver.save(userData: userData)
+            try await userDataSaver.save(userData: userData)
             return .success
         } catch {
             return .failed("Unable to save profile data: \(error.localizedDescription)")

@@ -20,7 +20,6 @@ class FirebaseUserRepository {
         } else {
             try await createUserDocument(with: userData)
         }
-        //TODO: Feature: Add search metadata to user doc
     }
     
     private func createUserDocument(with userData: UserData) async throws {
@@ -65,5 +64,11 @@ class FirebaseUserRepository {
     func fetchUserDocument(withId id: String) async throws -> FirestoreUserDoc? {
         let snapshot = try await usersCollection.document(id).getDocument()
         return try? snapshot.data(as: FirestoreUserDoc.self)
+    }
+}
+
+extension FirebaseUserRepository: UserDataSaver {
+    func save(userData: UserData) async throws {
+        try await createOrUpdateUserDocument(with: userData)
     }
 }

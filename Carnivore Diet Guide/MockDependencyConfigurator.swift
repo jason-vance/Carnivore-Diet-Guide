@@ -30,4 +30,5 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(ProfileFormUsernameAvailabilityChecker.self, initializer: MockProfileFormUsernameAvailabilityChecker.init)
     iocContainer.autoregister(UserProfileDataProvider.self, initializer: MockUserProfileDataProvider.init)
     iocContainer.autoregister(ProfileImageUploader.self, initializer: MockProfileImageUploader.init)
+    iocContainer.autoregister(UserDataSaver.self, initializer: MockUserDataSaver.init)
 }

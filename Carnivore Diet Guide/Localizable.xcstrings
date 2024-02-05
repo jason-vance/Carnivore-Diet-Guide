@@ -531,6 +531,9 @@
         }
       }
     },
+    "Continue" : {
+
+    },
     "Cooking Steps" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -671,6 +674,9 @@
 
     },
     "Error" : {
+
+    },
+    "Failing" : {
 
     },
     "Fat" : {
@@ -1596,6 +1602,12 @@
       }
     },
     "Settings" : {
+
+    },
+    "Shake Me" : {
+
+    },
+    "Succeeding" : {
 
     },
     "The Carnivore Diet Guide Team" : {

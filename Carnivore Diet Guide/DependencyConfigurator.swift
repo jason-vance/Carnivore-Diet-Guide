@@ -42,4 +42,5 @@ fileprivate func setup(iocContainer: Container) {
     //TODO: Make a FirebaseUserProfileDataProvider
     iocContainer.autoregister(UserProfileDataProvider.self, initializer: MockUserProfileDataProvider.init)
     iocContainer.autoregister(ProfileImageUploader.self, initializer: FirebaseProfileImageUploader.init)
+    iocContainer.autoregister(UserDataSaver.self, initializer: FirebaseUserRepository.init)
 }

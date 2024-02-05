@@ -65,6 +65,7 @@
 		56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift */; };
 		56B88A682B6FA6C100C4C0DB /* TaskAwareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A672B6FA6C100C4C0DB /* TaskAwareButton.swift */; };
 		56B88A6A2B6FA73000C4C0DB /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A692B6FA73000C4C0DB /* Shake.swift */; };
+		56B88A6C2B70D51D00C4C0DB /* UserDataSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A6B2B70D51D00C4C0DB /* UserDataSaver.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* BlogPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* BlogPostView.swift */; };
 		56E305072B4A982E0098079A /* BlogPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* BlogPost.swift */; };
@@ -173,6 +174,7 @@
 		56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseProfileImageUploader.swift; sourceTree = "<group>"; };
 		56B88A672B6FA6C100C4C0DB /* TaskAwareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAwareButton.swift; sourceTree = "<group>"; };
 		56B88A692B6FA73000C4C0DB /* Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shake.swift; sourceTree = "<group>"; };
+		56B88A6B2B70D51D00C4C0DB /* UserDataSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataSaver.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* BlogPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPostView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* BlogPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogPost.swift; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 			children = (
 				56B88A4D2B6CFAE000C4C0DB /* ProfileFormUsernameAvailabilityChecker.swift */,
 				56B88A632B6F896000C4C0DB /* ProfileImageUploader.swift */,
+				56B88A6B2B70D51D00C4C0DB /* UserDataSaver.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -730,6 +733,7 @@
 				56B88A322B6CEA7C00C4C0DB /* Username.swift in Sources */,
 				56B88A3D2B6CF0B800C4C0DB /* ProfileFormNameField.swift in Sources */,
 				56E305072B4A982E0098079A /* BlogPost.swift in Sources */,
+				56B88A6C2B70D51D00C4C0DB /* UserDataSaver.swift in Sources */,
 				56E305112B4B71400098079A /* BlogLibraryView.swift in Sources */,
 				56B88A402B6CF0F100C4C0DB /* FormTextField.swift in Sources */,
 				56B88A472B6CF53A00C4C0DB /* EditUserProfileView.swift in Sources */,
