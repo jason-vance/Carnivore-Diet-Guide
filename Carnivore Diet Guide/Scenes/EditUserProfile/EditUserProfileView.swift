@@ -71,7 +71,6 @@ struct EditUserProfileView: View {
                                 .padding(.top, 16)
                         }
                         .padding()
-                        .padding(.bottom, 100)
                     }
                     .overlay(alignment: .top) {
                         Rectangle()
@@ -107,7 +106,7 @@ struct EditUserProfileView: View {
         Button {
             dismiss()
         } label: {
-            Image(systemName: "chevron.backward")
+            Image(systemName: "xmark")
                 .bold()
         }
     }
