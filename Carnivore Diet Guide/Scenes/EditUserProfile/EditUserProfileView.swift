@@ -89,8 +89,6 @@ struct EditUserProfileView: View {
         }
         .interactiveDismissDisabled(!dismissable)
         .presentationDetents([.large])
-        .toolbar(.visible, for: .navigationBar)
-        .toolbarRole(.automatic)
         .navigationBarBackButtonHidden()
         .alert(errorMessage, isPresented: $showError) {}
         .onChange(of: initializationState, initial: true) { newState in
@@ -134,7 +132,7 @@ struct EditUserProfileView: View {
     @ViewBuilder func TitleBar() -> some View {
         Text(profileImageUrl == nil ? "Create Profile" : "Edit Profile")
             .bold()
-            .foregroundStyle(Color.accent)
+            .foregroundStyle(Color.text)
             .frame(maxWidth: .infinity)
             .overlay(alignment: .leading) {
                 if dismissable {

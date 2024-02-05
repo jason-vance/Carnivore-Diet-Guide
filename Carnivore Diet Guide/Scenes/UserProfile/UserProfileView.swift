@@ -52,7 +52,7 @@ struct UserProfileView: View {
                             EditProfileButton()
 //                            FavoriteRecipesButton()
 //                            BookmarkedArticlesButton()
-//                            SettingsButton()
+                            SettingsButton()
                         }
                         .padding(.bottom, 32)
                         LogoutButton()
@@ -164,7 +164,7 @@ struct UserProfileView: View {
             String(localized: "Settings"),
             icon: "gearshape.fill"
         ) {
-            Text("Settings")
+            SettingsView()
         }
     }
     
@@ -198,35 +198,6 @@ struct UserProfileView: View {
             action()
         } label: {
             ProfileControlLabel(title, icon: icon, showNavigationAccessories: false)
-        }
-    }
-    
-    @ViewBuilder func ProfileControlLabel(
-        _ title: String,
-        icon: String,
-        showNavigationAccessories: Bool
-    ) -> some View {
-        HStack {
-            HStack {
-                Image(systemName: icon)
-                    .foregroundStyle(Color.accent)
-                    .font(.system(size: 18, weight: .bold))
-            }
-            .frame(width: 24, height: 24)
-            Text(title)
-                .font(.system(size: 18, weight: .bold))
-            Spacer()
-            Image(systemName: "chevron.forward")
-                .font(.system(size: 14, weight: .bold))
-                .opacity(showNavigationAccessories ? 1 : 0)
-        }
-        .foregroundStyle(Color.text)
-        .frame(height: 48)
-        .overlay(alignment: .bottom) {
-            Rectangle()
-                .foregroundStyle(Color.text)
-                .frame(height: 1)
-                .opacity(showNavigationAccessories ? 0.1 : 0)
         }
     }
 }
