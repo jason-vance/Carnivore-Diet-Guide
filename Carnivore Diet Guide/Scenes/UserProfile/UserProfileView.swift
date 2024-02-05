@@ -155,7 +155,7 @@ struct UserProfileView: View {
             String(localized: "Bookmarked Articles"),
             icon: "bookmark.fill"
         ) {
-            Text("Favorites")
+            Text("Favorite Recipes")
         }
     }
     

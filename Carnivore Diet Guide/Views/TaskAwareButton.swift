@@ -132,7 +132,7 @@ fileprivate extension View {
                 return .failed("Password Incorrect!")
             } label: {
                 HStack(spacing: 10) {
-                    Text("Failing")
+                    Text(String("Failing"))
                 }
                 .fontWeight(.bold)
             }
@@ -142,7 +142,7 @@ fileprivate extension View {
                 return .success
             } label: {
                 HStack(spacing: 10) {
-                    Text("Succeeding")
+                    Text(String("Succeeding"))
                     Image(systemName: "chevron.right")
                 }
                 .fontWeight(.bold)
@@ -152,7 +152,7 @@ fileprivate extension View {
                 try? await Task.sleep(for: .seconds(2))
                 return .failed("failed")
             } label: {
-                Text("Continue")
+                Text(String("Continue"))
                     .font(.system(size: 18))
                     .foregroundColor(.white)
                     .padding(.horizontal)

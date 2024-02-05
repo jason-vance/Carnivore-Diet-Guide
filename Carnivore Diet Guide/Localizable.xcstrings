@@ -531,9 +531,6 @@
         }
       }
     },
-    "Continue" : {
-
-    },
     "Cooking Steps" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -673,12 +670,6 @@
     "Edit Profile" : {
 
     },
-    "Error" : {
-
-    },
-    "Failing" : {
-
-    },
     "Fat" : {
       "localizations" : {
         "ar" : {
@@ -744,9 +735,6 @@
       }
     },
     "Favorite Recipes" : {
-
-    },
-    "Favorites" : {
 
     },
     "Featured Blog Post" : {
@@ -1606,12 +1594,6 @@
       }
     },
     "Settings" : {
-
-    },
-    "Shake Me" : {
-
-    },
-    "Succeeding" : {
 
     },
     "The Carnivore Diet Guide Team" : {

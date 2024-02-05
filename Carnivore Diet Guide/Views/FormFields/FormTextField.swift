@@ -59,7 +59,7 @@ struct FormTextField<ErrorContent: View>: View {
             text: text,
             prompt: "Text",
             errorView: {
-                Text("Error")
+                Text(String("Error"))
             }
         )
     }

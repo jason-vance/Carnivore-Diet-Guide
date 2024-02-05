@@ -93,7 +93,7 @@ extension View {
 
 #Preview {
     StatefulPreviewContainer(false) { shake in
-        Text("Shake Me")
+        Text(String("Shake Me"))
             .shake(shake)
             .onTapGesture {
                 shake.wrappedValue.toggle()
