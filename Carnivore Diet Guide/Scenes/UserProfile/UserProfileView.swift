@@ -11,12 +11,12 @@ import Kingfisher
 
 struct UserProfileView: View {
     
-    private let userDataProvider = iocContainer~>UserProfileDataProvider.self
+    private let userDataProvider = iocContainer~>UserDataProvider.self
     private let signOutService = iocContainer~>UserProfileSignOutService.self
     
     var userId: String
     
-    @State private var userData: UserData = .sample
+    @State private var userData: UserData = .empty
     
     @State private var showEditProfile: Bool = false
     @State private var showLogoutDialog: Bool = false

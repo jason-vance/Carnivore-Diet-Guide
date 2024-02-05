@@ -14,7 +14,7 @@ protocol UserDataProvider {
 
 class MockUserDataProvider: UserDataProvider {
     
-    @Published var userData: UserData = .empty
+    @Published var userData: UserData = .sample
     var userDataPublisher: Published<UserData>.Publisher { $userData }
     
     func startListeningToUser(withId id: String?) {

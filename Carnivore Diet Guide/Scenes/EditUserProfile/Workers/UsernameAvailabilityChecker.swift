@@ -13,7 +13,7 @@ protocol UsernameAvailabilityChecker {
 
 class MockUsernameAvailabilityChecker: UsernameAvailabilityChecker {
     
-    var returnsIsAvailable = false
+    var returnsIsAvailable = true
     var willThrow = false
     
     func checkIsAvailable(username: Username) async throws -> Bool {

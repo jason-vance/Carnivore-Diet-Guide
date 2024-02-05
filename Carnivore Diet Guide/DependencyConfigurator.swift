@@ -40,8 +40,7 @@ fileprivate func setup(iocContainer: Container) {
     
     //User Profile
     iocContainer.autoregister(UserProfileSignOutService.self) { FirebaseAuthenticationProvider.instance }
-    //TODO: Make a FirebaseUserProfileDataProvider
-    iocContainer.autoregister(UserProfileDataProvider.self, initializer: MockUserProfileDataProvider.init)
+    iocContainer.autoregister(UserDataProvider.self, initializer: FirestoreUserDataProvider.init)
 
     //Edit User Profile
     //TODO: Make a FirebaseProfileFormUsernameAvailabilityChecker
