@@ -1,5 +1,5 @@
 //
-//  BlogPost.swift
+//  Post.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 1/6/24.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol BlogPostContentItem: Identifiable {
+protocol PostContentItem: Identifiable {
     var id: UUID { get }
 }
 
-struct BlogPost: Identifiable {
+struct Post: Identifiable {
     
     var id: UUID = .init()
     var title: String
@@ -22,9 +22,9 @@ struct BlogPost: Identifiable {
     var publicationDate: Date
 }
 
-extension BlogPost {
+extension Post {
     
-    static var sample: BlogPost {
+    static var sample: Post {
         .init(
             title: "What is the Carnivore Diet?",
             imageName: "WhatIsTheCarnivoreDiet",
@@ -69,7 +69,7 @@ While the carnivore diet may offer short-term benefits for weight loss or blood 
         )
     }
     
-    static var longNamedSample: BlogPost {
+    static var longNamedSample: Post {
         .init(
             title: "Getting Started with the Carnivore Diet. All of the Whats, Whys, and Hows.",
             imageName: "WhatIsTheCarnivoreDiet",
@@ -114,5 +114,5 @@ While the carnivore diet may offer short-term benefits for weight loss or blood 
         )
     }
     
-    static let samples: [BlogPost] = [sample, longNamedSample]
+    static let samples: [Post] = [sample, longNamedSample]
 }

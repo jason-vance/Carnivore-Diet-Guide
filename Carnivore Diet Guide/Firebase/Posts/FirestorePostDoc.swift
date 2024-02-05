@@ -24,7 +24,7 @@ struct FirestorePostDoc: Codable {
     var imageUrl: String?
     var localizations: [Localization]
     
-    func toBlogPost() -> BlogPost? {
+    func toPost() -> Post? {
         let localization: Localization? = {
             let languageCode = Locale.current.language.languageCode?.identifier
             

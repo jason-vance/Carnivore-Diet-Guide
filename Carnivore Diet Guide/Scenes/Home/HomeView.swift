@@ -10,11 +10,6 @@ import SwinjectAutoregistration
 
 struct HomeView: View {
     
-    enum FeaturedItemType {
-        case blogPost
-        case recipe
-    }
-    
     private let contentProvider = iocContainer~>HomeViewContentProvider.self
     
     @Binding var selectedTab: ContentView.Tab
@@ -74,7 +69,7 @@ struct HomeView: View {
             VStack {
                 FeaturedContentView()
                 TrendingRecipesView()
-                TrendingBlogPostsView()
+                TrendingPostsView()
             }
         }
     }
@@ -89,17 +84,17 @@ struct HomeView: View {
             .padding(.horizontal)
             ScrollView(.horizontal) {
                 HStack(spacing: 16) {
-                    let featuredBlogPost = content!.featuredBlogPost
+                    let featuredPost = content!.featuredPost
                     let featuredRecipe = content!.featuredRecipe
                     
                     NavigationLink {
-                        BlogPostView(blogPost: featuredBlogPost)
+                        PostDetailView(post: featuredPost)
                     } label: {
                         FeaturedContentThumbnail(
-                            title: featuredBlogPost.title,
-                            imageUrl: featuredBlogPost.imageUrl,
-                            imageName: featuredBlogPost.imageName,
-                            type: .blog
+                            title: featuredPost.title,
+                            imageUrl: featuredPost.imageUrl,
+                            imageName: featuredPost.imageName,
+                            type: .post
                         )
                     }
                     NavigationLink {
@@ -152,25 +147,25 @@ struct HomeView: View {
         .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
     }
     
-    @ViewBuilder func TrendingBlogPostsView() -> some View {
+    @ViewBuilder func TrendingPostsView() -> some View {
         VStack {
             SectionTitleView(
-                String(localized: "Trending Blog Posts"),
+                String(localized: "Trending Posts"),
                 theme: .light,
-                viewAllAction: { selectedTab = .blog }
+                viewAllAction: { selectedTab = .post }
             )
             .padding(.top)
             .padding(.horizontal)
             ScrollView(.horizontal) {
                 HStack(spacing: 16) {
-                    ForEach(content!.trendingBlogPosts) { blogPost in
+                    ForEach(content!.trendingPosts) { post in
                         NavigationLink {
-                            BlogPostView(blogPost: blogPost)
+                            PostDetailView(post: post)
                         } label: {
-                            HomeBlogPostThumbnail(
-                                title: blogPost.title,
-                                imageUrl: blogPost.imageUrl,
-                                imageName: blogPost.imageName
+                            HomePostThumbnail(
+                                title: post.title,
+                                imageUrl: post.imageUrl,
+                                imageName: post.imageName
                             )
                         }
                     }

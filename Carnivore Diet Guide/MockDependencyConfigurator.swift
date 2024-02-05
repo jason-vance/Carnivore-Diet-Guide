@@ -20,8 +20,8 @@ func setupMockIocContainer(_ iocContainer: Container) {
     //Recipe Library
     iocContainer.autoregister(RecipeLibraryContentProvider.self, initializer: MockRecipeLibraryContentProvider.init)
     
-    //Blog Library
-    iocContainer.autoregister(BlogLibraryContentProvider.self, initializer: MockBlogLibraryContentProvider.init)
+    //Knowledge Library
+    iocContainer.autoregister(KnowledgeLibraryContentProvider.self, initializer: MockKnowledgeLibraryContentProvider.init)
     
     //User Profile
     iocContainer.autoregister(UserProfileSignOutService.self, initializer: MockUserProfileSignOutService.init)

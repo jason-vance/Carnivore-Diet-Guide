@@ -1,5 +1,5 @@
 //
-//  HomeBlogPostThumbnail.swift
+//  HomePostThumbnail.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 1/3/24.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Kingfisher
 
-struct HomeBlogPostThumbnail: View {
+struct HomePostThumbnail: View {
     
     @State private var imageSize: CGFloat = 200
     
@@ -56,19 +56,19 @@ struct HomeBlogPostThumbnail: View {
 #Preview {
     ScrollView(.horizontal) {
         HStack(spacing: 16) {
-            HomeBlogPostThumbnail(
+            HomePostThumbnail(
                 title: "Beef Bourguignon",
                 imageName: "BeefBourguignon"
             )
-            HomeBlogPostThumbnail(
+            HomePostThumbnail(
                 title: "Grilled Salmon with Lemon Butter",
                 imageName: "GrilledSalmonWithLemonButter"
             )
-            HomeBlogPostThumbnail(
+            HomePostThumbnail(
                 title: "Spicy Mexican Beef Skillet",
                 imageName: "SpicyMexicanBeefSkillet"
             )
-            HomeBlogPostThumbnail(
+            HomePostThumbnail(
                 title: "Sukiyaki-Style Beef",
                 imageName: "SukiyakiStyleBeef"
             )

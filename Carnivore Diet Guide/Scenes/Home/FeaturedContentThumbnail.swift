@@ -12,7 +12,7 @@ struct FeaturedContentThumbnail: View {
     
     enum FeaturedContentType {
         case recipe
-        case blog
+        case post
     }
     
     @State private var imageSize: CGFloat = 200
@@ -26,7 +26,7 @@ struct FeaturedContentThumbnail: View {
         VStack(spacing: 16) {
             ThumbnailImage()
                 .overlay(alignment: .topLeading) {
-                    Text(type == .recipe ? "Featured Recipe" : "Featured Blog Post")
+                    Text(type == .recipe ? "Featured Recipe" : "Featured Post")
                         .font(.system(size: 14, weight: .bold))
                         .foregroundStyle(Color.background)
                         .bold()
@@ -74,7 +74,7 @@ struct FeaturedContentThumbnail: View {
             FeaturedContentThumbnail(
                 title: "Getting Started with the Carnivore Diet",
                 imageName: "StartingCarnivoreDiet",
-                type: .blog
+                type: .post
             )
             FeaturedContentThumbnail(
                 title: "Seared Ribeye Steak",

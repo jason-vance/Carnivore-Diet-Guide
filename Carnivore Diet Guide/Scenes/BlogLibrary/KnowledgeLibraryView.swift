@@ -1,5 +1,5 @@
 //
-//  BlogLibraryView.swift
+//  KnowledgeLibraryView.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 1/7/24.
@@ -8,17 +8,17 @@
 import SwiftUI
 import SwinjectAutoregistration
 
-struct BlogLibraryView: View {
+struct KnowledgeLibraryView: View {
     
-    let contentProvider = iocContainer~>BlogLibraryContentProvider.self
+    let contentProvider = iocContainer~>KnowledgeLibraryContentProvider.self
     
-    @State private var blogPosts: [BlogPost] = []
+    @State private var posts: [Post] = []
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
-    private func loadBlogPosts() {
-        contentProvider.loadBlogPosts { blogPosts in
-            self.blogPosts = blogPosts
+    private func loadPosts() {
+        contentProvider.loadPosts { posts in
+            self.posts = posts
         } onError: { error in
             self.showError = true
             self.errorMessage = error.localizedDescription
@@ -29,14 +29,14 @@ struct BlogLibraryView: View {
         NavigationStack {
             VStack(spacing: 0) {
                 TitleBarAndHeroImage()
-                BlogPostList()
+                PostList()
                     .background(Color.background)
                     .clipShape(.rect(topLeadingRadius: Corners.radius, topTrailingRadius: Corners.radius))
             }
             .background(Color.background)
         }
         .onAppear {
-            loadBlogPosts()
+            loadPosts()
         }
         .alert(errorMessage, isPresented: $showError) {}
     }
@@ -66,7 +66,7 @@ struct BlogLibraryView: View {
     }
     
     @ViewBuilder func HeroImage() -> some View {
-        Image("BlogHero")
+        Image("KnowledgeHero")
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(height: 150)
@@ -75,8 +75,8 @@ struct BlogLibraryView: View {
             .zIndex(-1)
     }
     
-    @ViewBuilder func BlogPostList() -> some View {
-        if blogPosts.isEmpty {
+    @ViewBuilder func PostList() -> some View {
+        if posts.isEmpty {
             ZStack {
                 ProgressView()
                     .progressViewStyle(.circular)
@@ -86,11 +86,11 @@ struct BlogLibraryView: View {
         } else {
             ScrollView {
                 LazyVStack(spacing: 16) {
-                    ForEach(blogPosts) { blogPost in
+                    ForEach(posts) { post in
                         NavigationLink {
-                            BlogPostView(blogPost: blogPost)
+                            PostDetailView(post: post)
                         } label: {
-                            LibraryBlogPostThumbnail(blogPost: blogPost)
+                            LibraryPostThumbnail(post: post)
                         }
                     }
                 }
@@ -104,6 +104,6 @@ struct BlogLibraryView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        BlogLibraryView()
+        KnowledgeLibraryView()
     }
 }

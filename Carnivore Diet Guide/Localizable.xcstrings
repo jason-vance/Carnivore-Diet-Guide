@@ -750,6 +750,7 @@
 
     },
     "Featured Blog Post" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -812,6 +813,9 @@
           }
         }
       }
+    },
+    "Featured Post" : {
+
     },
     "Featured Recipe" : {
       "localizations" : {
@@ -1676,6 +1680,7 @@
       }
     },
     "Trending Blog Posts" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1738,6 +1743,9 @@
           }
         }
       }
+    },
+    "Trending Posts" : {
+
     },
     "Trending Recipes" : {
       "localizations" : {

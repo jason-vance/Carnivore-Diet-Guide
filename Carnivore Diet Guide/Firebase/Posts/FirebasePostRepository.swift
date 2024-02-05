@@ -15,7 +15,7 @@ class FirebasePostRepository {
     
     let postsCollection = Firestore.firestore().collection(POSTS)
     
-    func getPublishedPostsNewestToOldest(limit: Int? = nil) async throws -> [BlogPost] {
+    func getPublishedPostsNewestToOldest(limit: Int? = nil) async throws -> [Post] {
         var query = postsCollection
             .whereField(PUBLICATION_DATE, isLessThan: Date.now)
             .order(by: PUBLICATION_DATE, descending: true)
@@ -26,6 +26,6 @@ class FirebasePostRepository {
         let snapshot = try await query.getDocuments()
         
         return try snapshot.documents
-            .compactMap { try $0.data(as: FirestorePostDoc.self).toBlogPost() }
+            .compactMap { try $0.data(as: FirestorePostDoc.self).toPost() }
     }
 }

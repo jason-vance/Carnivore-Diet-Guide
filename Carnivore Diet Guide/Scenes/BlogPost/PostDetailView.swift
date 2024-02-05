@@ -1,5 +1,5 @@
 //
-//  BlogPostView.swift
+//  PostDetailView.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 1/6/24.
@@ -8,20 +8,20 @@
 import SwiftUI
 import MarkdownUI
 
-struct BlogPostView: View {
+struct PostDetailView: View {
     
-    let blogPost: BlogPost
+    let post: Post
     
     @Environment(\.dismiss) private var dismiss: DismissAction
 
     var body: some View {
         VStack(spacing: 0) {
-            BlogPostHeader()
+            PostHeader()
             ZStack(alignment: .top) {
                 Rectangle()
                     .foregroundStyle(Color.text)
                 ScrollView {
-                    BlogPostContent()
+                    PostContent()
                         .padding()
                         .frame(maxWidth: .infinity)
                 }
@@ -33,15 +33,15 @@ struct BlogPostView: View {
         .navigationBarBackButtonHidden()
     }
     
-    @ViewBuilder func BlogPostHeader() -> some View {
+    @ViewBuilder func PostHeader() -> some View {
         VStack(alignment: .leading) {
-            Text(blogPost.title)
+            Text(post.title)
                 .font(.title).bold()
                 .foregroundStyle(Color.background)
-            Text("By: \(String(localized: .init(blogPost.author)))")
+            Text("By: \(String(localized: .init(post.author)))")
                 .font(.subheadline).bold()
                 .foregroundStyle(Color.darkAccentText)
-            Text(blogPost.publicationDate, style: .date)
+            Text(post.publicationDate, style: .date)
                 .font(.caption).bold()
                 .foregroundStyle(Color.background)
             CloseButton()
@@ -51,8 +51,8 @@ struct BlogPostView: View {
         .background(Color.text, ignoresSafeAreaEdges: .top)
     }
     
-    @ViewBuilder func BlogPostContent() -> some View {
-        Markdown(blogPost.markdownContent)
+    @ViewBuilder func PostContent() -> some View {
+        Markdown(post.markdownContent)
             .markdownTextStyle {
                 ForegroundColor(Color.text)
             }
@@ -78,5 +78,5 @@ struct BlogPostView: View {
 }
 
 #Preview {
-    BlogPostView(blogPost: .sample)
+    PostDetailView(post: .sample)
 }

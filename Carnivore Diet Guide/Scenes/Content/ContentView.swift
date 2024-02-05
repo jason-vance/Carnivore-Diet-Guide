@@ -13,7 +13,7 @@ struct ContentView: View {
     enum Tab {
         case home
         case recipes
-        case blog
+        case post
         case profile
     }
     
@@ -54,7 +54,7 @@ struct ContentView: View {
         TabView(selection: $selectedTab) {
             HomeTab()
             RecipesTab()
-            BlogTab()
+            KnowledgeTab()
             UserProfileTab()
         }
         .sheet(isPresented: .constant(isOnboardingRequired == .notOnboarded)) {
@@ -83,12 +83,12 @@ struct ContentView: View {
             .toolbarBackground(Color.background, for: .tabBar)
     }
     
-    @ViewBuilder func BlogTab() -> some View {
-        BlogLibraryView()
+    @ViewBuilder func KnowledgeTab() -> some View {
+        KnowledgeLibraryView()
             .tabItem {
                 Label("Knowledge", systemImage: "newspaper")
             }
-            .tag(Tab.blog)
+            .tag(Tab.post)
             .toolbarBackground(Color.background, for: .tabBar)
     }
     

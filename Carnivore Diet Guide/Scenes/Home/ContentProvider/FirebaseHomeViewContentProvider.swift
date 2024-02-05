@@ -12,11 +12,11 @@ class FirebaseHomeViewContentProvider: HomeViewContentProvider {
     private let itemLimit = 5
     
     private let recipesRepo = FirebaseRecipeRepository()
-    private let blogPostsRepo = FirebasePostRepository()
+    private let postsRepo = FirebasePostRepository()
     
     func loadContent() async throws -> HomeViewContent {
         let recipes = try await recipesRepo.getPublishedRecipesNewestToOldest(limit: itemLimit)
-        let posts = try await blogPostsRepo.getPublishedPostsNewestToOldest(limit: itemLimit)
+        let posts = try await postsRepo.getPublishedPostsNewestToOldest(limit: itemLimit)
         
         guard let featuredPost = posts.first else { throw "Could not find any featured content" }
         guard let featuredRecipe = recipes.first else { throw "Could not find any featured recipes" }
@@ -28,10 +28,10 @@ class FirebaseHomeViewContentProvider: HomeViewContentProvider {
         guard !trendingPosts.isEmpty else { throw "Could not find any trending content" }
 
         return .init(
-            featuredBlogPost: featuredPost,
+            featuredPost: featuredPost,
             featuredRecipe: featuredRecipe,
             trendingRecipes: trendingRecipes,
-            trendingBlogPosts: trendingPosts
+            trendingPosts: trendingPosts
         )
     }
 }
