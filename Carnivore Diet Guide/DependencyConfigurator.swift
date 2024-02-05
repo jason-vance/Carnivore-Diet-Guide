@@ -16,10 +16,14 @@ let iocContainer: Container = {
 }()
 
 fileprivate func setup(iocContainer: Container) {
+    //Workers
+    iocContainer.autoregister(CurrentUserIdProvider.self) { FirebaseAuthenticationProvider.instance }
+    iocContainer.autoregister(UserDataProvider.self, initializer: FirestoreUserDataProvider.init)
+    iocContainer.autoregister(FirebaseUserRepository.self, initializer: FirebaseUserRepository.init)
+
     //Content
     iocContainer.autoregister(ContentAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }
-    //TODO: Make a FirebaseContentUserOnboardingStateProvider
-    iocContainer.autoregister(ContentUserOnboardingStateProvider.self, initializer: MockContentUserOnboardingStateProvider.init)
+    iocContainer.autoregister(UserOnboardingStateProvider.self, initializer: DefaultUserOnboardingStateProvider.init)
 
     //Sign In
     iocContainer.autoregister(SignInAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }

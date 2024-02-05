@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol ContentUserOnboardingStateProvider {
+protocol UserOnboardingStateProvider {
     var userOnboardingStatePublisher: Published<UserOnboardingState>.Publisher { get }
 }
 
-class MockContentUserOnboardingStateProvider: ContentUserOnboardingStateProvider {
+class MockUserOnboardingStateProvider: UserOnboardingStateProvider {
     @Published var userOnboardingState: UserOnboardingState = .unknown
     var userOnboardingStatePublisher: Published<UserOnboardingState>.Publisher { $userOnboardingState }
 }

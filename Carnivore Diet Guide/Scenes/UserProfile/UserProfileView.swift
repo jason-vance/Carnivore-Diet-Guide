@@ -122,13 +122,13 @@ struct UserProfileView: View {
     }
     
     @ViewBuilder func FullName() -> some View {
-        Text(userData.fullName.value)
+        Text(userData.fullName?.value ?? "<Name Unknown>")
             .font(.system(size: 32, weight: .bold))
             .foregroundStyle(Color.text)
     }
     
     @ViewBuilder func Username() -> some View {
-        Text(userData.username.value)
+        Text(userData.username?.value ?? "<Username Unknown>")
             .font(.system(size: 18))
             .foregroundStyle(Color.text)
     }

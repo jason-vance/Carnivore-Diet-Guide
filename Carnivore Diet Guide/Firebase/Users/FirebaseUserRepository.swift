@@ -41,9 +41,9 @@ class FirebaseUserRepository {
     
     private func updateUserDocument(with userData: UserData) async throws {
         var dict: [AnyHashable : Any] = [:]
-        dict[FirestoreUserDoc.CodingKeys.fullName.rawValue] = userData.fullName.value
-        dict[FirestoreUserDoc.CodingKeys.username.rawValue] = userData.username.value
-        dict[FirestoreUserDoc.CodingKeys.profileImageUrl.rawValue] = userData.profileImageUrl.absoluteString
+        dict[FirestoreUserDoc.CodingKeys.fullName.rawValue] = userData.fullName?.value
+        dict[FirestoreUserDoc.CodingKeys.username.rawValue] = userData.username?.value
+        dict[FirestoreUserDoc.CodingKeys.profileImageUrl.rawValue] = userData.profileImageUrl?.absoluteString
 
         try await usersCollection.document(userData.id).updateData(dict)
     }

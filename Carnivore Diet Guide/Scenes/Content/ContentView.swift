@@ -18,7 +18,7 @@ struct ContentView: View {
     }
     
     private let authProvider = iocContainer~>ContentAuthenticationProvider.self
-    private let onboardingStateProvider = iocContainer~>ContentUserOnboardingStateProvider.self
+    private let onboardingStateProvider = iocContainer~>UserOnboardingStateProvider.self
     
     @State private var isOnboardingRequired: UserOnboardingState = .unknown
     @State private var currentUserId: String = ""
@@ -128,8 +128,8 @@ struct ContentView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
         
-        iocContainer.autoregister(ContentUserOnboardingStateProvider.self) {
-            let mock = MockContentUserOnboardingStateProvider()
+        iocContainer.autoregister(UserOnboardingStateProvider.self) {
+            let mock = MockUserOnboardingStateProvider()
             mock.userOnboardingState = .notOnboarded
             return mock
         }

@@ -9,7 +9,7 @@ import Foundation
 import FirebaseAuth
 import AuthenticationServices
 
-class FirebaseAuthenticationProvider: ContentAuthenticationProvider, SignInAuthenticationProvider, UserProfileSignOutService {
+class FirebaseAuthenticationProvider {
     
     @Published var currentUser: User? {
         didSet {
@@ -91,4 +91,8 @@ class FirebaseAuthenticationProvider: ContentAuthenticationProvider, SignInAuthe
     func signOut() throws {
         try Auth.auth().signOut()
     }
+}
+
+extension FirebaseAuthenticationProvider: CurrentUserIdProvider, ContentAuthenticationProvider, SignInAuthenticationProvider, UserProfileSignOutService {
+    
 }

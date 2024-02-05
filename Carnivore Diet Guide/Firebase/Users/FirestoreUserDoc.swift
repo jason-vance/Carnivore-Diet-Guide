@@ -25,8 +25,8 @@ struct FirestoreUserDoc: Codable {
     static func from(_ userData: UserData) -> FirestoreUserDoc {
         FirestoreUserDoc(
             id: userData.id,
-            fullName: userData.fullName.value,
-            username: userData.username.value,
+            fullName: userData.fullName?.value,
+            username: userData.username?.value,
             profileImageUrl: userData.profileImageUrl
         )
     }
