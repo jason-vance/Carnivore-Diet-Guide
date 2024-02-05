@@ -10,7 +10,10 @@ import SwinjectAutoregistration
 
 struct EditUserProfileView: View {
     
-    //TODO: Dismiss on successful save
+    private enum InitializationState {
+        case notInitialized
+        case initialized
+    }
     
     private let userDataProvider = iocContainer~>CurrentUserDataProvider.self
     private let imageUploader = iocContainer~>ProfileImageUploader.self
@@ -25,19 +28,22 @@ struct EditUserProfileView: View {
     @State private var profileImageUrl: URL? = nil
     @State private var fullName: PersonName? = nil
     @State private var username: Username? = nil
-    
+    @State private var initializationState: InitializationState = .notInitialized
+
+    @State private var showBlockingSpinner: Bool = false
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
     private func loadExistingUserData() {
         Task {
             do {
-                //TODO: Block UI while loading
                 let userData = try await userDataProvider.fetchCurrentUserData()
                 
                 profileImageUrl = userData.profileImageUrl
                 fullName = userData.fullName
                 username = userData.username
+                
+                initializationState = .initialized
             } catch {
                 show(errorMessage: "Could not load existing user data. \(error.localizedDescription)")
             }
@@ -80,32 +86,12 @@ struct EditUserProfileView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .bottom) {
-                VStack(spacing: 0) {
-                    TitleBar()
-                    ScrollView {
-                        VStack(spacing: 16) {
-                            ProfileFormPictureField(
-                                profileImage: $profileImage,
-                                profileImageUrl: profileImageUrl
-                            )
-                            .padding(.bottom, 16)
-                            ProfileFormNameField($fullName)
-                            ProfileFormUsernameField($username)
-                            Spacer()
-                            SaveButton()
-                                .padding(.top, 16)
-                        }
-                        .padding()
-                    }
-                    .overlay(alignment: .top) {
-                        Rectangle()
-                            .foregroundStyle(LinearGradient(colors: [.background, .clear], startPoint: .top, endPoint: .bottom))
-                            .frame(height: 16)
+            InitializedView()
+                .overlay {
+                    if initializationState == .notInitialized {
+                        BlockingSpinnerView()
                     }
                 }
-            }
-            .background(Color.background)
         }
         .interactiveDismissDisabled(!dismissable)
         .presentationDetents([.large])
@@ -113,9 +99,43 @@ struct EditUserProfileView: View {
         .toolbarRole(.automatic)
         .navigationBarBackButtonHidden()
         .alert(errorMessage, isPresented: $showError) {}
+        .onChange(of: initializationState, initial: true) { newState in
+            withAnimation(.snappy) {
+                showBlockingSpinner = newState == .notInitialized
+            }
+        }
         .onAppear {
             loadExistingUserData()
         }
+    }
+    
+    @ViewBuilder func InitializedView() -> some View {
+        ZStack(alignment: .bottom) {
+            VStack(spacing: 0) {
+                TitleBar()
+                ScrollView {
+                    VStack(spacing: 16) {
+                        ProfileFormPictureField(
+                            profileImage: $profileImage,
+                            profileImageUrl: profileImageUrl
+                        )
+                        .padding(.bottom, 16)
+                        ProfileFormNameField($fullName)
+                        ProfileFormUsernameField($username)
+                        Spacer()
+                        SaveButton()
+                            .padding(.top, 16)
+                    }
+                    .padding()
+                }
+                .overlay(alignment: .top) {
+                    Rectangle()
+                        .foregroundStyle(LinearGradient(colors: [.background, .clear], startPoint: .top, endPoint: .bottom))
+                        .frame(height: 16)
+                }
+            }
+        }
+        .background(Color.background)
     }
     
     @ViewBuilder func TitleBar() -> some View {
