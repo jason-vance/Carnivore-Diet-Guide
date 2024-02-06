@@ -14,8 +14,6 @@ struct SignInView: View {
     
     private let authProvider = iocContainer~>SignInAuthenticationProvider.self
     
-    var subs: Set<AnyCancellable> = []
-    
     @State var userAuthState: UserAuthState = .working
     @State var showError: Bool = false
     @State var errorMessage: String = ""

@@ -31,6 +31,7 @@ struct SettingsView: View {
     }
     
     private func actuallyDeleteAccount(authResult: Result<ASAuthorization, Error>) {
+        showConfirmDeleteAccountSheet = false
         Task {
             do {        
                 switch authResult {
@@ -42,8 +43,7 @@ struct SettingsView: View {
             } catch {
                 let errorMessage = "Account could not be deleted: \(error.localizedDescription)"
                 print(errorMessage)
-                //Don't show the error. You will get the following error:
-                //"Attempting to present a confirmation dialog while an alert is already presented. This is not supported."
+                show(errorMessage: errorMessage)
             }
         }
     }

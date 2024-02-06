@@ -16,8 +16,8 @@ class FirebaseUserAccountDeleter: UserAccountDeleter {
     
     func deleteCurrentUserAccount(authorization: ASAuthorization) async throws {
         guard let currentUserId = auth.currentUserId else { throw "There is no user currently logged in" }
-        try await userRepo.deleteUserDoc(withId: currentUserId)
         try await profilePicStorage.deleteProfileImage(for: currentUserId)
+        try await userRepo.deleteUserDoc(withId: currentUserId)
         try await auth.deleteUser(authorization: authorization)
     }
 }

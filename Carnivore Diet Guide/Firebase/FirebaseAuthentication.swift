@@ -11,11 +11,7 @@ import AuthenticationServices
 
 class FirebaseAuthenticationProvider {
     
-    @Published var currentUser: User? {
-        didSet {
-            currentUserId = currentUser?.uid
-        }
-    }
+    @Published var currentUser: User?
     @Published var currentUserId: String?
     var currentUserIdPublisher: Published<String?>.Publisher { $currentUserId }
 
@@ -38,9 +34,11 @@ class FirebaseAuthenticationProvider {
         authStateChangeListenerHandle = Auth.auth().addStateDidChangeListener { [weak self] auth, user in
             if let user = user {
                 self?.currentUser = user
+                self?.currentUserId = user.uid
                 self?.userAuthState = .loggedIn
             } else {
                 self?.currentUser = nil
+                self?.currentUserId = nil
                 self?.userAuthState = .loggedOut
             }
         }

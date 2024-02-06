@@ -30,7 +30,6 @@ class DefaultUserOnboardingStateProvider: UserOnboardingStateProvider {
         userIdSub = userIdProvider.currentUserIdPublisher
             .sink(receiveValue: onUpdate(currentUserId:))
         userDataSub = userDataProvider.userDataPublisher
-            .filter { !$0.id.isEmpty }
             .sink(receiveValue: onUpdate(userData:))
     }
     
@@ -39,7 +38,9 @@ class DefaultUserOnboardingStateProvider: UserOnboardingStateProvider {
     }
     
     private func onUpdate(userData: UserData) {
-        if userData.isFullyOnboarded {
+        if userData.id.isEmpty {
+            self.userOnboardingState = .unknown
+        } else if userData.isFullyOnboarded {
             self.userOnboardingState = .fullyOnboarded
         } else {
             self.userOnboardingState = .notOnboarded

@@ -10,8 +10,6 @@ import SwinjectAutoregistration
 
 struct ContentView: View {
     
-    //TODO: If you delete account and then sign back in, you don't get onboarded
-    
     enum Tab {
         case home
         case recipes
@@ -22,7 +20,7 @@ struct ContentView: View {
     private let authProvider = iocContainer~>ContentAuthenticationProvider.self
     private let onboardingStateProvider = iocContainer~>UserOnboardingStateProvider.self
     
-    @State private var isOnboardingRequired: UserOnboardingState = .unknown
+    @State private var isOnboardingRequired: Bool = false
     @State private var currentUserId: String = ""
     @State private var userAuthState: UserAuthState = .working
     @State private var selectedTab: Tab = .home
@@ -44,7 +42,7 @@ struct ContentView: View {
             currentUserId = newUserId ?? ""
         }
         .onReceive(onboardingStateProvider.userOnboardingStatePublisher) { newState in
-            isOnboardingRequired = newState
+            isOnboardingRequired = newState == .notOnboarded
         }
     }
     
@@ -59,7 +57,7 @@ struct ContentView: View {
             KnowledgeTab()
             UserProfileTab()
         }
-        .sheet(isPresented: .constant(isOnboardingRequired == .notOnboarded)) {
+        .sheet(isPresented: $isOnboardingRequired) {
             EditUserProfileView(userId: currentUserId, dismissable: false)
         }
         .onAppear {
