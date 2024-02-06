@@ -21,6 +21,10 @@ class FirebaseHomeViewContentProvider: HomeViewContentProvider {
         guard let featuredPost = posts.first else { throw "Could not find any featured content" }
         guard let featuredRecipe = recipes.first else { throw "Could not find any featured recipes" }
         
+        let featuredContent = [
+            FeaturedContentItem.from(post: featuredPost),
+            FeaturedContentItem.from(recipe: featuredRecipe)
+        ]
         let trendingRecipes = Array(recipes.suffix(from: 1).prefix(itemLimit - 1))
         let trendingPosts = Array(posts.suffix(from: 1).prefix(itemLimit - 1))
         
@@ -28,8 +32,7 @@ class FirebaseHomeViewContentProvider: HomeViewContentProvider {
         guard !trendingPosts.isEmpty else { throw "Could not find any trending content" }
 
         return .init(
-            featuredPost: featuredPost,
-            featuredRecipe: featuredRecipe,
+            featuredContent: featuredContent,
             trendingRecipes: trendingRecipes,
             trendingPosts: trendingPosts
         )

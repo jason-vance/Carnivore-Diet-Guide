@@ -10,32 +10,33 @@ import Kingfisher
 
 struct FeaturedContentThumbnail: View {
     
-    enum FeaturedContentType {
-        case recipe
-        case post
-    }
-    
     @State private var imageSize: CGFloat = 200
     
-    @State var title: String
-    @State var imageUrl: String?
-    @State var imageName: String?
-    @State var type: FeaturedContentType
+    @State var item: FeaturedContentItem = .empty
     
     var body: some View {
         VStack(spacing: 16) {
             ThumbnailImage()
                 .overlay(alignment: .topLeading) {
-                    Text(type == .recipe ? "Featured Recipe" : "Featured Post")
-                        .font(.system(size: 14, weight: .bold))
-                        .foregroundStyle(Color.background)
-                        .bold()
-                        .padding(8)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.accent)
+                    Group {
+                        switch item.type {
+                        case .none:
+                            Text("")
+                        case .recipe(_):
+                            Text("Featured Recipe")
+                        case .post(_):
+                            Text("Featured Post")
+                        }
+                    }
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(Color.background)
+                    .bold()
+                    .padding(8)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.accent)
                 }
                 .overlay(alignment: .bottom) {
-                    Text(title)
+                    Text(item.title)
                         .font(.system(size: 14, weight: .bold))
                         .foregroundStyle(Color.background)
                         .frame(maxWidth: .infinity)
@@ -50,12 +51,12 @@ struct FeaturedContentThumbnail: View {
     }
     
     @ViewBuilder func ThumbnailImage() -> some View {
-        if let imageName = imageName {
+        if let imageName = item.imageName {
             Image(imageName)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
-        if let imageUrl = imageUrl {
+        if let imageUrl = item.imageUrl {
             KFImage(URL(string: imageUrl))
                 .resizable()
                 .placeholder {
@@ -71,16 +72,8 @@ struct FeaturedContentThumbnail: View {
 #Preview {
     ScrollView(.horizontal) {
         HStack(spacing: 16) {
-            FeaturedContentThumbnail(
-                title: "Getting Started with the Carnivore Diet",
-                imageName: "StartingCarnivoreDiet",
-                type: .post
-            )
-            FeaturedContentThumbnail(
-                title: "Seared Ribeye Steak",
-                imageName: "SearedRibeyeSteak",
-                type: .recipe
-            )
+            FeaturedContentThumbnail(item: .samplePost)
+            FeaturedContentThumbnail(item: .sampleRecipe)
         }
         .padding()
     }

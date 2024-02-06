@@ -16,6 +16,9 @@ func setupMockIocContainer(_ iocContainer: Container) {
 
     //Sign In
     iocContainer.autoregister(SignInAuthenticationProvider.self, initializer: MockSignInAuthenticationProvider.init)
+    
+    //Home
+    iocContainer.autoregister(HomeViewContentProvider.self, initializer: MockHomeViewContentProvider.init)
 
     //Recipe Library
     iocContainer.autoregister(RecipeLibraryContentProvider.self, initializer: MockRecipeLibraryContentProvider.init)

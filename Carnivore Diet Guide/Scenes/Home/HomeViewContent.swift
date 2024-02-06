@@ -8,16 +8,21 @@
 import Foundation
 
 struct HomeViewContent {
-    let featuredPost: Post
-    let featuredRecipe: Recipe
+    
+    let featuredContent: [FeaturedContentItem]
     let trendingRecipes: [Recipe]
     let trendingPosts: [Post]
 }
 
 extension HomeViewContent {
+    static let empty: HomeViewContent = .init(
+        featuredContent: [],
+        trendingRecipes: [],
+        trendingPosts: []
+    )
+    
     static let sample: HomeViewContent = .init(
-        featuredPost: .sample,
-        featuredRecipe: .sample,
+        featuredContent: FeaturedContentItem.samples,
         trendingRecipes: Recipe.samples,
         trendingPosts: Post.samples
     )

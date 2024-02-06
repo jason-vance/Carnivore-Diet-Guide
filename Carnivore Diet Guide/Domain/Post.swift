@@ -7,13 +7,10 @@
 
 import Foundation
 
-protocol PostContentItem: Identifiable {
-    var id: UUID { get }
-}
-
 struct Post: Identifiable {
     
-    var id: UUID = .init()
+    //TODO: use the firebase id
+    var id: String = UUID().uuidString
     var title: String
     var imageName: String?
     var imageUrl: String?

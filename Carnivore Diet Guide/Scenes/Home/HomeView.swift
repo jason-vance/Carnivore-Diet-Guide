@@ -10,23 +10,35 @@ import SwinjectAutoregistration
 
 struct HomeView: View {
     
+    private enum LoadingState {
+        case idle
+        case working
+    }
+    
     private let contentProvider = iocContainer~>HomeViewContentProvider.self
     
     @Binding var selectedTab: ContentView.Tab
     
-    @State var content: HomeViewContent? = nil
-    @State var showError: Bool = false
-    @State var errorMessage: String = ""
+    @State private var loadingState: LoadingState = .idle
+    @State private var content: HomeViewContent = .empty
+    @State private var showError: Bool = false
+    @State private var errorMessage: String = ""
     
-    func loadContent() {
+    private func loadContent() {
         Task {
+            loadingState = .working
             do {
                 content = try await contentProvider.loadContent()
             } catch {
-                showError = true
-                errorMessage = "Unable to load: \(error.localizedDescription)"
+                show(errorMessage: "Unable to load: \(error.localizedDescription)")
             }
+            loadingState = .idle
         }
+    }
+    
+    private func show(errorMessage: String) {
+        showError = true
+        self.errorMessage = errorMessage
     }
     
     var body: some View {
@@ -46,7 +58,7 @@ struct HomeView: View {
     }
     
     @ViewBuilder func ContentView() -> some View {
-        if content == nil {
+        if loadingState == .working {
             LoadingView()
         } else {
             LoadedContentView()
@@ -84,28 +96,12 @@ struct HomeView: View {
             .padding(.horizontal)
             ScrollView(.horizontal) {
                 HStack(spacing: 16) {
-                    let featuredPost = content!.featuredPost
-                    let featuredRecipe = content!.featuredRecipe
-                    
-                    NavigationLink {
-                        PostDetailView(post: featuredPost)
-                    } label: {
-                        FeaturedContentThumbnail(
-                            title: featuredPost.title,
-                            imageUrl: featuredPost.imageUrl,
-                            imageName: featuredPost.imageName,
-                            type: .post
-                        )
-                    }
-                    NavigationLink {
-                        RecipeDetailView(recipe: .sample)
-                    } label: {
-                        FeaturedContentThumbnail(
-                            title: featuredRecipe.title,
-                            imageUrl: featuredRecipe.imageUrl,
-                            imageName: featuredRecipe.imageName,
-                            type: .recipe
-                        )
+                    ForEach(content.featuredContent) { featuredItem in
+                        NavigationLink {
+                            FeaturedContentDetailView(featuredItem)
+                        } label: {
+                            FeaturedContentThumbnail(item: featuredItem)
+                        }
                     }
                 }
                 .padding()
@@ -113,6 +109,17 @@ struct HomeView: View {
             .scrollIndicators(.hidden)
         }
         .padding(.bottom)
+    }
+    
+    @ViewBuilder func FeaturedContentDetailView(_ featuredItem: FeaturedContentItem) -> some View {
+        switch featuredItem.type {
+        case .none:
+            Text("")
+        case .recipe(let recipe):
+            RecipeDetailView(recipe: recipe)
+        case .post(let post):
+            PostDetailView(post: post)
+        }
     }
     
     @ViewBuilder func TrendingRecipesView() -> some View {
@@ -126,7 +133,7 @@ struct HomeView: View {
             .padding(.horizontal)
             ScrollView(.horizontal) {
                 HStack(spacing: 16) {
-                    ForEach(content!.trendingRecipes) { recipe in
+                    ForEach(content.trendingRecipes) { recipe in
                         NavigationLink {
                             RecipeDetailView(recipe: recipe)
                         } label: {
@@ -158,7 +165,7 @@ struct HomeView: View {
             .padding(.horizontal)
             ScrollView(.horizontal) {
                 HStack(spacing: 16) {
-                    ForEach(content!.trendingPosts) { post in
+                    ForEach(content.trendingPosts) { post in
                         NavigationLink {
                             PostDetailView(post: post)
                         } label: {
@@ -246,9 +253,23 @@ struct HomeView: View {
     }
 }
 
-#Preview {
+#Preview("No Errors") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
+    } content: {
+        HomeView(selectedTab: .constant(.home))
+    }
+}
+
+#Preview("Loading Error") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+        
+        iocContainer.autoregister(HomeViewContentProvider.self) {
+            let mock = MockHomeViewContentProvider()
+            mock.errorToThrow = "Didn't work"
+            return mock
+        }
     } content: {
         HomeView(selectedTab: .constant(.home))
     }
