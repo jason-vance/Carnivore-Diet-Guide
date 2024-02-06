@@ -288,8 +288,8 @@
 				562E03E52B450A8900859F81 /* Home */,
 				56E3050A2B4B601B0098079A /* RecipeLibrary */,
 				5676A1312B477853009C1DA6 /* RecipeDetail */,
-				56E3050F2B4B71320098079A /* BlogLibrary */,
-				56E305032B4A55BD0098079A /* BlogPost */,
+				56E3050F2B4B71320098079A /* KnowledgeLibrary */,
+				56E305032B4A55BD0098079A /* PostDetail */,
 				56B88A1A2B6C64F200C4C0DB /* UserProfile */,
 				56B88A452B6CF51B00C4C0DB /* EditUserProfile */,
 				567754312B717A970094EB8C /* Settings */,
@@ -572,12 +572,12 @@
 			path = Workers;
 			sourceTree = "<group>";
 		};
-		56E305032B4A55BD0098079A /* BlogPost */ = {
+		56E305032B4A55BD0098079A /* PostDetail */ = {
 			isa = PBXGroup;
 			children = (
 				56E305042B4A55E00098079A /* PostDetailView.swift */,
 			);
-			path = BlogPost;
+			path = PostDetail;
 			sourceTree = "<group>";
 		};
 		56E3050A2B4B601B0098079A /* RecipeLibrary */ = {
@@ -590,14 +590,14 @@
 			path = RecipeLibrary;
 			sourceTree = "<group>";
 		};
-		56E3050F2B4B71320098079A /* BlogLibrary */ = {
+		56E3050F2B4B71320098079A /* KnowledgeLibrary */ = {
 			isa = PBXGroup;
 			children = (
 				56E305542B4BF0C30098079A /* ContentProvider */,
 				56E305102B4B71400098079A /* KnowledgeLibraryView.swift */,
 				56E305152B4B74BC0098079A /* LibraryPostThumbnail.swift */,
 			);
-			path = BlogLibrary;
+			path = KnowledgeLibrary;
 			sourceTree = "<group>";
 		};
 		56E305542B4BF0C30098079A /* ContentProvider */ = {

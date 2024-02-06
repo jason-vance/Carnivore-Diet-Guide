@@ -8,14 +8,20 @@
 import Foundation
 
 protocol RecipeLibraryContentProvider {
-    func loadRecipes(onUpdate: @escaping ([Recipe]) -> (), onError: @escaping (Error) -> ())
+    func loadRecipes() async throws -> [Recipe]
 }
 
 class MockRecipeLibraryContentProvider: RecipeLibraryContentProvider {
-    func loadRecipes(onUpdate: @escaping ([Recipe]) -> (), onError: @escaping (Error) -> ()) {
-        Task {
-            try? await Task.sleep(for: .seconds(1))
-            onUpdate(Recipe.samples)
+    
+    var errorToThrow: Error? = nil
+    
+    func loadRecipes() async throws -> [Recipe] {
+        try? await Task.sleep(for: .seconds(1))
+        
+        if let errorToThrow = errorToThrow {
+            throw errorToThrow
         }
+        
+        return Recipe.samples
     }
 }

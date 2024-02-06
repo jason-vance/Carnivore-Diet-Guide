@@ -10,19 +10,33 @@ import SwinjectAutoregistration
 
 struct KnowledgeLibraryView: View {
     
+    private enum LoadingState {
+        case idle
+        case working
+    }
+    
     let contentProvider = iocContainer~>KnowledgeLibraryContentProvider.self
     
+    @State private var loadingState: LoadingState = .idle
     @State private var posts: [Post] = []
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
     private func loadPosts() {
-        contentProvider.loadPosts { posts in
-            self.posts = posts
-        } onError: { error in
-            self.showError = true
-            self.errorMessage = error.localizedDescription
+        Task {
+            loadingState = .working
+            do {
+                posts = try await contentProvider.loadPosts()
+            } catch {
+                show(errorMessage: "Unable to load posts: \(error.localizedDescription)")
+            }
+            loadingState = .idle
         }
+    }
+    
+    private func show(errorMessage: String) {
+        showError = true
+        self.errorMessage = errorMessage
     }
     
     var body: some View {
@@ -76,7 +90,7 @@ struct KnowledgeLibraryView: View {
     }
     
     @ViewBuilder func PostList() -> some View {
-        if posts.isEmpty {
+        if loadingState == .working {
             ZStack {
                 ProgressView()
                     .progressViewStyle(.circular)
@@ -100,9 +114,23 @@ struct KnowledgeLibraryView: View {
     }
 }
 
-#Preview {
+#Preview("No Errors") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
+    } content: {
+        KnowledgeLibraryView()
+    }
+}
+
+#Preview("Loading Error") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+        
+        iocContainer.autoregister(KnowledgeLibraryContentProvider.self) {
+            let mock = MockKnowledgeLibraryContentProvider()
+            mock.errorToThrow = "Didn't work"
+            return mock
+        }
     } content: {
         KnowledgeLibraryView()
     }

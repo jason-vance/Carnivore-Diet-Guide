@@ -10,19 +10,33 @@ import SwinjectAutoregistration
 
 struct RecipeLibraryView: View {
     
+    private enum LoadingState {
+        case idle
+        case working
+    }
+    
     let contentProvider = iocContainer~>RecipeLibraryContentProvider.self
     
+    @State private var loadingState: LoadingState = .idle
     @State private var recipes: [Recipe] = []
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
     private func loadRecipes() {
-        contentProvider.loadRecipes { recipes in
-            self.recipes = recipes
-        } onError: { error in
-            self.showError = true
-            self.errorMessage = error.localizedDescription
+        Task {
+            loadingState = .working
+            do {
+                recipes = try await contentProvider.loadRecipes()
+            } catch {
+                show(errorMessage: "Unable to load recipes: \(error.localizedDescription)")
+            }
+            loadingState = .idle
         }
+    }
+    
+    private func show(errorMessage: String) {
+        showError = true
+        self.errorMessage = errorMessage
     }
     
     var body: some View {
@@ -76,7 +90,7 @@ struct RecipeLibraryView: View {
     }
     
     @ViewBuilder func RecipesList() -> some View {
-        if recipes.isEmpty {
+        if loadingState == .working {
             ZStack {
                 ProgressView()
                     .progressViewStyle(.circular)
@@ -100,9 +114,23 @@ struct RecipeLibraryView: View {
     }
 }
 
-#Preview {
+#Preview("No Errors") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
+    } content: {
+        RecipeLibraryView()
+    }
+}
+
+#Preview("Loading Error") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+        
+        iocContainer.autoregister(RecipeLibraryContentProvider.self) {
+            let mock = MockRecipeLibraryContentProvider()
+            mock.errorToThrow = "Didn't work"
+            return mock
+        }
     } content: {
         RecipeLibraryView()
     }
