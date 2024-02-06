@@ -19,12 +19,14 @@ struct KnowledgeLibraryView: View {
     
     @State private var loadingState: LoadingState = .idle
     @State private var posts: [Post] = []
+    @State private var listDidAppear: Bool = false
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
     private func loadPosts() {
         Task {
             loadingState = .working
+            listDidAppear = false
             do {
                 posts = try await contentProvider.loadPosts()
             } catch {
@@ -107,6 +109,15 @@ struct KnowledgeLibraryView: View {
                             PostDetailView(post: post)
                         } label: {
                             LibraryPostThumbnail(post: post)
+                        }
+                    }
+                    .offset(y: listDidAppear ? 0 : 100)
+                    .opacity(listDidAppear ? 1 : 0)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                            withAnimation(.snappy) {
+                                listDidAppear = !posts.isEmpty
+                            }
                         }
                     }
                 }

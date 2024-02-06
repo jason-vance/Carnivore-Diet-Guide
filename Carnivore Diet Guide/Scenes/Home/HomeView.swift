@@ -21,12 +21,14 @@ struct HomeView: View {
     
     @State private var loadingState: LoadingState = .idle
     @State private var content: HomeViewContent = .empty
+    @State private var listDidAppear: Bool = false
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
     private func loadContent() {
         Task {
             loadingState = .working
+            listDidAppear = false
             do {
                 content = try await contentProvider.loadContent()
             } catch {
@@ -84,6 +86,15 @@ struct HomeView: View {
                 FeaturedContentView()
                 TrendingRecipesView()
                 TrendingPostsView()
+            }
+            .offset(y: listDidAppear ? 0 : 100)
+            .opacity(listDidAppear ? 1 : 0)
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    withAnimation(.snappy) {
+                        listDidAppear = !content.isEmpty
+                    }
+                }
             }
         }
     }

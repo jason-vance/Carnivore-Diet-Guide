@@ -19,12 +19,14 @@ struct RecipeLibraryView: View {
     
     @State private var loadingState: LoadingState = .idle
     @State private var recipes: [Recipe] = []
+    @State private var listDidAppear: Bool = false
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
     private func loadRecipes() {
         Task {
             loadingState = .working
+            listDidAppear = false
             do {
                 recipes = try await contentProvider.loadRecipes()
             } catch {
@@ -107,6 +109,15 @@ struct RecipeLibraryView: View {
                             RecipeDetailView(recipe: recipe)
                         } label: {
                             LibraryRecipeThumbnail(recipe: recipe)
+                        }
+                    }
+                    .offset(y: listDidAppear ? 0 : 100)
+                    .opacity(listDidAppear ? 1 : 0)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now()) {
+                            withAnimation(.snappy) {
+                                listDidAppear = !recipes.isEmpty
+                            }
                         }
                     }
                 }
