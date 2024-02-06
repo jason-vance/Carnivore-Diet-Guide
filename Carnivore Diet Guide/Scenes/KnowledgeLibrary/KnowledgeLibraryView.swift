@@ -123,6 +123,9 @@ struct KnowledgeLibraryView: View {
                 }
                 .padding()
             }
+            .refreshable {
+                loadPosts()
+            }
         }
     }
 }

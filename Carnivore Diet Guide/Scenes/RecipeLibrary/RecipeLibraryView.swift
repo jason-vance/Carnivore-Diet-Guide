@@ -123,6 +123,9 @@ struct RecipeLibraryView: View {
                 }
                 .padding()
             }
+            .refreshable {
+                loadRecipes()
+            }
         }
     }
 }

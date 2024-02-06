@@ -97,6 +97,9 @@ struct HomeView: View {
                 }
             }
         }
+        .refreshable {
+            loadContent()
+        }
     }
     
     @ViewBuilder func FeaturedContentView() -> some View {
