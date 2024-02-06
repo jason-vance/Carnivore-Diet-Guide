@@ -197,6 +197,12 @@
     "Albums" : {
       "comment" : "Photo Albums"
     },
+    "Are you really sure you want to delete your account? This action will delete all of your data and is irreversible." : {
+
+    },
+    "Are you sure you want to delete your account?" : {
+
+    },
     "Are you sure you want to logout?" : {
 
     },
@@ -597,6 +603,9 @@
       }
     },
     "Create Profile" : {
+
+    },
+    "Delete Account" : {
 
     },
     "Diet Guide" : {

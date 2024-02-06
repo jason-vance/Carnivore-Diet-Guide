@@ -29,6 +29,8 @@
 		567754302B7168DD0094EB8C /* BlockingSpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5677542F2B7168DD0094EB8C /* BlockingSpinnerView.swift */; };
 		567754332B717AAA0094EB8C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567754322B717AAA0094EB8C /* SettingsView.swift */; };
 		567754352B717B420094EB8C /* ProfileControlLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567754342B717B420094EB8C /* ProfileControlLabel.swift */; };
+		567754372B7184640094EB8C /* UserAccountDeleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567754362B7184640094EB8C /* UserAccountDeleter.swift */; };
+		567754392B7194900094EB8C /* FirebaseUserAccountDeleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567754382B7194900094EB8C /* FirebaseUserAccountDeleter.swift */; };
 		567E87F62B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567E87F52B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift */; };
 		567E87F82B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567E87F72B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift */; };
 		56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A062B6C4DEC00C4C0DB /* SignInView.swift */; };
@@ -62,7 +64,7 @@
 		56B88A5F2B6F335800C4C0DB /* FirestoreRecipeDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A5E2B6F335800C4C0DB /* FirestoreRecipeDoc.swift */; };
 		56B88A622B6F346F00C4C0DB /* FirestorePostDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A612B6F346F00C4C0DB /* FirestorePostDoc.swift */; };
 		56B88A642B6F896000C4C0DB /* ProfileImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A632B6F896000C4C0DB /* ProfileImageUploader.swift */; };
-		56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift */; };
+		56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageStorage.swift */; };
 		56B88A682B6FA6C100C4C0DB /* TaskAwareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A672B6FA6C100C4C0DB /* TaskAwareButton.swift */; };
 		56B88A6A2B6FA73000C4C0DB /* Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A692B6FA73000C4C0DB /* Shake.swift */; };
 		56B88A6C2B70D51D00C4C0DB /* UserDataSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A6B2B70D51D00C4C0DB /* UserDataSaver.swift */; };
@@ -143,6 +145,8 @@
 		5677542F2B7168DD0094EB8C /* BlockingSpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockingSpinnerView.swift; sourceTree = "<group>"; };
 		567754322B717AAA0094EB8C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		567754342B717B420094EB8C /* ProfileControlLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileControlLabel.swift; sourceTree = "<group>"; };
+		567754362B7184640094EB8C /* UserAccountDeleter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountDeleter.swift; sourceTree = "<group>"; };
+		567754382B7194900094EB8C /* FirebaseUserAccountDeleter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserAccountDeleter.swift; sourceTree = "<group>"; };
 		567E87F52B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeLibraryContentProvider.swift; sourceTree = "<group>"; };
 		567E87F72B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRecipeLibraryContentProvider.swift; sourceTree = "<group>"; };
 		56B88A062B6C4DEC00C4C0DB /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -175,7 +179,7 @@
 		56B88A5E2B6F335800C4C0DB /* FirestoreRecipeDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRecipeDoc.swift; sourceTree = "<group>"; };
 		56B88A612B6F346F00C4C0DB /* FirestorePostDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestorePostDoc.swift; sourceTree = "<group>"; };
 		56B88A632B6F896000C4C0DB /* ProfileImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageUploader.swift; sourceTree = "<group>"; };
-		56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseProfileImageUploader.swift; sourceTree = "<group>"; };
+		56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseProfileImageStorage.swift; sourceTree = "<group>"; };
 		56B88A672B6FA6C100C4C0DB /* TaskAwareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAwareButton.swift; sourceTree = "<group>"; };
 		56B88A692B6FA73000C4C0DB /* Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shake.swift; sourceTree = "<group>"; };
 		56B88A6B2B70D51D00C4C0DB /* UserDataSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataSaver.swift; sourceTree = "<group>"; };
@@ -251,7 +255,7 @@
 				56B88A5D2B6F334100C4C0DB /* Recipes */,
 				56B88A5A2B6F310B00C4C0DB /* Users */,
 				56B88A182B6C5FE400C4C0DB /* FirebaseAuthentication.swift */,
-				56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift */,
+				56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageStorage.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -397,6 +401,7 @@
 				56B88A762B70DCFD00C4C0DB /* UserDataProvider.swift */,
 				56B88A712B70DC9800C4C0DB /* CurrentUserIdProvider.swift */,
 				5677542B2B70E55C0094EB8C /* CurrentUserDataProvider.swift */,
+				567754362B7184640094EB8C /* UserAccountDeleter.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -524,6 +529,7 @@
 				56B88A5B2B6F311A00C4C0DB /* FirestoreUserDoc.swift */,
 				56B88A732B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift */,
 				5677542D2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift */,
+				567754382B7194900094EB8C /* FirebaseUserAccountDeleter.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -775,11 +781,13 @@
 				56B88A6C2B70D51D00C4C0DB /* UserDataSaver.swift in Sources */,
 				56E305112B4B71400098079A /* KnowledgeLibraryView.swift in Sources */,
 				567754302B7168DD0094EB8C /* BlockingSpinnerView.swift in Sources */,
+				567754392B7194900094EB8C /* FirebaseUserAccountDeleter.swift in Sources */,
 				56B88A402B6CF0F100C4C0DB /* FormTextField.swift in Sources */,
 				56B88A472B6CF53A00C4C0DB /* EditUserProfileView.swift in Sources */,
 				566B2D642B4694C6008627F8 /* FeaturedContentThumbnail.swift in Sources */,
 				56025D1D2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift in Sources */,
 				562E03E72B450AA000859F81 /* HomeView.swift in Sources */,
+				567754372B7184640094EB8C /* UserAccountDeleter.swift in Sources */,
 				567754332B717AAA0094EB8C /* SettingsView.swift in Sources */,
 				56E305532B4BED1B0098079A /* KnowledgeLibraryContentProvider.swift in Sources */,
 				56B88A342B6CEA8700C4C0DB /* EmailAddress.swift in Sources */,
@@ -803,7 +811,7 @@
 				5676A1362B477933009C1DA6 /* Recipe.swift in Sources */,
 				56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */,
 				56B88A682B6FA6C100C4C0DB /* TaskAwareButton.swift in Sources */,
-				56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageUploader.swift in Sources */,
+				56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageStorage.swift in Sources */,
 				567E87F62B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift in Sources */,
 				56B88A5F2B6F335800C4C0DB /* FirestoreRecipeDoc.swift in Sources */,
 				56B88A642B6F896000C4C0DB /* ProfileImageUploader.swift in Sources */,

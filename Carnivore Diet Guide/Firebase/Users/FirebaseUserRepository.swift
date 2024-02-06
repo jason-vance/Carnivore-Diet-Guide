@@ -64,6 +64,10 @@ class FirebaseUserRepository {
         let snapshot = try await usersCollection.document(id).getDocument()
         return try? snapshot.data(as: FirestoreUserDoc.self)
     }
+    
+    func deleteUserDoc(withId userId: String) async throws {
+        try await usersCollection.document(userId).delete()
+    }
 }
 
 extension FirebaseUserRepository: UserDataSaver {

@@ -80,19 +80,43 @@ class FirebaseAuthenticationProvider {
             rawNonce: nil,
             fullName: appleIDCredential.fullName)
         
-        // Sign in with Firebase.
-        do {
-            try await Auth.auth().signIn(with: credential)
-        } catch {
-            throw "Unable to sign in with credential"
+        try await Auth.auth().signIn(with: credential)
+    }
+    
+    private func reathenticate(withAuthorization authorization: ASAuthorization) async throws {
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+            throw "Unable to fetch credential"
         }
+        guard let appleIDToken = appleIDCredential.identityToken else {
+            throw "Unable to fetch identity token"
+        }
+        guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+            throw "Unable to serialize token string from data: \(appleIDToken.debugDescription)"
+        }
+        
+        // Initialize a Firebase credential, including the user's full name.
+        let credential = OAuthProvider.appleCredential(
+            withIDToken: idTokenString,
+            rawNonce: nil,
+            fullName: appleIDCredential.fullName)
+
+        try await currentUser?.reauthenticate(with: credential)
     }
     
     func signOut() throws {
         try Auth.auth().signOut()
     }
+    
+    func deleteUser(authorization: ASAuthorization) async throws {
+        try await reathenticate(withAuthorization: authorization)
+        try await currentUser?.delete()
+    }
 }
 
-extension FirebaseAuthenticationProvider: CurrentUserIdProvider, ContentAuthenticationProvider, SignInAuthenticationProvider, UserProfileSignOutService {
-    
-}
+extension FirebaseAuthenticationProvider: CurrentUserIdProvider {}
+
+extension FirebaseAuthenticationProvider: ContentAuthenticationProvider {}
+
+extension FirebaseAuthenticationProvider: SignInAuthenticationProvider {}
+
+extension FirebaseAuthenticationProvider: UserProfileSignOutService {}

@@ -1,5 +1,5 @@
 //
-//  FirebaseProfileImageUploader.swift
+//  FirebaseProfileImageStorage.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 2/3/24.
@@ -9,12 +9,16 @@ import Foundation
 import FirebaseStorage
 import UIKit
 
-class FirebaseProfileImageUploader: ProfileImageUploader {
+class FirebaseProfileImageStorage {
     
     var storage: Storage { Storage.storage() }
     
+    private func userProfileImagePath(userId: String) -> String {
+        "ProfileImages/\(userId)/\(userId).jpg"
+    }
+    
     func upload(profileImage: UIImage, for userId: String) async throws -> URL {
-        let path = "ProfileImages/\(userId)/\(userId).jpg"
+        let path = userProfileImagePath(userId: userId)
         return try await upload(image: profileImage, to: path)
     }
     
@@ -41,4 +45,12 @@ class FirebaseProfileImageUploader: ProfileImageUploader {
         }
         return try await storageReference.downloadURL()
     }
+    
+    func deleteProfileImage(for userId: String) async throws {
+        let path = userProfileImagePath(userId: userId)
+        let storageReference = storage.reference(withPath: path)
+        try await storageReference.delete()
+    }
 }
+
+extension FirebaseProfileImageStorage: ProfileImageUploader {}

@@ -44,6 +44,9 @@ fileprivate func setup(iocContainer: Container) {
 
     //Edit User Profile
     iocContainer.autoregister(CurrentUserDataProvider.self, initializer: FirebaseCurrentUserDataProvider.init)
-    iocContainer.autoregister(ProfileImageUploader.self, initializer: FirebaseProfileImageUploader.init)
+    iocContainer.autoregister(ProfileImageUploader.self, initializer: FirebaseProfileImageStorage.init)
     iocContainer.autoregister(UserDataSaver.self, initializer: FirebaseUserRepository.init)
+    
+    //Settings
+    iocContainer.autoregister(UserAccountDeleter.self, initializer: FirebaseUserAccountDeleter.init)
 }

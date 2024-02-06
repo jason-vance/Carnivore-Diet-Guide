@@ -10,6 +10,8 @@ import SwinjectAutoregistration
 
 struct ContentView: View {
     
+    //TODO: If you delete account and then sign back in, you don't get onboarded
+    
     enum Tab {
         case home
         case recipes

@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
+import _AuthenticationServices_SwiftUI
 
 struct SettingsView: View {
+    
+    private let accountDeleter = iocContainer~>UserAccountDeleter.self
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     @State private var showDeleteAccountDialog: Bool = false
-    @State private var showConfirmDeleteAccountDialog: Bool = false
+    @State private var showConfirmDeleteAccountSheet: Bool = false
     
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
@@ -23,44 +27,49 @@ struct SettingsView: View {
     }
     
     private func confirmDeleteAccount() {
-        if showConfirmDeleteAccountDialog {
-            Task {
-                do {
-                    try await actuallyDeleteAccount()
-                } catch {
-                    show(errorMessage: "Could not delete account: \(error.localizedDescription)")
+        showConfirmDeleteAccountSheet = true
+    }
+    
+    private func actuallyDeleteAccount(authResult: Result<ASAuthorization, Error>) {
+        Task {
+            do {        
+                switch authResult {
+                case .success(let authorization):
+                    try await accountDeleter.deleteCurrentUserAccount(authorization: authorization)
+                case .failure(let error):
+                    throw error
                 }
+            } catch {
+                let errorMessage = "Account could not be deleted: \(error.localizedDescription)"
+                print(errorMessage)
+                //Don't show the error. You will get the following error:
+                //"Attempting to present a confirmation dialog while an alert is already presented. This is not supported."
             }
-        } else {
-            showConfirmDeleteAccountDialog = true
         }
     }
     
-    private func actuallyDeleteAccount() async throws {
-        //TODO: Implement deleteAccount
-        print("Delete")
-    }
-    
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                TitleBar()
-                ScrollView {
-                    VStack {
-                        DeleteAccountButton()
+        ZStack {
+            NavigationStack {
+                VStack(spacing: 0) {
+                    TitleBar()
+                    ScrollView {
+                        VStack {
+                            DeleteAccountButton()
+                        }
+                        .padding()
                     }
-                    .padding()
+                    .overlay(alignment: .top) {
+                        LinearGradient(
+                            colors: [Color.background, Color.clear],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                        .frame(height: 16)
+                    }
                 }
-                .overlay(alignment: .top) {
-                    LinearGradient(
-                        colors: [Color.background, Color.clear],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                    .frame(height: 16)
-                }
+                .background(Color.background)
             }
-            .background(Color.background)
         }
         .toolbar(.hidden, for: .automatic)
         .alert(errorMessage, isPresented: $showError) {}
@@ -72,14 +81,41 @@ struct SettingsView: View {
             ConfirmDeleteAccountButton()
             CancelDeleteAccountButton()
         }
-        .confirmationDialog(
-            "Are you really sure you want to delete your account? This action will delete all of your data and is irreversible.",
-            isPresented: $showConfirmDeleteAccountDialog,
-            titleVisibility: .visible
-        ) {
-            ConfirmDeleteAccountButton()
-            CancelDeleteAccountButton()
+        .sheet(isPresented: $showConfirmDeleteAccountSheet, content: {
+            ConfirmDeleteAccountSheet()
+        })
+    }
+    
+    @ViewBuilder func ConfirmDeleteAccountSheet() -> some View {
+        ZStack(alignment: .bottom) {
+            LinearGradient(colors: [.clear, .text], startPoint: .top, endPoint: .bottom) 
+                .ignoresSafeArea()
+                .onTapGesture {
+                    showConfirmDeleteAccountSheet = false
+                }
+            VStack {
+                Text("Are you really sure you want to delete your account? This action will delete all of your data and is irreversible.")
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.center)
+                ReallyConfirmDeleteAccountButton()
+                CancelDeleteAccountButton()
+            }
+            .padding()
+            .background(Color.background)
+            .clipShape(RoundedRectangle(cornerRadius: Corners.radius, style: .continuous))
+            .padding()
         }
+        .presentationCompactAdaptation(.fullScreenCover)
+        .presentationBackground(.clear)
+    }
+    
+    @ViewBuilder func ReallyConfirmDeleteAccountButton() -> some View {
+        SignInWithAppleButton(.continue) { _ in
+        } onCompletion: { result in
+            actuallyDeleteAccount(authResult: result)
+        }
+        .frame(height: 48)
+        .padding(.vertical)
     }
     
     @ViewBuilder func ConfirmDeleteAccountButton() -> some View {
@@ -92,9 +128,12 @@ struct SettingsView: View {
     
     @ViewBuilder func CancelDeleteAccountButton() -> some View {
         Button(role: .cancel) {
+            showDeleteAccountDialog = false
+            showConfirmDeleteAccountSheet = false
         } label: {
             Text("Cancel")
         }
+        .frame(height: 48)
     }
     
     @ViewBuilder func TitleBar() -> some View {
