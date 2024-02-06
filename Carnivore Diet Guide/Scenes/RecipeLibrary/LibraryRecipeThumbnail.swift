@@ -70,7 +70,6 @@ struct LibraryRecipeThumbnail: View {
         VStack {
             LibraryRecipeThumbnail(recipe: .sample)
             LibraryRecipeThumbnail(recipe: .longNamedSample)
-            LibraryRecipeThumbnail(recipe: .sample)
         }
         .padding()
     }

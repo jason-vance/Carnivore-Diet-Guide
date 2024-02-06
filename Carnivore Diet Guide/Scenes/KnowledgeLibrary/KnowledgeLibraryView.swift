@@ -50,7 +50,9 @@ struct KnowledgeLibraryView: View {
             .background(Color.background)
         }
         .onAppear {
-            loadPosts()
+            if posts.isEmpty {
+                loadPosts()
+            }
         }
         .alert(errorMessage, isPresented: $showError) {}
     }

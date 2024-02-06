@@ -50,7 +50,9 @@ struct RecipeLibraryView: View {
             .background(Color.background)
         }
         .onAppear {
-            loadRecipes()
+            if recipes.isEmpty {
+                loadRecipes()
+            }
         }
         .alert(errorMessage, isPresented: $showError) {}
     }

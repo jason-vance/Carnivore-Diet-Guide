@@ -12,6 +12,8 @@ struct HomeViewContent {
     let featuredContent: [FeaturedContentItem]
     let trendingRecipes: [Recipe]
     let trendingPosts: [Post]
+    
+    var isEmpty: Bool { featuredContent.isEmpty && trendingRecipes.isEmpty && trendingPosts.isEmpty }
 }
 
 extension HomeViewContent {

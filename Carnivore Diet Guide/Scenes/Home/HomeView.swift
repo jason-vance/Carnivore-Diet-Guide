@@ -53,7 +53,9 @@ struct HomeView: View {
         }
         .alert(errorMessage, isPresented: $showError) {}
         .onAppear {
-            loadContent()
+            if content.isEmpty {
+                loadContent()
+            }
         }
     }
     
