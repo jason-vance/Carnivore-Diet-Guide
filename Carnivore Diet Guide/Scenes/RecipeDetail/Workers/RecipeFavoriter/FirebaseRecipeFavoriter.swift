@@ -42,9 +42,14 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
     
     private func checkFavoriteStatus() {
         Task {
-            guard let userId = currentUserIdProvider.currentUserId else { return }
-            if let isFavorite = try? await favoritesRepo.isRecipe(recipe, markedAsFavoriteBy: userId) {
-                isMarkedAsFavorite = isFavorite
+            do {
+                guard let userId = currentUserIdProvider.currentUserId else { return }
+                let isFavorite = try await favoritesRepo.isRecipe(recipe, markedAsFavoriteBy: userId)
+                RunLoop.main.perform {
+                    self.isMarkedAsFavorite = isFavorite
+                }
+            } catch {
+                print("Failed to checkFavoriteStatus: \(error.localizedDescription)")
             }
         }
     }

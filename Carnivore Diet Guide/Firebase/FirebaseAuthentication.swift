@@ -31,15 +31,17 @@ class FirebaseAuthenticationProvider {
     }
     
     private func listenForAuthStateChanges() {
-        authStateChangeListenerHandle = Auth.auth().addStateDidChangeListener { [weak self] auth, user in
-            if let user = user {
-                self?.currentUser = user
-                self?.currentUserId = user.uid
-                self?.userAuthState = .loggedIn
-            } else {
-                self?.currentUser = nil
-                self?.currentUserId = nil
-                self?.userAuthState = .loggedOut
+        authStateChangeListenerHandle = Auth.auth().addStateDidChangeListener { auth, user in
+            DispatchQueue.main.async { [weak self] in
+                if let user = user {
+                    self?.currentUser = user
+                    self?.currentUserId = user.uid
+                    self?.userAuthState = .loggedIn
+                } else {
+                    self?.currentUser = nil
+                    self?.currentUserId = nil
+                    self?.userAuthState = .loggedOut
+                }
             }
         }
     }
@@ -70,7 +72,9 @@ class FirebaseAuthenticationProvider {
             throw "Unable to serialize token string from data: \(appleIDToken.debugDescription)"
         }
         
-        userAuthState = .working
+        DispatchQueue.main.sync {
+            self.userAuthState = .working
+        }
         
         // Initialize a Firebase credential, including the user's full name.
         let credential = OAuthProvider.appleCredential(
@@ -91,6 +95,9 @@ class FirebaseAuthenticationProvider {
         guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
             throw "Unable to serialize token string from data: \(appleIDToken.debugDescription)"
         }
+        guard let currentUser = currentUser else {
+            throw "User is not logged in"
+        }
         
         // Initialize a Firebase credential, including the user's full name.
         let credential = OAuthProvider.appleCredential(
@@ -98,7 +105,7 @@ class FirebaseAuthenticationProvider {
             rawNonce: nil,
             fullName: appleIDCredential.fullName)
 
-        try await currentUser?.reauthenticate(with: credential)
+        try await currentUser.reauthenticate(with: credential)
     }
     
     func signOut() throws {
@@ -106,8 +113,12 @@ class FirebaseAuthenticationProvider {
     }
     
     func deleteUser(authorization: ASAuthorization) async throws {
+        guard let currentUser = currentUser else {
+            throw "User is not logged in"
+        }
+        
         try await reathenticate(withAuthorization: authorization)
-        try await currentUser?.delete()
+        try await currentUser.delete()
     }
 }
 
