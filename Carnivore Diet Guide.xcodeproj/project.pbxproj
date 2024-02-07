@@ -129,6 +129,7 @@
 		56F2138F2B7426A6009DB057 /* RecipeFavoritersRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2138E2B7426A6009DB057 /* RecipeFavoritersRepo.swift */; };
 		56F213912B74293F009DB057 /* FirestoreRecipeFavoriterDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213902B74293F009DB057 /* FirestoreRecipeFavoriterDoc.swift */; };
 		56F213942B742B1B009DB057 /* DocumentReferenceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213932B742B1B009DB057 /* DocumentReferenceExtensions.swift */; };
+		56F213962B74313E009DB057 /* RecipeDetailsHeaderContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213952B74313E009DB057 /* RecipeDetailsHeaderContentModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -224,6 +225,7 @@
 		56F2138E2B7426A6009DB057 /* RecipeFavoritersRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFavoritersRepo.swift; sourceTree = "<group>"; };
 		56F213902B74293F009DB057 /* FirestoreRecipeFavoriterDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRecipeFavoriterDoc.swift; sourceTree = "<group>"; };
 		56F213932B742B1B009DB057 /* DocumentReferenceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReferenceExtensions.swift; sourceTree = "<group>"; };
+		56F213952B74313E009DB057 /* RecipeDetailsHeaderContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsHeaderContentModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -406,6 +408,7 @@
 				56F213852B737121009DB057 /* Workers */,
 				56F2137F2B722A2D009DB057 /* RecipeDetailView.swift */,
 				56F213832B730F06009DB057 /* RecipeDetailsHeaderContent.swift */,
+				56F213952B74313E009DB057 /* RecipeDetailsHeaderContentModel.swift */,
 			);
 			path = RecipeDetail;
 			sourceTree = "<group>";
@@ -882,6 +885,7 @@
 				5676A1362B477933009C1DA6 /* Recipe.swift in Sources */,
 				56F213842B730F06009DB057 /* RecipeDetailsHeaderContent.swift in Sources */,
 				56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */,
+				56F213962B74313E009DB057 /* RecipeDetailsHeaderContentModel.swift in Sources */,
 				56B88A682B6FA6C100C4C0DB /* TaskAwareButton.swift in Sources */,
 				56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageStorage.swift in Sources */,
 				56F2138A2B73735D009DB057 /* FirebaseRecipeFavoriter.swift in Sources */,

@@ -15,8 +15,6 @@ struct RecipeDetailView: View {
     
     var recipe: Recipe
     
-    //TODO: Favorite button flickers when scrolling
-    
     @State private var showExtraMenuOptions: Bool = false
     
     var body: some View {

@@ -9,37 +9,16 @@ import SwiftUI
 import SwinjectAutoregistration
 
 struct RecipeDetailsHeaderContent: View {
-    
-    var recipe: Recipe
-    
-    private let recipeFavoriter: RecipeFavoriter
         
     @Environment(\.dismiss) private var dismiss: DismissAction
     
+    @State var recipe: Recipe
+    
+    @StateObject private var model = RecipeDetailsHeaderContentModel()
     @State private var showAllOptions: Bool = false
-    @State private var isMarkedAsFavorite: Bool?
     
     var isInitialized: Bool {
-        isMarkedAsFavorite != nil
-    }
-    
-    init(recipe: Recipe) {
-        self.recipe = recipe
-        
-        recipeFavoriter = iocContainer.resolve(RecipeFavoriter.self, argument: recipe)!
-    }
-    
-    private func toggleFavorite() {
-        Task {
-            guard let isFavorited = isMarkedAsFavorite else { return }
-            
-            isMarkedAsFavorite = !isFavorited
-            do {
-                try await recipeFavoriter.toggleFavorite()
-            } catch {
-                isMarkedAsFavorite = isFavorited
-            }
-        }
+        model.isMarkedAsFavorite != nil
     }
     
     var body: some View {
@@ -59,6 +38,9 @@ struct RecipeDetailsHeaderContent: View {
             startPoint: .top,
             endPoint: .bottom
         ))
+        .onAppear {
+            model.recipe = recipe
+        }
     }
     
     @ViewBuilder func CloseButton() -> some View {
@@ -85,12 +67,9 @@ struct RecipeDetailsHeaderContent: View {
     
     @ViewBuilder func FavoriteButton() -> some View {
         Button {
-            toggleFavorite()
+            model.toggleFavorite()
         } label: {
-            HeaderButtonLabel(isMarkedAsFavorite == true ? "heart.fill" : "heart.slash")
-        }
-        .onReceive(recipeFavoriter.isMarkedAsFavoritePublisher) { isFavorited in
-            isMarkedAsFavorite = isFavorited
+            HeaderButtonLabel(model.isMarkedAsFavorite == true ? "heart.fill" : "heart.slash")
         }
     }
     
