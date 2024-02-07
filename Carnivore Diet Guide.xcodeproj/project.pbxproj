@@ -125,6 +125,10 @@
 		56F213842B730F06009DB057 /* RecipeDetailsHeaderContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213832B730F06009DB057 /* RecipeDetailsHeaderContent.swift */; };
 		56F213882B737159009DB057 /* RecipeFavoriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213872B737159009DB057 /* RecipeFavoriter.swift */; };
 		56F2138A2B73735D009DB057 /* FirebaseRecipeFavoriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213892B73735D009DB057 /* FirebaseRecipeFavoriter.swift */; };
+		56F2138C2B742652009DB057 /* FavoriteRecipeRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2138B2B742652009DB057 /* FavoriteRecipeRepo.swift */; };
+		56F2138F2B7426A6009DB057 /* RecipeFavoritersRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2138E2B7426A6009DB057 /* RecipeFavoritersRepo.swift */; };
+		56F213912B74293F009DB057 /* FirestoreRecipeFavoriterDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213902B74293F009DB057 /* FirestoreRecipeFavoriterDoc.swift */; };
+		56F213942B742B1B009DB057 /* DocumentReferenceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213932B742B1B009DB057 /* DocumentReferenceExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -216,6 +220,10 @@
 		56F213832B730F06009DB057 /* RecipeDetailsHeaderContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsHeaderContent.swift; sourceTree = "<group>"; };
 		56F213872B737159009DB057 /* RecipeFavoriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFavoriter.swift; sourceTree = "<group>"; };
 		56F213892B73735D009DB057 /* FirebaseRecipeFavoriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRecipeFavoriter.swift; sourceTree = "<group>"; };
+		56F2138B2B742652009DB057 /* FavoriteRecipeRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipeRepo.swift; sourceTree = "<group>"; };
+		56F2138E2B7426A6009DB057 /* RecipeFavoritersRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFavoritersRepo.swift; sourceTree = "<group>"; };
+		56F213902B74293F009DB057 /* FirestoreRecipeFavoriterDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRecipeFavoriterDoc.swift; sourceTree = "<group>"; };
+		56F213932B742B1B009DB057 /* DocumentReferenceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReferenceExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +273,7 @@
 		56025D1E2B6B005300F31A07 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
+				56F213922B742B0F009DB057 /* Extensions */,
 				56B88A602B6F344D00C4C0DB /* Posts */,
 				56B88A5D2B6F334100C4C0DB /* Recipes */,
 				56B88A5A2B6F310B00C4C0DB /* Users */,
@@ -419,6 +428,7 @@
 				56B88A712B70DC9800C4C0DB /* CurrentUserIdProvider.swift */,
 				5677542B2B70E55C0094EB8C /* CurrentUserDataProvider.swift */,
 				567754362B7184640094EB8C /* UserAccountDeleter.swift */,
+				56F2138B2B742652009DB057 /* FavoriteRecipeRepo.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -559,6 +569,7 @@
 			children = (
 				56025D1F2B6B006600F31A07 /* FirebaseRecipeRepository.swift */,
 				56B88A5E2B6F335800C4C0DB /* FirestoreRecipeDoc.swift */,
+				56F213902B74293F009DB057 /* FirestoreRecipeFavoriterDoc.swift */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";
@@ -584,6 +595,7 @@
 		56B88A702B70DC8000C4C0DB /* Workers */ = {
 			isa = PBXGroup;
 			children = (
+				56F2138D2B742665009DB057 /* Recipes */,
 				5677542A2B70E5500094EB8C /* Users */,
 			);
 			path = Workers;
@@ -658,6 +670,22 @@
 				56F213892B73735D009DB057 /* FirebaseRecipeFavoriter.swift */,
 			);
 			path = RecipeFavoriter;
+			sourceTree = "<group>";
+		};
+		56F2138D2B742665009DB057 /* Recipes */ = {
+			isa = PBXGroup;
+			children = (
+				56F2138E2B7426A6009DB057 /* RecipeFavoritersRepo.swift */,
+			);
+			path = Recipes;
+			sourceTree = "<group>";
+		};
+		56F213922B742B0F009DB057 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				56F213932B742B1B009DB057 /* DocumentReferenceExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -832,10 +860,12 @@
 				56E3050C2B4B60360098079A /* RecipeLibraryView.swift in Sources */,
 				56E305682B4BF83C0098079A /* PreviewContainerWithSetup.swift in Sources */,
 				56B88A422B6CF10700C4C0DB /* FormFieldOverlay.swift in Sources */,
+				56F2138F2B7426A6009DB057 /* RecipeFavoritersRepo.swift in Sources */,
 				56353B582B440C9900C4E972 /* ContentView.swift in Sources */,
 				56B88A102B6C50AE00C4C0DB /* UserAuthState.swift in Sources */,
 				56E305562B4BF0E70098079A /* FirebaseKnowledgeLibraryContentProvider.swift in Sources */,
 				56F213822B72C4FC009DB057 /* StickyHeaderScrollingView.swift in Sources */,
+				56F213942B742B1B009DB057 /* DocumentReferenceExtensions.swift in Sources */,
 				56025D292B6B8CD000F31A07 /* UI.swift in Sources */,
 				56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */,
 				56B88A092B6C4E6E00C4C0DB /* BundleExtensions.swift in Sources */,
@@ -856,12 +886,14 @@
 				56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageStorage.swift in Sources */,
 				56F2138A2B73735D009DB057 /* FirebaseRecipeFavoriter.swift in Sources */,
 				567E87F62B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift in Sources */,
+				56F213912B74293F009DB057 /* FirestoreRecipeFavoriterDoc.swift in Sources */,
 				56B88A5F2B6F335800C4C0DB /* FirestoreRecipeDoc.swift in Sources */,
 				5677543B2B71BC710094EB8C /* FeaturedContentItem.swift in Sources */,
 				56B88A642B6F896000C4C0DB /* ProfileImageUploader.swift in Sources */,
 				56025D262B6B04AB00F31A07 /* StringExtensions.swift in Sources */,
 				56B88A6F2B70DB0600C4C0DB /* DefaultOnboardingStateProvider.swift in Sources */,
 				56025D202B6B006600F31A07 /* FirebaseRecipeRepository.swift in Sources */,
+				56F2138C2B742652009DB057 /* FavoriteRecipeRepo.swift in Sources */,
 				56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */,
 				56B88A162B6C5AA400C4C0DB /* ContentAuthenticationProvider.swift in Sources */,
 				56B88A622B6F346F00C4C0DB /* FirestorePostDoc.swift in Sources */,

@@ -11,6 +11,7 @@ import FirebaseFirestore
 class FirebaseRecipeRepository {
     
     private static let RECIPES = "Recipes"
+    private let FAVORITERS = "Favoriters"
     private let PUBLICATION_DATE = "publicationDate"
 
     let recipesCollection = Firestore.firestore().collection(RECIPES)
@@ -27,5 +28,20 @@ class FirebaseRecipeRepository {
         
         return try snapshot.documents
             .compactMap { try $0.data(as: FirestoreRecipeDoc.self).toRecipe() }
+    }
+}
+
+extension FirebaseRecipeRepository: RecipeFavoritersRepo {
+    
+    func addUser(_ userId: String, asFavoriterOf recipe: Recipe) async throws {
+        let favoriterDoc = FirestoreRecipeFavoriterDoc(userId: userId, date: .now)
+        
+        let favoritersCollection = recipesCollection.document(recipe.id).collection(FAVORITERS)
+        try await favoritersCollection.document(userId).setData(from: favoriterDoc)
+    }
+    
+    func removeUser(_ userId: String, asFavoriterOf recipe: Recipe) async throws {
+        let favoritersCollection = recipesCollection.document(recipe.id).collection(FAVORITERS)
+        try await favoritersCollection.document(userId).delete()
     }
 }

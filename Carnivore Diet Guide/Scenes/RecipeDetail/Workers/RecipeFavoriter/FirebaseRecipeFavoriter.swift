@@ -9,24 +9,12 @@ import Foundation
 import SwinjectAutoregistration
 import Combine
 
-protocol FavoriteRecipeRepo {
-    func listenToFavoriteStatusOf(
-        recipe: Recipe,
-        byUser userId: String,
-        onUpdate: @escaping (Bool)->(),
-        onError: ((Error)->())?
-    ) -> AnyCancellable
-    
-    func addRecipe(_ recipe: Recipe, toFavoritesOf userId: String) async throws
-    
-    func removeRecipe(_ recipe: Recipe, fromFavoritesOf userId: String) async throws
-}
-
 class DefaultRecipeFavoriter: RecipeFavoriter {
     
     private let recipe: Recipe
     private let currentUserIdProvider = iocContainer~>CurrentUserIdProvider.self
     private let favoritesRepo = iocContainer~>FavoriteRecipeRepo.self
+    private let recipeRepo = iocContainer~>RecipeFavoritersRepo.self
     
     @Published var isMarkedAsFavorite: Bool?
     var isMarkedAsFavoritePublisher: Published<Bool?>.Publisher { $isMarkedAsFavorite }
@@ -45,8 +33,12 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
         
         if isFavorited {
             try await favoritesRepo.removeRecipe(recipe, fromFavoritesOf: userId)
+            removeUserAsFavoriterOfRecipe()
+            //TODO: Remove recipeFavorited activity event
         } else {
             try await favoritesRepo.addRecipe(recipe, toFavoritesOf: userId)
+            addUserAsFavoriterOfRecipe()
+            //TODO: Create a recipeFavorited activity event
         }
     }
     
@@ -57,6 +49,30 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
             self?.isMarkedAsFavorite = isFavorite
         } onError: { error in
             print("Failed to retrieve favorite status: \(error.localizedDescription)")
+        }
+    }
+    
+    private func addUserAsFavoriterOfRecipe() {
+        guard let userId = currentUserIdProvider.currentUserId else { return }
+        
+        Task {
+            do {
+                try await recipeRepo.addUser(userId, asFavoriterOf: recipe)
+            } catch {
+                print("Failed to add user as favoriter of recipe: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func removeUserAsFavoriterOfRecipe() {
+        guard let userId = currentUserIdProvider.currentUserId else { return }
+        
+        Task {
+            do {
+                try await recipeRepo.removeUser(userId, asFavoriterOf: recipe)
+            } catch {
+                print("Failed to remove user as favoriter of recipe: \(error.localizedDescription)")
+            }
         }
     }
 }
