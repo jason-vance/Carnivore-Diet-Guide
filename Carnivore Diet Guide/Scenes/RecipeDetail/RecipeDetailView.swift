@@ -15,6 +15,8 @@ struct RecipeDetailView: View {
     
     var recipe: Recipe
     
+    //TODO: Favorite button flickers when scrolling
+    
     @State private var showExtraMenuOptions: Bool = false
     
     var body: some View {
@@ -205,12 +207,15 @@ struct RecipeDetailView: View {
 }
 
 #Preview {
-    NavigationStack {
-        NavigationLink {
-            RecipeDetailView(recipe: .longNamedSample)
-        } label: {
-            Text("Recipe Details")
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        NavigationStack {
+            NavigationLink {
+                RecipeDetailView(recipe: .longNamedSample)
+            } label: {
+                Text("Recipe Details")
+            }
         }
     }
-    
 }
