@@ -16,10 +16,6 @@ struct RecipeDetailView: View {
     @State var recipe: Recipe
     @StateObject private var model = RecipeDetailViewModel()
     @State private var showExtraMenuOptions: Bool = false
-    @State private var showCommentCount: Bool = true
-    @State private var commentCount: UInt = 0
-    @State private var showFavoriteCount: Bool = false
-    @State private var favoriteCount: UInt = 0
     
     var body: some View {
         StickyHeaderScrollingView(
@@ -60,7 +56,7 @@ struct RecipeDetailView: View {
     
     @ViewBuilder func ScrollableContent() -> some View {
         VStack {
-            MetadataLine()
+            RecipeDetailMetadataView(recipe: recipe)
             RecipeTitle()
             ServingsLine()
             ByLine()
@@ -98,74 +94,6 @@ struct RecipeDetailView: View {
                 .font(.caption)
                 .foregroundStyle(Color.text)
             Spacer()
-        }
-    }
-    
-    //TODO: Put MetadataLine in its own file
-    @ViewBuilder func MetadataLine() -> some View {
-        HStack {
-            DifficultyLevelMetadataItem()
-            MetadataSeparator()
-            CookTimeMetadataItem()
-            Spacer()
-            if showCommentCount {
-                CommentsMetadataItem()
-            }
-            if showCommentCount && showFavoriteCount {
-                MetadataSeparator()
-            }
-            if showFavoriteCount {
-                FavoritesMetadataItem()
-            }
-        }
-        .font(.caption)
-        .foregroundStyle(Color.text)
-        .onChange(of: model.commentCount, initial: true) { count in
-            withAnimation(.snappy) {
-                showCommentCount = count > 0
-                commentCount = count
-            }
-        }
-        .onChange(of: model.favoriteCount, initial: true) { count in
-            withAnimation(.snappy) {
-                showFavoriteCount = count > 0
-                favoriteCount = count
-            }
-        }
-    }
-    
-    @ViewBuilder func MetadataSeparator() -> some View {
-        Circle()
-            .fill(Color.text)
-            .frame(width: 4, height: 4)
-    }
-    
-    @ViewBuilder func CookTimeMetadataItem() -> some View {
-        //TODO: Get a real cook time
-        MetadataItem(text: "17mins", icon: "clock")
-    }
-    
-    @ViewBuilder func DifficultyLevelMetadataItem() -> some View {
-        //TODO: Get a real cooking level
-        MetadataItem(text: "easy", icon: "frying.pan")
-    }
-    
-    @ViewBuilder func FavoritesMetadataItem() -> some View {
-        MetadataItem(text: "\(favoriteCount)", icon: "heart")
-    }
-    
-    @ViewBuilder func CommentsMetadataItem() -> some View {
-        //TODO: Get a real comment count
-        MetadataItem(text: "\(commentCount)", icon: "text.bubble")
-    }
-    
-    @ViewBuilder func MetadataItem(text: String, icon: String? = nil) -> some View {
-        HStack(spacing: 2) {
-            if let icon = icon {
-                Image(systemName: icon)
-            }
-            Text(text)
-                .contentTransition(.numericText())
         }
     }
     

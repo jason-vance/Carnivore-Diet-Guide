@@ -1,5 +1,5 @@
 //
-//  RecipeDetailViewModel.swift
+//  RecipeDetailMetadataViewModel.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 2/7/24.
@@ -10,7 +10,7 @@ import SwinjectAutoregistration
 import Combine
 
 @MainActor
-class RecipeDetailViewModel: ObservableObject {
+class RecipeDetailMetadataViewModel: ObservableObject {
     
     var recipe: Recipe? {
         didSet {
