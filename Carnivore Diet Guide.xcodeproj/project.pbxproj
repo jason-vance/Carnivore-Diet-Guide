@@ -121,6 +121,9 @@
 		56E305762B4D4DC50098079A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 56E305752B4D4DC50098079A /* Kingfisher */; };
 		56F2137C2B7222CA009DB057 /* PositionObservingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2137B2B7222CA009DB057 /* PositionObservingView.swift */; };
 		56F2137E2B722305009DB057 /* OffsetObservingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2137D2B722305009DB057 /* OffsetObservingScrollView.swift */; };
+		56F213802B722A2D009DB057 /* RecipeDetailViewWithStickyHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2137F2B722A2D009DB057 /* RecipeDetailViewWithStickyHeader.swift */; };
+		56F213822B72C4FC009DB057 /* StickyHeaderScrollingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213812B72C4FC009DB057 /* StickyHeaderScrollingView.swift */; };
+		56F213842B730F06009DB057 /* RecipeDetailsHeaderContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213832B730F06009DB057 /* RecipeDetailsHeaderContent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -208,6 +211,9 @@
 		56E305722B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = "Carnivore-Diet-Guide-InfoPlist.xcstrings"; sourceTree = "<group>"; };
 		56F2137B2B7222CA009DB057 /* PositionObservingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionObservingView.swift; sourceTree = "<group>"; };
 		56F2137D2B722305009DB057 /* OffsetObservingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetObservingScrollView.swift; sourceTree = "<group>"; };
+		56F2137F2B722A2D009DB057 /* RecipeDetailViewWithStickyHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewWithStickyHeader.swift; sourceTree = "<group>"; };
+		56F213812B72C4FC009DB057 /* StickyHeaderScrollingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeaderScrollingView.swift; sourceTree = "<group>"; };
+		56F213832B730F06009DB057 /* RecipeDetailsHeaderContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsHeaderContent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -387,6 +393,8 @@
 			isa = PBXGroup;
 			children = (
 				5676A1322B477913009C1DA6 /* RecipeDetailView.swift */,
+				56F2137F2B722A2D009DB057 /* RecipeDetailViewWithStickyHeader.swift */,
+				56F213832B730F06009DB057 /* RecipeDetailsHeaderContent.swift */,
 			);
 			path = RecipeDetail;
 			sourceTree = "<group>";
@@ -477,6 +485,7 @@
 				567754342B717B420094EB8C /* ProfileControlLabel.swift */,
 				56F2137B2B7222CA009DB057 /* PositionObservingView.swift */,
 				56F2137D2B722305009DB057 /* OffsetObservingScrollView.swift */,
+				56F213812B72C4FC009DB057 /* StickyHeaderScrollingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -807,6 +816,7 @@
 				56353B582B440C9900C4E972 /* ContentView.swift in Sources */,
 				56B88A102B6C50AE00C4C0DB /* UserAuthState.swift in Sources */,
 				56E305562B4BF0E70098079A /* FirebaseKnowledgeLibraryContentProvider.swift in Sources */,
+				56F213822B72C4FC009DB057 /* StickyHeaderScrollingView.swift in Sources */,
 				56025D292B6B8CD000F31A07 /* UI.swift in Sources */,
 				56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */,
 				56B88A092B6C4E6E00C4C0DB /* BundleExtensions.swift in Sources */,
@@ -816,10 +826,12 @@
 				56B88A192B6C5FE400C4C0DB /* FirebaseAuthentication.swift in Sources */,
 				56E305162B4B74BC0098079A /* LibraryPostThumbnail.swift in Sources */,
 				56B88A742B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift in Sources */,
+				56F213802B722A2D009DB057 /* RecipeDetailViewWithStickyHeader.swift in Sources */,
 				56F2137C2B7222CA009DB057 /* PositionObservingView.swift in Sources */,
 				56B88A122B6C541F00C4C0DB /* SignInViewModel.swift in Sources */,
 				56B88A1F2B6CE4F100C4C0DB /* UserProfileSignOutService.swift in Sources */,
 				5676A1362B477933009C1DA6 /* Recipe.swift in Sources */,
+				56F213842B730F06009DB057 /* RecipeDetailsHeaderContent.swift in Sources */,
 				56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */,
 				56B88A682B6FA6C100C4C0DB /* TaskAwareButton.swift in Sources */,
 				56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageStorage.swift in Sources */,

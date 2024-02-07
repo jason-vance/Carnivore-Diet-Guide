@@ -65,6 +65,9 @@
         }
       }
     },
+    "%lld" : {
+
+    },
     "%lld kcal" : {
       "localizations" : {
         "ar" : {
@@ -1669,6 +1672,9 @@
           }
         }
       }
+    },
+    "Title" : {
+
     },
     "Trending Blog Posts" : {
       "extractionState" : "stale",
