@@ -7,10 +7,18 @@
 
 import Foundation
 import SwinjectAutoregistration
+import Combine
 
 protocol FavoriteRecipeRepo {
-    func isRecipe(_ recipe: Recipe, markedAsFavoriteBy userId: String) async throws -> Bool
+    func listenToFavoriteStatusOf(
+        recipe: Recipe,
+        byUser userId: String,
+        onUpdate: @escaping (Bool)->(),
+        onError: ((Error)->())?
+    ) -> AnyCancellable
+    
     func addRecipe(_ recipe: Recipe, toFavoritesOf userId: String) async throws
+    
     func removeRecipe(_ recipe: Recipe, fromFavoritesOf userId: String) async throws
 }
 
@@ -23,34 +31,32 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
     @Published var isMarkedAsFavorite: Bool?
     var isMarkedAsFavoritePublisher: Published<Bool?>.Publisher { $isMarkedAsFavorite }
     
+    private var favoriteListener: AnyCancellable?
+    
     init(recipe: Recipe) {
         self.recipe = recipe
         
-        checkFavoriteStatus()
+        listenToFavoriteStatus()
     }
     
-    func toggleFavorite(recipe: Recipe) async throws {
+    func toggleFavorite() async throws {
         guard let userId = currentUserIdProvider.currentUserId else { throw "Could not retrieve userId" }
-        guard let isMarkedAsFavorite = isMarkedAsFavorite else { throw "Unknown favorite status" }
+        guard let isFavorited = isMarkedAsFavorite else { throw "Unknown favorite status" }
         
-        if isMarkedAsFavorite {
+        if isFavorited {
             try await favoritesRepo.removeRecipe(recipe, fromFavoritesOf: userId)
         } else {
             try await favoritesRepo.addRecipe(recipe, toFavoritesOf: userId)
         }
     }
     
-    private func checkFavoriteStatus() {
-        Task {
-            do {
-                guard let userId = currentUserIdProvider.currentUserId else { return }
-                let isFavorite = try await favoritesRepo.isRecipe(recipe, markedAsFavoriteBy: userId)
-                RunLoop.main.perform {
-                    self.isMarkedAsFavorite = isFavorite
-                }
-            } catch {
-                print("Failed to checkFavoriteStatus: \(error.localizedDescription)")
-            }
+    private func listenToFavoriteStatus() {
+        guard let userId = currentUserIdProvider.currentUserId else { return }
+        
+        favoriteListener = favoritesRepo.listenToFavoriteStatusOf(recipe: recipe, byUser: userId) { [weak self] isFavorite in
+            self?.isMarkedAsFavorite = isFavorite
+        } onError: { error in
+            print("Failed to retrieve favorite status: \(error.localizedDescription)")
         }
     }
 }

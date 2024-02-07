@@ -35,7 +35,7 @@ struct RecipeDetailsHeaderContent: View {
             
             isMarkedAsFavorite = !isFavorited
             do {
-                try await recipeFavoriter.toggleFavorite(recipe: recipe)
+                try await recipeFavoriter.toggleFavorite()
             } catch {
                 isMarkedAsFavorite = isFavorited
             }

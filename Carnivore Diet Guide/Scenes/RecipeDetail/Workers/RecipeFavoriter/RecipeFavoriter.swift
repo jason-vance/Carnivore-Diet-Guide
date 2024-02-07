@@ -9,7 +9,7 @@ import Foundation
 
 protocol RecipeFavoriter {
     var isMarkedAsFavoritePublisher: Published<Bool?>.Publisher { get }
-    func toggleFavorite(recipe: Recipe) async throws
+    func toggleFavorite() async throws
 }
 
 class MockRecipeFavoriter: RecipeFavoriter {
@@ -29,7 +29,7 @@ class MockRecipeFavoriter: RecipeFavoriter {
         }
     }
     
-    func toggleFavorite(recipe: Recipe) async throws {
+    func toggleFavorite() async throws {
         try await Task.sleep(for: .seconds(1))
         
         if let error = error {

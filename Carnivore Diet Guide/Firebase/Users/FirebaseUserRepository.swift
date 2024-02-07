@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import Combine
 
 class FirebaseUserRepository {
     
@@ -47,7 +48,11 @@ class FirebaseUserRepository {
         try await usersCollection.document(userData.id).updateData(dict)
     }
     
-    func listenToUserDocument(withId id: String, onUpdate: @escaping (FirestoreUserDoc?)->(), onError: ((Error)->())? = nil) -> ListenerRegistration {
+    func listenToUserDocument(
+        withId id: String,
+        onUpdate: @escaping (FirestoreUserDoc?)->(),
+        onError: ((Error)->())? = nil
+    ) -> ListenerRegistration {
         usersCollection.document(id).addSnapshotListener { snapshot, error in
             if let snapshot = snapshot {
                 let userDoc = try? snapshot.data(as: FirestoreUserDoc.self)
@@ -77,12 +82,34 @@ extension FirebaseUserRepository: UserDataSaver {
 }
 
 extension FirebaseUserRepository: FavoriteRecipeRepo {
-    func isRecipe(_ recipe: Recipe, markedAsFavoriteBy userId: String) async throws -> Bool {
-        let snapshot = try await usersCollection.document(userId).getDocument()
-        let favoritesAsAny = snapshot.get(FirestoreUserDoc.CodingKeys.favoriteRecipes.rawValue)
-        guard let favorites = favoritesAsAny as? [String]? else { throw "Couldn't cast to array of favorites" }
-        guard let favorites = favorites else { return false }
-        return favorites.contains { $0 == recipe.id }
+    func listenToFavoriteStatusOf(
+        recipe: Recipe,
+        byUser userId: String,
+        onUpdate: @escaping (Bool)->(),
+        onError: ((Error)->())? = nil
+    ) -> AnyCancellable {
+        let listener = usersCollection.document(userId).addSnapshotListener { snapshot, error in
+            guard let snapshot = snapshot else {
+                onError?(error ?? "¯\\_(ツ)_/¯ While listening to user's recipe favorite status")
+                return
+            }
+            
+            let favoritesAsAny = snapshot.get(FirestoreUserDoc.CodingKeys.favoriteRecipes.rawValue)
+            
+            guard let favorites = favoritesAsAny as? [String]? else {
+                onError?("Couldn't cast to array of favorites")
+                return
+            }
+            
+            guard let favorites = favorites else {
+                onUpdate(false)
+                return
+            }
+            
+            onUpdate(favorites.contains { $0 == recipe.id })
+        }
+        
+        return AnyCancellable({ listener.remove() })
     }
     
     //TODO: Create a recipeFavorited activity event
