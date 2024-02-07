@@ -8,8 +8,7 @@
 import Foundation
 
 struct Recipe: Identifiable {
-    //TODO: use the firebase id
-    var id: String = UUID().uuidString
+    var id: String
     var title: String
     var imageName: String?
     var imageUrl: String?
@@ -23,6 +22,7 @@ struct Recipe: Identifiable {
 extension Recipe {
     static var sample: Recipe {
         .init(
+            id: "sampleRecipeId",
             title: "Seared Ribeye Steak",
             imageName: "SearedRibeyeSteak",
             author: "The Carnivore Diet Guide Team",
@@ -52,6 +52,7 @@ extension Recipe {
     
     static var longNamedSample: Recipe {
         .init(
+            id: "longNamedSampleRecipeId",
             title: "Grilled Salmon with Lemon Butter and Various Garnishes",
             imageName: "GrilledSalmonWithLemonButter",
             author: "The Carnivore Diet Guide Team",
@@ -79,5 +80,5 @@ extension Recipe {
         )
     }
     
-    static let samples: [Recipe] = [sample, longNamedSample, sample, longNamedSample]
+    static let samples: [Recipe] = [sample, longNamedSample]
 }
