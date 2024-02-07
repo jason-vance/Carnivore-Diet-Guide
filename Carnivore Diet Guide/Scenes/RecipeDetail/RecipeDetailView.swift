@@ -2,7 +2,7 @@
 //  RecipeDetailView.swift
 //  Carnivore Diet Guide
 //
-//  Created by Jason Vance on 1/4/24.
+//  Created by Jason Vance on 2/5/24.
 //
 
 import SwiftUI
@@ -11,81 +11,135 @@ import MarkdownUI
 
 struct RecipeDetailView: View {
     
-    let imageHeight: CGFloat = 200
+    private let imageHeight: CGFloat = 200
     
     var recipe: Recipe
     
-    @Environment(\.dismiss) private var dismiss: DismissAction
+    @State private var showExtraMenuOptions: Bool = false
     
     var body: some View {
-        VStack {
-            RecipeImage()
-            VStack(spacing: 0) {
-                RecipeTitle()
-                ZStack(alignment: .top) {
-                    Rectangle()
-                        .foregroundStyle(Color.text)
-                    ScrollView {
-                        VStack {
-                            RecipeContentView()
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                            NutritionalInformation()
-                        }
-                    }
-                    .background(Color.background)
-                    .clipShape(.rect(topLeadingRadius: Corners.radius, topTrailingRadius: Corners.radius))
-                }            }
-            .background(Color.text)
-            .clipShape(.rect(topLeadingRadius: Corners.radius, topTrailingRadius: Corners.radius))
-        }
+        StickyHeaderScrollingView(
+            headerContent: HeaderContent(progress:),
+            headerBackground: HeaderBackground,
+            scrollableContent: ScrollableContent
+        )
         .background(Color.background)
         .navigationBarBackButtonHidden()
     }
     
-    @ViewBuilder func RecipeImage() -> some View {
-        if let imageName = recipe.imageName {
-            Image(imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(height: imageHeight)
-                .overlay(alignment: .bottomLeading) {
-                    CloseButton()
-                        .padding(.horizontal)
-                        .padding(.vertical, 8)
-                }
-        }
-        if let imageUrl = recipe.imageUrl {
-            KFImage(URL(string: imageUrl))
-                .resizable()
-                .placeholder {
-                    Rectangle()
-                        .foregroundStyle(Color.background)
-                        .frame(height: imageHeight)
-                }
-                .aspectRatio(contentMode: .fill)
-                .frame(height: imageHeight)
-                .overlay(alignment: .bottomLeading) {
-                    CloseButton()
-                        .padding(.horizontal)
-                        .padding(.vertical, 8)
-                }
+    @ViewBuilder func HeaderBackground() -> some View {
+        Group {
+            if let imageName = recipe.imageName {
+                Image(imageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            }
+            if let imageUrl = recipe.imageUrl {
+                KFImage(URL(string: imageUrl))
+                    .resizable()
+                    .placeholder {
+                        Rectangle()
+                            .foregroundStyle(Color.background)
+                    }
+                    .aspectRatio(contentMode: .fill)
+            }
         }
     }
     
-    @ViewBuilder func RecipeTitle() -> some View {
+    @ViewBuilder func HeaderContent(progress: CGFloat) -> some View {
+        RecipeDetailsHeaderContent()
+    }
+    
+    @ViewBuilder func ScrollableContent() -> some View {
         VStack {
-            Text(recipe.title)
-                .font(.system(size: 24, weight: .bold))
-                .multilineTextAlignment(.center)
-                .foregroundStyle(Color.background)
-            Text("Serves \(recipe.servings)")
-                .font(.system(size: 12, weight: .bold))
-                .foregroundStyle(Color.darkAccentText)
+            MetadataLine()
+            RecipeTitle()
+            ServingsLine()
+            ByLine()
+            RecipeContentView()
+            NutritionalInformation()
         }
-        .frame(maxWidth: .infinity)
-        .background(Color.text)
         .padding()
+    }
+    
+    @ViewBuilder func RecipeTitle() -> some View {
+        Text(recipe.title)
+            .font(.system(size: 32, weight: .black))
+            .foregroundStyle(Color.text)
+            .multilineTextAlignment(.leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    @ViewBuilder func ByLine() -> some View {
+        HStack {
+            //TODO: Get a real profile pic
+            ProfileImageView(URL(string:"https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/06/final-fantasy-xvi-clive-profile.jpg"), size: 44, padding: 2)
+            VStack {
+                Text(recipe.author)
+                    .font(.system(size: 16, weight: .bold))
+                    .opacity(0.8)
+            }
+            Spacer()
+        }
+        .foregroundStyle(Color.text)
+    }
+    
+    @ViewBuilder func ServingsLine() -> some View {
+        HStack {
+            Text("Yields: \(recipe.servings) servings")
+                .font(.caption)
+                .foregroundStyle(Color.text)
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder func MetadataLine() -> some View {
+        HStack {
+            DifficultyLevelMetadataItem()
+            MetadataSeparator()
+            CookTimeMetadataItem()
+            Spacer()
+            CommentsMetadataItem()
+            MetadataSeparator()
+            FavoritesMetadataItem()
+        }
+        .font(.caption)
+        .foregroundStyle(Color.text)
+    }
+    
+    @ViewBuilder func MetadataSeparator() -> some View {
+        Circle()
+            .fill(Color.text)
+            .frame(width: 4, height: 4)
+    }
+    
+    @ViewBuilder func CookTimeMetadataItem() -> some View {
+        //TODO: Get a real cook time
+        MetadataItem(text: "17mins", icon: "clock")
+    }
+    
+    @ViewBuilder func DifficultyLevelMetadataItem() -> some View {
+        //TODO: Get a real cooking level
+        MetadataItem(text: "easy", icon: "frying.pan")
+    }
+    
+    @ViewBuilder func FavoritesMetadataItem() -> some View {
+        //TODO: Get a real favorite count
+        MetadataItem(text: "345", icon: "heart")
+    }
+    
+    @ViewBuilder func CommentsMetadataItem() -> some View {
+        //TODO: Get a real comment count
+        MetadataItem(text: "345", icon: "text.bubble")
+    }
+    
+    @ViewBuilder func MetadataItem(text: String, icon: String? = nil) -> some View {
+        HStack(spacing: 2) {
+            if let icon = icon {
+                Image(systemName: icon)
+            }
+            Text(text)
+        }
     }
     
     @ViewBuilder func RecipeContentView() -> some View {
@@ -93,6 +147,8 @@ struct RecipeDetailView: View {
             .markdownTextStyle {
                 ForegroundColor(Color.text)
             }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical)
     }
     
     @ViewBuilder func NutritionalInformation() -> some View {
@@ -131,7 +187,6 @@ struct RecipeDetailView: View {
                 RoundedRectangle(cornerRadius: Corners.radius)
                     .stroke(Color.text, lineWidth: 1)
             }
-            .padding()
         }
     }
     
@@ -146,39 +201,15 @@ struct RecipeDetailView: View {
                 .font(.system(size: 12, weight: .bold))
         }
     }
-    
-    @ViewBuilder func CloseButton() -> some View {
-        Button {
-            dismiss()
+}
+
+#Preview {
+    NavigationStack {
+        NavigationLink {
+            RecipeDetailView(recipe: .longNamedSample)
         } label: {
-            ZStack {
-                Circle()
-                    .foregroundStyle(Color.accent)
-                    .frame(width: 44, height: 44)
-                Image(systemName: "chevron.backward")
-                    .resizable()
-                    .bold()
-                    .foregroundStyle(Color.background)
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 18, height: 18)
-            }
+            Text("Recipe Details")
         }
     }
     
-    @ViewBuilder func SectionTitleView(
-        _ text: String,
-        theme: UIUserInterfaceStyle = .dark
-    ) -> some View {
-        HStack {
-            Text(text)
-                .font(.system(size: 16, weight: .black))
-                .foregroundStyle(theme == .light ? Color.text : Color.background)
-            Spacer()
-        }
-        .padding()
-        .background(theme == .light ? Color.background : Color.text)
-    }}
-
-#Preview {
-    RecipeDetailView(recipe: .sample)
 }

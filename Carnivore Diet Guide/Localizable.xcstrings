@@ -611,6 +611,9 @@
     "Delete Account" : {
 
     },
+    "Delete Recipe" : {
+
+    },
     "Diet Guide" : {
       "comment" : "Second line of the app name on the home screen. ie\n\"Carnivore\nDiet Guide\"",
       "localizations" : {
@@ -680,6 +683,9 @@
 
     },
     "Edit Profile" : {
+
+    },
+    "Edit Recipe" : {
 
     },
     "Fat" : {
@@ -1410,6 +1416,9 @@
         }
       }
     },
+    "Recipe Details" : {
+
+    },
     "Recipes" : {
       "localizations" : {
         "ar" : {
@@ -1537,6 +1546,9 @@
           }
         }
       }
+    },
+    "Report Recipe" : {
+
     },
     "Save" : {
 
@@ -1871,6 +1883,9 @@
           }
         }
       }
+    },
+    "Yields: %lld servings" : {
+
     }
   },
   "version" : "1.0"
