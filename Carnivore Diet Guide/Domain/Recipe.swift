@@ -18,6 +18,12 @@ struct Recipe: Identifiable {
     var publicationDate: Date
     var basicNutritionInfo: BasicNutritionInfo?
 }
+ 
+extension Recipe: Equatable {
+    static func == (lhs: Recipe, rhs: Recipe) -> Bool {
+        lhs.id == rhs.id
+    }
+}
 
 extension Recipe {
     static var sample: Recipe {

@@ -38,8 +38,8 @@ struct RecipeDetailsHeaderContent: View {
             startPoint: .top,
             endPoint: .bottom
         ))
-        .onAppear {
-            model.recipe = recipe
+        .onChange(of: recipe, initial: true) { newRecipe in
+            model.recipe = newRecipe
         }
     }
     
