@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import Combine
 
 class FirebaseRecipeRepository {
     
@@ -43,5 +44,22 @@ extension FirebaseRecipeRepository: RecipeFavoritersRepo {
     func removeUser(_ userId: String, asFavoriterOf recipe: Recipe) async throws {
         let favoritersCollection = recipesCollection.document(recipe.id).collection(FAVORITERS)
         try await favoritersCollection.document(userId).delete()
+    }
+    
+    func listenToFavoriteCountOf(
+        recipe: Recipe,
+        onUpdate: @escaping (UInt) -> (),
+        onError: ((Error) -> ())?
+    ) -> AnyCancellable {
+        let listener = recipesCollection.document(recipe.id).collection(FAVORITERS).addSnapshotListener { snapshot, error in
+            guard let snapshot = snapshot else {
+                onError?(error ?? "¯\\_(ツ)_/¯ While listening to recipe's favoriters")
+                return
+            }
+            
+            onUpdate(UInt(snapshot.count))
+        }
+        
+        return .init({ listener.remove() })
     }
 }

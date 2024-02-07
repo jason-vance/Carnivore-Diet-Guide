@@ -1,5 +1,5 @@
 //
-//  FirebaseRecipeFavoriter.swift
+//  DefaultRecipeFavoriter.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 2/6/24.
@@ -19,7 +19,7 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
     @Published var isMarkedAsFavorite: Bool?
     var isMarkedAsFavoritePublisher: Published<Bool?>.Publisher { $isMarkedAsFavorite }
     
-    private var favoriteListener: AnyCancellable?
+    private var isFavoriteListener: AnyCancellable?
     
     init(recipe: Recipe) {
         self.recipe = recipe
@@ -45,7 +45,7 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
     private func listenToFavoriteStatus() {
         guard let userId = currentUserIdProvider.currentUserId else { return }
         
-        favoriteListener = favoritesRepo.listenToFavoriteStatusOf(recipe: recipe, byUser: userId) { [weak self] isFavorite in
+        isFavoriteListener = favoritesRepo.listenToFavoriteStatusOf(recipe: recipe, byUser: userId) { [weak self] isFavorite in
             self?.isMarkedAsFavorite = isFavorite
         } onError: { error in
             print("Failed to retrieve favorite status: \(error.localizedDescription)")
