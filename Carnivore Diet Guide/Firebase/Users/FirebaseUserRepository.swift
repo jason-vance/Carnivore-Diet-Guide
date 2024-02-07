@@ -25,19 +25,7 @@ class FirebaseUserRepository {
     
     private func createUserDocument(with userData: UserData) async throws {
         let userDoc = FirestoreUserDoc.from(userData)
-        try await withCheckedThrowingContinuation { (continuation:CheckedContinuation<Void,Error>) in
-            do {
-                try usersCollection.document(userData.id).setData(from: userDoc) { error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                    } else {
-                        continuation.resume()
-                    }
-                }
-            } catch {
-                continuation.resume(throwing: error)
-            }
-        }
+        try await usersCollection.document(userData.id).setData(from: userDoc)
     }
     
     private func updateUserDocument(with userData: UserData) async throws {
@@ -112,7 +100,6 @@ extension FirebaseUserRepository: FavoriteRecipeRepo {
         return AnyCancellable({ listener.remove() })
     }
     
-    //TODO: Create a recipeFavorited activity event
     func addRecipe(_ recipe: Recipe, toFavoritesOf userId: String) async throws {
         guard !recipe.id.isEmpty else { throw "`recipe.id` was empty." }
         try await usersCollection
@@ -122,7 +109,6 @@ extension FirebaseUserRepository: FavoriteRecipeRepo {
             )
     }
     
-    //TODO: Remove recipeFavorited activity event
     func removeRecipe(_ recipe: Recipe, fromFavoritesOf userId: String) async throws {
         guard !recipe.id.isEmpty else { throw "`recipe.id` was empty." }
         try await usersCollection
