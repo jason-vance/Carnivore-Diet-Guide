@@ -6,18 +6,47 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct RecipeDetailsHeaderContent: View {
     
+    var recipe: Recipe
+    
+    private let recipeFavoriter: RecipeFavoriter
+        
     @Environment(\.dismiss) private var dismiss: DismissAction
+    
+    @State private var showAllOptions: Bool = false
+    @State private var isMarkedAsFavorite: Bool?
+    
+    var isInitialized: Bool {
+        isMarkedAsFavorite != nil
+    }
+    
+    init(recipe: Recipe) {
+        self.recipe = recipe
+        
+        recipeFavoriter = iocContainer.resolve(RecipeFavoriter.self, argument: recipe)!
+    }
+    
+    private func toggleFavorite() {
+        Task {
+            guard let isFavorited = isMarkedAsFavorite else { return }
+            
+            isMarkedAsFavorite = !isFavorited
+            do {
+                try await recipeFavoriter.toggleFavorite(recipe: recipe)
+            } catch {
+                isMarkedAsFavorite = isFavorited
+            }
+        }
+    }
     
     var body: some View {
         HStack {
             CloseButton()
             Spacer()
-            ExtraOptionsButton()
-            CommentsButton()
-            FavoriteButton()
+            OptionsButtons()
         }
         .padding()
         .frame(maxWidth: .infinity)
@@ -40,11 +69,28 @@ struct RecipeDetailsHeaderContent: View {
         }
     }
     
+    @ViewBuilder func OptionsButtons() -> some View {
+        HStack {
+            ExtraOptionsButton()
+            CommentsButton()
+            FavoriteButton()
+        }
+        .opacity(showAllOptions ? 1 : 0)
+        .onChange(of: isInitialized, initial: true) { isInitialized in
+            withAnimation(.snappy) {
+                showAllOptions = isInitialized
+            }
+        }
+    }
+    
     @ViewBuilder func FavoriteButton() -> some View {
         Button {
-            //TODO: Add ability to favorite recipes
+            toggleFavorite()
         } label: {
-            HeaderButtonLabel("heart")
+            HeaderButtonLabel(isMarkedAsFavorite == true ? "heart.fill" : "heart.slash")
+        }
+        .onReceive(recipeFavoriter.isMarkedAsFavoritePublisher) { isFavorited in
+            isMarkedAsFavorite = isFavorited
         }
     }
     
@@ -105,6 +151,24 @@ struct RecipeDetailsHeaderContent: View {
     }
 }
 
-#Preview {
-    RecipeDetailsHeaderContent()
+#Preview("Succeeding Services") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        RecipeDetailView(recipe: .sample)
+    }
+}
+
+#Preview("Failing Services") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+        
+        iocContainer.autoregister(RecipeFavoriter.self, argument: Recipe.self) { recipe in
+            let mock = MockRecipeFavoriter(recipe: recipe)
+            mock.error = "Test failure"
+            return mock
+        }
+    } content: {
+        RecipeDetailView(recipe: .sample)
+    }
 }

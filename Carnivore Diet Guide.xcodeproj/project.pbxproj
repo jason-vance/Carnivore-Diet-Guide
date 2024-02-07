@@ -123,6 +123,8 @@
 		56F213802B722A2D009DB057 /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2137F2B722A2D009DB057 /* RecipeDetailView.swift */; };
 		56F213822B72C4FC009DB057 /* StickyHeaderScrollingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213812B72C4FC009DB057 /* StickyHeaderScrollingView.swift */; };
 		56F213842B730F06009DB057 /* RecipeDetailsHeaderContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213832B730F06009DB057 /* RecipeDetailsHeaderContent.swift */; };
+		56F213882B737159009DB057 /* RecipeFavoriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213872B737159009DB057 /* RecipeFavoriter.swift */; };
+		56F2138A2B73735D009DB057 /* FirebaseRecipeFavoriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213892B73735D009DB057 /* FirebaseRecipeFavoriter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -212,6 +214,8 @@
 		56F2137F2B722A2D009DB057 /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
 		56F213812B72C4FC009DB057 /* StickyHeaderScrollingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyHeaderScrollingView.swift; sourceTree = "<group>"; };
 		56F213832B730F06009DB057 /* RecipeDetailsHeaderContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsHeaderContent.swift; sourceTree = "<group>"; };
+		56F213872B737159009DB057 /* RecipeFavoriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFavoriter.swift; sourceTree = "<group>"; };
+		56F213892B73735D009DB057 /* FirebaseRecipeFavoriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRecipeFavoriter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -390,6 +394,7 @@
 		5676A1312B477853009C1DA6 /* RecipeDetail */ = {
 			isa = PBXGroup;
 			children = (
+				56F213852B737121009DB057 /* Workers */,
 				56F2137F2B722A2D009DB057 /* RecipeDetailView.swift */,
 				56F213832B730F06009DB057 /* RecipeDetailsHeaderContent.swift */,
 			);
@@ -638,6 +643,23 @@
 			path = Previews;
 			sourceTree = "<group>";
 		};
+		56F213852B737121009DB057 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				56F213862B737138009DB057 /* RecipeFavoriter */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+		56F213862B737138009DB057 /* RecipeFavoriter */ = {
+			isa = PBXGroup;
+			children = (
+				56F213872B737159009DB057 /* RecipeFavoriter.swift */,
+				56F213892B73735D009DB057 /* FirebaseRecipeFavoriter.swift */,
+			);
+			path = RecipeFavoriter;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -781,6 +803,7 @@
 				56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */,
 				56B88A772B70DCFD00C4C0DB /* UserDataProvider.swift in Sources */,
 				56B88A6A2B6FA73000C4C0DB /* Shake.swift in Sources */,
+				56F213882B737159009DB057 /* RecipeFavoriter.swift in Sources */,
 				56E3050E2B4B6B060098079A /* LibraryRecipeThumbnail.swift in Sources */,
 				567754352B717B420094EB8C /* ProfileControlLabel.swift in Sources */,
 				566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */,
@@ -831,6 +854,7 @@
 				56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */,
 				56B88A682B6FA6C100C4C0DB /* TaskAwareButton.swift in Sources */,
 				56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageStorage.swift in Sources */,
+				56F2138A2B73735D009DB057 /* FirebaseRecipeFavoriter.swift in Sources */,
 				567E87F62B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift in Sources */,
 				56B88A5F2B6F335800C4C0DB /* FirestoreRecipeDoc.swift in Sources */,
 				5677543B2B71BC710094EB8C /* FeaturedContentItem.swift in Sources */,

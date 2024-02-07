@@ -10,6 +10,8 @@ import Kingfisher
 
 struct LibraryRecipeThumbnail: View {
     
+    //TODO: Add an isFavorite indicator
+    
     let imageHeight: CGFloat = 200
     let imageOffset: CGFloat = 20
     

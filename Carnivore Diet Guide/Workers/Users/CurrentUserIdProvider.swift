@@ -8,6 +8,7 @@
 import Foundation
 
 protocol CurrentUserIdProvider {
+    var currentUserId: String? { get }
     var currentUserIdPublisher: Published<String?>.Publisher { get }
 }
 

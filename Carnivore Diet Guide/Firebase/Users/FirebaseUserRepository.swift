@@ -75,3 +75,33 @@ extension FirebaseUserRepository: UserDataSaver {
         try await createOrUpdateUserDocument(with: userData)
     }
 }
+
+extension FirebaseUserRepository: FavoriteRecipeRepo {
+    func isRecipe(_ recipe: Recipe, markedAsFavoriteBy userId: String) async throws -> Bool {
+        let snapshot = try await usersCollection.document(userId).getDocument()
+        let favoritesAsAny = snapshot.get(FirestoreUserDoc.CodingKeys.favoriteRecipes.rawValue)
+        guard let favorites = favoritesAsAny as? [String]? else { throw "Couldn't cast to array of favorites" }
+        guard let favorites = favorites else { return false }
+        return favorites.contains { $0 == recipe.id }
+    }
+    
+    //TODO: Create a recipeFavorited activity event
+    func addRecipe(_ recipe: Recipe, toFavoritesOf userId: String) async throws {
+        guard !recipe.id.isEmpty else { throw "`recipe.id` was empty." }
+        try await usersCollection
+            .document(userId)
+            .updateData(
+                [FirestoreUserDoc.CodingKeys.favoriteRecipes.rawValue : FieldValue.arrayUnion([recipe.id])]
+            )
+    }
+    
+    //TODO: Remove recipeFavorited activity event
+    func removeRecipe(_ recipe: Recipe, fromFavoritesOf userId: String) async throws {
+        guard !recipe.id.isEmpty else { throw "`recipe.id` was empty." }
+        try await usersCollection
+            .document(userId)
+            .updateData(
+                [FirestoreUserDoc.CodingKeys.favoriteRecipes.rawValue : FieldValue.arrayRemove([recipe.id])]
+            )
+    }
+}

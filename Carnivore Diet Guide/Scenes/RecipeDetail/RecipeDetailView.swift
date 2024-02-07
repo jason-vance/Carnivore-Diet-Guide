@@ -25,6 +25,7 @@ struct RecipeDetailView: View {
         )
         .background(Color.background)
         .navigationBarBackButtonHidden()
+        //TODO: Create a recipeViewed activity event
     }
     
     @ViewBuilder func HeaderBackground() -> some View {
@@ -47,7 +48,7 @@ struct RecipeDetailView: View {
     }
     
     @ViewBuilder func HeaderContent(progress: CGFloat) -> some View {
-        RecipeDetailsHeaderContent()
+        RecipeDetailsHeaderContent(recipe: recipe)
     }
     
     @ViewBuilder func ScrollableContent() -> some View {
