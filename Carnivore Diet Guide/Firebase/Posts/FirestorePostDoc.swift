@@ -38,6 +38,7 @@ struct FirestorePostDoc: Codable {
         }()
         guard let localization = localization else { return nil}
         
+        guard let id = id else { return nil }
         guard let title = localization.title else { return nil }
         guard let imageUrl = imageUrl else { return nil }
         guard let author = author else { return nil }
@@ -45,6 +46,7 @@ struct FirestorePostDoc: Codable {
         guard let markdownContent = localization.markdownContent else { return nil }
 
         return .init(
+            id: id,
             title: title,
             imageUrl: imageUrl,
             author: author,

@@ -9,6 +9,8 @@ import Foundation
 import SwinjectAutoregistration
 import Combine
 
+
+//TODO: Reevaluate if I actually need this class or not
 @MainActor
 class RecipeDetailViewModel: ObservableObject {
     
@@ -21,6 +23,6 @@ class RecipeDetailViewModel: ObservableObject {
     private var subs: Set<AnyCancellable> = []
     
     private func setup() {
-        let recipe = recipe!
+//        let recipe = recipe!
     }
 }

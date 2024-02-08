@@ -8,9 +8,7 @@
 import Foundation
 
 struct Post: Identifiable {
-    
-    //TODO: use the firebase id
-    var id: String = UUID().uuidString
+    var id: String
     var title: String
     var imageName: String?
     var imageUrl: String?
@@ -19,10 +17,17 @@ struct Post: Identifiable {
     var publicationDate: Date
 }
 
+extension Post: Equatable {
+    static func == (lhs: Post, rhs: Post) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
 extension Post {
     
     static var sample: Post {
         .init(
+            id: "samplePostId",
             title: "What is the Carnivore Diet?",
             imageName: "WhatIsTheCarnivoreDiet",
             author: "The Carnivore Diet Guide Team",
@@ -68,6 +73,7 @@ While the carnivore diet may offer short-term benefits for weight loss or blood 
     
     static var longNamedSample: Post {
         .init(
+            id: "longNamedSamplePostId",
             title: "Getting Started with the Carnivore Diet. All of the Whats, Whys, and Hows.",
             imageName: "WhatIsTheCarnivoreDiet",
             author: "The Carnivore Diet Guide Team",
