@@ -39,6 +39,7 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(RecipeFavoriter.self, argument: Recipe.self, initializer: DefaultRecipeFavoriter.init)
     iocContainer.autoregister(FavoriteRecipeRepo.self, initializer: FirebaseUserRepository.init)
     iocContainer.autoregister(RecipeFavoritersRepo.self, initializer: FirebaseRecipeRepository.init)
+    iocContainer.autoregister(RecipeFavoriteActivityTracker.self, initializer: FirebaseRecipeActivityRepository.init)
     iocContainer.autoregister(RecipeFavoriteCountProvider.self, argument: Recipe.self, initializer: DefaultRecipeFavoriteCountProvider.init)
 
     //Knowledge Library

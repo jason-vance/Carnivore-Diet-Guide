@@ -15,6 +15,7 @@ class FirebaseHomeViewContentProvider: HomeViewContentProvider {
     private let postsRepo = FirebasePostRepository()
     
     func loadContent() async throws -> HomeViewContent {
+        //TODO: get trending items by recent activity
         let recipes = try await recipesRepo.getPublishedRecipesNewestToOldest(limit: itemLimit)
         let posts = try await postsRepo.getPublishedPostsNewestToOldest(limit: itemLimit)
         

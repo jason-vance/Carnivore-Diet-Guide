@@ -14,8 +14,9 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
     private let recipe: Recipe
     private let currentUserIdProvider = iocContainer~>CurrentUserIdProvider.self
     private let favoritesRepo = iocContainer~>FavoriteRecipeRepo.self
-    private let recipeRepo = iocContainer~>RecipeFavoritersRepo.self
-    
+    private let recipeFavoriters = iocContainer~>RecipeFavoritersRepo.self
+    private let recipeActivities = iocContainer~>RecipeFavoriteActivityTracker.self
+
     @Published var isMarkedAsFavorite: Bool?
     var isMarkedAsFavoritePublisher: Published<Bool?>.Publisher { $isMarkedAsFavorite }
     
@@ -34,11 +35,11 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
         if isFavorited {
             try await favoritesRepo.removeRecipe(recipe, fromFavoritesOf: userId)
             removeUserAsFavoriterOfRecipe()
-            //TODO: Remove recipeFavorited activity event
+            removeRecipeFavoritingActivity()
         } else {
             try await favoritesRepo.addRecipe(recipe, toFavoritesOf: userId)
             addUserAsFavoriterOfRecipe()
-            //TODO: Create a recipeFavorited activity event
+            addRecipeFavoritingActivity()
         }
     }
     
@@ -57,7 +58,7 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
         
         Task {
             do {
-                try await recipeRepo.addUser(userId, asFavoriterOf: recipe)
+                try await recipeFavoriters.addUser(userId, asFavoriterOf: recipe)
             } catch {
                 print("Failed to add user as favoriter of recipe: \(error.localizedDescription)")
             }
@@ -69,9 +70,33 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
         
         Task {
             do {
-                try await recipeRepo.removeUser(userId, asFavoriterOf: recipe)
+                try await recipeFavoriters.removeUser(userId, asFavoriterOf: recipe)
             } catch {
                 print("Failed to remove user as favoriter of recipe: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func addRecipeFavoritingActivity() {
+        guard let userId = currentUserIdProvider.currentUserId else { return }
+        
+        Task {
+            do {
+                try await recipeActivities.addRecipe(recipe, wasFavoritedByUser: userId)
+            } catch {
+                print("Failed to add add recipe favoriting activity: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func removeRecipeFavoritingActivity() {
+        guard let userId = currentUserIdProvider.currentUserId else { return }
+        
+        Task {
+            do {
+                try await recipeActivities.removeRecipe(recipe, wasFavoritedByUser: userId)
+            } catch {
+                print("Failed to remove recipe favoriting activity: \(error.localizedDescription)")
             }
         }
     }

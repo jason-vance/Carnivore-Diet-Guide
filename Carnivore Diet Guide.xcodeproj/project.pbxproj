@@ -20,6 +20,10 @@
 		56353B5D2B440C9B00C4E972 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56353B5C2B440C9B00C4E972 /* Preview Assets.xcassets */; };
 		563BC6C22B74453C008F3C50 /* RecipeDetailMetadataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6C12B74453C008F3C50 /* RecipeDetailMetadataView.swift */; };
 		563BC6C42B74456C008F3C50 /* RecipeDetailMetadataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6C32B74456C008F3C50 /* RecipeDetailMetadataViewModel.swift */; };
+		563BC6C62B744812008F3C50 /* RecipeFavoriteActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6C52B744812008F3C50 /* RecipeFavoriteActivityTracker.swift */; };
+		563BC6C82B7449E7008F3C50 /* FirebaseRecipeActivityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6C72B7449E7008F3C50 /* FirebaseRecipeActivityRepository.swift */; };
+		563BC6CB2B744A7A008F3C50 /* FirestoreRecipeActivityDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6CA2B744A7A008F3C50 /* FirestoreRecipeActivityDoc.swift */; };
+		563BC6CD2B744C5D008F3C50 /* CollectionReferenceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6CC2B744C5D008F3C50 /* CollectionReferenceExtensions.swift */; };
 		56554F8A2B6053A00070C079 /* HomeViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56554F892B6053A00070C079 /* HomeViewContentProvider.swift */; };
 		566B2D642B4694C6008627F8 /* FeaturedContentThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */; };
 		566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */; };
@@ -153,6 +157,10 @@
 		56353B5C2B440C9B00C4E972 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		563BC6C12B74453C008F3C50 /* RecipeDetailMetadataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailMetadataView.swift; sourceTree = "<group>"; };
 		563BC6C32B74456C008F3C50 /* RecipeDetailMetadataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailMetadataViewModel.swift; sourceTree = "<group>"; };
+		563BC6C52B744812008F3C50 /* RecipeFavoriteActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFavoriteActivityTracker.swift; sourceTree = "<group>"; };
+		563BC6C72B7449E7008F3C50 /* FirebaseRecipeActivityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRecipeActivityRepository.swift; sourceTree = "<group>"; };
+		563BC6CA2B744A7A008F3C50 /* FirestoreRecipeActivityDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRecipeActivityDoc.swift; sourceTree = "<group>"; };
+		563BC6CC2B744C5D008F3C50 /* CollectionReferenceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionReferenceExtensions.swift; sourceTree = "<group>"; };
 		56554F892B6053A00070C079 /* HomeViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewContentProvider.swift; sourceTree = "<group>"; };
 		566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedContentThumbnail.swift; sourceTree = "<group>"; };
 		566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecipeThumbnail.swift; sourceTree = "<group>"; };
@@ -288,6 +296,7 @@
 				56F213922B742B0F009DB057 /* Extensions */,
 				56B88A602B6F344D00C4C0DB /* Posts */,
 				56B88A5D2B6F334100C4C0DB /* Recipes */,
+				563BC6C92B744A29008F3C50 /* RecipeActivity */,
 				56B88A5A2B6F310B00C4C0DB /* Users */,
 				56B88A182B6C5FE400C4C0DB /* FirebaseAuthentication.swift */,
 				56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageStorage.swift */,
@@ -418,6 +427,15 @@
 				563BC6C32B74456C008F3C50 /* RecipeDetailMetadataViewModel.swift */,
 			);
 			path = RecipeDetailMetadataView;
+			sourceTree = "<group>";
+		};
+		563BC6C92B744A29008F3C50 /* RecipeActivity */ = {
+			isa = PBXGroup;
+			children = (
+				563BC6C72B7449E7008F3C50 /* FirebaseRecipeActivityRepository.swift */,
+				563BC6CA2B744A7A008F3C50 /* FirestoreRecipeActivityDoc.swift */,
+			);
+			path = RecipeActivity;
 			sourceTree = "<group>";
 		};
 		56554F882B6053790070C079 /* ContentProvider */ = {
@@ -717,6 +735,7 @@
 			isa = PBXGroup;
 			children = (
 				56F2138E2B7426A6009DB057 /* RecipeFavoritersRepo.swift */,
+				563BC6C52B744812008F3C50 /* RecipeFavoriteActivityTracker.swift */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";
@@ -725,6 +744,7 @@
 			isa = PBXGroup;
 			children = (
 				56F213932B742B1B009DB057 /* DocumentReferenceExtensions.swift */,
+				563BC6CC2B744C5D008F3C50 /* CollectionReferenceExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -908,6 +928,7 @@
 				562E03E72B450AA000859F81 /* HomeView.swift in Sources */,
 				567754372B7184640094EB8C /* UserAccountDeleter.swift in Sources */,
 				567754332B717AAA0094EB8C /* SettingsView.swift in Sources */,
+				563BC6CD2B744C5D008F3C50 /* CollectionReferenceExtensions.swift in Sources */,
 				56E305532B4BED1B0098079A /* KnowledgeLibraryContentProvider.swift in Sources */,
 				56B88A342B6CEA8700C4C0DB /* EmailAddress.swift in Sources */,
 				56E3050C2B4B60360098079A /* RecipeLibraryView.swift in Sources */,
@@ -918,6 +939,7 @@
 				56B88A102B6C50AE00C4C0DB /* UserAuthState.swift in Sources */,
 				56E305562B4BF0E70098079A /* FirebaseKnowledgeLibraryContentProvider.swift in Sources */,
 				56F213822B72C4FC009DB057 /* StickyHeaderScrollingView.swift in Sources */,
+				563BC6C62B744812008F3C50 /* RecipeFavoriteActivityTracker.swift in Sources */,
 				56F213942B742B1B009DB057 /* DocumentReferenceExtensions.swift in Sources */,
 				56025D292B6B8CD000F31A07 /* UI.swift in Sources */,
 				56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */,
@@ -927,6 +949,7 @@
 				56E305622B4BF77A0098079A /* DependencyConfigurator.swift in Sources */,
 				56B88A192B6C5FE400C4C0DB /* FirebaseAuthentication.swift in Sources */,
 				56E305162B4B74BC0098079A /* LibraryPostThumbnail.swift in Sources */,
+				563BC6C82B7449E7008F3C50 /* FirebaseRecipeActivityRepository.swift in Sources */,
 				56B88A742B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift in Sources */,
 				56F213802B722A2D009DB057 /* RecipeDetailView.swift in Sources */,
 				56F2137C2B7222CA009DB057 /* PositionObservingView.swift in Sources */,
@@ -938,6 +961,7 @@
 				56F213962B74313E009DB057 /* RecipeDetailsHeaderContentModel.swift in Sources */,
 				56B88A682B6FA6C100C4C0DB /* TaskAwareButton.swift in Sources */,
 				56B88A662B6F89DA00C4C0DB /* FirebaseProfileImageStorage.swift in Sources */,
+				563BC6CB2B744A7A008F3C50 /* FirestoreRecipeActivityDoc.swift in Sources */,
 				56F2138A2B73735D009DB057 /* DefaultRecipeFavoriter.swift in Sources */,
 				567E87F62B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift in Sources */,
 				56F213912B74293F009DB057 /* FirestoreRecipeFavoriterDoc.swift in Sources */,
