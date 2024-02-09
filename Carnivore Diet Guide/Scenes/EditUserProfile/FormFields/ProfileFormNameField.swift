@@ -22,7 +22,7 @@ struct ProfileFormNameField: View {
     var body: some View {
         FormTextField(
             text: $nameStr,
-            prompt: "Name",
+            prompt: String(localized: "Name"),
             autoCapitalization: .words,
             errorView: {
                 NameErrorView()
@@ -50,7 +50,7 @@ struct ProfileFormNameField: View {
     @ViewBuilder func InvalidNameIndicator() -> some View {
         FormFieldErrorView(
             icon: "exclamationmark.octagon.fill",
-            text: "Name must contain at least three letters",
+            text: String(localized: "Name must contain at least three letters"),
             color: .red
         )
     }

@@ -1215,6 +1215,12 @@
     "Logout" : {
 
     },
+    "Name" : {
+
+    },
+    "Name must contain at least three letters" : {
+
+    },
     "Next" : {
 
     },
