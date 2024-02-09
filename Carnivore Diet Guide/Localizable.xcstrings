@@ -608,10 +608,10 @@
     "Create Profile" : {
 
     },
-    "Delete Account" : {
+    "Delete" : {
 
     },
-    "Delete Recipe" : {
+    "Delete Account" : {
 
     },
     "Diet Guide" : {
@@ -682,10 +682,10 @@
     "Done" : {
 
     },
-    "Edit Profile" : {
+    "Edit" : {
 
     },
-    "Edit Recipe" : {
+    "Edit Profile" : {
 
     },
     "Fat" : {
@@ -1553,7 +1553,7 @@
         }
       }
     },
-    "Report Recipe" : {
+    "Report" : {
 
     },
     "Save" : {
@@ -1891,6 +1891,9 @@
       }
     },
     "Yields: %lld servings" : {
+
+    },
+    "Your comment" : {
 
     }
   },

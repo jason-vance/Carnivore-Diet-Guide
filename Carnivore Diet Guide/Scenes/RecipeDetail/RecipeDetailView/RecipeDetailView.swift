@@ -12,7 +12,9 @@ import MarkdownUI
 struct RecipeDetailView: View {
     
     private let imageHeight: CGFloat = 200
-    
+    private let profileImageSize: CGFloat = 44
+    private let profileImagePadding: CGFloat = 2
+
     @State var recipe: Recipe
     @StateObject private var model = RecipeDetailViewModel()
     @State private var showExtraMenuOptions: Bool = false
@@ -77,7 +79,7 @@ struct RecipeDetailView: View {
     @ViewBuilder func ByLine() -> some View {
         HStack {
             //TODO: Get a real profile pic
-            ProfileImageView(URL(string:"https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/06/final-fantasy-xvi-clive-profile.jpg"), size: 44, padding: 2)
+            ProfileImageView(URL(string:"https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/06/final-fantasy-xvi-clive-profile.jpg"), size: profileImageSize, padding: profileImagePadding)
             VStack {
                 Text(recipe.author)
                     .font(.system(size: 16, weight: .bold))

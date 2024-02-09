@@ -16,6 +16,7 @@ struct RecipeDetailsHeaderContent: View {
     
     @StateObject private var model = RecipeDetailsHeaderContentModel()
     @State private var showAllOptions: Bool = false
+    @State private var showCommentSection: Bool = false
     
     var isInitialized: Bool {
         model.isMarkedAsFavorite != nil
@@ -40,6 +41,9 @@ struct RecipeDetailsHeaderContent: View {
         ))
         .onChange(of: recipe, initial: true) { newRecipe in
             model.recipe = newRecipe
+        }
+        .sheet(isPresented: $showCommentSection) {
+            CommentSectionView()
         }
     }
     
@@ -75,7 +79,7 @@ struct RecipeDetailsHeaderContent: View {
     
     @ViewBuilder func CommentsButton() -> some View {
         Button {
-            //TODO: Add ability to comment on recipes
+            showCommentSection = true
         } label: {
             HeaderButtonLabel("text.bubble.fill")
         }
@@ -83,7 +87,10 @@ struct RecipeDetailsHeaderContent: View {
     
     @ViewBuilder func ExtraOptionsButton() -> some View {
         Menu {
+            Text(recipe.title)
+            //TODO: Show report button if recipe belongs to other users
             ReportRecipeButton()
+            //TODO: Show edit/delete button if recipe belongs to user
             EditRecipeButton()
             DeleteRecipeButton()
         } label: {
@@ -95,7 +102,7 @@ struct RecipeDetailsHeaderContent: View {
         Button {
             //TODO: Add ability to report recipe
         } label: {
-            Label("Report Recipe", systemImage: "megaphone")
+            Label("Report", systemImage: "megaphone")
         }
     }
     
@@ -103,7 +110,7 @@ struct RecipeDetailsHeaderContent: View {
         Button {
             //TODO: Add ability to edit recipe
         } label: {
-            Label("Edit Recipe", systemImage: "pencil")
+            Label("Edit", systemImage: "pencil")
         }
     }
     
@@ -111,7 +118,7 @@ struct RecipeDetailsHeaderContent: View {
         Button {
             //TODO: Add ability to delete recipe
         } label: {
-            Label("Delete Recipe", systemImage: "trash")
+            Label("Delete", systemImage: "trash")
         }
     }
     
