@@ -58,5 +58,6 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(UserAccountDeleter.self, initializer: FirebaseUserAccountDeleter.init)
     
     //Comment Section
+    iocContainer.autoregister(CommentProvider.self, initializer: FirebaseCommentRepository.init)
     iocContainer.autoregister(CommentSender.self, initializer: FirebaseCommentRepository.init)
 }

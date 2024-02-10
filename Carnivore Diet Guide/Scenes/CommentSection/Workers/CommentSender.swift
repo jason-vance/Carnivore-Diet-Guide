@@ -10,8 +10,7 @@ import Foundation
 protocol CommentSender {
     func sendComment(
         text: String,
-        forResource resourceId: String,
-        ofType resourceType: CommentSectionView.ResourceType
+        toResource resource: CommentSectionView.Resource
     ) async throws
 }
 
@@ -21,8 +20,7 @@ class MockCommentSender: CommentSender {
     
     func sendComment(
         text: String,
-        forResource resourceId: String,
-        ofType resourceType: CommentSectionView.ResourceType
+        toResource resource: CommentSectionView.Resource
     ) async throws {
         try await Task.sleep(for: .seconds(1))
         if let error = errorToThrowOnSend {

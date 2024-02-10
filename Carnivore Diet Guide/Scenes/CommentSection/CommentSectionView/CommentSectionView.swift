@@ -9,6 +9,11 @@ import SwiftUI
 
 struct CommentSectionView: View {
     
+    struct Resource: Equatable {
+        var id: String
+        var type: ResourceType
+    }
+    
     enum ResourceType {
         case recipe
         case post
@@ -16,8 +21,7 @@ struct CommentSectionView: View {
     
     private let controlSize: CGFloat = 48
     
-    var resourceId: String
-    var resourceType: ResourceType
+    @State var resource: Resource
     
     @StateObject private var model = CommentSectionViewModel()
     @State private var commentText: String = ""
@@ -33,8 +37,7 @@ struct CommentSectionView: View {
         do {
             try await model.sendComment(
                 text: commentText,
-                forResource: resourceId,
-                ofType: resourceType
+                toResource: resource
             )
             isCommentFieldFocused = false
             commentText = ""
@@ -55,9 +58,13 @@ struct CommentSectionView: View {
             .presentationDragIndicator(.visible)
             .presentationDetents([.large])
             .alert(errorMessage, isPresented: $showError) {}
+            .onChange(of: resource, initial: true) { newResource in
+                model.startListeningForComments(onResource: newResource)
+            }
     }
     
     @ViewBuilder func CommentSectionContent() -> some View {
+        //TODO: Show something if there are no comments
         VStack {
             ScrollView {
                 LazyVStack(spacing: 16) {
@@ -163,10 +170,10 @@ struct CommentSectionView: View {
     } content: {
         Rectangle()
             .sheet(isPresented: .constant(true)) {
-                CommentSectionView(
-                    resourceId: "recipeId",
-                    resourceType: .recipe
-                )
+                CommentSectionView(resource: .init(
+                    id: "recipeId",
+                    type: .recipe
+                ))
             }
     }
 }
@@ -183,10 +190,10 @@ struct CommentSectionView: View {
     } content: {
         Rectangle()
             .sheet(isPresented: .constant(true)) {
-                CommentSectionView(
-                    resourceId: "recipeId",
-                    resourceType: .recipe
-                )
+                CommentSectionView(resource: .init(
+                    id: "recipeId",
+                    type: .recipe
+                ))
             }
     }
 }

@@ -7,31 +7,56 @@
 
 import Foundation
 import FirebaseFirestore
+import Combine
 
 class FirebaseCommentRepository {
     
     private static let RECIPES = FirebaseRecipeRepository.RECIPES
     private static let POSTS = FirebasePostRepository.POSTS
     private let COMMENTS = "Comments"
-    
+    private let DATE = "date"
+
     let recipesCollection = Firestore.firestore().collection(RECIPES)
     let postsCollection = Firestore.firestore().collection(POSTS)
 
-    func commentsCollection(ofResource resourceId: String, ofType resourceType: CommentSectionView.ResourceType) -> CollectionReference {
-        switch resourceType {
+    func commentsCollection(forResource resource: CommentSectionView.Resource) -> CollectionReference {
+        switch resource.type {
         case .recipe:
-            return recipesCollection.document(resourceId).collection(COMMENTS)
+            return recipesCollection.document(resource.id).collection(COMMENTS)
         case .post:
-            return postsCollection.document(resourceId).collection(COMMENTS)
+            return postsCollection.document(resource.id).collection(COMMENTS)
         }
+    }
+}
+
+extension FirebaseCommentRepository: CommentProvider {
+    func listenForCommentsOrderedByDate(
+        onResource resource: CommentSectionView.Resource,
+        onUpdate: @escaping ([Comment]) -> (),
+        onError: ((Error) -> ())?
+    ) -> AnyCancellable {
+        let listener = commentsCollection(forResource: resource)
+            .order(by: DATE)
+            .addSnapshotListener { snapshot, error in
+                guard let snapshot = snapshot else {
+                    onError?(error ?? "¯\\_(ツ)_/¯ While listening for comments on \(resource.type) `\(resource.id)`")
+                    return
+                }
+                
+                let comments = snapshot.documents.compactMap {
+                    try? $0.data(as: FirestoreCommentDoc.self).toComment()
+                }
+                onUpdate(comments)
+            }
+        
+        return .init({ listener.remove() })
     }
 }
 
 extension FirebaseCommentRepository: CommentSender {
     func sendComment(
         text: String,
-        forResource resourceId: String,
-        ofType resourceType: CommentSectionView.ResourceType
+        toResource resource: CommentSectionView.Resource
     ) async throws {
         guard let userId = FirebaseAuthenticationProvider.instance.currentUserId else {
             throw "User is not currently signed in"
@@ -43,6 +68,6 @@ extension FirebaseCommentRepository: CommentSender {
             date: .now
         )
         
-        try await commentsCollection(ofResource: resourceId, ofType: resourceType).addDocument(from: doc)
+        try await commentsCollection(forResource: resource).addDocument(from: doc)
     }
 }

@@ -7,25 +7,39 @@
 
 import Foundation
 import SwinjectAutoregistration
+import Combine
 
 @MainActor
 class CommentSectionViewModel: ObservableObject {
     
-    //TODO: Load real comments
-    @Published var comments: [Comment] = Comment.samples
+    @Published var comments: [Comment] = []
     @Published var isSendingComment: Bool = false
     
-    private let commentSender: CommentSender = iocContainer~>CommentSender.self
+    private let commentProvider = iocContainer~>CommentProvider.self
+    private let commentSender = iocContainer~>CommentSender.self
+    
+    private var commentSub: AnyCancellable?
     
     func sendComment(
         text: String,
-        forResource resourceId: String,
-        ofType resourceType: CommentSectionView.ResourceType
+        toResource resource: CommentSectionView.Resource
     ) async throws {
         guard !text.isEmpty else { throw "Comment text is empty" }
         
         isSendingComment = true
-        try await commentSender.sendComment(text: text, forResource: resourceId, ofType: resourceType)
+        try await commentSender.sendComment(text: text, toResource: resource)
         isSendingComment = false
+    }
+    
+    func startListeningForComments(onResource resource: CommentSectionView.Resource) {
+        commentSub = commentProvider.listenForCommentsOrderedByDate(
+            onResource: resource,
+            onUpdate: onUpdate(comments:),
+            onError: nil
+        )
+    }
+    
+    private func onUpdate(comments: [Comment]) {
+        self.comments = comments
     }
 }

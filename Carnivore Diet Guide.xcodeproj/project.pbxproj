@@ -32,6 +32,7 @@
 		563BC6DF2B76ED44008F3C50 /* CommentSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6DE2B76ED44008F3C50 /* CommentSender.swift */; };
 		563BC6E22B76F91D008F3C50 /* FirebaseCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6E12B76F91D008F3C50 /* FirebaseCommentRepository.swift */; };
 		563BC6E42B76FA33008F3C50 /* FirestoreCommentDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6E32B76FA33008F3C50 /* FirestoreCommentDoc.swift */; };
+		563BC6E62B777FE3008F3C50 /* CommentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6E52B777FE3008F3C50 /* CommentProvider.swift */; };
 		56554F8A2B6053A00070C079 /* HomeViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56554F892B6053A00070C079 /* HomeViewContentProvider.swift */; };
 		566B2D642B4694C6008627F8 /* FeaturedContentThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */; };
 		566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */; };
@@ -177,6 +178,7 @@
 		563BC6DE2B76ED44008F3C50 /* CommentSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSender.swift; sourceTree = "<group>"; };
 		563BC6E12B76F91D008F3C50 /* FirebaseCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCommentRepository.swift; sourceTree = "<group>"; };
 		563BC6E32B76FA33008F3C50 /* FirestoreCommentDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCommentDoc.swift; sourceTree = "<group>"; };
+		563BC6E52B777FE3008F3C50 /* CommentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentProvider.swift; sourceTree = "<group>"; };
 		56554F892B6053A00070C079 /* HomeViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewContentProvider.swift; sourceTree = "<group>"; };
 		566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedContentThumbnail.swift; sourceTree = "<group>"; };
 		566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecipeThumbnail.swift; sourceTree = "<group>"; };
@@ -487,17 +489,10 @@
 		563BC6DC2B76ED29008F3C50 /* Workers */ = {
 			isa = PBXGroup;
 			children = (
-				563BC6DD2B76ED2E008F3C50 /* CommentSender */,
+				563BC6DE2B76ED44008F3C50 /* CommentSender.swift */,
+				563BC6E52B777FE3008F3C50 /* CommentProvider.swift */,
 			);
 			path = Workers;
-			sourceTree = "<group>";
-		};
-		563BC6DD2B76ED2E008F3C50 /* CommentSender */ = {
-			isa = PBXGroup;
-			children = (
-				563BC6DE2B76ED44008F3C50 /* CommentSender.swift */,
-			);
-			path = CommentSender;
 			sourceTree = "<group>";
 		};
 		563BC6E02B76F8F7008F3C50 /* Comments */ = {
@@ -1015,6 +1010,7 @@
 				56353B582B440C9900C4E972 /* ContentView.swift in Sources */,
 				56B88A102B6C50AE00C4C0DB /* UserAuthState.swift in Sources */,
 				56E305562B4BF0E70098079A /* FirebaseKnowledgeLibraryContentProvider.swift in Sources */,
+				563BC6E62B777FE3008F3C50 /* CommentProvider.swift in Sources */,
 				56F213822B72C4FC009DB057 /* StickyHeaderScrollingView.swift in Sources */,
 				563BC6D02B75ECCE008F3C50 /* CommentSectionView.swift in Sources */,
 				563BC6C62B744812008F3C50 /* RecipeFavoriteActivityTracker.swift in Sources */,
