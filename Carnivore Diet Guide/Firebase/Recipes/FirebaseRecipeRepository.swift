@@ -11,7 +11,7 @@ import Combine
 
 class FirebaseRecipeRepository {
     
-    private static let RECIPES = "Recipes"
+    static let RECIPES = "Recipes"
     private let FAVORITERS = "Favoriters"
     private let PUBLICATION_DATE = "publicationDate"
 

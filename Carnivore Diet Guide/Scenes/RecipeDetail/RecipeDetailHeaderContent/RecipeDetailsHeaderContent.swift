@@ -43,7 +43,7 @@ struct RecipeDetailsHeaderContent: View {
             model.recipe = newRecipe
         }
         .sheet(isPresented: $showCommentSection) {
-            CommentSectionView()
+            CommentSectionView(resourceId: recipe.id, resourceType: .recipe)
         }
     }
     

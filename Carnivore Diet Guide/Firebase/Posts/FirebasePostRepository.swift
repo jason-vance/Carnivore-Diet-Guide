@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 class FirebasePostRepository {
     
-    private static let POSTS = "BlogPosts"
+    static let POSTS = "BlogPosts"
     private let PUBLICATION_DATE = "publicationDate"
     
     let postsCollection = Firestore.firestore().collection(POSTS)

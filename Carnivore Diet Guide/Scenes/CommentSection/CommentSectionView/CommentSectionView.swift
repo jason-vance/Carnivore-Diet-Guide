@@ -9,18 +9,52 @@ import SwiftUI
 
 struct CommentSectionView: View {
     
+    enum ResourceType {
+        case recipe
+        case post
+    }
+    
     private let controlSize: CGFloat = 48
+    
+    var resourceId: String
+    var resourceType: ResourceType
     
     @StateObject private var model = CommentSectionViewModel()
     @State private var commentText: String = ""
     @FocusState private var isCommentFieldFocused: Bool
     @State private var showSendButton: Bool = false
+    
+    @State var showError: Bool = false
+    @State var errorMessage: String = ""
+    
+    private func sendComment() async -> TaskStatus {
+        guard !commentText.isEmpty else { return .failed("Your comment can not be empty") }
+        
+        do {
+            try await model.sendComment(
+                text: commentText,
+                forResource: resourceId,
+                ofType: resourceType
+            )
+            isCommentFieldFocused = false
+            commentText = ""
+            return .success
+        } catch {
+            return .failed("Could not send comment: \(error.localizedDescription)")
+        }
+    }
+    
+    private func show(errorMessage: String) {
+        showError = true
+        self.errorMessage = errorMessage
+    }
 
     var body: some View {
         CommentSectionContent()
             .background(Color.background)
             .presentationDragIndicator(.visible)
             .presentationDetents([.large])
+            .alert(errorMessage, isPresented: $showError) {}
     }
     
     @ViewBuilder func CommentSectionContent() -> some View {
@@ -55,20 +89,9 @@ struct CommentSectionView: View {
     }
     
     @ViewBuilder func CommentControls() -> some View {
-        //TODO: Spin while comment is sending
         HStack(alignment: .bottom, spacing: 8) {
             VStack(spacing: 2) {
-                HStack {
-                    Text(showSendButton || commentText.isEmpty ? "Your comment" : "")
-                        .font(.system(size: 16))
-                        .foregroundStyle(Color.text.opacity(showSendButton ? 1 : 0.5))
-                        .offset(
-                            x: showSendButton ? 0 : 16,
-                            y: showSendButton ? 0 : 36
-                        )
-                    Spacer()
-                }
-                .zIndex(1000)
+                CommentTextFieldLabel()
                 CommentTextField()
             }
             if showSendButton {
@@ -81,6 +104,20 @@ struct CommentSectionView: View {
                 showSendButton = isfocused
             }
         }
+    }
+    
+    @ViewBuilder func CommentTextFieldLabel() -> some View {
+        HStack {
+            Text(showSendButton || commentText.isEmpty ? "Your comment" : "")
+                .font(.system(size: 16))
+                .foregroundStyle(Color.text.opacity(showSendButton ? 1 : 0.5))
+                .offset(
+                    x: showSendButton ? 0 : 16,
+                    y: showSendButton ? 0 : 36
+                )
+            Spacer()
+        }
+        .zIndex(1000)
     }
     
     @ViewBuilder func CommentTextField() -> some View {
@@ -101,17 +138,13 @@ struct CommentSectionView: View {
     }
     
     @ViewBuilder func SendCommentButton() -> some View {
-        Button {
-            isCommentFieldFocused = false
-            commentText = ""
-            //TODO: Send the comment
+        TaskAwareButton {
+            await sendComment()
         } label: {
             Image(systemName: "paperplane.fill")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .foregroundStyle(Color.background)
-                .padding()
-                .frame(width: controlSize, height: controlSize)
                 .background {
                     RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
                         .fill(Color.accent)
@@ -124,13 +157,36 @@ struct CommentSectionView: View {
     }
 }
 
-#Preview {
+#Preview("Send Succeeds") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
         Rectangle()
             .sheet(isPresented: .constant(true)) {
-                CommentSectionView()
+                CommentSectionView(
+                    resourceId: "recipeId",
+                    resourceType: .recipe
+                )
+            }
+    }
+}
+
+#Preview("Send Fails") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+        
+        iocContainer.autoregister(CommentSender.self) {
+            let mock = MockCommentSender()
+            mock.errorToThrowOnSend = "Test Failure"
+            return mock
+        }
+    } content: {
+        Rectangle()
+            .sheet(isPresented: .constant(true)) {
+                CommentSectionView(
+                    resourceId: "recipeId",
+                    resourceType: .recipe
+                )
             }
     }
 }
