@@ -64,7 +64,6 @@ struct CommentSectionView: View {
     }
     
     @ViewBuilder func CommentSectionContent() -> some View {
-        //TODO: Show something if there are no comments
         VStack {
             ScrollView {
                 LazyVStack(spacing: 16) {
@@ -84,6 +83,19 @@ struct CommentSectionView: View {
             }
             Spacer()
             CommentControls()
+        }
+        .overlay {
+            if model.comments.isEmpty {
+                VStack {
+                    Spacer()
+                    Text("It's pretty quiet in here.\nBe the first to comment!")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundStyle(Color.text)
+                        .multilineTextAlignment(.center)
+                    Spacer()
+                    Spacer()
+                }
+            }
         }
     }
     
@@ -161,6 +173,26 @@ struct CommentSectionView: View {
             insertion: .push(from: .trailing),
             removal: .push(from: .leading))
         )
+    }
+}
+
+#Preview("No Comments") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+        
+        iocContainer.autoregister(CommentProvider.self) {
+            let mock = MockCommentProvider()
+            mock.comments = []
+            return mock
+        }
+    } content: {
+        Rectangle()
+            .sheet(isPresented: .constant(true)) {
+                CommentSectionView(resource: .init(
+                    id: "recipeId",
+                    type: .recipe
+                ))
+            }
     }
 }
 

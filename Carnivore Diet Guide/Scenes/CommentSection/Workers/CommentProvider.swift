@@ -17,12 +17,15 @@ protocol CommentProvider {
 }
 
 class MockCommentProvider: CommentProvider {
+    
+    var comments = Comment.samples
+    
     func listenForCommentsOrderedByDate(
         onResource resource: CommentSectionView.Resource,
         onUpdate: @escaping ([Comment]) -> (),
         onError: ((Error) -> ())?
     ) -> AnyCancellable {
-        onUpdate(Comment.samples)
+        onUpdate(comments)
         return .init({})
     }
 }
