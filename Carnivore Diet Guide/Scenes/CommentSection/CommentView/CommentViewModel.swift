@@ -28,7 +28,6 @@ class CommentViewModel: ObservableObject {
         userImageUrl = UserData.sample.profileImageUrl
         userFullName = UserData.sample.fullName!.value
         commentText = comment.text
-        //TODO: Make this date easier to read (moments ago, yesterday, etc)
-        dateString = comment.date.formatted()
+        dateString = comment.date.timeAgoString()
     }
 }

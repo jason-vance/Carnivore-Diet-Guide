@@ -33,6 +33,9 @@
 		563BC6E22B76F91D008F3C50 /* FirebaseCommentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6E12B76F91D008F3C50 /* FirebaseCommentRepository.swift */; };
 		563BC6E42B76FA33008F3C50 /* FirestoreCommentDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6E32B76FA33008F3C50 /* FirestoreCommentDoc.swift */; };
 		563BC6E62B777FE3008F3C50 /* CommentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6E52B777FE3008F3C50 /* CommentProvider.swift */; };
+		563BC6F62B78BDFA008F3C50 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6F52B78BDFA008F3C50 /* DateExtensions.swift */; };
+		563BC6F82B78BE31008F3C50 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6F52B78BDFA008F3C50 /* DateExtensions.swift */; };
+		563BC6FA2B78BE3E008F3C50 /* DateExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC6F92B78BE3E008F3C50 /* DateExtensionsTests.swift */; };
 		56554F8A2B6053A00070C079 /* HomeViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56554F892B6053A00070C079 /* HomeViewContentProvider.swift */; };
 		566B2D642B4694C6008627F8 /* FeaturedContentThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */; };
 		566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */; };
@@ -150,6 +153,16 @@
 		56F2139D2B743B37009DB057 /* DefaultRecipeFavoriteCountProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2139C2B743B37009DB057 /* DefaultRecipeFavoriteCountProvider.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		563BC6EF2B78BDC5008F3C50 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 56353B4A2B440C9900C4E972 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 56353B512B440C9900C4E972;
+			remoteInfo = "Carnivore Diet Guide";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		56025D1A2B6AED1900F31A07 /* HomeViewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewContent.swift; sourceTree = "<group>"; };
 		56025D1C2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHomeViewContentProvider.swift; sourceTree = "<group>"; };
@@ -179,6 +192,9 @@
 		563BC6E12B76F91D008F3C50 /* FirebaseCommentRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCommentRepository.swift; sourceTree = "<group>"; };
 		563BC6E32B76FA33008F3C50 /* FirestoreCommentDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCommentDoc.swift; sourceTree = "<group>"; };
 		563BC6E52B777FE3008F3C50 /* CommentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentProvider.swift; sourceTree = "<group>"; };
+		563BC6EB2B78BDC5008F3C50 /* Carnivore Diet Guide Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Carnivore Diet Guide Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		563BC6F52B78BDFA008F3C50 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
+		563BC6F92B78BE3E008F3C50 /* DateExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionsTests.swift; sourceTree = "<group>"; };
 		56554F892B6053A00070C079 /* HomeViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewContentProvider.swift; sourceTree = "<group>"; };
 		566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedContentThumbnail.swift; sourceTree = "<group>"; };
 		566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecipeThumbnail.swift; sourceTree = "<group>"; };
@@ -305,6 +321,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		563BC6E82B78BDC5008F3C50 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -329,6 +352,7 @@
 				56025D252B6B04AB00F31A07 /* StringExtensions.swift */,
 				56B88A082B6C4E6E00C4C0DB /* BundleExtensions.swift */,
 				56B88A132B6C557B00C4C0DB /* ViewExtensions.swift */,
+				563BC6F52B78BDFA008F3C50 /* DateExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -377,6 +401,7 @@
 			isa = PBXGroup;
 			children = (
 				56353B542B440C9900C4E972 /* Carnivore Diet Guide */,
+				563BC6EC2B78BDC5008F3C50 /* Carnivore Diet Guide Tests */,
 				56353B532B440C9900C4E972 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -385,6 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				56353B522B440C9900C4E972 /* Carnivore Diet Guide.app */,
+				563BC6EB2B78BDC5008F3C50 /* Carnivore Diet Guide Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -502,6 +528,22 @@
 				563BC6E32B76FA33008F3C50 /* FirestoreCommentDoc.swift */,
 			);
 			path = Comments;
+			sourceTree = "<group>";
+		};
+		563BC6EC2B78BDC5008F3C50 /* Carnivore Diet Guide Tests */ = {
+			isa = PBXGroup;
+			children = (
+				563BC6F72B78BDFE008F3C50 /* Extensions */,
+			);
+			path = "Carnivore Diet Guide Tests";
+			sourceTree = "<group>";
+		};
+		563BC6F72B78BDFE008F3C50 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				563BC6F92B78BE3E008F3C50 /* DateExtensionsTests.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		56554F882B6053790070C079 /* ContentProvider */ = {
@@ -880,6 +922,24 @@
 			productReference = 56353B522B440C9900C4E972 /* Carnivore Diet Guide.app */;
 			productType = "com.apple.product-type.application";
 		};
+		563BC6EA2B78BDC5008F3C50 /* Carnivore Diet Guide Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 563BC6F12B78BDC5008F3C50 /* Build configuration list for PBXNativeTarget "Carnivore Diet Guide Tests" */;
+			buildPhases = (
+				563BC6E72B78BDC5008F3C50 /* Sources */,
+				563BC6E82B78BDC5008F3C50 /* Frameworks */,
+				563BC6E92B78BDC5008F3C50 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				563BC6F02B78BDC5008F3C50 /* PBXTargetDependency */,
+			);
+			name = "Carnivore Diet Guide Tests";
+			productName = "Carnivore Diet Guide Tests";
+			productReference = 563BC6EB2B78BDC5008F3C50 /* Carnivore Diet Guide Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -887,11 +947,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1510;
+				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					56353B512B440C9900C4E972 = {
 						CreatedOnToolsVersion = 15.1;
+					};
+					563BC6EA2B78BDC5008F3C50 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 56353B512B440C9900C4E972;
 					};
 				};
 			};
@@ -928,6 +992,7 @@
 			projectRoot = "";
 			targets = (
 				56353B512B440C9900C4E972 /* Carnivore Diet Guide */,
+				563BC6EA2B78BDC5008F3C50 /* Carnivore Diet Guide Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -942,6 +1007,13 @@
 				56353B5A2B440C9B00C4E972 /* Assets.xcassets in Resources */,
 				56E305712B4D310A0098079A /* Localizable.xcstrings in Resources */,
 				56E305182B4BE3C40098079A /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		563BC6E92B78BDC5008F3C50 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1029,6 +1101,7 @@
 				56F2137C2B7222CA009DB057 /* PositionObservingView.swift in Sources */,
 				56B88A122B6C541F00C4C0DB /* SignInViewModel.swift in Sources */,
 				56B88A1F2B6CE4F100C4C0DB /* UserProfileSignOutService.swift in Sources */,
+				563BC6F62B78BDFA008F3C50 /* DateExtensions.swift in Sources */,
 				5676A1362B477933009C1DA6 /* Recipe.swift in Sources */,
 				56F213842B730F06009DB057 /* RecipeDetailsHeaderContent.swift in Sources */,
 				56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */,
@@ -1058,7 +1131,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		563BC6E72B78BDC5008F3C50 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				563BC6F82B78BE31008F3C50 /* DateExtensions.swift in Sources */,
+				563BC6FA2B78BE3E008F3C50 /* DateExtensionsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		563BC6F02B78BDC5008F3C50 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 56353B512B440C9900C4E972 /* Carnivore Diet Guide */;
+			targetProxy = 563BC6EF2B78BDC5008F3C50 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		56353B5E2B440C9B00C4E972 /* Debug */ = {
@@ -1258,6 +1348,44 @@
 			};
 			name = Release;
 		};
+		563BC6F22B78BDC5008F3C50 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QTXW6735S3;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jasonsapps.Carnivore-Diet-Guide-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Carnivore Diet Guide.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Carnivore Diet Guide";
+			};
+			name = Debug;
+		};
+		563BC6F32B78BDC5008F3C50 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QTXW6735S3;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jasonsapps.Carnivore-Diet-Guide-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Carnivore Diet Guide.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Carnivore Diet Guide";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1275,6 +1403,15 @@
 			buildConfigurations = (
 				56353B612B440C9B00C4E972 /* Debug */,
 				56353B622B440C9B00C4E972 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		563BC6F12B78BDC5008F3C50 /* Build configuration list for PBXNativeTarget "Carnivore Diet Guide Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				563BC6F22B78BDC5008F3C50 /* Debug */,
+				563BC6F32B78BDC5008F3C50 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

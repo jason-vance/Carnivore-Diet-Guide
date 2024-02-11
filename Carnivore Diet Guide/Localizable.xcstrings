@@ -68,6 +68,50 @@
     "%lld" : {
 
     },
+    "%lld days ago" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld day ago"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%lld days ago"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld hours ago" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld hour ago"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%lld hours ago"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld kcal" : {
       "localizations" : {
         "ar" : {
@@ -128,6 +172,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld 千卡"
+          }
+        }
+      }
+    },
+    "%lld minutes ago" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld minute ago"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%lld minutes ago"
+                }
+              }
+            }
           }
         }
       }
@@ -1215,6 +1281,9 @@
     "Logout" : {
 
     },
+    "moments ago" : {
+
+    },
     "Name" : {
 
     },
@@ -1891,7 +1960,26 @@
       }
     },
     "Yields: %lld servings" : {
-
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Yields: %lld serving"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "Yields: %lld servings"
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "Your comment" : {
 

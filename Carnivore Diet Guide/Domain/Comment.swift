@@ -40,19 +40,19 @@ extension Comment {
             id: UUID().uuidString,
             userId: UUID().uuidString,
             text: "I love this",
-            date: Calendar.current.date(byAdding: .day, value: -5, to: .now)!
+            date: Calendar.current.date(byAdding: .hour, value: -5, to: .now)!
         ),
         .init(
             id: UUID().uuidString,
             userId: UUID().uuidString,
             text: "This really helped",
-            date: Calendar.current.date(byAdding: .month, value: -5, to: .now)!
+            date: Calendar.current.date(byAdding: .day, value: -5, to: .now)!
         ),
         .init(
             id: UUID().uuidString,
             userId: UUID().uuidString,
             text: "I need more of this",
-            date: Calendar.current.date(byAdding: .year, value: -5, to: .now)!
+            date: Calendar.current.date(byAdding: .month, value: -5, to: .now)!
         )
     ]
 }
