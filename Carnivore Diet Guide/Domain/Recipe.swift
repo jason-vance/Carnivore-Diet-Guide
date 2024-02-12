@@ -12,6 +12,7 @@ struct Recipe: Identifiable {
     var title: String
     var imageName: String?
     var imageUrl: String?
+    //TODO: Change this to authorUserId
     var author: String
     var servings: Int
     var markdownContent: String

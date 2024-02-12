@@ -6,15 +6,18 @@
 //
 
 import Foundation
+import SwinjectAutoregistration
 
 @MainActor
 class CommentViewModel: ObservableObject {
     
-    //TODO: Load real imageUrl and user name
+    @Published var isLoading: Bool = false
     @Published var userImageUrl: URL?
     @Published var userFullName: String = ""
     @Published var commentText: String = ""
     @Published var dateString: String = ""
+    
+    private let userFetcher = iocContainer~>UserFetcher.self
     
     var comment: Comment? {
         didSet {
@@ -25,9 +28,21 @@ class CommentViewModel: ObservableObject {
     private func setup() {
         let comment = comment!
         
-        userImageUrl = UserData.sample.profileImageUrl
-        userFullName = UserData.sample.fullName!.value
         commentText = comment.text
         dateString = comment.date.timeAgoString()
+        
+        fetchUserData(userId: comment.userId)
+    }
+    
+    func fetchUserData(userId: String) {
+        Task {
+            isLoading = true
+            do {
+                let userData = try await userFetcher.fetchUser(userId: userId)
+                userImageUrl = userData.profileImageUrl
+                userFullName = userData.fullName?.value ?? "Unknown User"
+            }
+            isLoading = false
+        }
     }
 }

@@ -118,3 +118,19 @@ extension FirebaseUserRepository: FavoriteRecipeRepo {
             )
     }
 }
+
+extension FirebaseUserRepository: UserFetcher {
+    func fetchUser(userId: String) async throws -> UserData {
+        guard !userId.isEmpty else { throw "`userId` is empty" }
+        
+        let userData = try await usersCollection
+            .document(userId)
+            .getDocument()
+            .data(as: FirestoreUserDoc.self)
+            .toUserData()
+        
+        guard let userData = userData else { throw "Could not transform FirestoreUserDoc to UserData" }
+        
+        return userData
+    }
+}

@@ -10,6 +10,9 @@ import Swinject
 import SwinjectAutoregistration
 
 func setupMockIocContainer(_ iocContainer: Container) {
+    //Workers
+    iocContainer.autoregister(UserFetcher.self, initializer: MockUserFetcher.init)
+
     //Content
     iocContainer.autoregister(ContentAuthenticationProvider.self, initializer: MockContentAuthenticationProvider.init)
     iocContainer.autoregister(UserOnboardingStateProvider.self, initializer: MockUserOnboardingStateProvider.init)

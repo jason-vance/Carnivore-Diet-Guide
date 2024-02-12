@@ -37,12 +37,17 @@ struct ProfileImageView: View {
     }
     
     @ViewBuilder func PlaceholderView() -> some View {
-        Circle()
-            .foregroundStyle(Color.accent)
-            .opacity(0.1)
+        Image(systemName: "person.crop.circle.fill")
+            .resizable()
+            .foregroundStyle(Color.background)
+            .clipShape(Circle())
     }
 }
 
-#Preview {
+#Preview("Non-placeholder") {
     ProfileImageView(URL(string: "https://images.theconversation.com/files/453023/original/file-20220318-13-f1w6ml.jpg?ixlib=rb-1.1.0&rect=0%2C528%2C7360%2C3680&q=45&auto=format&w=1356&h=668&fit=crop")!)
+}
+
+#Preview("Placeholder") {
+    ProfileImageView(nil)
 }

@@ -17,7 +17,7 @@ struct UserData {
     }
 }
 
-extension UserData{
+extension UserData {
     static let empty = UserData(
         id: "",
         fullName: nil,

@@ -21,6 +21,7 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(CurrentUserIdProvider.self) { FirebaseAuthenticationProvider.instance }
     iocContainer.autoregister(UserDataProvider.self, initializer: FirestoreUserDataProvider.init)
     iocContainer.autoregister(FirebaseUserRepository.self, initializer: FirebaseUserRepository.init)
+    iocContainer.autoregister(UserFetcher.self, initializer: FirebaseUserRepository.init)
 
     //Content
     iocContainer.autoregister(ContentAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }

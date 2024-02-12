@@ -18,12 +18,18 @@ struct CommentView: View {
     var body: some View {
         VStack {
             HStack {
-                ProfileImageView(model.userImageUrl, size: profileImageSize, padding: profileImagePadding)
+                ProfileImageView(
+                    model.userImageUrl,
+                    size: profileImageSize,
+                    padding: profileImagePadding
+                )
+                .redacted(reason: model.isLoading ? [.placeholder] : [] )
                 VStack {
                     Text(model.userFullName)
                         .font(.system(size: 16, weight: .bold))
                         .foregroundStyle(Color.text)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .redacted(reason: model.isLoading ? [.placeholder] : [] )
                     Text(model.dateString)
                         .font(.system(size: 12))
                         .foregroundStyle(Color.text)
