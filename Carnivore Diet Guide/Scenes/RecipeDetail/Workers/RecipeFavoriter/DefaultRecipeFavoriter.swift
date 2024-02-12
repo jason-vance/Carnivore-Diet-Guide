@@ -84,7 +84,7 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
             do {
                 try await recipeActivities.addRecipe(recipe, wasFavoritedByUser: userId)
             } catch {
-                print("Failed to add add recipe favoriting activity: \(error.localizedDescription)")
+                print("Failed to add recipe favoriting activity: \(error.localizedDescription)")
             }
         }
     }

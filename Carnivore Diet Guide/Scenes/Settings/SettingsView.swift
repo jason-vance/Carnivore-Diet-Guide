@@ -95,8 +95,9 @@ struct SettingsView: View {
                 }
             VStack {
                 Text("Are you really sure you want to delete your account? This action will delete all of your data and is irreversible.")
-                    .frame(maxWidth: .infinity)
+                    .foregroundStyle(Color.text)
                     .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
                 ReallyConfirmDeleteAccountButton()
                 CancelDeleteAccountButton()
             }
