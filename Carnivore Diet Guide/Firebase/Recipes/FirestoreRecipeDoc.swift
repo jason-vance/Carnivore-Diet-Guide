@@ -20,7 +20,7 @@ struct FirestoreRecipeDoc: Codable {
     
     @DocumentID var id: String?
     var publicationDate: Date?
-    var author: String?
+    var authorUserId: String?
     var imageUrl: String?
     var localizations: [Localization]
     var servings: Int?
@@ -60,7 +60,7 @@ struct FirestoreRecipeDoc: Codable {
         guard let id = id else { return nil }
         guard let title = localization.title else { return nil }
         guard let imageUrl = imageUrl else { return nil }
-        guard let author = author else { return nil }
+        guard let authorUserId = authorUserId else { return nil }
         guard let servings = servings else { return nil }
         guard let publicationDate = publicationDate else { return nil }
         guard let markdownContent = localization.markdownContent else { return nil }
@@ -69,7 +69,7 @@ struct FirestoreRecipeDoc: Codable {
             id: id,
             title: title,
             imageUrl: imageUrl,
-            author: author,
+            authorUserId: authorUserId,
             servings: servings,
             markdownContent: markdownContent.replacingOccurrences(of: "\\n", with: "\n"),
             publicationDate: publicationDate,

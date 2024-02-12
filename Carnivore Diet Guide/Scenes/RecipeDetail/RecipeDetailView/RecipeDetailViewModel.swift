@@ -7,10 +7,7 @@
 
 import Foundation
 import SwinjectAutoregistration
-import Combine
 
-
-//TODO: Reevaluate if I actually need this class or not
 @MainActor
 class RecipeDetailViewModel: ObservableObject {
     
@@ -20,9 +17,33 @@ class RecipeDetailViewModel: ObservableObject {
         }
     }
     
-    private var subs: Set<AnyCancellable> = []
+    @Published var loadingAuthor: Bool = false
+    @Published var authorFullName: String = ""
+    @Published var authorProfilePicUrl: URL?
     
+    private let userFetcher = iocContainer~>UserFetcher.self
+
     private func setup() {
-//        let recipe = recipe!
+        let recipe = recipe!
+        
+        fetchAuthor(userId: recipe.authorUserId)
+    }
+    
+    private func fetchAuthor(userId: String) {
+        Task {
+            loadingAuthor = true
+            do {
+                let userData = try await userFetcher.fetchUser(userId: userId)
+                
+                authorProfilePicUrl = userData.profileImageUrl
+                
+                if let userFullName = userData.fullName?.value {
+                    authorFullName = String(localized: .init(userFullName))
+                } else {
+                    authorFullName = String(localized: "Unknown Author")
+                }
+            }
+            loadingAuthor = false
+        }
     }
 }

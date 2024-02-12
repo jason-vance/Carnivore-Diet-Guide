@@ -78,16 +78,21 @@ struct RecipeDetailView: View {
     
     @ViewBuilder func ByLine() -> some View {
         HStack {
-            //TODO: Get a real profile pic
-            ProfileImageView(URL(string:"https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/06/final-fantasy-xvi-clive-profile.jpg"), size: profileImageSize, padding: profileImagePadding)
+            ProfileImageView(
+                model.authorProfilePicUrl,
+                size: profileImageSize,
+                padding: profileImagePadding
+            )
             VStack {
-                Text(recipe.author)
+                Text(model.authorFullName)
                     .font(.system(size: 16, weight: .bold))
                     .opacity(0.8)
             }
             Spacer()
         }
         .foregroundStyle(Color.text)
+        .redacted(reason: model.loadingAuthor ? [.placeholder] : [])
+        .frame(height: profileImageSize)
     }
     
     @ViewBuilder func ServingsLine() -> some View {
