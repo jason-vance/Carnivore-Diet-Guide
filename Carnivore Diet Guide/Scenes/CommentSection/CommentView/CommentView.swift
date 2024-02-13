@@ -54,10 +54,11 @@ struct CommentView: View {
     @ViewBuilder func OptionsButton() -> some View {
         Menu {
             Text(model.commentText)
-            //TODO: Show report button if comment belongs to other users
-            ReportCommentButton()
-            //TODO: Show delete button if comment belongs to user
-            DeleteCommentButton()
+            if model.commentIsMine {
+                DeleteCommentButton()
+            } else {
+                ReportCommentButton()
+            }
         } label: {
             Image(systemName: "ellipsis")
                 .padding()
@@ -81,11 +82,44 @@ struct CommentView: View {
     }
 }
 
-#Preview {
+#Preview("Default") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
         CommentView(comment: .sample)
             .padding()
+    }
+}
+
+#Preview("Comment belonging to me and others") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+        
+        iocContainer.autoregister(CommentProvider.self) {
+            let mock = MockCommentProvider()
+            mock.comments = [
+                .init(
+                    id: UUID().uuidString,
+                    userId: "myId",
+                    text: "This is my comment",
+                    date: .now
+                ),
+                .init(
+                    id: UUID().uuidString,
+                    userId: UUID().uuidString,
+                    text: "This is somebody else's comment",
+                    date: .now
+                )
+            ]
+            return mock
+        }
+        
+        iocContainer.autoregister(CurrentUserIdProvider.self) {
+            let mock = MockCurrentUserIdProvider()
+            mock.currentUserId = "myId"
+            return mock
+        }
+    } content: {
+        CommentSectionView(resource: .init(id: "resourceId", type: .recipe))
     }
 }

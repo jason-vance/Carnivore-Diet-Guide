@@ -12,11 +12,13 @@ import SwinjectAutoregistration
 class CommentViewModel: ObservableObject {
     
     @Published var isLoading: Bool = false
+    @Published var commentIsMine: Bool = false
     @Published var userImageUrl: URL?
     @Published var userFullName: String = ""
     @Published var commentText: String = ""
     @Published var dateString: String = ""
     
+    private let currentUserIdProvider = iocContainer~>CurrentUserIdProvider.self
     private let userFetcher = iocContainer~>UserFetcher.self
     
     var comment: Comment? {
@@ -28,6 +30,7 @@ class CommentViewModel: ObservableObject {
     private func setup() {
         let comment = comment!
         
+        commentIsMine = comment.userId == currentUserIdProvider.currentUserId
         commentText = comment.text
         dateString = comment.date.timeAgoString()
         
