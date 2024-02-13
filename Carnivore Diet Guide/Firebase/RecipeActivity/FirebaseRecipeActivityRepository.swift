@@ -55,3 +55,25 @@ extension FirebaseRecipeActivityRepository: RecipeViewActivityTracker {
         try await addActivity(.view, forRecipe: recipe, byUser: userId)
     }
 }
+
+extension FirebaseRecipeActivityRepository: RecipePopularityFetcher {
+    
+    //TODO: Cache the results of this
+    func getPopularRecipes(since date: Date) async throws -> PopularResources {
+        let query = try await activityCollection
+            .whereField(FirestoreRecipeActivityDoc.CodingKeys.date.rawValue, isGreaterThanOrEqualTo: date)
+            .getDocuments()
+        
+        let docs = query.documents.compactMap { try? $0.data(as: FirestoreRecipeActivityDoc.self) }
+        
+        var trending = PopularResources()
+        
+        docs.forEach { doc in
+            guard let recipeId = doc.recipeId else { return }
+            trending.add(resourceId: recipeId)
+        }
+        
+        return trending
+    }
+}
+ 

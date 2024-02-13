@@ -33,6 +33,22 @@ class FirebaseRecipeRepository {
     }
 }
 
+extension FirebaseRecipeRepository: RecipeRepository {
+    
+    func fetchRecipe(byId recipeId: String) async throws -> Recipe {
+        guard let recipe = try await recipesCollection
+            .document(recipeId)
+            .getDocument()
+            .data(as: FirestoreRecipeDoc.self)
+            .toRecipe()
+        else {
+            throw "Could not map `RecipeDoc` to `Recipe`"
+        }
+        
+        return recipe
+    }
+}
+
 extension FirebaseRecipeRepository: RecipeFavoritersRepo {
     
     func addUser(_ userId: String, asFavoriterOf recipe: Recipe) async throws {

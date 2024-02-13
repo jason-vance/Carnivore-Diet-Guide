@@ -12,6 +12,7 @@ import SwinjectAutoregistration
 func setupMockIocContainer(_ iocContainer: Container) {
     //Workers
     iocContainer.autoregister(UserFetcher.self, initializer: MockUserFetcher.init)
+    iocContainer.autoregister(RecipeRepository.self, initializer: MockRecipeRepository.init)
 
     //Content
     iocContainer.autoregister(ContentAuthenticationProvider.self, initializer: MockContentAuthenticationProvider.init)
@@ -22,6 +23,8 @@ func setupMockIocContainer(_ iocContainer: Container) {
     
     //Home
     iocContainer.autoregister(HomeViewContentProvider.self, initializer: MockHomeViewContentProvider.init)
+    iocContainer.autoregister(TrendingRecipeFetcher.self, initializer: DefaultTrendingRecipeFetcher.init)
+    iocContainer.autoregister(RecipePopularityFetcher.self, initializer: MockRecipePopularityFetcher.init)
 
     //Recipe Library
     iocContainer.autoregister(RecipeLibraryContentProvider.self, initializer: MockRecipeLibraryContentProvider.init)
