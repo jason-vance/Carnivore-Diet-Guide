@@ -72,7 +72,6 @@ struct RecipeDetailMetadataView: View {
     }
     
     @ViewBuilder func CommentsMetadataItem() -> some View {
-        //TODO: Get a real comment count
         MetadataItem(text: "\(commentCount)", icon: "text.bubble")
     }
     

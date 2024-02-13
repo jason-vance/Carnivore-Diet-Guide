@@ -13,6 +13,7 @@ class FirebaseRecipeRepository {
     
     static let RECIPES = "Recipes"
     private let FAVORITERS = "Favoriters"
+    private let COMMENTS = "Comments"
     private let PUBLICATION_DATE = "publicationDate"
 
     let recipesCollection = Firestore.firestore().collection(RECIPES)
@@ -54,6 +55,25 @@ extension FirebaseRecipeRepository: RecipeFavoritersRepo {
         let listener = recipesCollection.document(recipe.id).collection(FAVORITERS).addSnapshotListener { snapshot, error in
             guard let snapshot = snapshot else {
                 onError?(error ?? "¯\\_(ツ)_/¯ While listening to recipe's favoriters")
+                return
+            }
+            
+            onUpdate(UInt(snapshot.count))
+        }
+        
+        return .init({ listener.remove() })
+    }
+}
+
+extension FirebaseRecipeRepository: RecipeCommentsRepo {
+    func listenToCommentCountOf(
+        recipe: Recipe,
+        onUpdate: @escaping (UInt) -> (),
+        onError: ((Error) -> ())?
+    ) -> AnyCancellable {
+        let listener = recipesCollection.document(recipe.id).collection(COMMENTS).addSnapshotListener { snapshot, error in
+            guard let snapshot = snapshot else {
+                onError?(error ?? "¯\\_(ツ)_/¯ While listening to recipe's comments")
                 return
             }
             

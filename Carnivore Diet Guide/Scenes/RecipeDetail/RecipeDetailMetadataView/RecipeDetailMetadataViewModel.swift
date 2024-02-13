@@ -18,11 +18,12 @@ class RecipeDetailMetadataViewModel: ObservableObject {
         }
     }
     
-    @Published var commentCount: UInt = 123
+    @Published var commentCount: UInt = 0
     @Published var favoriteCount: UInt = 0
 
     private var favoriteCountProvider: RecipeFavoriteCountProvider?
-    
+    private var commentCountProvider: RecipeCommentCountProvider?
+
     private var subs: Set<AnyCancellable> = []
     
     private func setup() {
@@ -32,6 +33,12 @@ class RecipeDetailMetadataViewModel: ObservableObject {
         favoriteCountProvider!.favoriteCountPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] in self?.favoriteCount = $0 }
+            .store(in: &subs)
+        
+        commentCountProvider = iocContainer.resolve(RecipeCommentCountProvider.self, argument: recipe)
+        commentCountProvider!.commentCountPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] in self?.commentCount = $0 }
             .store(in: &subs)
     }
 }
