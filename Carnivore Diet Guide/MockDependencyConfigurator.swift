@@ -29,6 +29,7 @@ func setupMockIocContainer(_ iocContainer: Container) {
     //Recipe Detail
     iocContainer.autoregister(RecipeFavoriter.self, argument: Recipe.self, initializer: MockRecipeFavoriter.init)
     iocContainer.autoregister(RecipeFavoriteCountProvider.self, argument: Recipe.self, initializer: MockRecipeFavoriteCountProvider.init)
+    iocContainer.autoregister(RecipeViewActivityTracker.self, initializer: MockRecipeViewActivityTracker.init)
 
     //Knowledge Library
     iocContainer.autoregister(KnowledgeLibraryContentProvider.self, initializer: MockKnowledgeLibraryContentProvider.init)

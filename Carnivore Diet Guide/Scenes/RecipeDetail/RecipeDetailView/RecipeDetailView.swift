@@ -30,7 +30,6 @@ struct RecipeDetailView: View {
         .onChange(of: recipe, initial: true) { newRecipe in
             model.recipe = newRecipe
         }
-        //TODO: Create a recipeViewed activity event
     }
     
     @ViewBuilder func HeaderBackground() -> some View {

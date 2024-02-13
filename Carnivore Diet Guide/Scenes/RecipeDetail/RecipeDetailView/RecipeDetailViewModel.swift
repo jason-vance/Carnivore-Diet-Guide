@@ -22,11 +22,14 @@ class RecipeDetailViewModel: ObservableObject {
     @Published var authorProfilePicUrl: URL?
     
     private let userFetcher = iocContainer~>UserFetcher.self
+    private let currentUserIdProvider = iocContainer~>CurrentUserIdProvider.self
+    private let recipeActivities = iocContainer~>RecipeViewActivityTracker.self
 
     private func setup() {
         let recipe = recipe!
         
         fetchAuthor(userId: recipe.authorUserId)
+        addRecipeViewedActivity(recipe: recipe)
     }
     
     private func fetchAuthor(userId: String) {
@@ -44,6 +47,13 @@ class RecipeDetailViewModel: ObservableObject {
                 }
             }
             loadingAuthor = false
+        }
+    }
+    
+    private func addRecipeViewedActivity(recipe: Recipe) {
+        Task {
+            guard let userId = currentUserIdProvider.currentUserId else { return }
+            try? await recipeActivities.recipe(recipe, wasViewedByUser: userId)
         }
     }
 }
