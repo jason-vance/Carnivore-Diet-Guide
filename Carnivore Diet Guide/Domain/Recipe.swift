@@ -26,14 +26,13 @@ extension Recipe: Equatable {
 }
 
 extension Recipe {
-    static var sample: Recipe {
-        .init(
-            id: "sampleRecipeId",
-            title: "Seared Ribeye Steak",
-            imageName: "SearedRibeyeSteak",
-            authorUserId: "authorUserId",
-            servings: 5,
-            markdownContent: """
+    static let sample = Recipe(
+        id: "sampleRecipeId",
+        title: "Seared Ribeye Steak",
+        imageName: "SearedRibeyeSteak",
+        authorUserId: "authorUserId",
+        servings: 5,
+        markdownContent: """
 ### Ingredients
 
 - 500g spaghetti
@@ -51,19 +50,17 @@ extension Recipe {
 4. Serve sauce over cooked spaghetti.
 5. Enjoy!
 """,
-            publicationDate: Date(),
-            basicNutritionInfo: .sample
-        )
-    }
+        publicationDate: Date(),
+        basicNutritionInfo: .sample
+    )
     
-    static var longNamedSample: Recipe {
-        .init(
-            id: "longNamedSampleRecipeId",
-            title: "Grilled Salmon with Lemon Butter and Various Garnishes",
-            imageName: "GrilledSalmonWithLemonButter",
-            authorUserId: "authorUserId",
-            servings: 5,
-            markdownContent: """
+    static let longNamedSample = Recipe(
+        id: "longNamedSampleRecipeId",
+        title: "Grilled Salmon with Lemon Butter and Various Garnishes",
+        imageName: "GrilledSalmonWithLemonButter",
+        authorUserId: "authorUserId",
+        servings: 5,
+        markdownContent: """
 ### Ingredients
 
 - 500g spaghetti
@@ -81,10 +78,9 @@ extension Recipe {
 4. Serve sauce over cooked spaghetti.
 5. Enjoy!
 """,
-            publicationDate: Date(),
-            basicNutritionInfo: .sample
-        )
-    }
+        publicationDate: Date(),
+        basicNutritionInfo: .sample
+    )
     
     static let samples: [Recipe] = [sample, longNamedSample]
 }

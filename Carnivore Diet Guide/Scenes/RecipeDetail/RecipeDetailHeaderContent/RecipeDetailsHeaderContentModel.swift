@@ -18,8 +18,10 @@ class RecipeDetailsHeaderContentModel: ObservableObject {
         }
     }
     
+    @Published var recipeIsMine: Bool = false
     @Published var isMarkedAsFavorite: Bool?
     
+    private let currentUserIdProvider = iocContainer~>CurrentUserIdProvider.self
     private var recipeFavoriter: RecipeFavoriter?
     
     private var subs: Set<AnyCancellable> = []
@@ -29,6 +31,8 @@ class RecipeDetailsHeaderContentModel: ObservableObject {
             assertionFailure("recipe was nil")
             return
         }
+        
+        recipeIsMine = recipe.authorUserId == currentUserIdProvider.currentUserId
         
         recipeFavoriter = iocContainer.resolve(RecipeFavoriter.self, argument: recipe)
         recipeFavoriter?.isMarkedAsFavoritePublisher

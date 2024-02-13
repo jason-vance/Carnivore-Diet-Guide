@@ -91,11 +91,12 @@ struct RecipeDetailsHeaderContent: View {
     @ViewBuilder func ExtraOptionsButton() -> some View {
         Menu {
             Text(recipe.title)
-            //TODO: Show report button if recipe belongs to other users
-            ReportRecipeButton()
-            //TODO: Show edit/delete button if recipe belongs to user
-            EditRecipeButton()
-            DeleteRecipeButton()
+            if model.recipeIsMine {
+                EditRecipeButton()
+                DeleteRecipeButton()
+            } else {
+                ReportRecipeButton()
+            }
         } label: {
             HeaderButtonLabel("ellipsis")
         }
@@ -155,6 +156,20 @@ struct RecipeDetailsHeaderContent: View {
         iocContainer.autoregister(RecipeFavoriter.self, argument: Recipe.self) { recipe in
             let mock = MockRecipeFavoriter(recipe: recipe)
             mock.error = "Test failure"
+            return mock
+        }
+    } content: {
+        RecipeDetailView(recipe: .sample)
+    }
+}
+
+#Preview("Recipe Is Mine") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+        
+        iocContainer.autoregister(CurrentUserIdProvider.self) {
+            let mock = MockCurrentUserIdProvider()
+            mock.currentUserId = Recipe.sample.authorUserId
             return mock
         }
     } content: {
