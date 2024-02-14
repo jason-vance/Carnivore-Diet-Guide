@@ -12,6 +12,7 @@ struct RecipeDetailMetadataView: View {
     @State var recipe: Recipe
     @StateObject private var model = RecipeDetailMetadataViewModel()
     @State private var showDifficultyLevel: Bool = false
+    @State private var showCookTime: Bool = false
     @State private var showCommentCount: Bool = false
     @State private var commentCount: UInt = 0
     @State private var showFavoriteCount: Bool = false
@@ -22,10 +23,12 @@ struct RecipeDetailMetadataView: View {
             if showDifficultyLevel {
                 DifficultyLevelMetadataItem()
             }
-            if showDifficultyLevel { //TODO: Add `&& showCookTime`
+            if showDifficultyLevel && showCookTime {
                 MetadataSeparator()
             }
-            CookTimeMetadataItem()
+            if showCookTime {
+                CookTimeMetadataItem()
+            }
             Spacer()
             if showCommentCount {
                 CommentsMetadataItem()
@@ -42,6 +45,11 @@ struct RecipeDetailMetadataView: View {
         .onChange(of: model.difficultyLevel, initial: true) { difficultyLevel in
             withAnimation(.snappy) {
                 showDifficultyLevel = difficultyLevel != .unknown
+            }
+        }
+        .onChange(of: model.cookTimeMinutes, initial: true) { cookTimeMinutes in
+            withAnimation(.snappy) {
+                showCookTime = cookTimeMinutes > 0
             }
         }
         .onChange(of: model.commentCount, initial: true) { count in
@@ -68,8 +76,7 @@ struct RecipeDetailMetadataView: View {
     }
     
     @ViewBuilder func CookTimeMetadataItem() -> some View {
-        //TODO: Get a real cook time
-        MetadataItem(text: "17mins", icon: "clock")
+        MetadataItem(text: CookTimeFormatter.formatMinutes(model.cookTimeMinutes), icon: "clock")
     }
     
     @ViewBuilder func DifficultyLevelMetadataItem() -> some View {

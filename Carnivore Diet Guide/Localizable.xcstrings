@@ -263,6 +263,52 @@
         }
       }
     },
+    "%lldhrs" : {
+      "comment" : "Abbreviation for hours",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lldhr"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%lldhrs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lldmins" : {
+      "comment" : "Abbreviation for minutes",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lldmin"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%lldmins"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "Albums" : {
       "comment" : "Photo Albums"
     },

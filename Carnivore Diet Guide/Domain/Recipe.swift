@@ -34,6 +34,7 @@ struct Recipe: Identifiable {
     var imageName: String?
     var imageUrl: String?
     var authorUserId: String
+    var cookTimeMinutes: Int
     var servings: Int
     var difficultyLevel: DifficultyLevel
     var markdownContent: String
@@ -53,6 +54,7 @@ extension Recipe {
         title: "Seared Ribeye Steak",
         imageName: "SearedRibeyeSteak",
         authorUserId: "authorUserId",
+        cookTimeMinutes: 12,
         servings: 5,
         difficultyLevel: .easy,
         markdownContent: """
@@ -82,6 +84,7 @@ extension Recipe {
         title: "Grilled Salmon with Lemon Butter and Various Garnishes",
         imageName: "GrilledSalmonWithLemonButter",
         authorUserId: "authorUserId",
+        cookTimeMinutes: 17,
         servings: 5,
         difficultyLevel: .easy,
         markdownContent: """

@@ -23,6 +23,7 @@ struct FirestoreRecipeDoc: Codable {
     var authorUserId: String?
     var imageUrl: String?
     var localizations: [Localization]
+    var cookTimeMinutes: Int?
     var servings: Int?
     var difficultyLevel: String?
     var calories: Int?
@@ -71,6 +72,7 @@ struct FirestoreRecipeDoc: Codable {
             title: title,
             imageUrl: imageUrl,
             authorUserId: authorUserId,
+            cookTimeMinutes: cookTimeMinutes ?? 0,
             servings: servings,
             difficultyLevel: .init(rawValue: difficultyLevel ?? "") ?? Recipe.DifficultyLevel.unknown,
             markdownContent: markdownContent.replacingOccurrences(of: "\\n", with: "\n"),
