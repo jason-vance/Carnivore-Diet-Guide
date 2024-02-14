@@ -8,12 +8,34 @@
 import Foundation
 
 struct Recipe: Identifiable {
+    
+    enum DifficultyLevel: String {
+        case unknown
+        case easy
+        case intermediate
+        case hard
+        
+        func toUiString() -> String {
+            switch self {
+            case .unknown:
+                return String(localized: "Unknown", comment: "Difficulty level is 'Unknown'")
+            case .easy:
+                return String(localized: "Easy", comment: "Difficulty level is 'Easy'")
+            case .intermediate:
+                return String(localized: "Intermediate", comment: "Difficulty level is 'Intermediate'")
+            case .hard:
+                return String(localized: "Hard", comment: "Difficulty level is 'Hard'")
+            }
+        }
+    }
+    
     var id: String
     var title: String
     var imageName: String?
     var imageUrl: String?
     var authorUserId: String
     var servings: Int
+    var difficultyLevel: DifficultyLevel
     var markdownContent: String
     var publicationDate: Date
     var basicNutritionInfo: BasicNutritionInfo?
@@ -32,6 +54,7 @@ extension Recipe {
         imageName: "SearedRibeyeSteak",
         authorUserId: "authorUserId",
         servings: 5,
+        difficultyLevel: .easy,
         markdownContent: """
 ### Ingredients
 
@@ -60,6 +83,7 @@ extension Recipe {
         imageName: "GrilledSalmonWithLemonButter",
         authorUserId: "authorUserId",
         servings: 5,
+        difficultyLevel: .easy,
         markdownContent: """
 ### Ingredients
 

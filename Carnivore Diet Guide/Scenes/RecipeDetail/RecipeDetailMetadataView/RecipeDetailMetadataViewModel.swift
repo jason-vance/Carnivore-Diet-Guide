@@ -18,6 +18,7 @@ class RecipeDetailMetadataViewModel: ObservableObject {
         }
     }
     
+    @Published var difficultyLevel: Recipe.DifficultyLevel = .unknown
     @Published var commentCount: UInt = 0
     @Published var favoriteCount: UInt = 0
 
@@ -28,6 +29,8 @@ class RecipeDetailMetadataViewModel: ObservableObject {
     
     private func setup() {
         let recipe = recipe!
+        
+        difficultyLevel = recipe.difficultyLevel
         
         favoriteCountProvider = iocContainer.resolve(RecipeFavoriteCountProvider.self, argument: recipe)
         favoriteCountProvider!.favoriteCountPublisher
