@@ -13,41 +13,64 @@ struct CommentView: View {
     private let profileImagePadding: CGFloat = 2
     
     @State var comment: Comment
+    @State var resource: CommentSectionView.Resource
     @StateObject var model = CommentViewModel()
     
     var body: some View {
         VStack {
-            HStack {
-                ProfileImageView(
-                    model.userImageUrl,
-                    size: profileImageSize,
-                    padding: profileImagePadding
-                )
-                .redacted(reason: model.isLoading ? [.placeholder] : [] )
-                VStack {
-                    Text(model.userFullName)
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundStyle(Color.text)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .redacted(reason: model.isLoading ? [.placeholder] : [] )
-                    Text(model.dateString)
-                        .font(.system(size: 12))
-                        .foregroundStyle(Color.text)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .opacity(0.8)
-                }
+            VStack {
+                CommentHeader()
+                CommentBody()
             }
-            .overlay(alignment: .topTrailing) {
-                OptionsButton()
+            .padding(.horizontal)
+            Divider()
+        }
+        .overlay {
+            if model.showError {
+                ErrorOverlay()
             }
-            Text(model.commentText)
-                .font(.system(size: 16))
-                .foregroundStyle(Color.text)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .multilineTextAlignment(.leading)
         }
         .onAppear {
-            model.comment = comment
+            model.set(comment: comment, resource: resource)
+        }
+    }
+    
+    @ViewBuilder func ErrorOverlay() -> some View {
+        Text(model.errorMessage)
+            .foregroundStyle(Color.background)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.text)
+            .ignoresSafeArea()
+            .onAppear {
+                withAnimation(.snappy.delay(1)) {
+                    model.showError = false
+                }
+            }
+    }
+    
+    @ViewBuilder func CommentHeader() -> some View {
+        HStack {
+            ProfileImageView(
+                model.userImageUrl,
+                size: profileImageSize,
+                padding: profileImagePadding
+            )
+            .redacted(reason: model.isLoading ? [.placeholder] : [] )
+            VStack {
+                Text(model.userFullName)
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundStyle(Color.text)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .redacted(reason: model.isLoading ? [.placeholder] : [] )
+                Text(model.dateString)
+                    .font(.system(size: 12))
+                    .foregroundStyle(Color.text)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .opacity(0.8)
+            }
+        }
+        .overlay(alignment: .topTrailing) {
+            OptionsButton()
         }
     }
     
@@ -75,10 +98,18 @@ struct CommentView: View {
     
     @ViewBuilder func DeleteCommentButton() -> some View {
         Button {
-            //TODO: Add ability to delete comment
+            model.deleteComment()
         } label: {
             Label("Delete", systemImage: "trash")
         }
+    }
+    
+    @ViewBuilder func CommentBody() -> some View {
+        Text(model.commentText)
+            .font(.system(size: 16))
+            .foregroundStyle(Color.text)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .multilineTextAlignment(.leading)
     }
 }
 
@@ -86,8 +117,11 @@ struct CommentView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        CommentView(comment: .sample)
-            .padding()
+        CommentView(
+            comment: .sample,
+            resource: .init(id: "resourceId", type: .recipe)
+        )
+        .padding()
     }
 }
 
@@ -117,6 +151,45 @@ struct CommentView: View {
         iocContainer.autoregister(CurrentUserIdProvider.self) {
             let mock = MockCurrentUserIdProvider()
             mock.currentUserId = "myId"
+            return mock
+        }
+    } content: {
+        CommentSectionView(resource: .init(id: "resourceId", type: .recipe))
+    }
+}
+
+#Preview("Delete/Report Fails") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+        
+        iocContainer.autoregister(CommentProvider.self) {
+            let mock = MockCommentProvider()
+            mock.comments = [
+                .init(
+                    id: UUID().uuidString,
+                    userId: "myId",
+                    text: "This is my comment",
+                    date: .now
+                ),
+                .init(
+                    id: UUID().uuidString,
+                    userId: UUID().uuidString,
+                    text: "This is somebody else's comment",
+                    date: .now
+                )
+            ]
+            return mock
+        }
+        
+        iocContainer.autoregister(CurrentUserIdProvider.self) {
+            let mock = MockCurrentUserIdProvider()
+            mock.currentUserId = "myId"
+            return mock
+        }
+        
+        iocContainer.autoregister(CommentDeleter.self) {
+            let mock = MockCommentDeleter()
+            mock.error = "Test Failure"
             return mock
         }
     } content: {

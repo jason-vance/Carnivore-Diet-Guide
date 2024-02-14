@@ -68,7 +68,7 @@ struct CommentSectionView: View {
             ScrollView {
                 LazyVStack(spacing: 16) {
                     ForEach(model.comments) { comment in
-                        Comment(comment)
+                        CommentView(comment: comment, resource: resource)
                     }
                 }
                 .padding(.vertical)
@@ -96,14 +96,6 @@ struct CommentSectionView: View {
                     Spacer()
                 }
             }
-        }
-    }
-    
-    @ViewBuilder func Comment(_ comment: Comment) -> some View {
-        VStack {
-            CommentView(comment: comment)
-                .padding(.horizontal)
-            Divider()
         }
     }
     

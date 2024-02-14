@@ -71,3 +71,9 @@ extension FirebaseCommentRepository: CommentSender {
         try await commentsCollection(forResource: resource).addDocument(from: doc)
     }
 }
+
+extension FirebaseCommentRepository: CommentDeleter {
+    func deleteComment(_ comment: Comment, onResource resource: CommentSectionView.Resource) async throws {
+        try await commentsCollection(forResource: resource).document(comment.id).delete()
+    }
+}

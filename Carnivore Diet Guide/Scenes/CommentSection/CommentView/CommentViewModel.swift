@@ -18,17 +18,19 @@ class CommentViewModel: ObservableObject {
     @Published var commentText: String = ""
     @Published var dateString: String = ""
     
+    @Published var showError: Bool = false
+    @Published var errorMessage: String = "errorMessage"
+    
     private let currentUserIdProvider = iocContainer~>CurrentUserIdProvider.self
     private let userFetcher = iocContainer~>UserFetcher.self
+    private let commentDeleter = iocContainer~>CommentDeleter.self
     
-    var comment: Comment? {
-        didSet {
-            setup()
-        }
-    }
+    private var comment: Comment?
+    private var resource: CommentSectionView.Resource?
     
-    private func setup() {
-        let comment = comment!
+    func set(comment: Comment, resource: CommentSectionView.Resource) {
+        self.comment = comment
+        self.resource = resource
         
         commentIsMine = comment.userId == currentUserIdProvider.currentUserId
         commentText = comment.text
@@ -37,7 +39,7 @@ class CommentViewModel: ObservableObject {
         fetchUserData(userId: comment.userId)
     }
     
-    func fetchUserData(userId: String) {
+    private func fetchUserData(userId: String) {
         Task {
             isLoading = true
             do {
@@ -47,5 +49,23 @@ class CommentViewModel: ObservableObject {
             }
             isLoading = false
         }
+    }
+    
+    func deleteComment() {
+        Task {
+            do {
+                guard let comment = comment else { throw "`comment` was nil" }
+                guard let resource = resource else { throw "`resource` was nil" }
+
+                try await commentDeleter.deleteComment(comment, onResource: resource)
+            } catch {
+                show(errorMessage: "Comment could not be deleted: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func show(errorMessage: String) {
+        showError = true
+        self.errorMessage = errorMessage
     }
 }

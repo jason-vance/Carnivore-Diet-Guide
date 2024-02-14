@@ -21,6 +21,7 @@ class DefaultTrendingRecipeFetcher: TrendingRecipeFetcher {
     
     func getTrendingRecipeIds(since date: Date, limit: Int) async throws -> [Recipe] {
         let popularRecipeIds = try await getSortedPopularRecipeIds(since: date, limit: limit)
+        //TODO: If popularRecipeIds isEmpty, then get some random recipeIds
         let recipeMap = try await getRecipeMap(popularRecipeIds)
         return sort(recipes: recipeMap, byPopularity: popularRecipeIds)
     }
