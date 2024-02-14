@@ -24,7 +24,8 @@ class CommentViewModel: ObservableObject {
     private let currentUserIdProvider = iocContainer~>CurrentUserIdProvider.self
     private let userFetcher = iocContainer~>UserFetcher.self
     private let commentDeleter = iocContainer~>CommentDeleter.self
-    
+    private let commentReporter = iocContainer~>CommentReporter.self
+
     private var comment: Comment?
     private var resource: CommentSectionView.Resource?
     
@@ -60,6 +61,21 @@ class CommentViewModel: ObservableObject {
                 try await commentDeleter.deleteComment(comment, onResource: resource)
             } catch {
                 show(errorMessage: "Comment could not be deleted: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func reportComment() {
+        Task {
+            do {
+                guard let comment = comment else { throw "`comment` was nil" }
+                guard let resource = resource else { throw "`resource` was nil" }
+                guard let reporterId = currentUserIdProvider.currentUserId else { throw "`reporterId` was nil" }
+
+                try await commentReporter.reportComment(comment, onResource: resource, reportedBy: reporterId)
+                show(errorMessage: "Comment was reported")
+            } catch {
+                show(errorMessage: "Comment could not be reported: \(error.localizedDescription)")
             }
         }
     }

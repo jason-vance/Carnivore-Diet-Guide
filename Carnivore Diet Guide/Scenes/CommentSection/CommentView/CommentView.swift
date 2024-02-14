@@ -90,7 +90,7 @@ struct CommentView: View {
     
     @ViewBuilder func ReportCommentButton() -> some View {
         Button {
-            //TODO: Add ability to report comment
+            model.reportComment()
         } label: {
             Label("Report", systemImage: "megaphone")
         }
@@ -189,6 +189,12 @@ struct CommentView: View {
         
         iocContainer.autoregister(CommentDeleter.self) {
             let mock = MockCommentDeleter()
+            mock.error = "Test Failure"
+            return mock
+        }
+        
+        iocContainer.autoregister(CommentReporter.self) {
+            let mock = MockCommentReporter()
             mock.error = "Test Failure"
             return mock
         }

@@ -54,4 +54,5 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(CommentProvider.self, initializer: MockCommentProvider.init)
     iocContainer.autoregister(CommentSender.self, initializer: MockCommentSender.init)
     iocContainer.autoregister(CommentDeleter.self, initializer: MockCommentDeleter.init)
+    iocContainer.autoregister(CommentReporter.self, initializer: MockCommentReporter.init)
 }

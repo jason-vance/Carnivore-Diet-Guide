@@ -14,7 +14,7 @@ struct CommentSectionView: View {
         var type: ResourceType
     }
     
-    enum ResourceType {
+    enum ResourceType: String {
         case recipe
         case post
     }

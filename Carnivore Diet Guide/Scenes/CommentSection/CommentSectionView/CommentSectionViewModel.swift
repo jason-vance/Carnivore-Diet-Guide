@@ -28,6 +28,7 @@ class CommentSectionViewModel: ObservableObject {
         
         isSendingComment = true
         try await commentSender.sendComment(text: text, toResource: resource)
+        //TODO: Add comment activity
         isSendingComment = false
     }
     
