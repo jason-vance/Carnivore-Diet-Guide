@@ -803,6 +803,9 @@
     "Edit Profile" : {
 
     },
+    "Failed to report recipe: %@" : {
+
+    },
     "Fat" : {
       "localizations" : {
         "ar" : {
@@ -1817,6 +1820,9 @@
           }
         }
       }
+    },
+    "This recipe has been reported. It will be reviewed to make sure it follows our content guidelines." : {
+
     },
     "Title" : {
 

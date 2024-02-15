@@ -35,3 +35,19 @@ extension FirebaseReportRepository: CommentReporter {
         try await reportedItemsCollection.addDocument(from: doc)
     }
 }
+
+extension FirebaseReportRepository: RecipeReporter {
+    func reportRecipe(
+        _ recipe: Recipe,
+        reportedBy reporterId: String
+    ) async throws {
+        let doc = FirestoreReportedItemDoc(
+            item: .recipe(recipeId: recipe.id),
+            itemOwnerId: recipe.authorUserId,
+            reporterId: reporterId,
+            date: .now
+        )
+        
+        try await reportedItemsCollection.addDocument(from: doc)
+    }
+}

@@ -48,6 +48,7 @@ struct RecipeDetailsHeaderContent: View {
                 type: .recipe
             ))
         }
+        .alert(model.alertMessage, isPresented: $model.showAlert) {}
     }
     
     @ViewBuilder func CloseButton() -> some View {
@@ -104,7 +105,7 @@ struct RecipeDetailsHeaderContent: View {
     
     @ViewBuilder func ReportRecipeButton() -> some View {
         Button {
-            //TODO: Add ability to report recipe
+            model.reportRecipe()
         } label: {
             Label("Report", systemImage: "megaphone")
         }

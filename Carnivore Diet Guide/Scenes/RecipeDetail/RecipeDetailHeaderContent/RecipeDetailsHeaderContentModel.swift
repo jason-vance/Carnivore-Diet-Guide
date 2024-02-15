@@ -21,8 +21,12 @@ class RecipeDetailsHeaderContentModel: ObservableObject {
     @Published var recipeIsMine: Bool = false
     @Published var isMarkedAsFavorite: Bool?
     
+    @Published var showAlert: Bool = false
+    @Published var alertMessage: String = ""
+    
     private let currentUserIdProvider = iocContainer~>CurrentUserIdProvider.self
     private var recipeFavoriter: RecipeFavoriter?
+    private let recipeReporter = iocContainer~>RecipeReporter.self
     
     private var subs: Set<AnyCancellable> = []
     
@@ -41,6 +45,11 @@ class RecipeDetailsHeaderContentModel: ObservableObject {
             .store(in: &subs)
     }
     
+    private func show(alertMessage: String) {
+        showAlert = true
+        self.alertMessage = alertMessage
+    }
+    
     func toggleFavorite() {
         Task {
             guard let isFavorited = isMarkedAsFavorite else { return }
@@ -51,6 +60,20 @@ class RecipeDetailsHeaderContentModel: ObservableObject {
                 try await recipeFavoriter.toggleFavorite()
             } catch {
                 isMarkedAsFavorite = isFavorited
+            }
+        }
+    }
+    
+    func reportRecipe() {
+        Task {
+            do {
+                guard let recipe = recipe else { throw "`recipe` was nil" }
+                guard let userId = currentUserIdProvider.currentUserId else { throw "User is not logged in" }
+
+                try await recipeReporter.reportRecipe(recipe, reportedBy: userId)
+                show(alertMessage: String(localized: "This recipe has been reported. It will be reviewed to make sure it follows our content guidelines."))
+            } catch {
+                show(alertMessage: String(localized: "Failed to report recipe: \(error.localizedDescription)"))
             }
         }
     }

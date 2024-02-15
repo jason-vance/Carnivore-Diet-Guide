@@ -57,6 +57,7 @@
 		563BC7242B7D6941008F3C50 /* FirestoreReportedItemDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7232B7D6941008F3C50 /* FirestoreReportedItemDoc.swift */; };
 		563BC7262B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7252B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift */; };
 		563BC7282B7D914D008F3C50 /* RecipeCommentActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7272B7D914D008F3C50 /* RecipeCommentActivityTracker.swift */; };
+		563BC72A2B7D93FB008F3C50 /* RecipeReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7292B7D93FB008F3C50 /* RecipeReporter.swift */; };
 		56554F8A2B6053A00070C079 /* HomeViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56554F892B6053A00070C079 /* HomeViewContentProvider.swift */; };
 		566B2D642B4694C6008627F8 /* FeaturedContentThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */; };
 		566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */; };
@@ -234,6 +235,7 @@
 		563BC7232B7D6941008F3C50 /* FirestoreReportedItemDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreReportedItemDoc.swift; sourceTree = "<group>"; };
 		563BC7252B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCommentActivityTracker.swift; sourceTree = "<group>"; };
 		563BC7272B7D914D008F3C50 /* RecipeCommentActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCommentActivityTracker.swift; sourceTree = "<group>"; };
+		563BC7292B7D93FB008F3C50 /* RecipeReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeReporter.swift; sourceTree = "<group>"; };
 		56554F892B6053A00070C079 /* HomeViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewContentProvider.swift; sourceTree = "<group>"; };
 		566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedContentThumbnail.swift; sourceTree = "<group>"; };
 		566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecipeThumbnail.swift; sourceTree = "<group>"; };
@@ -379,7 +381,7 @@
 				563BC6C92B744A29008F3C50 /* RecipeActivity */,
 				56B88A5A2B6F310B00C4C0DB /* Users */,
 				563BC6E02B76F8F7008F3C50 /* Comments */,
-				563BC7202B7D67EC008F3C50 /* Report */,
+				563BC7202B7D67EC008F3C50 /* ReportedItems */,
 				56B88A182B6C5FE400C4C0DB /* FirebaseAuthentication.swift */,
 				56B88A652B6F89DA00C4C0DB /* FirebaseProfileImageStorage.swift */,
 			);
@@ -631,13 +633,13 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		563BC7202B7D67EC008F3C50 /* Report */ = {
+		563BC7202B7D67EC008F3C50 /* ReportedItems */ = {
 			isa = PBXGroup;
 			children = (
 				563BC7212B7D6804008F3C50 /* FirebaseReportRepository.swift */,
 				563BC7232B7D6941008F3C50 /* FirestoreReportedItemDoc.swift */,
 			);
-			path = Report;
+			path = ReportedItems;
 			sourceTree = "<group>";
 		};
 		56554F882B6053790070C079 /* ContentProvider */ = {
@@ -927,6 +929,7 @@
 				563BC6FF2B7AF85B008F3C50 /* RecipeCommentCountProvider */,
 				56F213972B7438A0009DB057 /* RecipeFavoritesCountProvider */,
 				56F213862B737138009DB057 /* RecipeFavoriter */,
+				563BC7292B7D93FB008F3C50 /* RecipeReporter.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -1174,6 +1177,7 @@
 				56E305112B4B71400098079A /* KnowledgeLibraryView.swift in Sources */,
 				56F2137E2B722305009DB057 /* OffsetObservingScrollView.swift in Sources */,
 				567754302B7168DD0094EB8C /* BlockingSpinnerView.swift in Sources */,
+				563BC72A2B7D93FB008F3C50 /* RecipeReporter.swift in Sources */,
 				567754392B7194900094EB8C /* FirebaseUserAccountDeleter.swift in Sources */,
 				56B88A402B6CF0F100C4C0DB /* FormTextField.swift in Sources */,
 				56B88A472B6CF53A00C4C0DB /* EditUserProfileView.swift in Sources */,

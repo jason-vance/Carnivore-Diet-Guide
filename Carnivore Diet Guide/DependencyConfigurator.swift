@@ -49,6 +49,7 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(RecipeViewActivityTracker.self, initializer: FirebaseRecipeActivityRepository.init)
     iocContainer.autoregister(RecipeFavoriteCountProvider.self, argument: Recipe.self, initializer: DefaultRecipeFavoriteCountProvider.init)
     iocContainer.autoregister(RecipeCommentCountProvider.self, argument: Recipe.self, initializer: DefaultRecipeCommentCountProvider.init)
+    iocContainer.autoregister(RecipeReporter.self, initializer: FirebaseReportRepository.init)
 
     //Knowledge Library
     iocContainer.autoregister(KnowledgeLibraryContentProvider.self, initializer: FirebaseKnowledgeLibraryContentProvider.init)
