@@ -59,6 +59,8 @@
 		563BC7282B7D914D008F3C50 /* RecipeCommentActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7272B7D914D008F3C50 /* RecipeCommentActivityTracker.swift */; };
 		563BC72A2B7D93FB008F3C50 /* RecipeReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7292B7D93FB008F3C50 /* RecipeReporter.swift */; };
 		563BC72E2B7D9E67008F3C50 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC72D2B7D9E67008F3C50 /* HomeViewModel.swift */; };
+		563BC7302B7E0785008F3C50 /* HomeViewV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC72F2B7E0785008F3C50 /* HomeViewV2.swift */; };
+		563BC7332B7E105C008F3C50 /* CreateMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7322B7E105C008F3C50 /* CreateMenu.swift */; };
 		56554F8A2B6053A00070C079 /* HomeViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56554F892B6053A00070C079 /* HomeViewContentProvider.swift */; };
 		566B2D642B4694C6008627F8 /* FeaturedContentThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */; };
 		566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */; };
@@ -238,6 +240,8 @@
 		563BC7272B7D914D008F3C50 /* RecipeCommentActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCommentActivityTracker.swift; sourceTree = "<group>"; };
 		563BC7292B7D93FB008F3C50 /* RecipeReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeReporter.swift; sourceTree = "<group>"; };
 		563BC72D2B7D9E67008F3C50 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		563BC72F2B7E0785008F3C50 /* HomeViewV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewV2.swift; sourceTree = "<group>"; };
+		563BC7322B7E105C008F3C50 /* CreateMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMenu.swift; sourceTree = "<group>"; };
 		56554F892B6053A00070C079 /* HomeViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewContentProvider.swift; sourceTree = "<group>"; };
 		566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedContentThumbnail.swift; sourceTree = "<group>"; };
 		566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecipeThumbnail.swift; sourceTree = "<group>"; };
@@ -430,6 +434,7 @@
 		562E03E52B450A8900859F81 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				563BC7312B7E1041008F3C50 /* HomeViewV2 */,
 				563BC72C2B7D9E53008F3C50 /* ThumbnailViews */,
 				563BC72B2B7D9E48008F3C50 /* HomeView */,
 				56554F882B6053790070C079 /* ContentProvider */,
@@ -659,6 +664,15 @@
 				5677543A2B71BC710094EB8C /* FeaturedContentItem.swift */,
 			);
 			path = ThumbnailViews;
+			sourceTree = "<group>";
+		};
+		563BC7312B7E1041008F3C50 /* HomeViewV2 */ = {
+			isa = PBXGroup;
+			children = (
+				563BC72F2B7E0785008F3C50 /* HomeViewV2.swift */,
+				563BC7322B7E105C008F3C50 /* CreateMenu.swift */,
+			);
+			path = HomeViewV2;
 			sourceTree = "<group>";
 		};
 		56554F882B6053790070C079 /* ContentProvider */ = {
@@ -1189,10 +1203,12 @@
 				5677542C2B70E55C0094EB8C /* CurrentUserDataProvider.swift in Sources */,
 				5677542E2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift in Sources */,
 				56F2139B2B743A74009DB057 /* RecipeFavoriteCountProvider.swift in Sources */,
+				563BC7302B7E0785008F3C50 /* HomeViewV2.swift in Sources */,
 				56025D1B2B6AED1900F31A07 /* HomeViewContent.swift in Sources */,
 				56B88A3D2B6CF0B800C4C0DB /* ProfileFormNameField.swift in Sources */,
 				56E305072B4A982E0098079A /* Post.swift in Sources */,
 				56B88A6C2B70D51D00C4C0DB /* UserDataSaver.swift in Sources */,
+				563BC7332B7E105C008F3C50 /* CreateMenu.swift in Sources */,
 				56E305112B4B71400098079A /* KnowledgeLibraryView.swift in Sources */,
 				56F2137E2B722305009DB057 /* OffsetObservingScrollView.swift in Sources */,
 				567754302B7168DD0094EB8C /* BlockingSpinnerView.swift in Sources */,
