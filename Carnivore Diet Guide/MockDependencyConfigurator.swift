@@ -13,6 +13,7 @@ func setupMockIocContainer(_ iocContainer: Container) {
     //Workers
     iocContainer.autoregister(UserFetcher.self, initializer: MockUserFetcher.init)
     iocContainer.autoregister(RecipeRepository.self, initializer: MockRecipeRepository.init)
+    iocContainer.autoregister(ResourceCommentActivityTracker.self, initializer: DefaultResourceCommentActivityTracker.init)
 
     //Content
     iocContainer.autoregister(ContentAuthenticationProvider.self, initializer: MockContentAuthenticationProvider.init)
@@ -55,4 +56,5 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(CommentSender.self, initializer: MockCommentSender.init)
     iocContainer.autoregister(CommentDeleter.self, initializer: MockCommentDeleter.init)
     iocContainer.autoregister(CommentReporter.self, initializer: MockCommentReporter.init)
+    iocContainer.autoregister(RecipeCommentActivityTracker.self, initializer: MockRecipeCommentActivityTracker.init)
 }

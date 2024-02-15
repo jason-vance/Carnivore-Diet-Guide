@@ -55,6 +55,8 @@
 		563BC71F2B7D67A7008F3C50 /* CommentReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC71D2B7D67A7008F3C50 /* CommentReporter.swift */; };
 		563BC7222B7D6804008F3C50 /* FirebaseReportRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7212B7D6804008F3C50 /* FirebaseReportRepository.swift */; };
 		563BC7242B7D6941008F3C50 /* FirestoreReportedItemDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7232B7D6941008F3C50 /* FirestoreReportedItemDoc.swift */; };
+		563BC7262B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7252B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift */; };
+		563BC7282B7D914D008F3C50 /* RecipeCommentActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7272B7D914D008F3C50 /* RecipeCommentActivityTracker.swift */; };
 		56554F8A2B6053A00070C079 /* HomeViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56554F892B6053A00070C079 /* HomeViewContentProvider.swift */; };
 		566B2D642B4694C6008627F8 /* FeaturedContentThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */; };
 		566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */; };
@@ -230,6 +232,8 @@
 		563BC71D2B7D67A7008F3C50 /* CommentReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentReporter.swift; sourceTree = "<group>"; };
 		563BC7212B7D6804008F3C50 /* FirebaseReportRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseReportRepository.swift; sourceTree = "<group>"; };
 		563BC7232B7D6941008F3C50 /* FirestoreReportedItemDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreReportedItemDoc.swift; sourceTree = "<group>"; };
+		563BC7252B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCommentActivityTracker.swift; sourceTree = "<group>"; };
+		563BC7272B7D914D008F3C50 /* RecipeCommentActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCommentActivityTracker.swift; sourceTree = "<group>"; };
 		56554F892B6053A00070C079 /* HomeViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewContentProvider.swift; sourceTree = "<group>"; };
 		566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedContentThumbnail.swift; sourceTree = "<group>"; };
 		566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecipeThumbnail.swift; sourceTree = "<group>"; };
@@ -858,6 +862,7 @@
 				563BC7062B7B0123008F3C50 /* HomeContent */,
 				56F2138D2B742665009DB057 /* Recipes */,
 				5677542A2B70E5500094EB8C /* Users */,
+				563BC7252B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -941,6 +946,7 @@
 				56F2138E2B7426A6009DB057 /* RecipeFavoritersRepo.swift */,
 				563BC6C52B744812008F3C50 /* RecipeFavoriteActivityTracker.swift */,
 				563BC6FD2B7AF4E8008F3C50 /* RecipeViewActivityTracker.swift */,
+				563BC7272B7D914D008F3C50 /* RecipeCommentActivityTracker.swift */,
 				563BC7042B7AF93C008F3C50 /* RecipeCommentsRepo.swift */,
 				563BC7102B7B6DEB008F3C50 /* RecipePopularityFetcher.swift */,
 				563BC7122B7B6EED008F3C50 /* RecipeRepository.swift */,
@@ -1184,6 +1190,7 @@
 				563BC71E2B7D67A7008F3C50 /* CommentReporter.swift in Sources */,
 				56E305682B4BF83C0098079A /* PreviewContainerWithSetup.swift in Sources */,
 				56B88A422B6CF10700C4C0DB /* FormFieldOverlay.swift in Sources */,
+				563BC7282B7D914D008F3C50 /* RecipeCommentActivityTracker.swift in Sources */,
 				563BC70A2B7B39E9008F3C50 /* TrendingRecipeFetcher.swift in Sources */,
 				56F2138F2B7426A6009DB057 /* RecipeFavoritersRepo.swift in Sources */,
 				56353B582B440C9900C4E972 /* ContentView.swift in Sources */,
@@ -1240,6 +1247,7 @@
 				563BC7222B7D6804008F3C50 /* FirebaseReportRepository.swift in Sources */,
 				56E305052B4A55E00098079A /* PostDetailView.swift in Sources */,
 				563BC7032B7AF8D3008F3C50 /* DefaultRecipeCommentCountProvider.swift in Sources */,
+				563BC7262B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift in Sources */,
 				56B88A2B2B6CE94600C4C0DB /* ProfileFormPictureField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

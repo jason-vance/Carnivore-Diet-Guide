@@ -23,6 +23,7 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(FirebaseUserRepository.self, initializer: FirebaseUserRepository.init)
     iocContainer.autoregister(UserFetcher.self, initializer: FirebaseUserRepository.init)
     iocContainer.autoregister(RecipeRepository.self, initializer: FirebaseRecipeRepository.init)
+    iocContainer.autoregister(ResourceCommentActivityTracker.self, initializer: DefaultResourceCommentActivityTracker.init)
 
     //Content
     iocContainer.autoregister(ContentAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }
@@ -69,4 +70,5 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(CommentSender.self, initializer: FirebaseCommentRepository.init)
     iocContainer.autoregister(CommentDeleter.self, initializer: FirebaseCommentRepository.init)
     iocContainer.autoregister(CommentReporter.self, initializer: FirebaseReportRepository.init)
+    iocContainer.autoregister(RecipeCommentActivityTracker.self, initializer: FirebaseRecipeActivityRepository.init)
 }

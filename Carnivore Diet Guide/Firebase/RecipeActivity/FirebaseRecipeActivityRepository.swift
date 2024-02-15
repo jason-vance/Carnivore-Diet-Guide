@@ -16,13 +16,13 @@ class FirebaseRecipeActivityRepository {
     
     func addActivity(
         _ type: FirestoreRecipeActivityDoc.RecipeActivityType,
-        forRecipe recipe: Recipe,
+        forRecipe recipeId: String,
         byUser userId: String
     ) async throws {
         let doc = FirestoreRecipeActivityDoc(
             activityType: type,
             userId: userId,
-            recipeId: recipe.id,
+            recipeId: recipeId,
             date: .now
         )
         
@@ -32,7 +32,7 @@ class FirebaseRecipeActivityRepository {
 
 extension FirebaseRecipeActivityRepository: RecipeFavoriteActivityTracker {
     func addRecipe(_ recipe: Recipe, wasFavoritedByUser userId: String) async throws {
-        try await addActivity(.favorite, forRecipe: recipe, byUser: userId)
+        try await addActivity(.favorite, forRecipe: recipe.id, byUser: userId)
     }
     
     func removeRecipe(_ recipe: Recipe, wasFavoritedByUser userId: String) async throws {
@@ -52,7 +52,7 @@ extension FirebaseRecipeActivityRepository: RecipeFavoriteActivityTracker {
 
 extension FirebaseRecipeActivityRepository: RecipeViewActivityTracker {
     func recipe(_ recipe: Recipe, wasViewedByUser userId: String) async throws {
-        try await addActivity(.view, forRecipe: recipe, byUser: userId)
+        try await addActivity(.view, forRecipe: recipe.id, byUser: userId)
     }
 }
 
@@ -74,6 +74,12 @@ extension FirebaseRecipeActivityRepository: RecipePopularityFetcher {
         }
         
         return trending
+    }
+}
+
+extension FirebaseRecipeActivityRepository: RecipeCommentActivityTracker {
+    func recipe(_ recipeId: String, wasCommentedOnByUser userId: String) async throws {
+        try await addActivity(.comment, forRecipe: recipeId, byUser: userId)
     }
 }
  

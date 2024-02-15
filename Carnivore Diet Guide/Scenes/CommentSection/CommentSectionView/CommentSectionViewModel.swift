@@ -28,8 +28,9 @@ class CommentSectionViewModel: ObservableObject {
         
         isSendingComment = true
         try await commentSender.sendComment(text: text, toResource: resource)
-        //TODO: Add comment activity
         isSendingComment = false
+        
+        addCommentActivity(onResource: resource)
     }
     
     func startListeningForComments(onResource resource: CommentSectionView.Resource) {
@@ -42,5 +43,14 @@ class CommentSectionViewModel: ObservableObject {
     
     private func onUpdate(comments: [Comment]) {
         self.comments = comments
+    }
+    
+    private func addCommentActivity(onResource resource: CommentSectionView.Resource) {
+        Task {
+            guard let userId = (iocContainer~>CurrentUserIdProvider.self).currentUserId else { return }
+            let commentActivityTracker = iocContainer~>ResourceCommentActivityTracker.self
+            
+            try? await commentActivityTracker.resource(resource, wasCommentedOnByUser: userId)
+        }
     }
 }
