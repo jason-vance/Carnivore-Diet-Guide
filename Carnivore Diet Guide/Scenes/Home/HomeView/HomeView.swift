@@ -6,42 +6,12 @@
 //
 
 import SwiftUI
-import SwinjectAutoregistration
 
 struct HomeView: View {
     
-    private enum LoadingState {
-        case idle
-        case working
-    }
-    
-    private let contentProvider = iocContainer~>HomeViewContentProvider.self
-    
     @Binding var selectedTab: ContentView.Tab
     
-    @State private var loadingState: LoadingState = .idle
-    @State private var content: HomeViewContent = .empty
-    @State private var listDidAppear: Bool = false
-    @State private var showError: Bool = false
-    @State private var errorMessage: String = ""
-    
-    private func loadContent() {
-        Task {
-            loadingState = .working
-            listDidAppear = false
-            do {
-                content = try await contentProvider.loadContent()
-            } catch {
-                show(errorMessage: "Unable to load: \(error.localizedDescription)")
-            }
-            loadingState = .idle
-        }
-    }
-    
-    private func show(errorMessage: String) {
-        showError = true
-        self.errorMessage = errorMessage
-    }
+    @StateObject var model = HomeViewModel()
     
     var body: some View {
         NavigationStack {
@@ -53,16 +23,16 @@ struct HomeView: View {
             }
             .background(Color.background)
         }
-        .alert(errorMessage, isPresented: $showError) {}
+        .alert(model.alertMessage, isPresented: $model.showAlert) {}
         .onAppear {
-            if content.isEmpty {
-                loadContent()
+            if model.content.isEmpty {
+                model.loadContent()
             }
         }
     }
     
     @ViewBuilder func ContentView() -> some View {
-        if loadingState == .working {
+        if model.loadingState == .working {
             LoadingView()
         } else {
             LoadedContentView()
@@ -87,18 +57,18 @@ struct HomeView: View {
                 TrendingRecipesView()
                 TrendingPostsView()
             }
-            .offset(y: listDidAppear ? 0 : 100)
-            .opacity(listDidAppear ? 1 : 0)
+            .offset(y: model.listDidAppear ? 0 : 100)
+            .opacity(model.listDidAppear ? 1 : 0)
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
                     withAnimation(.snappy) {
-                        listDidAppear = !content.isEmpty
+                        model.listDidAppear = !model.content.isEmpty
                     }
                 }
             }
         }
         .refreshable {
-            loadContent()
+            model.loadContent()
         }
     }
     
@@ -112,7 +82,7 @@ struct HomeView: View {
             .padding(.horizontal)
             ScrollView(.horizontal) {
                 HStack(spacing: 16) {
-                    ForEach(content.featuredContent) { featuredItem in
+                    ForEach(model.content.featuredContent) { featuredItem in
                         NavigationLink {
                             FeaturedContentDetailView(featuredItem)
                         } label: {
@@ -149,7 +119,7 @@ struct HomeView: View {
             .padding(.horizontal)
             ScrollView(.horizontal) {
                 HStack(spacing: 16) {
-                    ForEach(content.trendingRecipes) { recipe in
+                    ForEach(model.content.trendingRecipes) { recipe in
                         NavigationLink {
                             RecipeDetailView(recipe: recipe)
                         } label: {
@@ -181,7 +151,7 @@ struct HomeView: View {
             .padding(.horizontal)
             ScrollView(.horizontal) {
                 HStack(spacing: 16) {
-                    ForEach(content.trendingPosts) { post in
+                    ForEach(model.content.trendingPosts) { post in
                         NavigationLink {
                             PostDetailView(post: post)
                         } label: {
