@@ -11,6 +11,7 @@ import SwinjectAutoregistration
 
 func setupMockIocContainer(_ iocContainer: Container) {
     //Workers
+    iocContainer.autoregister(CurrentUserIdProvider.self, initializer: MockCurrentUserIdProvider.init)
     iocContainer.autoregister(UserFetcher.self, initializer: MockUserFetcher.init)
     iocContainer.autoregister(RecipeRepository.self, initializer: MockRecipeRepository.init)
     iocContainer.autoregister(ResourceCommentActivityTracker.self, initializer: DefaultResourceCommentActivityTracker.init)
