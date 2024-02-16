@@ -10,6 +10,7 @@ import SwinjectAutoregistration
 
 struct HomeViewV2: View {
     
+    @State var searchText: String = ""
     @State var showUserProfile: Bool = false
     
     var body: some View {
@@ -48,7 +49,11 @@ struct HomeViewV2: View {
             Spacer()
         }
         .overlay(alignment: .trailing) {
-            ProfileButton()
+            HStack {
+                SearchButton()
+                ProfileButton()
+            }
+            .padding(.trailing)
         }
     }
     
@@ -59,12 +64,27 @@ struct HomeViewV2: View {
             .padding()
     }
     
+    @ViewBuilder func SearchButton() -> some View {
+        Button {
+            //TODO: Add ability to search
+        } label: {
+            Image(systemName: "magnifyingglass.circle.fill")
+                .resizable()
+                .foregroundStyle(Color.background)
+                .padding(2)
+                .background {
+                    Circle()
+                        .fill(Color.accentColor)
+                }
+                .frame(width: 32, height: 32)
+        }
+    }
+    
     @ViewBuilder func ProfileButton() -> some View {
         Button {
             showUserProfile = true
         } label: {
-            ProfileImageView(nil, size: 38, padding: 2)
-                .padding()
+            ProfileImageView(UserData.sample.profileImageUrl, size: 32, padding: 2)
         }
     }
     
