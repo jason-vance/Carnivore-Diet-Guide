@@ -12,8 +12,6 @@ import MarkdownUI
 struct RecipeDetailView: View {
     
     private let imageHeight: CGFloat = 200
-    private let profileImageSize: CGFloat = 44
-    private let profileImagePadding: CGFloat = 2
 
     @State var recipe: Recipe
     @StateObject private var model = RecipeDetailViewModel()
@@ -60,7 +58,7 @@ struct RecipeDetailView: View {
             RecipeDetailMetadataView(recipe: recipe)
             RecipeTitle()
             ServingsLine()
-            ByLine()
+            ByLineView(userId: recipe.authorUserId)
             RecipeContentView()
             NutritionalInformation()
         }
@@ -73,25 +71,6 @@ struct RecipeDetailView: View {
             .foregroundStyle(Color.text)
             .multilineTextAlignment(.leading)
             .frame(maxWidth: .infinity, alignment: .leading)
-    }
-    
-    @ViewBuilder func ByLine() -> some View {
-        HStack {
-            ProfileImageView(
-                model.authorProfilePicUrl,
-                size: profileImageSize,
-                padding: profileImagePadding
-            )
-            VStack {
-                Text(model.authorFullName)
-                    .font(.system(size: 16, weight: .bold))
-                    .opacity(0.8)
-            }
-            Spacer()
-        }
-        .foregroundStyle(Color.text)
-        .redacted(reason: model.loadingAuthor ? [.placeholder] : [])
-        .frame(height: profileImageSize)
     }
     
     @ViewBuilder func ServingsLine() -> some View {

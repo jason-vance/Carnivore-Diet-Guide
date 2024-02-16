@@ -10,27 +10,31 @@ import SwinjectAutoregistration
 
 struct HomeViewV2: View {
     
+    let itemHorizontalPadding: CGFloat = 8
+    
     @State var showUserProfile: Bool = false
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                TitleBar()
-                ScrollView {
-                    HomeContent()
-                        .padding(.vertical)
+            GeometryReader { proxy in
+                VStack(spacing: 0) {
+                    TitleBar()
+                    ScrollView {
+                        HomeContent(imageSize: proxy.size.width)
+                            .padding(.vertical)
+                    }
+                    .scrollIndicators(.hidden)
+                    .overlay(alignment: .top) {
+                        LinearGradient(
+                            colors: [Color.background, Color.clear],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                        .frame(height: 16)
+                    }
                 }
-                .scrollIndicators(.hidden)
-                .overlay(alignment: .top) {
-                    LinearGradient(
-                        colors: [Color.background, Color.clear],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                    .frame(height: 16)
-                }
+                .background(Color.background)
             }
-            .background(Color.background)
         }
         .overlay {
             CreateMenu()
@@ -88,9 +92,9 @@ struct HomeViewV2: View {
         }
     }
     
-    @ViewBuilder func HomeContent() -> some View {
+    @ViewBuilder func HomeContent(imageSize: CGFloat) -> some View {
         VStack {
-            InfinitePosts()
+            InfinitePosts(imageSize: imageSize)
         }
     }
     
@@ -98,17 +102,22 @@ struct HomeViewV2: View {
         
     }
     
-    @ViewBuilder func InfinitePosts() -> some View {
-        LazyVStack(spacing: 0) {
+    @ViewBuilder func InfinitePosts(imageSize: CGFloat) -> some View {
+        //TODO: Use real posts
+        LazyVStack(spacing: 16) {
             ForEach(1..<12, id: \.self) { index in
-                Rectangle()
-                    .stroke(lineWidth: 1)
-                    .foregroundStyle(Color.text)
-                    .frame(height: 375)
-                    .overlay {
-                        Text("\(index)")
-                    }
-                
+                FeedItemView(
+                    feedItem: .init(
+                        id: "\(index)",
+                        userId: FeedItem.sample.userId,
+                        imageUrls: FeedItem.sample.imageUrls,
+                        category: FeedItem.sample.category,
+                        title: FeedItem.sample.title,
+                        summary: FeedItem.sample.summary
+                    ),
+                    imageSize: imageSize - (2 * itemHorizontalPadding)
+                )
+                .padding(.horizontal, itemHorizontalPadding)
             }
         }
         .overlay(alignment: .bottom) {
