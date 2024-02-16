@@ -12,56 +12,62 @@ struct FeedItemView: View {
     
     //TODO: I would probably prefer to pass an id instead of a full feed item for Firebase's sake
     @State var feedItem: FeedItem
-    @State var imageSize: CGFloat
+    @State var itemWidth: CGFloat?
     @StateObject private var model = FeedItemViewModel()
     
     var body: some View {
         VStack(spacing: 4) {
-            ItemImage(size: imageSize)
+            ItemImage()
             VStack(spacing: 4) {
-                ItemCategory()
+                ItemCalloutText()
                 ItemTitle()
                 ByLineView(userId: feedItem.userId)
                 ItemSummary()
             }
             .padding(8)
-            .padding(.bottom, 8)
+            .padding(.bottom, 4)
         }
         .foregroundStyle(Color.text)
-        .clipped()
         .background(Color.background)
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: Corners.radius,
-                style: .continuous
-            )
-        )
+        .clipShape(RoundedRectangle(
+            cornerRadius: Corners.radius,
+            style: .continuous
+        ))
+        .clipped()
         .shadow(color: Color.text, radius: 4)
     }
     
-    @ViewBuilder func ItemImage(size: CGFloat) -> some View {
-        //TODO: single image, array of images, no image
-        if !feedItem.imageUrls.isEmpty {
+    @ViewBuilder func ItemImage() -> some View {
+        if feedItem.imageUrls.isEmpty {
+            //Do nothing, leave it blank
+        } else if feedItem.imageUrls.count == 1 {
             KFImage(feedItem.imageUrls[0])
                 .resizable()
                 .cacheOriginalImage()
                 .diskCacheExpiration(.days(7))
                 .placeholder(PlaceholderView)
                 .scaledToFill()
-                .frame(width: size, height: size)
+                .frame(width: itemWidth, height: itemWidth)
+        } else {
+            //TODO: Hanlde an array of FeedItem images
         }
     }
     
     @ViewBuilder func PlaceholderView() -> some View {
-        Image(systemName: "person.crop.circle.fill")
-            .resizable()
-            .foregroundStyle(Color.background)
-            .clipShape(Circle())
+        if let imageSize = itemWidth {
+            ZStack {
+                Rectangle()
+                    .fill(Color.text.opacity(0.8))
+                Image(systemName: "photo")
+                    .font(.system(size: imageSize/2))
+                    .foregroundStyle(Color.background)
+            }
+        }
     }
     
-    @ViewBuilder func ItemCategory() -> some View {
-        if let category = feedItem.category {
-            Text(category)
+    @ViewBuilder func ItemCalloutText() -> some View {
+        if let calloutText = feedItem.calloutText {
+            Text(calloutText)
                 .font(.headline.weight(.black))
                 .foregroundStyle(Color.accent)
                 .multilineTextAlignment(.leading)
@@ -73,6 +79,7 @@ struct FeedItemView: View {
         Text(feedItem.title)
             .font(.title.weight(.bold))
             .multilineTextAlignment(.leading)
+            .lineLimit(2)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
     
@@ -80,15 +87,45 @@ struct FeedItemView: View {
         Text(feedItem.summary)
             .font(.body)
             .multilineTextAlignment(.leading)
-            .lineLimit(3)
+            .lineLimit(4)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
-#Preview {
+#Preview("Article") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        FeedItemView(feedItem: .sample, imageSize: 375)
+        GeometryReader { proxy in
+            FeedItemView(feedItem: .sampleArticle, itemWidth: proxy.size.width)
+        }
+    }
+}
+
+#Preview("Discussion") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        GeometryReader { proxy in
+            FeedItemView(feedItem: .sampleDiscussion, itemWidth: proxy.size.width)
+        }
+    }
+}
+
+#Preview("Recipe") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        GeometryReader { proxy in
+            FeedItemView(feedItem: .sampleRecipe, itemWidth: proxy.size.width)
+        }
+    }
+}
+
+#Preview("Home Screen") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        HomeViewV2()
     }
 }

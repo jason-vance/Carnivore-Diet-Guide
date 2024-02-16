@@ -20,7 +20,7 @@ struct HomeViewV2: View {
                 VStack(spacing: 0) {
                     TitleBar()
                     ScrollView {
-                        HomeContent(imageSize: proxy.size.width)
+                        HomeContent(screenWidth: proxy.size.width)
                             .padding(.vertical)
                     }
                     .scrollIndicators(.hidden)
@@ -92,9 +92,9 @@ struct HomeViewV2: View {
         }
     }
     
-    @ViewBuilder func HomeContent(imageSize: CGFloat) -> some View {
+    @ViewBuilder func HomeContent(screenWidth: CGFloat) -> some View {
         VStack {
-            InfinitePosts(imageSize: imageSize)
+            InfinitePosts(screenWidth: screenWidth)
         }
     }
     
@@ -102,21 +102,18 @@ struct HomeViewV2: View {
         
     }
     
-    @ViewBuilder func InfinitePosts(imageSize: CGFloat) -> some View {
+    @ViewBuilder func InfinitePosts(screenWidth: CGFloat) -> some View {
         //TODO: Use real posts
-        LazyVStack(spacing: 16) {
-            ForEach(1..<12, id: \.self) { index in
-                FeedItemView(
-                    feedItem: .init(
-                        id: "\(index)",
-                        userId: FeedItem.sample.userId,
-                        imageUrls: FeedItem.sample.imageUrls,
-                        category: FeedItem.sample.category,
-                        title: FeedItem.sample.title,
-                        summary: FeedItem.sample.summary
-                    ),
-                    imageSize: imageSize - (2 * itemHorizontalPadding)
-                )
+        LazyVStack {
+            ForEach(FeedItem.samples) { feedItem in
+                NavigationLink {
+                    Text("Hello")
+                } label: {
+                    FeedItemView(
+                        feedItem: feedItem,
+                        itemWidth: screenWidth - (2 * itemHorizontalPadding)
+                    )
+                }
                 .padding(.horizontal, itemHorizontalPadding)
             }
         }
