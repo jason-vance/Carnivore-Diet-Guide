@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreateMenu: View {
     
-    private let actionButtonSize: CGFloat = 64
+    private let actionButtonSize: CGFloat = 56
     
     @State var showCreateOptions: Bool = false
     
@@ -130,6 +130,7 @@ struct CreateMenu: View {
                 .fill(Color.accent)
         }
         .padding(.horizontal)
+        .frame(height: actionButtonSize)
     }
 }
 

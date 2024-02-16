@@ -10,7 +10,6 @@ import SwinjectAutoregistration
 
 struct HomeViewV2: View {
     
-    @State var searchText: String = ""
     @State var showUserProfile: Bool = false
     
     var body: some View {
@@ -84,6 +83,7 @@ struct HomeViewV2: View {
         Button {
             showUserProfile = true
         } label: {
+            //TODO: Use a real profileImageUrl
             ProfileImageView(UserData.sample.profileImageUrl, size: 32, padding: 2)
         }
     }
