@@ -25,10 +25,9 @@ struct CreateMenu: View {
             VStack(alignment: .trailing) {
                 if showCreateOptions {
                     Group {
-//                        PostToFeedButton()
-                        AskQuestionButton()
                         WriteArticleButton()
                         CreateRecipeButton()
+                        StartDiscussionButton()
                     }
                     .transition(.asymmetric(
                         insertion: .push(from: .trailing),
@@ -76,17 +75,6 @@ struct CreateMenu: View {
         .rotationEffect(showCreateOptions ? .degrees(135) : .zero)
     }
     
-    @ViewBuilder func PostToFeedButton() -> some View {
-        Button {
-            //TODO: Add ability to post to feed
-        } label: {
-            ActionButtonLabel(
-                String(localized: "Post to Feed"),
-                imageName: "paperplane.fill"
-            )
-        }
-    }
-    
     @ViewBuilder func CreateRecipeButton() -> some View {
         Button {
             //TODO: Add ability to create a recipe
@@ -109,13 +97,13 @@ struct CreateMenu: View {
         }
     }
     
-    @ViewBuilder func AskQuestionButton() -> some View {
+    @ViewBuilder func StartDiscussionButton() -> some View {
         Button {
-            //TODO: Add ability to ask a question
+            //TODO: Add ability to start a discussion
         } label: {
             ActionButtonLabel(
-                String(localized: "Ask a Question"),
-                imageName: "questionmark"
+                String(localized: "Start a Disussion"),
+                imageName: "bubble.left.and.text.bubble.right.fill"
             )
         }
     }
