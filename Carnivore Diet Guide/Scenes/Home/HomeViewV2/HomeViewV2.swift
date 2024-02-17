@@ -10,8 +10,9 @@ import SwinjectAutoregistration
 
 struct HomeViewV2: View {
     
-    let itemHorizontalPadding: CGFloat = 8
+    private let itemHorizontalPadding: CGFloat = 8
     
+    @StateObject private var model = HomeViewModelV2()
     @State var showUserProfile: Bool = false
     
     var body: some View {
@@ -87,8 +88,11 @@ struct HomeViewV2: View {
         Button {
             showUserProfile = true
         } label: {
-            //TODO: Use a real profileImageUrl
-            ProfileImageView(UserData.sample.profileImageUrl, size: 32, padding: 2)
+            ProfileImageView(
+                model.userProfileImageUrl,
+                size: 32,
+                padding: 2
+            )
         }
     }
     
