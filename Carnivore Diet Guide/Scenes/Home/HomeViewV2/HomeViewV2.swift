@@ -45,6 +45,7 @@ struct HomeViewV2: View {
                 UserProfileView(userId: userId)
             }
         }
+        .alert(model.alertMessage, isPresented: $model.showAlert) {}
     }
     
     @ViewBuilder func TitleBar() -> some View {
@@ -107,9 +108,8 @@ struct HomeViewV2: View {
     }
     
     @ViewBuilder func InfinitePosts(screenWidth: CGFloat) -> some View {
-        //TODO: Use real posts
         LazyVStack {
-            ForEach(FeedItem.samples) { feedItem in
+            ForEach(model.feedItems) { feedItem in
                 NavigationLink {
                     Text("Hello")
                 } label: {
@@ -120,12 +120,27 @@ struct HomeViewV2: View {
                 }
                 .padding(.horizontal, itemHorizontalPadding)
             }
+            LoadNextFeedItemsView()
         }
         .overlay(alignment: .bottom) {
-            Image(systemName: "flag.checkered.2.crossed")
-                .font(.system(size: 22))
-                .foregroundStyle(Color.text)
-                .offset(y: 150)
+            if !model.canFetchMoreFeedItems {
+                Image(systemName: "flag.checkered.2.crossed")
+                    .font(.system(size: 22))
+                    .foregroundStyle(Color.text)
+                    .offset(y: 150)
+            }
+        }
+    }
+    
+    @ViewBuilder func LoadNextFeedItemsView() -> some View {
+        if model.canFetchMoreFeedItems {
+            ProgressView()
+                .progressViewStyle(.circular)
+                .tint(Color.accent)
+                .onAppear {
+                    model.fetchMoreFeedItems()
+                }
+                .padding(.vertical, 64)
         }
     }
 }

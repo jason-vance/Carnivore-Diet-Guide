@@ -82,6 +82,8 @@
 		567E87F62B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567E87F52B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift */; };
 		567E87F82B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567E87F72B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModelV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModelV2.swift */; };
+		56A6D0CC2B80A7DD003B27E5 /* FeedItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedItemProvider.swift */; };
+		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
 		56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A062B6C4DEC00C4C0DB /* SignInView.swift */; };
 		56B88A092B6C4E6E00C4C0DB /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A082B6C4E6E00C4C0DB /* BundleExtensions.swift */; };
 		56B88A0C2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A0B2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift */; };
@@ -269,6 +271,8 @@
 		567E87F52B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeLibraryContentProvider.swift; sourceTree = "<group>"; };
 		567E87F72B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRecipeLibraryContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModelV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelV2.swift; sourceTree = "<group>"; };
+		56A6D0CB2B80A7DD003B27E5 /* FeedItemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemProvider.swift; sourceTree = "<group>"; };
+		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
 		56B88A062B6C4DEC00C4C0DB /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		56B88A082B6C4E6E00C4C0DB /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
 		56B88A0B2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAuthenticationProvider.swift; sourceTree = "<group>"; };
@@ -714,6 +718,8 @@
 				56554F892B6053A00070C079 /* HomeViewContentProvider.swift */,
 				56025D1C2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift */,
 				563BC7092B7B39E9008F3C50 /* TrendingRecipeFetcher.swift */,
+				56A6D0CB2B80A7DD003B27E5 /* FeedItemProvider.swift */,
+				56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */,
 			);
 			path = ContentProvider;
 			sourceTree = "<group>";
@@ -1237,6 +1243,7 @@
 				56554F8A2B6053A00070C079 /* HomeViewContentProvider.swift in Sources */,
 				563BC7362B7F506A008F3C50 /* FeedItemView.swift in Sources */,
 				5677542C2B70E55C0094EB8C /* CurrentUserDataProvider.swift in Sources */,
+				56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */,
 				5677542E2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift in Sources */,
 				56F2139B2B743A74009DB057 /* RecipeFavoriteCountProvider.swift in Sources */,
 				563BC7302B7E0785008F3C50 /* HomeViewV2.swift in Sources */,
@@ -1309,6 +1316,7 @@
 				563BC6E22B76F91D008F3C50 /* FirebaseCommentRepository.swift in Sources */,
 				56B88A5F2B6F335800C4C0DB /* FirestoreRecipeDoc.swift in Sources */,
 				5677543B2B71BC710094EB8C /* FeaturedContentItem.swift in Sources */,
+				56A6D0CC2B80A7DD003B27E5 /* FeedItemProvider.swift in Sources */,
 				56B88A642B6F896000C4C0DB /* ProfileImageUploader.swift in Sources */,
 				563BC7082B7B0166008F3C50 /* PopularResources.swift in Sources */,
 				563BC6FC2B7A0973008F3C50 /* UserFetcher.swift in Sources */,

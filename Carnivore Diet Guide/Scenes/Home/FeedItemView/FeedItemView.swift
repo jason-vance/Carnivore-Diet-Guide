@@ -49,7 +49,7 @@ struct FeedItemView: View {
                 .scaledToFill()
                 .frame(width: itemWidth, height: itemWidth)
         } else {
-            //TODO: Hanlde an array of FeedItem images
+            //TODO: Handle an array of FeedItem images
         }
     }
     
