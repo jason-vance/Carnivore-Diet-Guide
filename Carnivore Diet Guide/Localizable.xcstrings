@@ -113,6 +113,7 @@
       }
     },
     "%lld kcal" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1278,6 +1279,7 @@
       }
     },
     "Knowledge" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1561,6 +1563,7 @@
 
     },
     "Recipes" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1696,6 +1699,7 @@
 
     },
     "Serves %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

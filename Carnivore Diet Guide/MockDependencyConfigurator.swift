@@ -27,9 +27,6 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(PopularRecipeIdFetcher.self, initializer: MockRecipePopularityFetcher.init)
     iocContainer.autoregister(FeedItemProvider.self, initializer: DefaultFeedItemProvider.init)
     iocContainer.autoregister(FeedItemRepository.self, initializer: MockFeedItemRepository.init)
-
-    //Recipe Library
-    iocContainer.autoregister(RecipeLibraryContentProvider.self, initializer: MockRecipeLibraryContentProvider.init)
     
     //Recipe Detail
     iocContainer.autoregister(RecipeFavoriter.self, argument: Recipe.self, initializer: MockRecipeFavoriter.init)
@@ -37,9 +34,6 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(RecipeCommentCountProvider.self, argument: Recipe.self, initializer: MockRecipeCommentCountProvider.init)
     iocContainer.autoregister(RecipeViewActivityTracker.self, initializer: MockRecipeViewActivityTracker.init)
     iocContainer.autoregister(RecipeReporter.self, initializer: MockRecipeReporter.init)
-
-    //Knowledge Library
-    iocContainer.autoregister(KnowledgeLibraryContentProvider.self, initializer: MockKnowledgeLibraryContentProvider.init)
     
     //User Profile
     iocContainer.autoregister(UserProfileSignOutService.self, initializer: MockUserProfileSignOutService.init)
