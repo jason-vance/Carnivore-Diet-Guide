@@ -2,261 +2,153 @@
 //  HomeView.swift
 //  Carnivore Diet Guide
 //
-//  Created by Jason Vance on 1/2/24.
+//  Created by Jason Vance on 2/14/24.
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct HomeView: View {
     
-    @Binding var selectedTab: ContentView.Tab
+    private let itemHorizontalPadding: CGFloat = 8
     
-    @StateObject var model = HomeViewModel()
+    @StateObject private var model = HomeViewModel()
+    @State var showUserProfile: Bool = false
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                TitleBarAndHeroImage()
-                ContentView()
-                    .background(Color.background)
-                    .clipShape(.rect(topLeadingRadius: Corners.radius, topTrailingRadius: Corners.radius))
+            GeometryReader { proxy in
+                VStack(spacing: 0) {
+                    TitleBar()
+                    ScrollView {
+                        HomeContent(screenWidth: proxy.size.width)
+                            .padding(.vertical)
+                    }
+                    .scrollIndicators(.hidden)
+                    .overlay(alignment: .top) {
+                        LinearGradient(
+                            colors: [Color.background, Color.clear],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                        .frame(height: 16)
+                    }
+                }
+                .background(Color.background)
             }
-            .background(Color.background)
+        }
+        .overlay {
+            CreateMenu()
+        }
+        .sheet(isPresented: $showUserProfile) {
+            if let userId = (iocContainer~>CurrentUserIdProvider.self).currentUserId {
+                UserProfileView(userId: userId)
+            }
         }
         .alert(model.alertMessage, isPresented: $model.showAlert) {}
-        .onAppear {
-            if model.content.isEmpty {
-                model.loadContent()
-            }
-        }
     }
     
-    @ViewBuilder func ContentView() -> some View {
-        if model.loadingState == .working {
-            LoadingView()
-        } else {
-            LoadedContentView()
-        }
-    }
-    
-    @ViewBuilder func LoadingView() -> some View {
-        ZStack {
-            ZStack {
-                ProgressView()
-                    .progressViewStyle(.circular)
-                    .tint(Color.accent)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
-    }
-    
-    @ViewBuilder func LoadedContentView() -> some View {
-        ScrollView {
-            VStack {
-                FeaturedContentView()
-                TrendingRecipesView()
-                TrendingPostsView()
-            }
-            .offset(y: model.listDidAppear ? 0 : 100)
-            .opacity(model.listDidAppear ? 1 : 0)
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now()) {
-                    withAnimation(.snappy) {
-                        model.listDidAppear = !model.content.isEmpty
-                    }
-                }
-            }
-        }
-        .refreshable {
-            model.loadContent()
-        }
-    }
-    
-    @ViewBuilder func FeaturedContentView() -> some View {
-        VStack(spacing: 0) {
-            SectionTitleView(
-                String(localized: "Recommended For You"),
-                theme: .light
-            )
-            .padding(.top)
-            .padding(.horizontal)
-            ScrollView(.horizontal) {
-                HStack(spacing: 16) {
-                    ForEach(model.content.featuredContent) { featuredItem in
-                        NavigationLink {
-                            FeaturedContentDetailView(featuredItem)
-                        } label: {
-                            FeaturedContentThumbnail(item: featuredItem)
-                        }
-                    }
-                }
-                .padding()
-            }
-            .scrollIndicators(.hidden)
-        }
-        .padding(.bottom)
-    }
-    
-    @ViewBuilder func FeaturedContentDetailView(_ featuredItem: FeaturedContentItem) -> some View {
-        switch featuredItem.type {
-        case .none:
-            Text("")
-        case .recipe(let recipe):
-            RecipeDetailView(recipe: recipe)
-        case .post(let post):
-            PostDetailView(post: post)
-        }
-    }
-    
-    @ViewBuilder func TrendingRecipesView() -> some View {
-        VStack(spacing: 0) {
-            SectionTitleView(
-                String(localized: "Trending Recipes"),
-                theme: .dark,
-                viewAllAction: { selectedTab = .recipes }
-            )
-            .padding(.top)
-            .padding(.horizontal)
-            ScrollView(.horizontal) {
-                HStack(spacing: 16) {
-                    ForEach(model.content.trendingRecipes) { recipe in
-                        NavigationLink {
-                            RecipeDetailView(recipe: recipe)
-                        } label: {
-                            HomeRecipeThumbnail(
-                                title: recipe.title,
-                                imageUrl: recipe.imageUrl,
-                                imageName: recipe.imageName
-                            )
-                        }
-                    }
-                }
-                .padding()
-            }
-        }
-        .scrollIndicators(.hidden)
-        .padding(.bottom)
-        .background(Color.text)
-        .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
-    }
-    
-    @ViewBuilder func TrendingPostsView() -> some View {
-        VStack {
-            SectionTitleView(
-                String(localized: "Trending Posts"),
-                theme: .light,
-                viewAllAction: { selectedTab = .post }
-            )
-            .padding(.top)
-            .padding(.horizontal)
-            ScrollView(.horizontal) {
-                HStack(spacing: 16) {
-                    ForEach(model.content.trendingPosts) { post in
-                        NavigationLink {
-                            PostDetailView(post: post)
-                        } label: {
-                            HomePostThumbnail(
-                                title: post.title,
-                                imageUrl: post.imageUrl,
-                                imageName: post.imageName
-                            )
-                        }
-                    }
-                }
-                .padding()
-            }
-        }
-        .scrollIndicators(.hidden)
-        .padding(.bottom)
-    }
-    
-    @ViewBuilder func SectionTitleView(
-        _ text: String,
-        theme: UIUserInterfaceStyle,
-        viewAllAction: (() -> ())? = nil
-    ) -> some View {
+    @ViewBuilder func TitleBar() -> some View {
         HStack {
-            Text(text)
-                .font(.system(size: 24, weight: .bold))
-                .foregroundStyle(theme == .light ? Color.text : Color.background)
+            TitleText()
             Spacer()
-            if let viewAllAction = viewAllAction {
-                ViewAllButton(theme: theme) {
-                    viewAllAction()
+        }
+        .overlay(alignment: .trailing) {
+            HStack {
+                SearchButton()
+                ProfileButton()
+            }
+            .padding(.trailing)
+        }
+    }
+    
+    @ViewBuilder func TitleText() -> some View {
+        Text(Bundle.main.bundleName ?? "")
+            .font(.system(size: 18, weight: .bold))
+            .foregroundStyle(Color.text)
+            .padding()
+    }
+    
+    @ViewBuilder func SearchButton() -> some View {
+        Button {
+            //TODO: Add ability to search
+        } label: {
+            Image(systemName: "magnifyingglass.circle.fill")
+                .resizable()
+                .foregroundStyle(Color.background)
+                .padding(2)
+                .background {
+                    Circle()
+                        .fill(Color.accentColor)
                 }
+                .frame(width: 32, height: 32)
+        }
+    }
+    
+    @ViewBuilder func ProfileButton() -> some View {
+        Button {
+            showUserProfile = true
+        } label: {
+            ProfileImageView(
+                model.userProfileImageUrl,
+                size: 32,
+                padding: 2
+            )
+        }
+    }
+    
+    @ViewBuilder func HomeContent(screenWidth: CGFloat) -> some View {
+        VStack {
+            InfinitePosts(screenWidth: screenWidth)
+        }
+    }
+    
+    @ViewBuilder func FeaturedContent() -> some View {
+        
+    }
+    
+    @ViewBuilder func InfinitePosts(screenWidth: CGFloat) -> some View {
+        LazyVStack {
+            ForEach(model.feedItems) { feedItem in
+                NavigationLink {
+                    Text("Hello")
+                } label: {
+                    FeedItemView(
+                        feedItem: feedItem,
+                        itemWidth: screenWidth - (2 * itemHorizontalPadding)
+                    )
+                }
+                .padding(.horizontal, itemHorizontalPadding)
+            }
+            LoadNextFeedItemsView()
+        }
+        .overlay(alignment: .bottom) {
+            if !model.canFetchMoreFeedItems {
+                Image(systemName: "flag.checkered.2.crossed")
+                    .font(.system(size: 22))
+                    .foregroundStyle(Color.text)
+                    .offset(y: 150)
             }
         }
     }
     
-    @ViewBuilder func ViewAllButton(
-        theme: UIUserInterfaceStyle,
-        _ action: @escaping () -> ()
-    ) -> some View {
-        Button {
-            action()
-        } label: {
-            Text("View All")
-                .font(.system(size: 12, weight: .bold))
-                .foregroundStyle(theme == .light ? Color.accentText : Color.darkAccentText)
+    @ViewBuilder func LoadNextFeedItemsView() -> some View {
+        if model.canFetchMoreFeedItems {
+            ProgressView()
+                .progressViewStyle(.circular)
+                .tint(Color.accent)
+                .onAppear {
+                    model.fetchMoreFeedItems()
+                }
+                .padding(.vertical, 64)
         }
-    }
-    
-    @ViewBuilder func TitleBarAndHeroImage() -> some View {
-        VStack(spacing: 0) {
-            Rectangle()
-                .foregroundStyle(Color.accent)
-                .frame(height: 48)
-            HeroImage()
-        }
-        .overlay(alignment: .top) {
-            TitleView()
-        }
-        .background(Color.accent)
-    }
-    
-    @ViewBuilder func TitleView() -> some View {
-        VStack(spacing: 0) {
-            Text("Carnivore", comment: "First line of the app name on the home screen. ie\n\"Carnivore\nDiet Guide\"")
-                .font(.system(size: 48, weight: .black))
-            Text("Diet Guide", comment: "Second line of the app name on the home screen. ie\n\"Carnivore\nDiet Guide\"")
-                .font(.system(size: 40, weight: .black))
-                .offset(y: -12)
-        }
-        .foregroundStyle(Color.background)
-        .shadow(color: .text, radius: 10, x: 0, y: 4)
-        .shadow(color: .text, radius: 10, x: 0, y: 4)
-        .frame(maxWidth: .infinity)
-    }
-    
-    @ViewBuilder func HeroImage() -> some View {
-        Image("HomeHero")
-            .resizable()
-            .aspectRatio(contentMode: .fill)
-            .frame(height: 200)
-            .clipped()
-            .offset(y: 16)
-            .zIndex(-1)
     }
 }
 
-#Preview("No Errors") {
+#Preview {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        HomeView(selectedTab: .constant(.home))
-    }
-}
-
-#Preview("Loading Error") {
-    PreviewContainerWithSetup {
-        setupMockIocContainer(iocContainer)
-        
-        iocContainer.autoregister(HomeViewContentProvider.self) {
-            let mock = MockHomeViewContentProvider()
-            mock.errorToThrow = "Didn't work"
-            return mock
-        }
-    } content: {
-        HomeView(selectedTab: .constant(.home))
+        HomeView()
     }
 }

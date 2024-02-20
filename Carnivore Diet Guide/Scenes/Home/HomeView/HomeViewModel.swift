@@ -2,7 +2,7 @@
 //  HomeViewModel.swift
 //  Carnivore Diet Guide
 //
-//  Created by Jason Vance on 2/14/24.
+//  Created by Jason Vance on 2/16/24.
 //
 
 import Foundation
@@ -11,34 +11,44 @@ import SwinjectAutoregistration
 @MainActor
 class HomeViewModel: ObservableObject {
     
-    enum LoadingState {
-        case idle
-        case working
-    }
+    @Published var userProfileImageUrl: URL?
+    @Published var feedItems: [FeedItem] = []
+    @Published var canFetchMoreFeedItems: Bool = true
     
-    private let contentProvider = iocContainer~>HomeViewContentProvider.self
-    
-    @Published var loadingState: LoadingState = .idle
-    @Published var content: HomeViewContent = .empty
-    @Published var listDidAppear: Bool = false
     @Published var showAlert: Bool = false
     @Published var alertMessage: String = ""
     
-    func loadContent() {
-        Task {
-            loadingState = .working
-            listDidAppear = false
-            do {
-                content = try await contentProvider.loadContent()
-            } catch {
-                show(alertMessage: "Unable to load: \(error.localizedDescription)")
-            }
-            loadingState = .idle
-        }
+    private let userDataProvider = iocContainer~>CurrentUserDataProvider.self
+    private let feedItemProvider = iocContainer~>FeedItemProvider.self
+    
+    init() {
+        fetchCurrentUserData()
     }
     
     private func show(alertMessage: String) {
         showAlert = true
         self.alertMessage = alertMessage
+    }
+    
+    private func fetchCurrentUserData() {
+        Task {
+            let userData = try? await userDataProvider.fetchCurrentUserData()
+            userProfileImageUrl = userData?.profileImageUrl
+        }
+    }
+    
+    func fetchMoreFeedItems() {
+        Task {
+            do {
+                let newFeedItems = try await feedItemProvider.fetchNextFeedItems()
+                feedItems.append(contentsOf: newFeedItems)
+                
+                if newFeedItems.isEmpty {
+                    canFetchMoreFeedItems = false
+                }
+            } catch {
+                show(alertMessage: "Could not retrieve next feed items: \(error.localizedDescription)")
+            }
+        }
     }
 }

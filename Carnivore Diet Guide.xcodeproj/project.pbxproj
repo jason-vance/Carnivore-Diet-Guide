@@ -7,13 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		56025D1B2B6AED1900F31A07 /* HomeViewContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D1A2B6AED1900F31A07 /* HomeViewContent.swift */; };
-		56025D1D2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D1C2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift */; };
 		56025D202B6B006600F31A07 /* FirebaseRecipeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D1F2B6B006600F31A07 /* FirebaseRecipeRepository.swift */; };
 		56025D222B6B01E800F31A07 /* FirebasePostRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D212B6B01E800F31A07 /* FirebasePostRepository.swift */; };
 		56025D262B6B04AB00F31A07 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D252B6B04AB00F31A07 /* StringExtensions.swift */; };
 		56025D292B6B8CD000F31A07 /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D282B6B8CD000F31A07 /* UI.swift */; };
-		562E03E72B450AA000859F81 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 562E03E62B450AA000859F81 /* HomeView.swift */; };
 		56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */; };
 		56353B582B440C9900C4E972 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56353B572B440C9900C4E972 /* ContentView.swift */; };
 		56353B5A2B440C9B00C4E972 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56353B592B440C9B00C4E972 /* Assets.xcassets */; };
@@ -42,10 +39,9 @@
 		563BC7032B7AF8D3008F3C50 /* DefaultRecipeCommentCountProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7022B7AF8D3008F3C50 /* DefaultRecipeCommentCountProvider.swift */; };
 		563BC7052B7AF93C008F3C50 /* RecipeCommentsRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7042B7AF93C008F3C50 /* RecipeCommentsRepo.swift */; };
 		563BC7082B7B0166008F3C50 /* PopularResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7072B7B0166008F3C50 /* PopularResources.swift */; };
-		563BC70A2B7B39E9008F3C50 /* TrendingRecipeFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7092B7B39E9008F3C50 /* TrendingRecipeFetcher.swift */; };
 		563BC70E2B7B65D1008F3C50 /* PopularResourcesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC70D2B7B65D1008F3C50 /* PopularResourcesTests.swift */; };
 		563BC70F2B7B65D9008F3C50 /* PopularResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7072B7B0166008F3C50 /* PopularResources.swift */; };
-		563BC7112B7B6DEB008F3C50 /* RecipePopularityFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7102B7B6DEB008F3C50 /* RecipePopularityFetcher.swift */; };
+		563BC7112B7B6DEB008F3C50 /* PopularRecipeIdFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7102B7B6DEB008F3C50 /* PopularRecipeIdFetcher.swift */; };
 		563BC7132B7B6EED008F3C50 /* RecipeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7122B7B6EED008F3C50 /* RecipeRepository.swift */; };
 		563BC7152B7C4C63008F3C50 /* CommentDeleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7142B7C4C63008F3C50 /* CommentDeleter.swift */; };
 		563BC7182B7CB67F008F3C50 /* CookTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7172B7CB67F008F3C50 /* CookTimeFormatter.swift */; };
@@ -58,18 +54,13 @@
 		563BC7262B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7252B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift */; };
 		563BC7282B7D914D008F3C50 /* RecipeCommentActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7272B7D914D008F3C50 /* RecipeCommentActivityTracker.swift */; };
 		563BC72A2B7D93FB008F3C50 /* RecipeReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7292B7D93FB008F3C50 /* RecipeReporter.swift */; };
-		563BC72E2B7D9E67008F3C50 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC72D2B7D9E67008F3C50 /* HomeViewModel.swift */; };
-		563BC7302B7E0785008F3C50 /* HomeViewV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC72F2B7E0785008F3C50 /* HomeViewV2.swift */; };
+		563BC7302B7E0785008F3C50 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC72F2B7E0785008F3C50 /* HomeView.swift */; };
 		563BC7332B7E105C008F3C50 /* CreateMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7322B7E105C008F3C50 /* CreateMenu.swift */; };
 		563BC7362B7F506A008F3C50 /* FeedItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7352B7F506A008F3C50 /* FeedItemView.swift */; };
 		563BC7382B7F50E4008F3C50 /* FeedItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7372B7F50E4008F3C50 /* FeedItemViewModel.swift */; };
 		563BC73B2B7F51E3008F3C50 /* ByLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC73A2B7F51E3008F3C50 /* ByLineView.swift */; };
 		563BC73D2B7F5233008F3C50 /* ByLineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC73C2B7F5233008F3C50 /* ByLineViewModel.swift */; };
 		563BC73F2B7F53D7008F3C50 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC73E2B7F53D7008F3C50 /* FeedItem.swift */; };
-		56554F8A2B6053A00070C079 /* HomeViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56554F892B6053A00070C079 /* HomeViewContentProvider.swift */; };
-		566B2D642B4694C6008627F8 /* FeaturedContentThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */; };
-		566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */; };
-		566B2D682B469A35008627F8 /* HomePostThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 566B2D672B469A35008627F8 /* HomePostThumbnail.swift */; };
 		5676A1362B477933009C1DA6 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5676A1352B477933009C1DA6 /* Recipe.swift */; };
 		5677542C2B70E55C0094EB8C /* CurrentUserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5677542B2B70E55C0094EB8C /* CurrentUserDataProvider.swift */; };
 		5677542E2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5677542D2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift */; };
@@ -78,10 +69,9 @@
 		567754352B717B420094EB8C /* ProfileControlLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567754342B717B420094EB8C /* ProfileControlLabel.swift */; };
 		567754372B7184640094EB8C /* UserAccountDeleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567754362B7184640094EB8C /* UserAccountDeleter.swift */; };
 		567754392B7194900094EB8C /* FirebaseUserAccountDeleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567754382B7194900094EB8C /* FirebaseUserAccountDeleter.swift */; };
-		5677543B2B71BC710094EB8C /* FeaturedContentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5677543A2B71BC710094EB8C /* FeaturedContentItem.swift */; };
 		567E87F62B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567E87F52B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift */; };
 		567E87F82B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567E87F72B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift */; };
-		56A6D0CA2B80A693003B27E5 /* HomeViewModelV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModelV2.swift */; };
+		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedItemProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
 		56A6D0D22B835593003B27E5 /* FirebaseFeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0D12B835593003B27E5 /* FirebaseFeedItemRepository.swift */; };
@@ -199,14 +189,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		56025D1A2B6AED1900F31A07 /* HomeViewContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewContent.swift; sourceTree = "<group>"; };
-		56025D1C2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseHomeViewContentProvider.swift; sourceTree = "<group>"; };
 		56025D1F2B6B006600F31A07 /* FirebaseRecipeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRecipeRepository.swift; sourceTree = "<group>"; };
 		56025D212B6B01E800F31A07 /* FirebasePostRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebasePostRepository.swift; sourceTree = "<group>"; };
 		56025D252B6B04AB00F31A07 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		56025D282B6B8CD000F31A07 /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
 		562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Carnivore-Diet-Guide-Info.plist"; sourceTree = SOURCE_ROOT; };
-		562E03E62B450AA000859F81 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		56353B522B440C9900C4E972 /* Carnivore Diet Guide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Carnivore Diet Guide.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carnivore_Diet_GuideApp.swift; sourceTree = "<group>"; };
 		56353B572B440C9900C4E972 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -236,9 +223,8 @@
 		563BC7022B7AF8D3008F3C50 /* DefaultRecipeCommentCountProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRecipeCommentCountProvider.swift; sourceTree = "<group>"; };
 		563BC7042B7AF93C008F3C50 /* RecipeCommentsRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCommentsRepo.swift; sourceTree = "<group>"; };
 		563BC7072B7B0166008F3C50 /* PopularResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularResources.swift; sourceTree = "<group>"; };
-		563BC7092B7B39E9008F3C50 /* TrendingRecipeFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendingRecipeFetcher.swift; sourceTree = "<group>"; };
 		563BC70D2B7B65D1008F3C50 /* PopularResourcesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularResourcesTests.swift; sourceTree = "<group>"; };
-		563BC7102B7B6DEB008F3C50 /* RecipePopularityFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePopularityFetcher.swift; sourceTree = "<group>"; };
+		563BC7102B7B6DEB008F3C50 /* PopularRecipeIdFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularRecipeIdFetcher.swift; sourceTree = "<group>"; };
 		563BC7122B7B6EED008F3C50 /* RecipeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeRepository.swift; sourceTree = "<group>"; };
 		563BC7142B7C4C63008F3C50 /* CommentDeleter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeleter.swift; sourceTree = "<group>"; };
 		563BC7172B7CB67F008F3C50 /* CookTimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookTimeFormatter.swift; sourceTree = "<group>"; };
@@ -249,18 +235,13 @@
 		563BC7252B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCommentActivityTracker.swift; sourceTree = "<group>"; };
 		563BC7272B7D914D008F3C50 /* RecipeCommentActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCommentActivityTracker.swift; sourceTree = "<group>"; };
 		563BC7292B7D93FB008F3C50 /* RecipeReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeReporter.swift; sourceTree = "<group>"; };
-		563BC72D2B7D9E67008F3C50 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		563BC72F2B7E0785008F3C50 /* HomeViewV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewV2.swift; sourceTree = "<group>"; };
+		563BC72F2B7E0785008F3C50 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		563BC7322B7E105C008F3C50 /* CreateMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMenu.swift; sourceTree = "<group>"; };
 		563BC7352B7F506A008F3C50 /* FeedItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemView.swift; sourceTree = "<group>"; };
 		563BC7372B7F50E4008F3C50 /* FeedItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemViewModel.swift; sourceTree = "<group>"; };
 		563BC73A2B7F51E3008F3C50 /* ByLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByLineView.swift; sourceTree = "<group>"; };
 		563BC73C2B7F5233008F3C50 /* ByLineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByLineViewModel.swift; sourceTree = "<group>"; };
 		563BC73E2B7F53D7008F3C50 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
-		56554F892B6053A00070C079 /* HomeViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewContentProvider.swift; sourceTree = "<group>"; };
-		566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedContentThumbnail.swift; sourceTree = "<group>"; };
-		566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecipeThumbnail.swift; sourceTree = "<group>"; };
-		566B2D672B469A35008627F8 /* HomePostThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostThumbnail.swift; sourceTree = "<group>"; };
 		5676A1352B477933009C1DA6 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		5677542B2B70E55C0094EB8C /* CurrentUserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserDataProvider.swift; sourceTree = "<group>"; };
 		5677542D2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCurrentUserDataProvider.swift; sourceTree = "<group>"; };
@@ -269,10 +250,9 @@
 		567754342B717B420094EB8C /* ProfileControlLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileControlLabel.swift; sourceTree = "<group>"; };
 		567754362B7184640094EB8C /* UserAccountDeleter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountDeleter.swift; sourceTree = "<group>"; };
 		567754382B7194900094EB8C /* FirebaseUserAccountDeleter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserAccountDeleter.swift; sourceTree = "<group>"; };
-		5677543A2B71BC710094EB8C /* FeaturedContentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedContentItem.swift; sourceTree = "<group>"; };
 		567E87F52B4FD94600E5EB97 /* RecipeLibraryContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeLibraryContentProvider.swift; sourceTree = "<group>"; };
 		567E87F72B4FD99100E5EB97 /* FirebaseRecipeLibraryContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRecipeLibraryContentProvider.swift; sourceTree = "<group>"; };
-		56A6D0C92B80A693003B27E5 /* HomeViewModelV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelV2.swift; sourceTree = "<group>"; };
+		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedItemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
 		56A6D0D12B835593003B27E5 /* FirebaseFeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFeedItemRepository.swift; sourceTree = "<group>"; };
@@ -456,9 +436,7 @@
 			isa = PBXGroup;
 			children = (
 				563BC7342B7F5059008F3C50 /* FeedItemView */,
-				563BC7312B7E1041008F3C50 /* HomeViewV2 */,
-				563BC72C2B7D9E53008F3C50 /* ThumbnailViews */,
-				563BC72B2B7D9E48008F3C50 /* HomeView */,
+				563BC7312B7E1041008F3C50 /* HomeView */,
 				56554F882B6053790070C079 /* ContentProvider */,
 			);
 			path = Home;
@@ -627,14 +605,6 @@
 			path = RecipeCommentCountProvider;
 			sourceTree = "<group>";
 		};
-		563BC7062B7B0123008F3C50 /* HomeContent */ = {
-			isa = PBXGroup;
-			children = (
-				56025D1A2B6AED1900F31A07 /* HomeViewContent.swift */,
-			);
-			path = HomeContent;
-			sourceTree = "<group>";
-		};
 		563BC70C2B7B65C2008F3C50 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -668,34 +638,14 @@
 			path = ReportedItems;
 			sourceTree = "<group>";
 		};
-		563BC72B2B7D9E48008F3C50 /* HomeView */ = {
+		563BC7312B7E1041008F3C50 /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
-				562E03E62B450AA000859F81 /* HomeView.swift */,
-				563BC72D2B7D9E67008F3C50 /* HomeViewModel.swift */,
-			);
-			path = HomeView;
-			sourceTree = "<group>";
-		};
-		563BC72C2B7D9E53008F3C50 /* ThumbnailViews */ = {
-			isa = PBXGroup;
-			children = (
-				566B2D632B4694C6008627F8 /* FeaturedContentThumbnail.swift */,
-				566B2D652B4698A7008627F8 /* HomeRecipeThumbnail.swift */,
-				566B2D672B469A35008627F8 /* HomePostThumbnail.swift */,
-				5677543A2B71BC710094EB8C /* FeaturedContentItem.swift */,
-			);
-			path = ThumbnailViews;
-			sourceTree = "<group>";
-		};
-		563BC7312B7E1041008F3C50 /* HomeViewV2 */ = {
-			isa = PBXGroup;
-			children = (
-				563BC72F2B7E0785008F3C50 /* HomeViewV2.swift */,
-				56A6D0C92B80A693003B27E5 /* HomeViewModelV2.swift */,
+				563BC72F2B7E0785008F3C50 /* HomeView.swift */,
+				56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */,
 				563BC7322B7E105C008F3C50 /* CreateMenu.swift */,
 			);
-			path = HomeViewV2;
+			path = HomeView;
 			sourceTree = "<group>";
 		};
 		563BC7342B7F5059008F3C50 /* FeedItemView */ = {
@@ -720,9 +670,6 @@
 		56554F882B6053790070C079 /* ContentProvider */ = {
 			isa = PBXGroup;
 			children = (
-				56554F892B6053A00070C079 /* HomeViewContentProvider.swift */,
-				56025D1C2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift */,
-				563BC7092B7B39E9008F3C50 /* TrendingRecipeFetcher.swift */,
 				56A6D0CB2B80A7DD003B27E5 /* FeedItemProvider.swift */,
 				56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */,
 			);
@@ -948,7 +895,6 @@
 		56B88A702B70DC8000C4C0DB /* Workers */ = {
 			isa = PBXGroup;
 			children = (
-				563BC7062B7B0123008F3C50 /* HomeContent */,
 				56F2138D2B742665009DB057 /* Recipes */,
 				5677542A2B70E5500094EB8C /* Users */,
 				563BC7252B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift */,
@@ -1038,7 +984,7 @@
 				563BC6FD2B7AF4E8008F3C50 /* RecipeViewActivityTracker.swift */,
 				563BC7272B7D914D008F3C50 /* RecipeCommentActivityTracker.swift */,
 				563BC7042B7AF93C008F3C50 /* RecipeCommentsRepo.swift */,
-				563BC7102B7B6DEB008F3C50 /* RecipePopularityFetcher.swift */,
+				563BC7102B7B6DEB008F3C50 /* PopularRecipeIdFetcher.swift */,
 				563BC7122B7B6EED008F3C50 /* RecipeRepository.swift */,
 			);
 			path = Recipes;
@@ -1230,8 +1176,7 @@
 				56B88A572B6F27DE00C4C0DB /* UserOnboardingState.swift in Sources */,
 				56B88A232B6CE7E500C4C0DB /* ImagePickerView.swift in Sources */,
 				563BC6C22B74453C008F3C50 /* RecipeDetailMetadataView.swift in Sources */,
-				563BC7112B7B6DEB008F3C50 /* RecipePopularityFetcher.swift in Sources */,
-				566B2D682B469A35008627F8 /* HomePostThumbnail.swift in Sources */,
+				563BC7112B7B6DEB008F3C50 /* PopularRecipeIdFetcher.swift in Sources */,
 				56B88A1C2B6C650600C4C0DB /* UserProfileView.swift in Sources */,
 				56B88A302B6CEA7000C4C0DB /* PersonName.swift in Sources */,
 				563BC6D22B75EDF6008F3C50 /* CommentSectionViewModel.swift in Sources */,
@@ -1247,21 +1192,18 @@
 				56F213882B737159009DB057 /* RecipeFavoriter.swift in Sources */,
 				56E3050E2B4B6B060098079A /* LibraryRecipeThumbnail.swift in Sources */,
 				567754352B717B420094EB8C /* ProfileControlLabel.swift in Sources */,
-				566B2D662B4698A7008627F8 /* HomeRecipeThumbnail.swift in Sources */,
 				56F2139D2B743B37009DB057 /* DefaultRecipeFavoriteCountProvider.swift in Sources */,
 				56B88A5C2B6F311A00C4C0DB /* FirestoreUserDoc.swift in Sources */,
 				563BC7152B7C4C63008F3C50 /* CommentDeleter.swift in Sources */,
 				56B88A142B6C557B00C4C0DB /* ViewExtensions.swift in Sources */,
 				563BC6D92B75F0E1008F3C50 /* CommentView.swift in Sources */,
 				563BC6DB2B75F0F1008F3C50 /* CommentViewModel.swift in Sources */,
-				56554F8A2B6053A00070C079 /* HomeViewContentProvider.swift in Sources */,
 				563BC7362B7F506A008F3C50 /* FeedItemView.swift in Sources */,
 				5677542C2B70E55C0094EB8C /* CurrentUserDataProvider.swift in Sources */,
 				56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */,
 				5677542E2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift in Sources */,
 				56F2139B2B743A74009DB057 /* RecipeFavoriteCountProvider.swift in Sources */,
-				563BC7302B7E0785008F3C50 /* HomeViewV2.swift in Sources */,
-				56025D1B2B6AED1900F31A07 /* HomeViewContent.swift in Sources */,
+				563BC7302B7E0785008F3C50 /* HomeView.swift in Sources */,
 				56B88A3D2B6CF0B800C4C0DB /* ProfileFormNameField.swift in Sources */,
 				56E305072B4A982E0098079A /* Post.swift in Sources */,
 				56B88A6C2B70D51D00C4C0DB /* UserDataSaver.swift in Sources */,
@@ -1273,9 +1215,6 @@
 				567754392B7194900094EB8C /* FirebaseUserAccountDeleter.swift in Sources */,
 				56B88A402B6CF0F100C4C0DB /* FormTextField.swift in Sources */,
 				56B88A472B6CF53A00C4C0DB /* EditUserProfileView.swift in Sources */,
-				566B2D642B4694C6008627F8 /* FeaturedContentThumbnail.swift in Sources */,
-				56025D1D2B6AEEDC00F31A07 /* FirebaseHomeViewContentProvider.swift in Sources */,
-				562E03E72B450AA000859F81 /* HomeView.swift in Sources */,
 				567754372B7184640094EB8C /* UserAccountDeleter.swift in Sources */,
 				567754332B717AAA0094EB8C /* SettingsView.swift in Sources */,
 				563BC6CD2B744C5D008F3C50 /* CollectionReferenceExtensions.swift in Sources */,
@@ -1289,7 +1228,6 @@
 				56B88A422B6CF10700C4C0DB /* FormFieldOverlay.swift in Sources */,
 				563BC7282B7D914D008F3C50 /* RecipeCommentActivityTracker.swift in Sources */,
 				56A6D0D22B835593003B27E5 /* FirebaseFeedItemRepository.swift in Sources */,
-				563BC70A2B7B39E9008F3C50 /* TrendingRecipeFetcher.swift in Sources */,
 				56F2138F2B7426A6009DB057 /* RecipeFavoritersRepo.swift in Sources */,
 				56353B582B440C9900C4E972 /* ContentView.swift in Sources */,
 				56B88A102B6C50AE00C4C0DB /* UserAuthState.swift in Sources */,
@@ -1330,7 +1268,6 @@
 				56F213912B74293F009DB057 /* FirestoreRecipeFavoriterDoc.swift in Sources */,
 				563BC6E22B76F91D008F3C50 /* FirebaseCommentRepository.swift in Sources */,
 				56B88A5F2B6F335800C4C0DB /* FirestoreRecipeDoc.swift in Sources */,
-				5677543B2B71BC710094EB8C /* FeaturedContentItem.swift in Sources */,
 				56A6D0CC2B80A7DD003B27E5 /* FeedItemProvider.swift in Sources */,
 				56B88A642B6F896000C4C0DB /* ProfileImageUploader.swift in Sources */,
 				563BC7082B7B0166008F3C50 /* PopularResources.swift in Sources */,
@@ -1340,7 +1277,7 @@
 				563BC6C42B74456C008F3C50 /* RecipeDetailMetadataViewModel.swift in Sources */,
 				56F213992B7438BA009DB057 /* RecipeDetailViewModel.swift in Sources */,
 				56B88A6F2B70DB0600C4C0DB /* DefaultOnboardingStateProvider.swift in Sources */,
-				56A6D0CA2B80A693003B27E5 /* HomeViewModelV2.swift in Sources */,
+				56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */,
 				56025D202B6B006600F31A07 /* FirebaseRecipeRepository.swift in Sources */,
 				563BC73B2B7F51E3008F3C50 /* ByLineView.swift in Sources */,
 				56F2138C2B742652009DB057 /* FavoriteRecipeRepo.swift in Sources */,
@@ -1348,7 +1285,6 @@
 				56B88A162B6C5AA400C4C0DB /* ContentAuthenticationProvider.swift in Sources */,
 				56B88A622B6F346F00C4C0DB /* FirestorePostDoc.swift in Sources */,
 				563BC7222B7D6804008F3C50 /* FirebaseReportRepository.swift in Sources */,
-				563BC72E2B7D9E67008F3C50 /* HomeViewModel.swift in Sources */,
 				56E305052B4A55E00098079A /* PostDetailView.swift in Sources */,
 				563BC7032B7AF8D3008F3C50 /* DefaultRecipeCommentCountProvider.swift in Sources */,
 				563BC7262B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift in Sources */,

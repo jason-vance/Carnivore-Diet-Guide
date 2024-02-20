@@ -24,9 +24,7 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(SignInAuthenticationProvider.self, initializer: MockSignInAuthenticationProvider.init)
     
     //Home
-    iocContainer.autoregister(HomeViewContentProvider.self, initializer: MockHomeViewContentProvider.init)
-    iocContainer.autoregister(TrendingRecipeFetcher.self, initializer: DefaultTrendingRecipeFetcher.init)
-    iocContainer.autoregister(RecipePopularityFetcher.self, initializer: MockRecipePopularityFetcher.init)
+    iocContainer.autoregister(PopularRecipeIdFetcher.self, initializer: MockRecipePopularityFetcher.init)
     iocContainer.autoregister(FeedItemProvider.self, initializer: DefaultFeedItemProvider.init)
     iocContainer.autoregister(FeedItemRepository.self, initializer: MockFeedItemRepository.init)
 

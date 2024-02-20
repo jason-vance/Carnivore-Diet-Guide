@@ -56,24 +56,31 @@ extension FirebaseRecipeActivityRepository: RecipeViewActivityTracker {
     }
 }
 
-extension FirebaseRecipeActivityRepository: RecipePopularityFetcher {
+extension FirebaseRecipeActivityRepository: PopularRecipeIdFetcher {
     
     //TODO: Cache the results of this
-    func getPopularRecipes(since date: Date) async throws -> PopularResources {
-        let query = try await activityCollection
+    func getPopularRecipeIds(since date: Date, limit: Int) async throws -> [String] {
+        let recipeActivityCounts = try await getRecipeActivityEventCounts(since: date)
+        return recipeActivityCounts
+            .sorted { $0.value > $1.value }
+            .map { $0.key }
+    }
+    
+    private func getRecipeActivityEventCounts(since date: Date) async throws -> [String:Int] {
+        let docs = try await activityCollection
             .whereField(FirestoreRecipeActivityDoc.CodingKeys.date.rawValue, isGreaterThanOrEqualTo: date)
             .getDocuments()
+            .documents
+            .compactMap { try? $0.data(as: FirestoreRecipeActivityDoc.self) }
         
-        let docs = query.documents.compactMap { try? $0.data(as: FirestoreRecipeActivityDoc.self) }
-        
-        var trending = PopularResources()
+        var recipeActivityCounts: [String:Int] = [:]
         
         docs.forEach { doc in
             guard let recipeId = doc.recipeId else { return }
-            trending.add(resourceId: recipeId)
+            recipeActivityCounts[recipeId] = (recipeActivityCounts[recipeId] ?? 0) + 1
         }
         
-        return trending
+        return recipeActivityCounts
     }
 }
 

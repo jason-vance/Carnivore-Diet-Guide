@@ -51,54 +51,7 @@ struct ContentView: View {
     }
     
     @ViewBuilder func LoggedInView() -> some View {
-        TabView(selection: $selectedTab) {
-            HomeTab()
-            RecipesTab()
-            KnowledgeTab()
-            UserProfileTab()
-        }
-        .sheet(isPresented: $isOnboardingRequired) {
-            EditUserProfileView(userId: currentUserId, dismissable: false)
-        }
-        .onAppear {
-            selectedTab = .home
-        }
-    }
-    
-    @ViewBuilder func HomeTab() -> some View {
-        HomeView(selectedTab: $selectedTab)
-            .tabItem {
-                Label("Home", systemImage: "house")
-            }
-            .tag(Tab.home)
-            .toolbarBackground(Color.background, for: .tabBar)
-    }
-    
-    @ViewBuilder func RecipesTab() -> some View {
-        RecipeLibraryView()
-            .tabItem {
-                Label("Recipes", systemImage: "frying.pan")
-            }
-            .tag(Tab.recipes)
-            .toolbarBackground(Color.background, for: .tabBar)
-    }
-    
-    @ViewBuilder func KnowledgeTab() -> some View {
-        KnowledgeLibraryView()
-            .tabItem {
-                Label("Knowledge", systemImage: "newspaper")
-            }
-            .tag(Tab.post)
-            .toolbarBackground(Color.background, for: .tabBar)
-    }
-    
-    @ViewBuilder func UserProfileTab() -> some View {
-        UserProfileView(userId: currentUserId)
-            .tabItem {
-                Label("Profile", systemImage: "person")
-            }
-            .tag(Tab.profile)
-            .toolbarBackground(Color.background, for: .tabBar)
+        HomeView()
     }
 }
 

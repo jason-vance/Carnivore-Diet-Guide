@@ -126,6 +126,6 @@ struct FeedItemView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        HomeViewV2()
+        HomeView()
     }
 }

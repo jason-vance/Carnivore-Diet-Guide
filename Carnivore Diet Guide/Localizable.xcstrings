@@ -941,10 +941,8 @@
         }
       }
     },
-    "Featured Post" : {
-
-    },
     "Featured Recipe" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1080,6 +1078,7 @@
 
     },
     "Home" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1626,6 +1625,7 @@
       }
     },
     "Recommended For You" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1901,10 +1901,8 @@
         }
       }
     },
-    "Trending Posts" : {
-
-    },
     "Trending Recipes" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1975,6 +1973,7 @@
 
     },
     "View All" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
