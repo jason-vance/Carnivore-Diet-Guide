@@ -13,7 +13,7 @@ protocol TrendingRecipeFetcher {
 }
 
 
-//TODO: Write tests for DefaultTrendingRecipeFetcher
+//TODO: Is this class still necessary after the home redesign
 class DefaultTrendingRecipeFetcher: TrendingRecipeFetcher {
     
     private let recipePopularityFetcher = iocContainer~>RecipePopularityFetcher.self

@@ -8,6 +8,7 @@
 import Foundation
 import SwinjectAutoregistration
 
+//TODO: Is this class still necessary after the home redesign
 class FirebaseHomeViewContentProvider: HomeViewContentProvider {
     
     private let itemLimit = 4

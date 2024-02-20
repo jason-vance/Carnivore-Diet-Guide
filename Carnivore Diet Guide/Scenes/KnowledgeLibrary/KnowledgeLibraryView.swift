@@ -8,6 +8,7 @@
 import SwiftUI
 import SwinjectAutoregistration
 
+//TODO: Is this View still necessary after the home redesign?
 struct KnowledgeLibraryView: View {
     
     private enum LoadingState {
