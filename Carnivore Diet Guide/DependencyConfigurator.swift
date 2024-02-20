@@ -37,7 +37,7 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(TrendingRecipeFetcher.self, initializer: DefaultTrendingRecipeFetcher.init)
     iocContainer.autoregister(RecipePopularityFetcher.self, initializer: FirebaseRecipeActivityRepository.init)
     iocContainer.autoregister(FeedItemProvider.self, initializer: DefaultFeedItemProvider.init)
-    //TODO: Make a real FeedItemRepository
+    iocContainer.autoregister(FeedItemRepository.self, initializer: FirebaseFeedItemRepository.init)
 
     //Recipe Library
     iocContainer.autoregister(RecipeLibraryContentProvider.self, initializer: FirebaseRecipeLibraryContentProvider.init)

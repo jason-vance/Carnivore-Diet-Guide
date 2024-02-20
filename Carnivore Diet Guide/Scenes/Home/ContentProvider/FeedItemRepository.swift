@@ -37,7 +37,6 @@ class MockFeedItemRepository: FeedItemRepository {
         let sampleIndex = i % FeedItem.samples.count
         var feedItem = FeedItem.samples[sampleIndex]
         feedItem.id = "\(i)"
-        print("Created FeedItem.id: \(feedItem.id)")
         return feedItem
     }
 }

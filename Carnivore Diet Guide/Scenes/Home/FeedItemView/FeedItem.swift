@@ -9,7 +9,7 @@ import Foundation
 
 struct FeedItem: Identifiable {
     
-    enum FeedItemType {
+    enum FeedItemType: String, Codable {
         case recipe
         case article
         case discussion
@@ -17,6 +17,7 @@ struct FeedItem: Identifiable {
     
     var id: String
     var type: FeedItemType
+    var resourceId: String
     var userId: String
     var imageUrls: [URL]
     var calloutText: String?
@@ -28,6 +29,7 @@ extension FeedItem {
     static let sampleArticle: FeedItem = .init(
         id: UUID().uuidString,
         type: .article,
+        resourceId: "resourceId",
         userId: "userId",
         imageUrls: [
             URL(string: "https://ancestralsupplements.com/cdn/shop/articles/Modified_Carnivore_Diet.jpg?v=1698546054")!
@@ -40,6 +42,7 @@ extension FeedItem {
     static let sampleRecipe: FeedItem = .init(
         id: UUID().uuidString,
         type: .recipe,
+        resourceId: "resourceId",
         userId: "userId",
         imageUrls: [
             URL(string: "https://firebasestorage.googleapis.com/v0/b/carnivore-diet-guide.appspot.com/o/RecipeImages%2Fseared_ribeye_steak.jpg?alt=media&token=38c16213-c053-4f47-992a-5dd748dc529b")!
@@ -52,6 +55,7 @@ extension FeedItem {
     static let sampleDiscussion: FeedItem = .init(
         id: UUID().uuidString,
         type: .discussion,
+        resourceId: "resourceId",
         userId: "userId",
         imageUrls: [],
         calloutText: "Featured Discussion",
