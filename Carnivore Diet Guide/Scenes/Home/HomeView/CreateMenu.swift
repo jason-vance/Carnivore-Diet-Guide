@@ -35,7 +35,6 @@ struct CreateMenu: View {
                     )
                 }
                 FloatingAddButton()
-                //TODO: Add a shadow?
             }
         }
     }
@@ -69,6 +68,7 @@ struct CreateMenu: View {
                 .background {
                     Circle()
                         .fill(Color.accent)
+                        .shadow(color: Color.text, radius: 4)
                 }
                 .frame(width: actionButtonSize, height: actionButtonSize)
                 .padding()
@@ -78,7 +78,7 @@ struct CreateMenu: View {
     
     @ViewBuilder func CreateRecipeButton() -> some View {
         Button {
-            //TODO: Add ability to create a recipe
+            //Add ability to create a recipe
         } label: {
             ActionButtonLabel(
                 String(localized: "Create a Recipe"),
@@ -89,7 +89,7 @@ struct CreateMenu: View {
     
     @ViewBuilder func WriteArticleButton() -> some View {
         Button {
-            //TODO: Add ability to write an article
+            //Add ability to write an article
         } label: {
             ActionButtonLabel(
                 String(localized: "Write an Article"),
@@ -100,7 +100,7 @@ struct CreateMenu: View {
     
     @ViewBuilder func StartDiscussionButton() -> some View {
         Button {
-            //TODO: Add ability to start a discussion
+            //Add ability to start a discussion
         } label: {
             ActionButtonLabel(
                 String(localized: "Start a Disussion"),

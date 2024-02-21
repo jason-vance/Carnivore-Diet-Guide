@@ -32,7 +32,6 @@ struct HomeView: View {
                 }
                 .scrollIndicators(.hidden)
                 .background(Color.background)
-                //TODO: Add .refreshable to HomeView
             }
         }
         .overlay { CreateMenu() }
@@ -99,7 +98,7 @@ struct HomeView: View {
     
     @ViewBuilder func QuickLinkItem(_ text: String, imageName: String) -> some View {
         NavigationLink {
-            //TODO: Navigate to Recipes and Knowledge
+            //Navigate to Recipes and Knowledge
             Text(text)
         } label: {
             VStack(spacing: 2) {
@@ -107,12 +106,16 @@ struct HomeView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 125, height: 125)
-                    .clipShape(RoundedRectangle(cornerRadius: Corners.radius, style: .continuous))
-                    .shadow(color: Color.text, radius: 4)
                 Text(text)
                     .font(.system(size: 16, weight: .bold))
+                    .lineLimit(1)
                     .foregroundStyle(Color.text)
+                    .padding(4)
             }
+            .background(Color.background)
+            .frame(width: 125)
+            .clipShape(RoundedRectangle(cornerRadius: Corners.radius, style: .continuous))
+            .shadow(color: Color.text, radius: 4)
         }
     }
     

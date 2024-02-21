@@ -10,7 +10,6 @@ import Kingfisher
 
 struct FeedItemView: View {
     
-    //TODO: I would probably prefer to pass an id instead of a full feed item for Firebase's sake
     @State var feedItem: FeedItem
     @State var itemWidth: CGFloat?
     @StateObject private var model = FeedItemViewModel()
@@ -49,7 +48,7 @@ struct FeedItemView: View {
                 .scaledToFill()
                 .frame(width: itemWidth, height: itemWidth)
         } else {
-            //TODO: Handle an array of FeedItem images
+            //Handle an array of FeedItem images
         }
     }
     

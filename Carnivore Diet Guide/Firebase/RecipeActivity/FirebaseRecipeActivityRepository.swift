@@ -58,7 +58,6 @@ extension FirebaseRecipeActivityRepository: RecipeViewActivityTracker {
 
 extension FirebaseRecipeActivityRepository: PopularRecipeIdFetcher {
     
-    //TODO: Cache the results of this
     func getPopularRecipeIds(since date: Date, limit: Int) async throws -> [String] {
         let recipeActivityCounts = try await getRecipeActivityEventCounts(since: date)
         return recipeActivityCounts

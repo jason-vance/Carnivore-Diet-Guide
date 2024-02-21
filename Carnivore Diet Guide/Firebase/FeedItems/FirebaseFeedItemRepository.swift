@@ -23,7 +23,6 @@ extension FirebaseFeedItemRepository: FeedItemRepository {
             .order(by: PUBLICATION_DATE, descending: true)
             .limit(to: limit)
         if let after = after {
-            //TODO: Figure out a way to not fetch this document
             let docSnapshot = try await feedItemsCollection.document(after.id).getDocument()
             query = query.start(afterDocument: docSnapshot)
         }

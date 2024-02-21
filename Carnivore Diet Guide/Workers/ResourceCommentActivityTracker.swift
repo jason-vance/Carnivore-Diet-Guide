@@ -22,7 +22,6 @@ class DefaultResourceCommentActivityTracker: ResourceCommentActivityTracker {
         case .recipe:
             try await recipe(resource.id, wasCommentedOnByUser: userId)
         case .post:
-            //TODO: try await post(resource.id, wasCommentedOnByUser: userId)
             return
         }
     }

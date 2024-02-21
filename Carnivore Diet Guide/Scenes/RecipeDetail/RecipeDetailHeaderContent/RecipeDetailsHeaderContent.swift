@@ -113,7 +113,7 @@ struct RecipeDetailsHeaderContent: View {
     
     @ViewBuilder func EditRecipeButton() -> some View {
         Button {
-            //TODO: Add ability to edit recipe
+            //Add ability to edit recipe
         } label: {
             Label("Edit", systemImage: "pencil")
         }
@@ -121,7 +121,7 @@ struct RecipeDetailsHeaderContent: View {
     
     @ViewBuilder func DeleteRecipeButton() -> some View {
         Button {
-            //TODO: Add ability to delete recipe
+            //Add ability to delete recipe
         } label: {
             Label("Delete", systemImage: "trash")
         }

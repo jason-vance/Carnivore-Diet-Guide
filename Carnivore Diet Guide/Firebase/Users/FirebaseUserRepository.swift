@@ -120,7 +120,7 @@ extension FirebaseUserRepository: FavoriteRecipeRepo {
 }
 
 extension FirebaseUserRepository: UserFetcher {
-    //TODO: Cache UserData (maybe some intermediate class that interfaces with FirebaseUserRepository)
+
     func fetchUser(userId: String) async throws -> UserData {
         guard !userId.isEmpty else { throw "`userId` is empty" }
         
