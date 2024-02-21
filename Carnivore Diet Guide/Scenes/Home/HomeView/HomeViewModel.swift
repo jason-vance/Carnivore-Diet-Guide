@@ -19,8 +19,6 @@ class HomeViewModel: ObservableObject {
     }
     
     @Published var userProfileImageUrl: URL?
-    @Published var feedItems: [FeedItem] = []
-    @Published var canFetchMoreFeedItems: Bool = true
     
     @Published var searchString: String = ""
     @Published var searchScope: SearchScope = .all
@@ -29,7 +27,6 @@ class HomeViewModel: ObservableObject {
     @Published var alertMessage: String = ""
     
     private let userDataProvider = iocContainer~>CurrentUserDataProvider.self
-    private let feedItemProvider = iocContainer~>FeedItemProvider.self
     
     init() {
         fetchCurrentUserData()
@@ -44,21 +41,6 @@ class HomeViewModel: ObservableObject {
         Task {
             let userData = try? await userDataProvider.fetchCurrentUserData()
             userProfileImageUrl = userData?.profileImageUrl
-        }
-    }
-    
-    func fetchMoreFeedItems() {
-        Task {
-            do {
-                let newFeedItems = try await feedItemProvider.fetchNextFeedItems()
-                feedItems.append(contentsOf: newFeedItems)
-                
-                if newFeedItems.isEmpty {
-                    canFetchMoreFeedItems = false
-                }
-            } catch {
-                show(alertMessage: "Could not retrieve next feed items: \(error.localizedDescription)")
-            }
         }
     }
     

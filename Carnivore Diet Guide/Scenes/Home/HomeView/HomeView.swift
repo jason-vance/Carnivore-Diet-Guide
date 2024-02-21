@@ -10,8 +10,6 @@ import SwinjectAutoregistration
 
 struct HomeView: View {
     
-    private let itemHorizontalPadding: CGFloat = 8
-    
     @StateObject private var model = HomeViewModel()
     @State private var showUserProfile: Bool = false
     
@@ -19,8 +17,7 @@ struct HomeView: View {
         NavigationStack {
             GeometryReader { proxy in
                 ScrollView {
-                    HomeContent(screenWidth: proxy.size.width)
-                        .padding(.vertical)
+                    FeedView(screenWidth: proxy.size.width)
                 }
                 .scrollIndicators(.hidden)
                 .background(Color.background)
@@ -78,53 +75,6 @@ struct HomeView: View {
                 size: 32,
                 padding: 2
             )
-        }
-    }
-    
-    @ViewBuilder func HomeContent(screenWidth: CGFloat) -> some View {
-        VStack {
-            InfinitePosts(screenWidth: screenWidth)
-        }
-    }
-    
-    @ViewBuilder func FeaturedContent() -> some View {
-        
-    }
-    
-    @ViewBuilder func InfinitePosts(screenWidth: CGFloat) -> some View {
-        LazyVStack {
-            ForEach(model.feedItems) { feedItem in
-                NavigationLink {
-                    Text("Hello")
-                } label: {
-                    FeedItemView(
-                        feedItem: feedItem,
-                        itemWidth: screenWidth - (2 * itemHorizontalPadding)
-                    )
-                }
-                .padding(.horizontal, itemHorizontalPadding)
-            }
-            LoadNextFeedItemsView()
-        }
-        .overlay(alignment: .bottom) {
-            if !model.canFetchMoreFeedItems {
-                Image(systemName: "flag.checkered.2.crossed")
-                    .font(.system(size: 22))
-                    .foregroundStyle(Color.text)
-                    .offset(y: 150)
-            }
-        }
-    }
-    
-    @ViewBuilder func LoadNextFeedItemsView() -> some View {
-        if model.canFetchMoreFeedItems {
-            ProgressView()
-                .progressViewStyle(.circular)
-                .tint(Color.accent)
-                .onAppear {
-                    model.fetchMoreFeedItems()
-                }
-                .padding(.vertical, 64)
         }
     }
 }
