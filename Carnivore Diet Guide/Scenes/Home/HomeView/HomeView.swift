@@ -10,54 +10,43 @@ import SwinjectAutoregistration
 
 struct HomeView: View {
     
+    private let defaultPadding: CGFloat = 16
+    
     @StateObject private var model = HomeViewModel()
     @State private var showUserProfile: Bool = false
     
+    private var currentUserId: String {
+        (iocContainer~>CurrentUserIdProvider.self).currentUserId!
+    }
+    
     var body: some View {
-        NavigationStack {
-            GeometryReader { proxy in
-                ScrollView {
-                    FeedView(screenWidth: proxy.size.width)
+        GeometryReader { proxy in
+            NavigationStack {
+                VStack {
+                    TitleBar()
+                    ScrollView {
+                        FeedView(screenWidth: proxy.size.width)
+                            .padding(.vertical, defaultPadding)
+                    }
+                    .overlay(alignment: .top) { ScrollViewShroud() }
                 }
                 .scrollIndicators(.hidden)
                 .background(Color.background)
-                .toolbarRole(.navigationStack)
-                .toolbar { NavigationBar() }
-                .searchable(text: $model.searchString, placement: .navigationBarDrawer)
-                .searchScopes($model.searchScope, activation: .onSearchPresentation) {
-                    SearchScopes()
-                }
-                .onSubmit(of: .search) {
-                    model.doSearch()
-                }
                 //TODO: Add .refreshable to HomeView
             }
         }
-        .overlay {
-            CreateMenu()
-        }
-        .sheet(isPresented: $showUserProfile) {
-            if let userId = (iocContainer~>CurrentUserIdProvider.self).currentUserId {
-                UserProfileView(userId: userId)
-            }
-        }
+        .overlay { CreateMenu() }
+        .sheet(isPresented: $showUserProfile) { UserProfileView(userId: currentUserId) }
         .alert(model.alertMessage, isPresented: $model.showAlert) {}
     }
     
-    @ToolbarContentBuilder func NavigationBar() -> some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
+    @ViewBuilder func TitleBar() -> some View {
+        HStack {
             TitleText()
-        }
-        ToolbarItem(placement: .topBarTrailing) {
+            Spacer()
             ProfileButton()
         }
-    }
-    
-    @ViewBuilder func SearchScopes() -> some View {
-        Text("All").tag(HomeViewModel.SearchScope.all)
-        Text("Recipe").tag(HomeViewModel.SearchScope.recipe)
-        Text("Article").tag(HomeViewModel.SearchScope.article)
-        Text("Discussion").tag(HomeViewModel.SearchScope.discussion)
+        .padding(.horizontal)
     }
     
     @ViewBuilder func TitleText() -> some View {
@@ -76,6 +65,15 @@ struct HomeView: View {
                 padding: 2
             )
         }
+    }
+    
+    @ViewBuilder func ScrollViewShroud() -> some View {
+        LinearGradient(
+            colors: [Color.background, Color.clear],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        .frame(height: defaultPadding)
     }
 }
 

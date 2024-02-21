@@ -35,6 +35,7 @@ struct CreateMenu: View {
                     )
                 }
                 FloatingAddButton()
+                //TODO: Add a shadow?
             }
         }
     }
