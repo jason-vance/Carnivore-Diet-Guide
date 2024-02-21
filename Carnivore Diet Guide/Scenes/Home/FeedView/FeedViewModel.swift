@@ -7,6 +7,7 @@
 
 import Foundation
 import SwinjectAutoregistration
+import SwiftUI
 
 @MainActor
 class FeedViewModel: ObservableObject {
@@ -31,7 +32,9 @@ class FeedViewModel: ObservableObject {
                 feedItems.append(contentsOf: newFeedItems)
                 
                 if newFeedItems.isEmpty {
-                    canFetchMoreFeedItems = false
+                    withAnimation(.snappy) {
+                        canFetchMoreFeedItems = false
+                    }
                 }
             } catch {
                 show(alertMessage: "Could not retrieve next feed items: \(error.localizedDescription)")
