@@ -13,28 +13,27 @@ struct HomeView: View {
     private let itemHorizontalPadding: CGFloat = 8
     
     @StateObject private var model = HomeViewModel()
-    @State var showUserProfile: Bool = false
+    @State private var showUserProfile: Bool = false
     
     var body: some View {
         NavigationStack {
             GeometryReader { proxy in
-                VStack(spacing: 0) {
-                    TitleBar()
-                    ScrollView {
-                        HomeContent(screenWidth: proxy.size.width)
-                            .padding(.vertical)
-                    }
-                    .scrollIndicators(.hidden)
-                    .overlay(alignment: .top) {
-                        LinearGradient(
-                            colors: [Color.background, Color.clear],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                        .frame(height: 16)
-                    }
+                ScrollView {
+                    HomeContent(screenWidth: proxy.size.width)
+                        .padding(.vertical)
                 }
+                .scrollIndicators(.hidden)
                 .background(Color.background)
+                .toolbarRole(.navigationStack)
+                .toolbar { NavigationBar() }
+                .searchable(text: $model.searchString, placement: .navigationBarDrawer)
+                .searchScopes($model.searchScope, activation: .onSearchPresentation) {
+                    SearchScopes()
+                }
+                .onSubmit(of: .search) {
+                    model.doSearch()
+                }
+                //TODO: Add .refreshable to HomeView
             }
         }
         .overlay {
@@ -48,41 +47,26 @@ struct HomeView: View {
         .alert(model.alertMessage, isPresented: $model.showAlert) {}
     }
     
-    @ViewBuilder func TitleBar() -> some View {
-        HStack {
+    @ToolbarContentBuilder func NavigationBar() -> some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
             TitleText()
-            Spacer()
         }
-        .overlay(alignment: .trailing) {
-            HStack {
-                SearchButton()
-                ProfileButton()
-            }
-            .padding(.trailing)
+        ToolbarItem(placement: .topBarTrailing) {
+            ProfileButton()
         }
+    }
+    
+    @ViewBuilder func SearchScopes() -> some View {
+        Text("All").tag(HomeViewModel.SearchScope.all)
+        Text("Recipe").tag(HomeViewModel.SearchScope.recipe)
+        Text("Article").tag(HomeViewModel.SearchScope.article)
+        Text("Discussion").tag(HomeViewModel.SearchScope.discussion)
     }
     
     @ViewBuilder func TitleText() -> some View {
         Text(Bundle.main.bundleName ?? "")
             .font(.system(size: 18, weight: .bold))
             .foregroundStyle(Color.text)
-            .padding()
-    }
-    
-    @ViewBuilder func SearchButton() -> some View {
-        Button {
-            //TODO: Add ability to search
-        } label: {
-            Image(systemName: "magnifyingglass.circle.fill")
-                .resizable()
-                .foregroundStyle(Color.background)
-                .padding(2)
-                .background {
-                    Circle()
-                        .fill(Color.accentColor)
-                }
-                .frame(width: 32, height: 32)
-        }
     }
     
     @ViewBuilder func ProfileButton() -> some View {

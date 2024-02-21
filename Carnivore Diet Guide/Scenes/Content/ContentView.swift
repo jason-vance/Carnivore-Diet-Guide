@@ -10,20 +10,12 @@ import SwinjectAutoregistration
 
 struct ContentView: View {
     
-    enum Tab {
-        case home
-        case recipes
-        case post
-        case profile
-    }
-    
     private let authProvider = iocContainer~>ContentAuthenticationProvider.self
     private let onboardingStateProvider = iocContainer~>UserOnboardingStateProvider.self
     
     @State private var isOnboardingRequired: Bool = false
     @State private var currentUserId: String = ""
     @State private var userAuthState: UserAuthState = .working
-    @State private var selectedTab: Tab = .home
     
     var body: some View {
         Group {
