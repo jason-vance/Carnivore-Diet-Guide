@@ -10,8 +10,9 @@ import SwinjectAutoregistration
 
 struct HomeView: View {
     
-    private let defaultPadding: CGFloat = 16
-    
+    private let scrollShroudHeight: CGFloat = 16
+    private let defaultPadding: CGFloat = 8
+
     @StateObject private var model = HomeViewModel()
     @State private var showUserProfile: Bool = false
     
@@ -25,8 +26,7 @@ struct HomeView: View {
                 VStack {
                     TitleBar()
                     ScrollView {
-                        FeedView(screenWidth: proxy.size.width)
-                            .padding(.vertical, defaultPadding)
+                        ScrollableHomeContent(screenWidth: proxy.size.width)
                     }
                     .overlay(alignment: .top) { ScrollViewShroud() }
                 }
@@ -73,7 +73,67 @@ struct HomeView: View {
             startPoint: .top,
             endPoint: .bottom
         )
-        .frame(height: defaultPadding)
+        .frame(height: scrollShroudHeight)
+    }
+    
+    @ViewBuilder func ScrollableHomeContent(screenWidth: CGFloat) -> some View {
+        VStack {
+            QuickLinks()
+            NewsFeed(screenWidth: screenWidth)
+        }
+        .padding(.top, scrollShroudHeight)
+    }
+    
+    @ViewBuilder func QuickLinks() -> some View {
+        VStack(spacing: 0) {
+            SectionHeader(String(localized: "Quick Links"))
+            ScrollView(.horizontal) {
+                LazyHStack {
+                    QuickLinkItem(String(localized: "Recipes"), imageName: "HomeHero")
+                    QuickLinkItem(String(localized: "Articles"), imageName: "KnowledgeHero")
+                }
+                .padding(defaultPadding)
+            }
+        }
+    }
+    
+    @ViewBuilder func QuickLinkItem(_ text: String, imageName: String) -> some View {
+        NavigationLink {
+            //TODO: Navigate to Recipes and Knowledge
+            Text(text)
+        } label: {
+            VStack(spacing: 2) {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 125, height: 125)
+                    .clipShape(RoundedRectangle(cornerRadius: Corners.radius, style: .continuous))
+                    .shadow(color: Color.text, radius: 4)
+                Text(text)
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundStyle(Color.text)
+            }
+        }
+    }
+    
+    @ViewBuilder func NewsFeed(screenWidth: CGFloat) -> some View {
+        VStack(spacing: 0) {
+            SectionHeader(String(localized: "News Feed"))
+            FeedView(screenWidth: screenWidth)
+                .padding(.top, defaultPadding)
+        }
+    }
+    
+    @ViewBuilder func SectionHeader(_ text: String) -> some View {
+        HStack {
+            Text(text)
+                .font(.system(size: 32, weight: .bold))
+                .foregroundStyle(Color.text.opacity(0.8))
+            Spacer()
+        }
+        .padding(.horizontal, defaultPadding)
+        Divider()
+            .padding(.horizontal, defaultPadding)
     }
 }
 

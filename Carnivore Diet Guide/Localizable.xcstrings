@@ -322,6 +322,9 @@
     "Are you sure you want to logout?" : {
 
     },
+    "Articles" : {
+
+    },
     "Blog" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1563,7 +1566,6 @@
 
     },
     "Recipes" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
