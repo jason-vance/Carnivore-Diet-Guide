@@ -18,7 +18,7 @@ struct FeedView: View {
         LazyVStack {
             ForEach(model.feedItems) { feedItem in
                 NavigationLink {
-                    Text("Hello")
+                    FeedItemDetailView(feedItem)
                 } label: {
                     FeedItemView(
                         feedItem: feedItem,
@@ -50,6 +50,17 @@ struct FeedView: View {
                 .padding(.vertical, 64)
         }
     }
+    
+    @ViewBuilder func FeedItemDetailView(_ feedItem: FeedItem) -> some View {
+        switch feedItem.type {
+        case .article:
+            PostDetailView(post: .sample)
+        case .recipe:
+            RecipeDetailView(recipeId: feedItem.resourceId)
+        case .discussion:
+            Text(feedItem.title)
+        }
+    }
 }
 
 #Preview {
@@ -57,7 +68,11 @@ struct FeedView: View {
         setupMockIocContainer(iocContainer)
     } content: {
         GeometryReader { proxy in
-            FeedView(screenWidth: proxy.size.width)
+            NavigationStack {
+                ScrollView {
+                    FeedView(screenWidth: proxy.size.width)
+                }
+            }
         }
     }
 }

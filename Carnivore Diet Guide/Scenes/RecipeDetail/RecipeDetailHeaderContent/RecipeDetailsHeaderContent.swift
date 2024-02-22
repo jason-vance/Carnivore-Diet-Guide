@@ -12,7 +12,7 @@ struct RecipeDetailsHeaderContent: View {
         
     @Environment(\.dismiss) private var dismiss: DismissAction
     
-    @State var recipe: Recipe
+    @State var recipe: Recipe?
     
     @StateObject private var model = RecipeDetailsHeaderContentModel()
     @State private var showAllOptions: Bool = false
@@ -26,7 +26,9 @@ struct RecipeDetailsHeaderContent: View {
         HStack {
             CloseButton()
             Spacer()
-            OptionsButtons()
+            if let recipe = recipe {
+                OptionsButtons(recipe)
+            }
         }
         .padding()
         .frame(maxWidth: .infinity)
@@ -43,10 +45,12 @@ struct RecipeDetailsHeaderContent: View {
             model.recipe = newRecipe
         }
         .sheet(isPresented: $showCommentSection) {
-            CommentSectionView(resource: .init(
-                id: recipe.id,
-                type: .recipe
-            ))
+            if let recipe = recipe {
+                CommentSectionView(resource: .init(
+                    id: recipe.id,
+                    type: .recipe
+                ))
+            }
         }
         .alert(model.alertMessage, isPresented: $model.showAlert) {}
     }
@@ -59,9 +63,9 @@ struct RecipeDetailsHeaderContent: View {
         }
     }
     
-    @ViewBuilder func OptionsButtons() -> some View {
+    @ViewBuilder func OptionsButtons(_ recipe: Recipe) -> some View {
         HStack {
-            ExtraOptionsButton()
+            ExtraOptionsButton(recipe)
             CommentsButton()
             FavoriteButton()
         }
@@ -89,7 +93,7 @@ struct RecipeDetailsHeaderContent: View {
         }
     }
     
-    @ViewBuilder func ExtraOptionsButton() -> some View {
+    @ViewBuilder func ExtraOptionsButton(_ recipe: Recipe) -> some View {
         Menu {
             Text(recipe.title)
             if model.recipeIsMine {
@@ -146,7 +150,7 @@ struct RecipeDetailsHeaderContent: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        RecipeDetailView(recipe: .sample)
+        RecipeDetailView(recipeId: Recipe.sample.id)
     }
 }
 
@@ -160,7 +164,7 @@ struct RecipeDetailsHeaderContent: View {
             return mock
         }
     } content: {
-        RecipeDetailView(recipe: .sample)
+        RecipeDetailView(recipeId: Recipe.sample.id)
     }
 }
 
@@ -174,6 +178,6 @@ struct RecipeDetailsHeaderContent: View {
             return mock
         }
     } content: {
-        RecipeDetailView(recipe: .sample)
+        RecipeDetailView(recipeId: Recipe.sample.id)
     }
 }

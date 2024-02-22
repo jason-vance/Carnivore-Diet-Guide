@@ -11,31 +11,36 @@ import SwinjectAutoregistration
 @MainActor
 class ByLineViewModel: ObservableObject {
     
-    @Published var loadingAuthor: Bool = false
-    @Published var authorFullName: String = ""
+    enum InitializationState {
+        case uninitialized
+        case initialized
+    }
+    
+    private static let unknownAuthorName = String(localized: "Unknown Author")
+    
+    @Published var initializationState: InitializationState = .uninitialized
+    @Published var authorFullName: String = unknownAuthorName
     @Published var authorProfilePicUrl: URL?
     
     private let userFetcher = iocContainer~>UserFetcher.self
 
     func set(userId: String) {
-        fetchAuthor(userId: userId)
+        Task {
+            initializationState = .uninitialized
+            await fetchAuthor(userId: userId)
+            initializationState = .initialized
+        }
     }
     
-    private func fetchAuthor(userId: String) {
-        Task {
-            loadingAuthor = true
-            do {
-                let userData = try await userFetcher.fetchUser(userId: userId)
-                
-                authorProfilePicUrl = userData.profileImageUrl
-                
-                if let userFullName = userData.fullName?.value {
-                    authorFullName = String(localized: .init(userFullName))
-                } else {
-                    authorFullName = String(localized: "Unknown Author")
-                }
-            }
-            loadingAuthor = false
+    private func fetchAuthor(userId: String) async {
+        authorFullName = Self.unknownAuthorName
+        
+        guard let userData = try? await userFetcher.fetchUser(userId: userId) else { return }
+        
+        authorProfilePicUrl = userData.profileImageUrl
+        
+        if let userFullName = userData.fullName?.value {
+            authorFullName = String(localized: .init(userFullName))
         }
     }
 }

@@ -31,10 +31,7 @@ class RecipeDetailsHeaderContentModel: ObservableObject {
     private var subs: Set<AnyCancellable> = []
     
     private func setup() {
-        guard let recipe = recipe else {
-            assertionFailure("recipe was nil")
-            return
-        }
+        guard let recipe = recipe else { return }
         
         recipeIsMine = recipe.authorUserId == currentUserIdProvider.currentUserId
         

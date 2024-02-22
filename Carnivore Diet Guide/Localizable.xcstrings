@@ -1078,9 +1078,6 @@
     "Hard" : {
       "comment" : "Difficulty level is 'Hard'"
     },
-    "Hello" : {
-
-    },
     "Home" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1361,6 +1358,9 @@
     "Name must contain at least three letters" : {
 
     },
+    "News Feed" : {
+
+    },
     "Next" : {
 
     },
@@ -1561,6 +1561,9 @@
           }
         }
       }
+    },
+    "Quick Links" : {
+
     },
     "Recipe Details" : {
 

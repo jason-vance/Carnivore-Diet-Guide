@@ -30,7 +30,7 @@ struct ByLineView: View {
             Spacer()
         }
         .foregroundStyle(Color.text)
-        .redacted(reason: model.loadingAuthor ? [.placeholder] : [])
+        .redacted(reason: model.initializationState == .initialized ? [] : [.placeholder])
         .frame(height: profileImageSize)
         .onChange(of: userId, initial: true) { newUserId in
             model.set(userId: newUserId)

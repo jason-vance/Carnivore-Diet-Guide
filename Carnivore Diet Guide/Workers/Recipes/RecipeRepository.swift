@@ -12,7 +12,14 @@ protocol RecipeRepository {
 }
 
 class MockRecipeRepository: RecipeRepository {
+    
+    var error: Error?
+    
     func fetchRecipe(byId recipeId: String) async throws -> Recipe {
-        .sample
+        try await Task.sleep(for: .seconds(1))
+        if let error = error {
+            throw error
+        }
+        return .sample
     }
 }

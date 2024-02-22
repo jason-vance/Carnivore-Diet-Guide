@@ -13,7 +13,7 @@ struct RecipeDetailView: View {
     
     private let imageHeight: CGFloat = 200
 
-    @State var recipe: Recipe
+    @State var recipeId: String
     @StateObject private var model = RecipeDetailViewModel()
     @State private var showExtraMenuOptions: Bool = false
     
@@ -25,47 +25,54 @@ struct RecipeDetailView: View {
         )
         .background(Color.background)
         .navigationBarBackButtonHidden()
-        .onChange(of: recipe, initial: true) { newRecipe in
-            model.recipe = newRecipe
+        .onChange(of: recipeId, initial: true) { newRecipeId in
+            model.set(recipeId: newRecipeId)
         }
     }
     
     @ViewBuilder func HeaderBackground() -> some View {
-        Group {
-            if let imageName = recipe.imageName {
-                Image(imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            }
-            if let imageUrl = recipe.imageUrl {
-                KFImage(URL(string: imageUrl))
-                    .resizable()
-                    .placeholder {
-                        Rectangle()
-                            .foregroundStyle(Color.background)
-                    }
-                    .aspectRatio(contentMode: .fill)
-            }
+        if let imageName = model.recipe?.imageName {
+            Image(imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        } else if let imageUrl = model.recipe?.imageUrl {
+            KFImage(URL(string: imageUrl))
+                .resizable()
+                .placeholder {
+                    Rectangle()
+                        .foregroundStyle(Color.background)
+                }
+                .aspectRatio(contentMode: .fill)
+        } else {
+            Color.text
         }
     }
     
     @ViewBuilder func HeaderContent(progress: CGFloat) -> some View {
-        RecipeDetailsHeaderContent(recipe: recipe)
+        RecipeDetailsHeaderContent(recipe: model.recipe)
+            .id(model.recipe?.id ?? UUID().uuidString)
     }
     
     @ViewBuilder func ScrollableContent() -> some View {
-        VStack {
-            RecipeDetailMetadataView(recipe: recipe)
-            RecipeTitle()
-            ServingsLine()
-            ByLineView(userId: recipe.authorUserId)
-            RecipeContentView()
-            NutritionalInformation()
+        if let recipe = model.recipe {
+            VStack {
+                RecipeDetailMetadataView(recipe: recipe)
+                RecipeTitle(recipe)
+                ServingsLine(recipe)
+                ByLineView(userId: recipe.authorUserId)
+                RecipeContentView(recipe)
+                NutritionalInformation(recipe)
+            }
+            .padding()
+        } else {
+            ProgressView()
+                .progressViewStyle(.circular)
+                .tint(Color.accent)
+                .padding(.vertical, 128)
         }
-        .padding()
     }
     
-    @ViewBuilder func RecipeTitle() -> some View {
+    @ViewBuilder func RecipeTitle(_ recipe: Recipe) -> some View {
         Text(recipe.title)
             .font(.system(size: 32, weight: .black))
             .foregroundStyle(Color.text)
@@ -73,7 +80,7 @@ struct RecipeDetailView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
     }
     
-    @ViewBuilder func ServingsLine() -> some View {
+    @ViewBuilder func ServingsLine(_ recipe: Recipe) -> some View {
         HStack {
             Text("Yields: \(recipe.servings) servings")
                 .font(.caption)
@@ -82,7 +89,7 @@ struct RecipeDetailView: View {
         }
     }
     
-    @ViewBuilder func RecipeContentView() -> some View {
+    @ViewBuilder func RecipeContentView(_ recipe: Recipe) -> some View {
         Markdown(recipe.markdownContent)
             .markdownTextStyle {
                 ForegroundColor(Color.text)
@@ -91,7 +98,7 @@ struct RecipeDetailView: View {
             .padding(.vertical)
     }
     
-    @ViewBuilder func NutritionalInformation() -> some View {
+    @ViewBuilder func NutritionalInformation(_ recipe: Recipe) -> some View {
         if let basicNutritionInfo = recipe.basicNutritionInfo {
             VStack(spacing: 12) {
                 Text("Nutritional Info")
@@ -149,7 +156,7 @@ struct RecipeDetailView: View {
     } content: {
         NavigationStack {
             NavigationLink {
-                RecipeDetailView(recipe: .longNamedSample)
+                RecipeDetailView(recipeId: Recipe.sample.id)
             } label: {
                 Text("Recipe Details")
             }

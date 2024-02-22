@@ -27,7 +27,7 @@ struct FeedItem: Identifiable {
 
 extension FeedItem {
     static let sampleArticle: FeedItem = .init(
-        id: UUID().uuidString,
+        id: "articleFeedItemId",
         type: .article,
         resourceId: "resourceId",
         userId: "userId",
@@ -40,7 +40,7 @@ extension FeedItem {
     )
     
     static let sampleRecipe: FeedItem = .init(
-        id: UUID().uuidString,
+        id: "recipeFeedItemId",
         type: .recipe,
         resourceId: "resourceId",
         userId: "userId",
@@ -53,7 +53,7 @@ extension FeedItem {
     )
     
     static let sampleDiscussion: FeedItem = .init(
-        id: UUID().uuidString,
+        id: "discussionFeedItemId",
         type: .discussion,
         resourceId: "resourceId",
         userId: "userId",

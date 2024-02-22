@@ -106,6 +106,6 @@ struct RecipeDetailMetadataView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        RecipeDetailView(recipe: .sample)
+        RecipeDetailView(recipeId: Recipe.sample.id)
     }
 }
