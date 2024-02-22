@@ -35,12 +35,10 @@ class FeedViewModel: ObservableObject {
     }
     
     private func receive(feedItems: [FeedItem]) {
-        print("refresh: receive(feedItems: \(feedItems.count) items")
         self.feedItems = feedItems
     }
     
     private func receive(canFetchMoreFeedItems: Bool) {
-        print("refresh: receive(canFetchMoreFeedItems: \(canFetchMoreFeedItems))")
         withAnimation(.snappy) {
             self.canFetchMoreFeedItems = canFetchMoreFeedItems
         }

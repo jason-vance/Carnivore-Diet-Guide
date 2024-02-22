@@ -20,7 +20,7 @@ class DefaultFeedViewContentProvider: FeedViewContentProvider {
     static let instance: DefaultFeedViewContentProvider = { .init() }()
     private static let limit = 5
     
-    private var cursor: FeedItem? = nil
+    private var cursor: FeedItemRepositoryCursor? = nil
     @Published var feedItems: [FeedItem] = []
     @Published var canFetchMore: Bool = true
     
@@ -40,16 +40,13 @@ class DefaultFeedViewContentProvider: FeedViewContentProvider {
     }
     
     func refresh() {
-        print("refreshing")
         resetProperties()
     }
 
     func fetchMoreFeedItems() async throws {
-        let newFeedItems = try await feedItemRepo.getFeedItemsNewestToOldest(after: cursor, limit: Self.limit)
+        let newFeedItems = try await feedItemRepo.getFeedItemsNewestToOldest(after: &cursor, limit: Self.limit)
         if newFeedItems.isEmpty {
             canFetchMore = false
-        } else {
-            cursor = newFeedItems.last
         }
         feedItems.append(contentsOf: newFeedItems)
     }

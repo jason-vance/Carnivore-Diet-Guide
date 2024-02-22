@@ -7,30 +7,40 @@
 
 import Foundation
 
+protocol FeedItemRepositoryCursor { }
+
 protocol FeedItemRepository {
-    func getFeedItemsNewestToOldest(after: FeedItem?, limit: Int) async throws -> [FeedItem]
+    func getFeedItemsNewestToOldest(after cursor: inout FeedItemRepositoryCursor?, limit: Int) async throws -> [FeedItem]
 }
 
 class MockFeedItemRepository: FeedItemRepository {
     
+    struct Cursor: FeedItemRepositoryCursor {
+        let id: Int
+    }
+    
     let totalFeedItems: Int = 22
     
-    func getFeedItemsNewestToOldest(after: FeedItem?, limit: Int) async throws -> [FeedItem] {
+    func getFeedItemsNewestToOldest(after cursor: inout FeedItemRepositoryCursor?, limit: Int) async throws -> [FeedItem] {
         try await Task.sleep(for: .seconds(0.5))
         
         var limit = limit
         var indexOffset = 0
-        if let after = after {
-            indexOffset = Int(after.id)! + 1
+        if let cursor = cursor as? Cursor {
+            indexOffset = cursor.id + 1
         }
         
         if indexOffset + limit > totalFeedItems {
             limit = totalFeedItems - indexOffset
         }
         
-        return (indexOffset..<(indexOffset+limit)).map { i in
+        let feedItems = (indexOffset..<(indexOffset+limit)).map { i in
             getRandomFeedItem(i)
         }
+        if let last = feedItems.last {
+            cursor = Cursor(id: Int(last.id)!)
+        }
+        return feedItems
     }
     
     private func getRandomFeedItem(_ i: Int) -> FeedItem {

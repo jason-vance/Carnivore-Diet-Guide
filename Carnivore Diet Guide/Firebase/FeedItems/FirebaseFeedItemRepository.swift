@@ -17,17 +17,25 @@ class FirebaseFeedItemRepository {
 }
 
 extension FirebaseFeedItemRepository: FeedItemRepository {
-    func getFeedItemsNewestToOldest(after: FeedItem?, limit: Int) async throws -> [FeedItem] {
+    
+    struct Cursor: FeedItemRepositoryCursor {
+        let document: DocumentSnapshot
+    }
+    
+    func getFeedItemsNewestToOldest(after cursor: inout FeedItemRepositoryCursor?, limit: Int) async throws -> [FeedItem] {
         var query = feedItemsCollection
             .whereField(PUBLICATION_DATE, isLessThan: Date.now)
             .order(by: PUBLICATION_DATE, descending: true)
             .limit(to: limit)
-        if let after = after {
-            let docSnapshot = try await feedItemsCollection.document(after.id).getDocument()
-            query = query.start(afterDocument: docSnapshot)
+        if let cursor = cursor as? Cursor {
+            query = query.start(afterDocument: cursor.document)
         }
         
         let snapshot = try await query.getDocuments()
+        
+        if let last = snapshot.documents.last {
+            cursor = Cursor(document: last)
+        }
         
         return try snapshot.documents
             .compactMap { try $0.data(as: FirestoreFeedItemDoc.self).toFeedItem() }
