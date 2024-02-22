@@ -8,6 +8,7 @@
 import Foundation
 import SwinjectAutoregistration
 import SwiftUI
+import Combine
 
 @MainActor
 class FeedViewModel: ObservableObject {
@@ -18,7 +19,32 @@ class FeedViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var alertMessage: String = ""
     
-    private let feedItemProvider = iocContainer~>FeedItemProvider.self
+    private let feedItemProvider = iocContainer~>FeedViewContentProvider.self
+    
+    private var subs: Set<AnyCancellable> = []
+    
+    init() {
+        feedItemProvider.feedItemsPublisher
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: receive(feedItems:))
+            .store(in: &subs)
+        feedItemProvider.canFetchMoreFeedItemsPublisher
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: receive(canFetchMoreFeedItems:))
+            .store(in: &subs)
+    }
+    
+    private func receive(feedItems: [FeedItem]) {
+        print("refresh: receive(feedItems: \(feedItems.count) items")
+        self.feedItems = feedItems
+    }
+    
+    private func receive(canFetchMoreFeedItems: Bool) {
+        print("refresh: receive(canFetchMoreFeedItems: \(canFetchMoreFeedItems))")
+        withAnimation(.snappy) {
+            self.canFetchMoreFeedItems = canFetchMoreFeedItems
+        }
+    }
     
     private func show(alertMessage: String) {
         showAlert = true
@@ -28,16 +54,9 @@ class FeedViewModel: ObservableObject {
     func fetchMoreFeedItems() {
         Task {
             do {
-                let newFeedItems = try await feedItemProvider.fetchNextFeedItems()
-                feedItems.append(contentsOf: newFeedItems)
-                
-                if newFeedItems.isEmpty {
-                    withAnimation(.snappy) {
-                        canFetchMoreFeedItems = false
-                    }
-                }
+                try await feedItemProvider.fetchMoreFeedItems()
             } catch {
-                show(alertMessage: "Could not retrieve next feed items: \(error.localizedDescription)")
+                show(alertMessage: "Failed to get more feed items: \(error.localizedDescription)")
             }
         }
     }

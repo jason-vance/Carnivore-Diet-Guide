@@ -32,6 +32,8 @@ struct HomeView: View {
                 }
                 .scrollIndicators(.hidden)
                 .background(Color.background)
+                .refreshable { model.refreshNewsFeed() }
+                .onAppear { UIRefreshControl.appearance().tintColor = .accent }
             }
         }
         .overlay { CreateMenu() }

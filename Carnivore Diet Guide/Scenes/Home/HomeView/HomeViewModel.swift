@@ -33,4 +33,8 @@ class HomeViewModel: ObservableObject {
             userProfileImageUrl = userData?.profileImageUrl
         }
     }
+    
+    func refreshNewsFeed() {
+        (iocContainer~>FeedViewContentProvider.self).refresh()
+    }
 }
