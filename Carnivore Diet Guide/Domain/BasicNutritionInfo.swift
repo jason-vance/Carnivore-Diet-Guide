@@ -15,6 +15,13 @@ struct BasicNutritionInfo {
 }
 
 extension BasicNutritionInfo {
+    static let zero: BasicNutritionInfo = .init(
+        calories: 0,
+        protein: 0,
+        fat: 0,
+        carbohydrates: 0
+    )
+    
     static let sample: BasicNutritionInfo = .init(
         calories: 300,
         protein: 10,
