@@ -76,6 +76,8 @@
 		56A6D0D42B8355A7003B27E5 /* FirestoreFeedItemDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0D32B8355A7003B27E5 /* FirestoreFeedItemDoc.swift */; };
 		56A6D0DA2B8582D5003B27E5 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0D92B8582D5003B27E5 /* FeedViewModel.swift */; };
 		56A6D0DC2B8582DF003B27E5 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0DB2B8582DF003B27E5 /* FeedView.swift */; };
+		56A6D0EE2B884C51003B27E5 /* FontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0ED2B884C51003B27E5 /* FontExtensions.swift */; };
+		56A6D0F02B884ED6003B27E5 /* CGFloatExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0EF2B884ED6003B27E5 /* CGFloatExtensions.swift */; };
 		56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A062B6C4DEC00C4C0DB /* SignInView.swift */; };
 		56B88A092B6C4E6E00C4C0DB /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A082B6C4E6E00C4C0DB /* BundleExtensions.swift */; };
 		56B88A0C2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A0B2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift */; };
@@ -251,6 +253,8 @@
 		56A6D0D32B8355A7003B27E5 /* FirestoreFeedItemDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFeedItemDoc.swift; sourceTree = "<group>"; };
 		56A6D0D92B8582D5003B27E5 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		56A6D0DB2B8582DF003B27E5 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		56A6D0ED2B884C51003B27E5 /* FontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtensions.swift; sourceTree = "<group>"; };
+		56A6D0EF2B884ED6003B27E5 /* CGFloatExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtensions.swift; sourceTree = "<group>"; };
 		56B88A062B6C4DEC00C4C0DB /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		56B88A082B6C4E6E00C4C0DB /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
 		56B88A0B2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAuthenticationProvider.swift; sourceTree = "<group>"; };
@@ -390,6 +394,8 @@
 				56B88A082B6C4E6E00C4C0DB /* BundleExtensions.swift */,
 				56B88A132B6C557B00C4C0DB /* ViewExtensions.swift */,
 				563BC6F52B78BDFA008F3C50 /* DateExtensions.swift */,
+				56A6D0ED2B884C51003B27E5 /* FontExtensions.swift */,
+				56A6D0EF2B884ED6003B27E5 /* CGFloatExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1143,6 +1149,7 @@
 				56B88A2D2B6CE9EF00C4C0DB /* UserData.swift in Sources */,
 				56B88A552B6F275700C4C0DB /* UserOnboardingStateProvider.swift in Sources */,
 				56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */,
+				56A6D0F02B884ED6003B27E5 /* CGFloatExtensions.swift in Sources */,
 				56B88A772B70DCFD00C4C0DB /* UserDataProvider.swift in Sources */,
 				563BC7182B7CB67F008F3C50 /* CookTimeFormatter.swift in Sources */,
 				56B88A6A2B6FA73000C4C0DB /* Shake.swift in Sources */,
@@ -1167,6 +1174,7 @@
 				56B88A6C2B70D51D00C4C0DB /* UserDataSaver.swift in Sources */,
 				563BC7332B7E105C008F3C50 /* CreateMenu.swift in Sources */,
 				56F2137E2B722305009DB057 /* OffsetObservingScrollView.swift in Sources */,
+				56A6D0EE2B884C51003B27E5 /* FontExtensions.swift in Sources */,
 				567754302B7168DD0094EB8C /* BlockingSpinnerView.swift in Sources */,
 				563BC72A2B7D93FB008F3C50 /* RecipeReporter.swift in Sources */,
 				567754392B7194900094EB8C /* FirebaseUserAccountDeleter.swift in Sources */,
