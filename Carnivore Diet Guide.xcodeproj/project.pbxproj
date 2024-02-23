@@ -76,6 +76,7 @@
 		56A6D0D42B8355A7003B27E5 /* FirestoreFeedItemDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0D32B8355A7003B27E5 /* FirestoreFeedItemDoc.swift */; };
 		56A6D0DA2B8582D5003B27E5 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0D92B8582D5003B27E5 /* FeedViewModel.swift */; };
 		56A6D0DC2B8582DF003B27E5 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0DB2B8582DF003B27E5 /* FeedView.swift */; };
+		56A6D0EA2B88450E003B27E5 /* NumberEntryDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0E92B88450E003B27E5 /* NumberEntryDialogView.swift */; };
 		56A6D0EC2B88461E003B27E5 /* TitleBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0EB2B88461E003B27E5 /* TitleBar.swift */; };
 		56A6D0EE2B884C51003B27E5 /* FontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0ED2B884C51003B27E5 /* FontExtensions.swift */; };
 		56A6D0F02B884ED6003B27E5 /* CGFloatExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0EF2B884ED6003B27E5 /* CGFloatExtensions.swift */; };
@@ -254,6 +255,7 @@
 		56A6D0D32B8355A7003B27E5 /* FirestoreFeedItemDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFeedItemDoc.swift; sourceTree = "<group>"; };
 		56A6D0D92B8582D5003B27E5 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		56A6D0DB2B8582DF003B27E5 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		56A6D0E92B88450E003B27E5 /* NumberEntryDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberEntryDialogView.swift; sourceTree = "<group>"; };
 		56A6D0EB2B88461E003B27E5 /* TitleBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBar.swift; sourceTree = "<group>"; };
 		56A6D0ED2B884C51003B27E5 /* FontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtensions.swift; sourceTree = "<group>"; };
 		56A6D0EF2B884ED6003B27E5 /* CGFloatExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatExtensions.swift; sourceTree = "<group>"; };
@@ -825,6 +827,7 @@
 				56B88A3F2B6CF0F100C4C0DB /* FormTextField.swift */,
 				56B88A412B6CF10700C4C0DB /* FormFieldOverlay.swift */,
 				56B88A432B6CF14000C4C0DB /* FormFieldErrorView.swift */,
+				56A6D0E92B88450E003B27E5 /* NumberEntryDialogView.swift */,
 			);
 			path = FormFields;
 			sourceTree = "<group>";
@@ -1203,6 +1206,7 @@
 				563BC6C62B744812008F3C50 /* RecipeFavoriteActivityTracker.swift in Sources */,
 				56F213942B742B1B009DB057 /* DocumentReferenceExtensions.swift in Sources */,
 				56025D292B6B8CD000F31A07 /* UI.swift in Sources */,
+				56A6D0EA2B88450E003B27E5 /* NumberEntryDialogView.swift in Sources */,
 				56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */,
 				56B88A092B6C4E6E00C4C0DB /* BundleExtensions.swift in Sources */,
 				56B88A442B6CF14000C4C0DB /* FormFieldErrorView.swift in Sources */,
