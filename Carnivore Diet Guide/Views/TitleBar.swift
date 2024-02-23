@@ -17,6 +17,7 @@ struct TitleBar: View {
         HStack {
             Spacer()
             Text(text)
+                .font(.headerBold)
                 .bold()
                 .foregroundStyle(Color.text)
             Spacer()
@@ -25,7 +26,7 @@ struct TitleBar: View {
             DismissButton()
         }
         .padding()
-        .background(Color.background)
+        .frame(height: .titleBarHeight)
     }
     
     @ViewBuilder func DismissButton() -> some View {

@@ -9,9 +9,16 @@ import Foundation
 
 extension CGFloat {
     
-    static let titleTextSize: CGFloat = 32
-    static let headerTextSize: CGFloat = 16
-    static let bodyTextSize: CGFloat = 14
+    static let textSizeTitle: CGFloat = 32
+    static let textSizeHeader: CGFloat = 17
+    static let textSizeBody: CGFloat = 14
+    
+    static let titleBarHeight: CGFloat = 52
+    
+    static let paddingDefault: CGFloat = 16
+    static let paddingMedium: CGFloat = 8
 
-    static let defaultCornerRadius: CGFloat = 16
+    static let cornerRadiusDefault: CGFloat = 16
+    
+    static let buttonStrokeWidthDefault: CGFloat = 2
 }

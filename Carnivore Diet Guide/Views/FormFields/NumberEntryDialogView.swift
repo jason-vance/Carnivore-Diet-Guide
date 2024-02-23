@@ -12,12 +12,18 @@ struct NumberEntryDialogView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State var prompt: String
-    @Binding var number: Int
+    @Binding var number: Int?
 
     @State private var numberString: String = ""
     
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
+    
+    private func prepopulateIfNecessary() {
+        if let number = number {
+            numberString = String(number)
+        }
+    }
     
     private func show(alertMessage: String) {
         showAlert = true
@@ -29,12 +35,8 @@ struct NumberEntryDialogView: View {
     }
     
     private func saveNumber() {
-        if let numberStringAsNumber = numberStringAsNumber {
-            number = numberStringAsNumber
-            dismiss()
-        } else {
-            show(alertMessage: "'\(numberString)' could not be converted to a number")
-        }
+        number = numberStringAsNumber
+        dismiss()
     }
     
     var body: some View {
@@ -52,6 +54,7 @@ struct NumberEntryDialogView: View {
         .presentationDetents([.medium])
         .interactiveDismissDisabled()
         .alert(alertMessage, isPresented: $showAlert) {}
+        .onAppear { prepopulateIfNecessary() }
     }
     
     @ViewBuilder func SaveButton() -> some View {
@@ -66,8 +69,8 @@ struct NumberEntryDialogView: View {
     }
     
     @ViewBuilder func NumberDisplay() -> some View {
-        Text("\(numberStringAsNumber ?? 0)")
-            .font(.boldTitle)
+        Text("\(numberStringAsNumber?.formatted() ?? "--")")
+                .font(.titleBold)
     }
     
     @ViewBuilder func KeyPad() -> some View {
@@ -101,7 +104,7 @@ struct NumberEntryDialogView: View {
             numberString.append("\(number)")
         } label: {
             Text("\(number)")
-                .font(.boldHeader)
+                .font(.headerBold)
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background { ButtonBackground() }
@@ -113,7 +116,7 @@ struct NumberEntryDialogView: View {
             numberString.append(".")
         } label: {
             Text(".")
-                .font(.boldHeader)
+                .font(.headerBold)
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background { ButtonBackground() }
@@ -122,24 +125,25 @@ struct NumberEntryDialogView: View {
     
     @ViewBuilder func DeleteButton() -> some View {
         Button {
+            guard !numberString.isEmpty else { return }
             numberString.removeLast()
         } label: {
             Image(systemName: "delete.backward")
-                .font(.regularTitle)
+                .font(.titleRegular)
                 .padding()
                 .frame(maxWidth: .infinity)
         }
     }
     
     @ViewBuilder func ButtonBackground() -> some View {
-        RoundedRectangle(cornerRadius: .defaultCornerRadius, style: .continuous)
-            .stroke(lineWidth: 2)
+        RoundedRectangle(cornerRadius: .cornerRadiusDefault, style: .continuous)
+            .stroke(lineWidth: .buttonStrokeWidthDefault)
             .foregroundStyle(Color.accent)
     }
 }
 
 #Preview {
-    StatefulPreviewContainer(0) { number in
+    StatefulPreviewContainer(0 as Int?) { number in
         Rectangle()
             .sheet(isPresented: .constant(true)) {
                 NumberEntryDialogView(prompt: "Enter Your Number", number: number)

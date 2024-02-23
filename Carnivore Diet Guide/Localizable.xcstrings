@@ -65,6 +65,12 @@
         }
       }
     },
+    "." : {
+
+    },
+    "(%@)" : {
+
+    },
     "%lld" : {
 
     },
@@ -309,6 +315,9 @@
           }
         }
       }
+    },
+    "Add Ingredient" : {
+
     },
     "Albums" : {
       "comment" : "Photo Albums"
@@ -727,6 +736,9 @@
     "Create Profile" : {
 
     },
+    "Create Recipe" : {
+
+    },
     "Delete" : {
 
     },
@@ -808,6 +820,9 @@
 
     },
     "Edit Profile" : {
+
+    },
+    "Edit Recipe" : {
 
     },
     "Failed to report recipe: %@" : {
@@ -1144,7 +1159,6 @@
       }
     },
     "Ingredients" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1771,6 +1785,9 @@
     "Settings" : {
 
     },
+    "Show Sheet" : {
+
+    },
     "Start a Disussion" : {
 
     },
@@ -2047,6 +2064,9 @@
       }
     },
     "Write an Article" : {
+
+    },
+    "x" : {
 
     },
     "Yields: %lld servings" : {

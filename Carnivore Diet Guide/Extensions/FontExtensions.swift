@@ -8,8 +8,9 @@
 import SwiftUI
 
 extension Font {
-    static let regularTitle: Font = .system(size: .titleTextSize)
-    static let boldTitle: Font = .system(size: .titleTextSize, weight: .bold)
-    static let boldHeader: Font = .system(size: .headerTextSize, weight: .bold)
-    static let bodyText: Font = .system(size: .bodyTextSize)
+    static let titleRegular: Font = .system(size: .textSizeTitle)
+    static let titleBold: Font = .system(size: .textSizeTitle, weight: .bold)
+    static let headerRegular: Font = .system(size: .textSizeHeader)
+    static let headerBold: Font = .system(size: .textSizeHeader, weight: .bold)
+    static let bodyText: Font = .system(size: .textSizeBody)
 }
