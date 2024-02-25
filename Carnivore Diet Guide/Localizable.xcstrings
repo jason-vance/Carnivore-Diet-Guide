@@ -71,6 +71,9 @@
     "(%@)" : {
 
     },
+    "%@" : {
+
+    },
     "%lld" : {
 
     },
@@ -317,6 +320,9 @@
       }
     },
     "Add Ingredient" : {
+
+    },
+    "Add Item" : {
 
     },
     "Albums" : {
@@ -739,6 +745,12 @@
     "Create Recipe" : {
 
     },
+    "Cups" : {
+
+    },
+    "Dash" : {
+      "comment" : "As in, a dash of salt"
+    },
     "Delete" : {
 
     },
@@ -1025,8 +1037,14 @@
         }
       }
     },
+    "fl oz" : {
+      "comment" : "Abbreviation of fluid ounces"
+    },
+    "Fluid Ounces" : {
+
+    },
     "g" : {
-      "comment" : "grams",
+      "comment" : "grams\nAbbreviation of grams",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1089,6 +1107,18 @@
           }
         }
       }
+    },
+    "gal" : {
+      "comment" : "Abbreviation of gallons"
+    },
+    "Gallons" : {
+
+    },
+    "Grams" : {
+
+    },
+    "Handful" : {
+      "comment" : "As in, a handful of flour"
     },
     "Hard" : {
       "comment" : "Difficulty level is 'Hard'"
@@ -1228,6 +1258,9 @@
     "It's pretty quiet in here.\nBe the first to comment!" : {
 
     },
+    "John Doe" : {
+      "comment" : "Generic person's name"
+    },
     "kcal" : {
       "localizations" : {
         "ar" : {
@@ -1291,6 +1324,12 @@
           }
         }
       }
+    },
+    "kg" : {
+      "comment" : "Abbreviation of kilograms"
+    },
+    "Kilograms" : {
+
     },
     "Knowledge" : {
       "extractionState" : "stale",
@@ -1356,6 +1395,9 @@
           }
         }
       }
+    },
+    "lb" : {
+      "comment" : "Abbreviation of pounds"
     },
     "Library" : {
       "comment" : "Photo Library"
@@ -1445,6 +1487,12 @@
     "OK" : {
 
     },
+    "Ounces" : {
+
+    },
+    "oz" : {
+      "comment" : "Abbreviation of ounces"
+    },
     "Per Serving" : {
       "localizations" : {
         "ar" : {
@@ -1508,6 +1556,15 @@
           }
         }
       }
+    },
+    "Pinch" : {
+      "comment" : "As in, a pinch of salt"
+    },
+    "Pints" : {
+
+    },
+    "Pounds" : {
+
     },
     "Profile" : {
 
@@ -1575,6 +1632,15 @@
           }
         }
       }
+    },
+    "pt" : {
+      "comment" : "Abbreviation of pints"
+    },
+    "qt" : {
+      "comment" : "Abbreviation of quarts"
+    },
+    "Quarts" : {
+
     },
     "Quick Links" : {
 
@@ -1791,6 +1857,15 @@
     "Start a Disussion" : {
 
     },
+    "Tablespoons" : {
+
+    },
+    "tbsp" : {
+      "comment" : "Abbreviation of tablespoons"
+    },
+    "Teaspoons" : {
+
+    },
     "The Carnivore Diet Guide Team" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1991,6 +2066,15 @@
           }
         }
       }
+    },
+    "tsp" : {
+      "comment" : "Abbreviation of teaspoons"
+    },
+    "tsp, cup, etc." : {
+
+    },
+    "Unit" : {
+      "comment" : "Unit of measurement"
     },
     "Unknown" : {
       "comment" : "Difficulty level is 'Unknown'"

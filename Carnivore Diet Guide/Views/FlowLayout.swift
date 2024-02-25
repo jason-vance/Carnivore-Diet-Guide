@@ -88,7 +88,7 @@ struct FlowLayout<Item, ItemContent>: View where Item: Hashable, ItemContent: Vi
 }
 
 #Preview {
-    var items = [
+    let items = [
         "Some long item here",
         "And then some longer one",
         "Short", "Items", "Here", "And", "A", "Few", "More",

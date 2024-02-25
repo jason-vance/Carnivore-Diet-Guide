@@ -104,7 +104,8 @@ struct NumberEntryDialogView: View {
             numberString.append("\(number)")
         } label: {
             Text("\(number)")
-                .font(.headerBold)
+                .font(.subHeaderBold)
+                .foregroundStyle(Color.text)
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background { ButtonBackground() }
@@ -116,7 +117,8 @@ struct NumberEntryDialogView: View {
             numberString.append(".")
         } label: {
             Text(".")
-                .font(.headerBold)
+                .font(.subHeaderBold)
+                .foregroundStyle(Color.text)
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background { ButtonBackground() }

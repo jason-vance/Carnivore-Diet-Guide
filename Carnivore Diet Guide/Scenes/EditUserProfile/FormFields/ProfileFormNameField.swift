@@ -22,7 +22,8 @@ struct ProfileFormNameField: View {
     var body: some View {
         FormTextField(
             text: $nameStr,
-            prompt: String(localized: "Name"),
+            label: String(localized: "Name"),
+            prompt: String(localized: "John Doe", comment: "Generic person's name"),
             autoCapitalization: .words,
             errorView: {
                 NameErrorView()

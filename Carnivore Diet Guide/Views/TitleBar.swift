@@ -17,7 +17,7 @@ struct TitleBar: View {
         HStack {
             Spacer()
             Text(text)
-                .font(.headerBold)
+                .font(.subHeaderBold)
                 .bold()
                 .foregroundStyle(Color.text)
             Spacer()

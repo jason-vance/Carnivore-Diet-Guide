@@ -22,7 +22,7 @@ struct FormFieldOverlay: View {
             RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
                 .stroke(
                     Color.accentColor,
-                    style: .init(lineWidth: 1))
+                    style: .init(lineWidth: .buttonStrokeWidthDefault))
         }
     }
 }

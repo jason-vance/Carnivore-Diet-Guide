@@ -10,7 +10,6 @@ import SwinjectAutoregistration
 
 struct HomeView: View {
     
-    private let scrollShroudHeight: CGFloat = 16
     private let defaultPadding: CGFloat = 8
 
     @StateObject private var model = HomeViewModel()
@@ -27,6 +26,7 @@ struct HomeView: View {
                     TitleBar()
                     ScrollView {
                         ScrollableHomeContent(screenWidth: proxy.size.width)
+                            .padding(.top, .scrollShroudHeight)
                     }
                     .overlay(alignment: .top) { ScrollViewShroud() }
                 }
@@ -68,21 +68,11 @@ struct HomeView: View {
         }
     }
     
-    @ViewBuilder func ScrollViewShroud() -> some View {
-        LinearGradient(
-            colors: [Color.background, Color.clear],
-            startPoint: .top,
-            endPoint: .bottom
-        )
-        .frame(height: scrollShroudHeight)
-    }
-    
     @ViewBuilder func ScrollableHomeContent(screenWidth: CGFloat) -> some View {
         VStack {
             QuickLinks()
             NewsFeed(screenWidth: screenWidth)
         }
-        .padding(.top, scrollShroudHeight)
     }
     
     @ViewBuilder func QuickLinks() -> some View {
