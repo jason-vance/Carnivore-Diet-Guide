@@ -65,10 +65,10 @@
         }
       }
     },
-    "." : {
+    "--" : {
 
     },
-    "(%@)" : {
+    "." : {
 
     },
     "%@" : {
@@ -318,9 +318,6 @@
           }
         }
       }
-    },
-    "Add Ingredient" : {
-
     },
     "Add Item" : {
 
@@ -671,6 +668,9 @@
         }
       }
     },
+    "Cooking Level" : {
+
+    },
     "Cooking Steps" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -744,12 +744,6 @@
     },
     "Create Recipe" : {
 
-    },
-    "Cups" : {
-
-    },
-    "Dash" : {
-      "comment" : "As in, a dash of salt"
     },
     "Delete" : {
 
@@ -832,9 +826,6 @@
 
     },
     "Edit Profile" : {
-
-    },
-    "Edit Recipe" : {
 
     },
     "Failed to report recipe: %@" : {
@@ -1037,14 +1028,8 @@
         }
       }
     },
-    "fl oz" : {
-      "comment" : "Abbreviation of fluid ounces"
-    },
-    "Fluid Ounces" : {
-
-    },
     "g" : {
-      "comment" : "grams\nAbbreviation of grams",
+      "comment" : "grams",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1107,18 +1092,6 @@
           }
         }
       }
-    },
-    "gal" : {
-      "comment" : "Abbreviation of gallons"
-    },
-    "Gallons" : {
-
-    },
-    "Grams" : {
-
-    },
-    "Handful" : {
-      "comment" : "As in, a handful of flour"
     },
     "Hard" : {
       "comment" : "Difficulty level is 'Hard'"
@@ -1189,6 +1162,7 @@
       }
     },
     "Ingredients" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1325,12 +1299,6 @@
         }
       }
     },
-    "kg" : {
-      "comment" : "Abbreviation of kilograms"
-    },
-    "Kilograms" : {
-
-    },
     "Knowledge" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1395,9 +1363,6 @@
           }
         }
       }
-    },
-    "lb" : {
-      "comment" : "Abbreviation of pounds"
     },
     "Library" : {
       "comment" : "Photo Library"
@@ -1487,12 +1452,6 @@
     "OK" : {
 
     },
-    "Ounces" : {
-
-    },
-    "oz" : {
-      "comment" : "Abbreviation of ounces"
-    },
     "Per Serving" : {
       "localizations" : {
         "ar" : {
@@ -1556,15 +1515,6 @@
           }
         }
       }
-    },
-    "Pinch" : {
-      "comment" : "As in, a pinch of salt"
-    },
-    "Pints" : {
-
-    },
-    "Pounds" : {
-
     },
     "Profile" : {
 
@@ -1633,13 +1583,7 @@
         }
       }
     },
-    "pt" : {
-      "comment" : "Abbreviation of pints"
-    },
-    "qt" : {
-      "comment" : "Abbreviation of quarts"
-    },
-    "Quarts" : {
+    "Providing a cooking level is required" : {
 
     },
     "Quick Links" : {
@@ -1780,7 +1724,19 @@
     "Report" : {
 
     },
+    "Requires more advanced skills and experience, maybe some special equipment, or hard to find ingredients." : {
+
+    },
+    "Requires more experience, more prep, more cooking time, or ingredients you might not already have in your kitchen." : {
+
+    },
+    "Requires only basic cooking skills and common ingredients." : {
+
+    },
     "Save" : {
+
+    },
+    "Seared Ribeye Steak" : {
 
     },
     "Serves %lld" : {
@@ -1851,19 +1807,10 @@
     "Settings" : {
 
     },
-    "Show Sheet" : {
-
-    },
     "Start a Disussion" : {
 
     },
-    "Tablespoons" : {
-
-    },
-    "tbsp" : {
-      "comment" : "Abbreviation of tablespoons"
-    },
-    "Teaspoons" : {
+    "Text must not be empty" : {
 
     },
     "The Carnivore Diet Guide Team" : {
@@ -1935,6 +1882,9 @@
 
     },
     "Title" : {
+
+    },
+    "Title cannot be empty" : {
 
     },
     "Trending Blog Posts" : {
@@ -2067,15 +2017,6 @@
         }
       }
     },
-    "tsp" : {
-      "comment" : "Abbreviation of teaspoons"
-    },
-    "tsp, cup, etc." : {
-
-    },
-    "Unit" : {
-      "comment" : "Unit of measurement"
-    },
     "Unknown" : {
       "comment" : "Difficulty level is 'Unknown'"
     },
@@ -2148,9 +2089,6 @@
       }
     },
     "Write an Article" : {
-
-    },
-    "x" : {
 
     },
     "Yields: %lld servings" : {

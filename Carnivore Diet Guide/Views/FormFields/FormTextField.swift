@@ -12,16 +12,38 @@ struct FormTextField<ErrorContent: View>: View {
     @Binding var text: String
     @State var label: String
     @State var prompt: String
+    var hasError: Bool
     @State var clearable: Bool = false
     @State var autoCapitalization: TextInputAutocapitalization = .never
     @State var keyboard: UIKeyboardType = .alphabet
     var onCommit: (() -> ())? = nil
-    var errorView: () -> ErrorContent
-    
+    var errorContent: () -> ErrorContent
+
     @FocusState var isFocused: Bool
     
+    @State private var showError: Bool = false
+    @State private var showErrorContent: Bool = false
+    
     var body: some View {
-        VStack(spacing: 2) {
+        HStack {
+            if showError {
+                Button {
+                    showErrorContent = true
+                } label: {
+                    Image(systemName: "exclamationmark.octagon.fill")
+                        .font(.subHeaderBold)
+                        .foregroundStyle(Color.accent)
+                }
+                .transition(.asymmetric(
+                    insertion: .push(from: .leading),
+                    removal: .push(from: .trailing)
+                ))
+                .popover(isPresented: $showErrorContent) {
+                    errorContent()
+                        .padding(.horizontal)
+                        .presentationCompactAdaptation(.popover)
+                }
+            }
             HStack {
                 LabelText()
                 TextFieldView()
@@ -35,7 +57,11 @@ struct FormTextField<ErrorContent: View>: View {
                     isFocused = true
                 }
             }
-            errorView()
+        }
+        .onChange(of: hasError, initial: true) { newHasError in
+            withAnimation(.snappy) {
+                showError = newHasError
+            }
         }
     }
     
@@ -82,7 +108,8 @@ struct FormTextField<ErrorContent: View>: View {
         FormTextField(
             text: text,
             label: "Label",
-            prompt: "Prompt") {
+            prompt: "Prompt",
+            hasError: text.wrappedValue.isEmpty) {
                 Text(text.wrappedValue.isEmpty ? "Text must not be empty" : "")
             }
     }
@@ -94,6 +121,7 @@ struct FormTextField<ErrorContent: View>: View {
             text: text,
             label: "Label",
             prompt: "Prompt",
+            hasError: text.wrappedValue.isEmpty,
             clearable: true) {
                 Text(text.wrappedValue.isEmpty ? "Text must not be empty" : "")
             }

@@ -80,7 +80,7 @@ struct RecipeDetailMetadataView: View {
     }
     
     @ViewBuilder func DifficultyLevelMetadataItem() -> some View {
-        MetadataItem(text: model.difficultyLevel.toUiString(), icon: "frying.pan")
+        MetadataItem(text: model.difficultyLevel.uiString, icon: "frying.pan")
     }
     
     @ViewBuilder func FavoritesMetadataItem() -> some View {

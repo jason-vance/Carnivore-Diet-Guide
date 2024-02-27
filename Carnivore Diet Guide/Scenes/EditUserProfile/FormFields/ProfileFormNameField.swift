@@ -24,10 +24,9 @@ struct ProfileFormNameField: View {
             text: $nameStr,
             label: String(localized: "Name"),
             prompt: String(localized: "John Doe", comment: "Generic person's name"),
+            hasError: !isNameValid,
             autoCapitalization: .words,
-            errorView: {
-                NameErrorView()
-            }
+            errorContent: NameErrorView
         )
         .onChange(of: nameStr, perform: { value in
             guard name.wrappedValue?.value != value else { return }
@@ -41,19 +40,7 @@ struct ProfileFormNameField: View {
     }
     
     @ViewBuilder func NameErrorView() -> some View {
-        if isNameValid {
-            FormFieldErrorView.none
-        } else {
-            InvalidNameIndicator()
-        }
-    }
-    
-    @ViewBuilder func InvalidNameIndicator() -> some View {
-        FormFieldErrorView(
-            icon: "exclamationmark.octagon.fill",
-            text: String(localized: "Name must contain at least three letters"),
-            color: .red
-        )
+        Text("Name must contain at least three letters")
     }
 }
 
