@@ -87,6 +87,7 @@
 		56A6D1012B89DA6E003B27E5 /* ScrollViewShroud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D1002B89DA6E003B27E5 /* ScrollViewShroud.swift */; };
 		56A6D1042B8D24A0003B27E5 /* ResourceFormImageField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D1032B8D24A0003B27E5 /* ResourceFormImageField.swift */; };
 		56A6D1062B8D3387003B27E5 /* FormDialogField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D1052B8D3387003B27E5 /* FormDialogField.swift */; };
+		56A6D1082B8E97F4003B27E5 /* FormLongTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D1072B8E97F4003B27E5 /* FormLongTextField.swift */; };
 		56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A062B6C4DEC00C4C0DB /* SignInView.swift */; };
 		56B88A092B6C4E6E00C4C0DB /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A082B6C4E6E00C4C0DB /* BundleExtensions.swift */; };
 		56B88A0C2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A0B2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift */; };
@@ -273,6 +274,7 @@
 		56A6D1002B89DA6E003B27E5 /* ScrollViewShroud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewShroud.swift; sourceTree = "<group>"; };
 		56A6D1032B8D24A0003B27E5 /* ResourceFormImageField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceFormImageField.swift; sourceTree = "<group>"; };
 		56A6D1052B8D3387003B27E5 /* FormDialogField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDialogField.swift; sourceTree = "<group>"; };
+		56A6D1072B8E97F4003B27E5 /* FormLongTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormLongTextField.swift; sourceTree = "<group>"; };
 		56B88A062B6C4DEC00C4C0DB /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		56B88A082B6C4E6E00C4C0DB /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
 		56B88A0B2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInAuthenticationProvider.swift; sourceTree = "<group>"; };
@@ -865,6 +867,7 @@
 				56A6D0E92B88450E003B27E5 /* NumberEntryDialogView.swift */,
 				56A6D1032B8D24A0003B27E5 /* ResourceFormImageField.swift */,
 				56A6D1052B8D3387003B27E5 /* FormDialogField.swift */,
+				56A6D1072B8E97F4003B27E5 /* FormLongTextField.swift */,
 			);
 			path = FormFields;
 			sourceTree = "<group>";
@@ -1197,6 +1200,7 @@
 				56B88A772B70DCFD00C4C0DB /* UserDataProvider.swift in Sources */,
 				563BC7182B7CB67F008F3C50 /* CookTimeFormatter.swift in Sources */,
 				56B88A6A2B6FA73000C4C0DB /* Shake.swift in Sources */,
+				56A6D1082B8E97F4003B27E5 /* FormLongTextField.swift in Sources */,
 				56F213882B737159009DB057 /* RecipeFavoriter.swift in Sources */,
 				56A6D1042B8D24A0003B27E5 /* ResourceFormImageField.swift in Sources */,
 				567754352B717B420094EB8C /* ProfileControlLabel.swift in Sources */,

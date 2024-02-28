@@ -736,6 +736,9 @@
         }
       }
     },
+    "Cooking Time" : {
+
+    },
     "Create a Recipe" : {
 
     },
@@ -1586,6 +1589,9 @@
     "Providing a cooking level is required" : {
 
     },
+    "Providing a cooking time is required" : {
+
+    },
     "Quick Links" : {
 
     },
@@ -1804,10 +1810,19 @@
         }
       }
     },
+    "Servings" : {
+
+    },
+    "Servings must be greater than 0" : {
+
+    },
     "Settings" : {
 
     },
     "Start a Disussion" : {
+
+    },
+    "Summary" : {
 
     },
     "Text must not be empty" : {

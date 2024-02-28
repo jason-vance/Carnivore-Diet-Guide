@@ -20,12 +20,11 @@ struct EditRecipeView: View {
     @State private var summary: String = ""
     @State private var markdownContent: String = ""
     @State private var basicNutritionInfo: BasicNutritionInfo = .zero
+    //TODO: I probably need to make a bunch of ValueOf type classes to hold all of this data
     
     @State private var isCookingLevelDialogPresented: Bool = false
     @State private var isCookingTimeDialogPresented: Bool = false
     @State private var isServingsDialogPresented: Bool = false
-    @FocusState private var isSummaryFieldFocused: Bool
-    @State private var showSummaryTextEditor: Bool = false
 
     var body: some View {
         GeometryReader { geo in
@@ -36,7 +35,7 @@ struct EditRecipeView: View {
                     CookingLevelField()
                     CookingTimeField()
                     ServingsField()
-                    SummaryField(screenWidth: geo.size.width)
+                    SummaryField()
                     //TODO: Add a field for markdownContent
                     //TODO: Add a field for basicNutritionInfo
                 }
@@ -47,12 +46,8 @@ struct EditRecipeView: View {
         .interactiveDismissDisabled()
         .navigationBarBackButtonHidden()
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar{ Toolbar() }
-        .onChange(of: isSummaryFieldFocused, initial: true) { summaryFieldFocused in
-            withAnimation(.snappy) {
-                showSummaryTextEditor = summaryFieldFocused
-            }
-        }
+        .toolbar { Toolbar() }
+        .toolbarBackground(.ultraThinMaterial)
     }
     
     @ToolbarContentBuilder func Toolbar() -> some ToolbarContent {
@@ -88,6 +83,7 @@ struct EditRecipeView: View {
             label: String(localized: "Title"),
             prompt: String(localized: "Seared Ribeye Steak"),
             hasError: resourceTitle.isEmpty,
+            autoCapitalization: .words,
             errorContent: TitleErrorView
         )
     }
@@ -137,44 +133,14 @@ struct EditRecipeView: View {
             }
     }
     
-    @ViewBuilder func SummaryField(screenWidth: CGFloat) -> some View {
-        VStack(spacing: showSummaryTextEditor ? .paddingMedium : 0) {
-            SummaryTextFieldLabel()
-            SumaryTextField(screenWidth: screenWidth)
-        }
-        .padding()
-        .background {
-            FormFieldOverlay {
-                isSummaryFieldFocused.toggle()
-            }
-        }
-    }
-    
-    @ViewBuilder func SummaryTextFieldLabel() -> some View {
-        HStack {
-            Text("Summary")
-                .font(.subHeaderBold)
-                .foregroundStyle(Color.text)
-            Spacer()
-            Text(summary)
-                .font(.subHeaderRegular)
-                .foregroundStyle(Color.text)
-                .lineLimit(1)
-                .opacity(showSummaryTextEditor ? 0 : 1)
-        }
-    }
-    
-    @ViewBuilder func SumaryTextField(screenWidth: CGFloat) -> some View {
-        TextEditor(text: $summary)
-            .foregroundStyle(Color.text, Color.accent)
-            .scrollContentBackground(.hidden)
-            .focused($isSummaryFieldFocused)
-            .multilineTextAlignment(.leading)
-            .frame(
-                maxWidth: .infinity,
-                minHeight: showSummaryTextEditor ? 48 : 0,
-                maxHeight: showSummaryTextEditor ? .infinity : 0
-            )
+    @ViewBuilder func SummaryField() -> some View {
+        FormLongTextField(
+            text: $summary,
+            label: String(localized: "Summary"),
+            prompt: String(localized: "Tell us about your recipe"),
+            hasError: summary.isEmpty,
+            errorContent: { Text("Summary must not be empty") }
+        )
     }
 }
 
