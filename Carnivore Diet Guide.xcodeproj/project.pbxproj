@@ -69,6 +69,7 @@
 		567754352B717B420094EB8C /* ProfileControlLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567754342B717B420094EB8C /* ProfileControlLabel.swift */; };
 		567754372B7184640094EB8C /* UserAccountDeleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567754362B7184640094EB8C /* UserAccountDeleter.swift */; };
 		567754392B7194900094EB8C /* FirebaseUserAccountDeleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567754382B7194900094EB8C /* FirebaseUserAccountDeleter.swift */; };
+		569C57F42B8FF5B300CDF337 /* FormMarkdownContentField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569C57F32B8FF5B300CDF337 /* FormMarkdownContentField.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -256,6 +257,7 @@
 		567754342B717B420094EB8C /* ProfileControlLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileControlLabel.swift; sourceTree = "<group>"; };
 		567754362B7184640094EB8C /* UserAccountDeleter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountDeleter.swift; sourceTree = "<group>"; };
 		567754382B7194900094EB8C /* FirebaseUserAccountDeleter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserAccountDeleter.swift; sourceTree = "<group>"; };
+		569C57F32B8FF5B300CDF337 /* FormMarkdownContentField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormMarkdownContentField.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -868,6 +870,7 @@
 				56A6D1032B8D24A0003B27E5 /* ResourceFormImageField.swift */,
 				56A6D1052B8D3387003B27E5 /* FormDialogField.swift */,
 				56A6D1072B8E97F4003B27E5 /* FormLongTextField.swift */,
+				569C57F32B8FF5B300CDF337 /* FormMarkdownContentField.swift */,
 			);
 			path = FormFields;
 			sourceTree = "<group>";
@@ -1196,6 +1199,7 @@
 				56B88A2D2B6CE9EF00C4C0DB /* UserData.swift in Sources */,
 				56B88A552B6F275700C4C0DB /* UserOnboardingStateProvider.swift in Sources */,
 				56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */,
+				569C57F42B8FF5B300CDF337 /* FormMarkdownContentField.swift in Sources */,
 				56A6D0F02B884ED6003B27E5 /* CGFloatExtensions.swift in Sources */,
 				56B88A772B70DCFD00C4C0DB /* UserDataProvider.swift in Sources */,
 				563BC7182B7CB67F008F3C50 /* CookTimeFormatter.swift in Sources */,

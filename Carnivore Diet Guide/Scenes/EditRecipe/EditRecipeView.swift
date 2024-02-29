@@ -36,7 +36,7 @@ struct EditRecipeView: View {
                     CookingTimeField()
                     ServingsField()
                     SummaryField()
-                    //TODO: Add a field for markdownContent
+                    MarkdownContentField()
                     //TODO: Add a field for basicNutritionInfo
                 }
                 .padding(.paddingDefault)
@@ -140,6 +140,16 @@ struct EditRecipeView: View {
             prompt: String(localized: "Tell us about your recipe"),
             hasError: summary.isEmpty,
             errorContent: { Text("Summary must not be empty") }
+        )
+    }
+    
+    @ViewBuilder func MarkdownContentField() -> some View {
+        FormMarkdownContentField(
+            markdownContent: $markdownContent,
+            label: String(localized: "Recipe"),
+            prompt: "",
+            hasError: markdownContent.isEmpty,
+            errorContent: { Text("Recipe must not be empty") }
         )
     }
 }
