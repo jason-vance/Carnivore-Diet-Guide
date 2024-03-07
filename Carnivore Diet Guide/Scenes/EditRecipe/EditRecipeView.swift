@@ -9,6 +9,20 @@ import SwiftUI
 
 struct EditRecipeView: View {
     
+    private let sampleMarkdown: String = """
+This field supports Markdown.
+
+Tap the binoculars button to see what this will look like when it is displayed.
+
+## Ingredients
+- Something Tasty
+- Something Yummy
+
+## Cooking Steps
+1. **Gather:** Put all the ingredients into a bowl
+2. **Mix:** Stir the ingredients together
+"""
+    
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     @State private var resourceImage: UIImage = .init()
@@ -23,7 +37,6 @@ struct EditRecipeView: View {
     //TODO: I probably need to make a bunch of ValueOf type classes to hold all of this data
     //TODO: I Probably want to make a small library of components that I like to use in my apps
     // IE. StickyHeaderScrollingView, MicrowaveTimeEntryDialog, TaskAwareButton, etc
-    //TODO: Add an example for markdownContent
     
     @State private var isDifficultyLevelDialogPresented: Bool = false
     @State private var isCookingTimeDialogPresented: Bool = false
@@ -159,6 +172,7 @@ struct EditRecipeView: View {
             markdownContent: $markdownContent,
             label: String(localized: "Recipe"),
             prompt: "",
+            sampleMarkdown: sampleMarkdown,
             hasError: markdownContent.isEmpty,
             errorContent: { Text("Recipe must not be empty") }
         )

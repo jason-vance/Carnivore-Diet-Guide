@@ -13,6 +13,7 @@ struct FormMarkdownContentField<ErrorContent: View>: View {
     @Binding var markdownContent: String
     @State var label: String
     @State var prompt: String
+    @State var sampleMarkdown: String
     var hasError: Bool
     @State var autoCapitalization: TextInputAutocapitalization = .sentences
     @State var keyboard: UIKeyboardType = .default
@@ -32,7 +33,11 @@ struct FormMarkdownContentField<ErrorContent: View>: View {
     }
     
     private func save() {
-        markdownContent = myMarkdownContent
+        if myMarkdownContent == sampleMarkdown {
+            markdownContent = ""
+        } else {
+            markdownContent = myMarkdownContent
+        }
         showEntryDialog = false
     }
     
@@ -135,7 +140,12 @@ struct FormMarkdownContentField<ErrorContent: View>: View {
                     }
                     .padding(.horizontal)
                     .onAppear {
-                        myMarkdownContent = markdownContent
+                        if markdownContent.isEmpty {
+                            myMarkdownContent = sampleMarkdown
+                        } else {
+                            myMarkdownContent = markdownContent
+                        }
+                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             isFocused = true
                         }
@@ -177,9 +187,7 @@ struct FormMarkdownContentField<ErrorContent: View>: View {
                 showQuickLook.toggle()
             }
         } label: {
-            Image(systemName: "binoculars")
-                .font(.subHeaderBold)
-                .foregroundStyle(Color.accent)
+            ControlButtonLabel("binoculars")
                 .overlay(alignment: .bottomTrailing) {
                     if showQuickLook {
                         Image(systemName: "xmark.circle.fill")
@@ -187,6 +195,7 @@ struct FormMarkdownContentField<ErrorContent: View>: View {
                             .foregroundStyle(Color.accent)
                             .padding(1)
                             .background{ Circle().fill(Color.background) }
+                            .padding(.paddingMedium)
                             .offset(x: 2, y: 2)
                     }
                 }
@@ -195,9 +204,9 @@ struct FormMarkdownContentField<ErrorContent: View>: View {
     
     @ViewBuilder func TitleMenu() -> some View {
         Menu {
-            TitleButton()
-            HeaderButton()
             SubheaderButton()
+            HeaderButton()
+            TitleButton()
         } label: {
             ControlButtonLabel("textformat.size")
         }
@@ -229,8 +238,8 @@ struct FormMarkdownContentField<ErrorContent: View>: View {
     
     @ViewBuilder func ListMenu() -> some View {
         Menu {
-            NumberedListButton()
             BulletedListButton()
+            NumberedListButton()
         } label: {
             ControlButtonLabel("list.dash")
         }
@@ -298,6 +307,7 @@ struct FormMarkdownContentField<ErrorContent: View>: View {
             markdownContent: markdownContent,
             label: "Label",
             prompt: "Prompt",
+            sampleMarkdown: "This is sample ***Markdown***",
             hasError: markdownContent.wrappedValue.isEmpty) {
                 Text(markdownContent.wrappedValue.isEmpty ? "Markdown Content must not be empty" : "")
             }
