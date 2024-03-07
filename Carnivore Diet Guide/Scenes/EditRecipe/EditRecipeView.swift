@@ -15,7 +15,7 @@ struct EditRecipeView: View {
     @State private var resourceImageUrl: URL? = nil
     @State private var resourceTitle: String = ""
     @State private var difficultyLevel: Recipe.DifficultyLevel = .unknown
-    @State private var cookTimeMinutes: Int?
+    @State private var cookTime: MicrowaveTime = .zero
     @State private var servings: Int? = 1
     @State private var summary: String = ""
     @State private var markdownContent: String = ""
@@ -23,6 +23,7 @@ struct EditRecipeView: View {
     //TODO: I probably need to make a bunch of ValueOf type classes to hold all of this data
     //TODO: I Probably want to make a small library of components that I like to use in my apps
     // IE. StickyHeaderScrollingView, MicrowaveTimeEntryDialog, TaskAwareButton, etc
+    //TODO: Add an example for markdownContent
     
     @State private var isDifficultyLevelDialogPresented: Bool = false
     @State private var isCookingTimeDialogPresented: Bool = false
@@ -97,7 +98,7 @@ struct EditRecipeView: View {
     
     @ViewBuilder func CookingLevelField() -> some View {
         FormDialogField(
-            label: String(localized: "Cooking Level"),
+            label: String(localized: "Difficulty Level"),
             isDialogPresented: $isDifficultyLevelDialogPresented,
             hasError: difficultyLevel == .unknown) {
                 Text(difficultyLevel.uiString)
@@ -113,12 +114,17 @@ struct EditRecipeView: View {
         FormDialogField(
             label: String(localized: "Cooking Time"),
             isDialogPresented: $isCookingTimeDialogPresented,
-            hasError: cookTimeMinutes == nil) {
-                Text(cookTimeMinutes?.formatted() ?? "--:--")
+            hasError: cookTime == .zero) {
+                Text(cookTime.formatted())
             } errorContent: {
-                Text("Providing a cooking time is required")
+                Text("Cooking time must be greater than zero")
             }
-        //TODO: Show a cooking time dialog
+            .sheet(isPresented: $isCookingTimeDialogPresented) {
+                MicrowaveTimeEntryDialog(
+                    prompt: String(localized: "Cooking Time"),
+                    microwaveTime: $cookTime
+                )
+            }
     }
     
     @ViewBuilder func ServingsField() -> some View {

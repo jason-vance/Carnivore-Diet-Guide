@@ -128,6 +128,7 @@
 		56B88A742B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A732B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift */; };
 		56B88A772B70DCFD00C4C0DB /* UserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A762B70DCFD00C4C0DB /* UserDataProvider.swift */; };
 		56CD67132B99371B00484788 /* RecipeDifficultyLevelDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67122B99371B00484788 /* RecipeDifficultyLevelDialog.swift */; };
+		56CD67152B99661C00484788 /* MicrowaveTimeEntryDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67142B99661C00484788 /* MicrowaveTimeEntryDialog.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* PostDetailView.swift */; };
 		56E305072B4A982E0098079A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* Post.swift */; };
@@ -316,6 +317,7 @@
 		56B88A732B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreUserDataProvider.swift; sourceTree = "<group>"; };
 		56B88A762B70DCFD00C4C0DB /* UserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataProvider.swift; sourceTree = "<group>"; };
 		56CD67122B99371B00484788 /* RecipeDifficultyLevelDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDifficultyLevelDialog.swift; sourceTree = "<group>"; };
+		56CD67142B99661C00484788 /* MicrowaveTimeEntryDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrowaveTimeEntryDialog.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -873,6 +875,7 @@
 				56A6D1052B8D3387003B27E5 /* FormDialogField.swift */,
 				56A6D1072B8E97F4003B27E5 /* FormLongTextField.swift */,
 				569C57F32B8FF5B300CDF337 /* FormMarkdownContentField.swift */,
+				56CD67142B99661C00484788 /* MicrowaveTimeEntryDialog.swift */,
 			);
 			path = FormFields;
 			sourceTree = "<group>";
@@ -1229,6 +1232,7 @@
 				56A6D0F22B89432F003B27E5 /* FlowLayout.swift in Sources */,
 				56B88A3D2B6CF0B800C4C0DB /* ProfileFormNameField.swift in Sources */,
 				56E305072B4A982E0098079A /* Post.swift in Sources */,
+				56CD67152B99661C00484788 /* MicrowaveTimeEntryDialog.swift in Sources */,
 				56A6D0DC2B8582DF003B27E5 /* FeedView.swift in Sources */,
 				56B88A6C2B70D51D00C4C0DB /* UserDataSaver.swift in Sources */,
 				563BC7332B7E105C008F3C50 /* CreateMenu.swift in Sources */,
