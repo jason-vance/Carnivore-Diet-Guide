@@ -14,15 +14,17 @@ struct EditRecipeView: View {
     @State private var resourceImage: UIImage = .init()
     @State private var resourceImageUrl: URL? = nil
     @State private var resourceTitle: String = ""
-    @State private var cookingLevel: Recipe.DifficultyLevel = .unknown
+    @State private var difficultyLevel: Recipe.DifficultyLevel = .unknown
     @State private var cookTimeMinutes: Int?
     @State private var servings: Int? = 1
     @State private var summary: String = ""
     @State private var markdownContent: String = ""
     @State private var basicNutritionInfo: BasicNutritionInfo = .zero
     //TODO: I probably need to make a bunch of ValueOf type classes to hold all of this data
+    //TODO: I Probably want to make a small library of components that I like to use in my apps
+    // IE. StickyHeaderScrollingView, MicrowaveTimeEntryDialog, TaskAwareButton, etc
     
-    @State private var isCookingLevelDialogPresented: Bool = false
+    @State private var isDifficultyLevelDialogPresented: Bool = false
     @State private var isCookingTimeDialogPresented: Bool = false
     @State private var isServingsDialogPresented: Bool = false
 
@@ -54,6 +56,7 @@ struct EditRecipeView: View {
         ToolbarItem(placement: .principal) {
             Text("Create Recipe")
                 .font(.subHeaderBold)
+                .foregroundStyle(Color.text)
         }
         ToolbarItem(placement: .topBarLeading) {
             CancelButton()
@@ -95,13 +98,15 @@ struct EditRecipeView: View {
     @ViewBuilder func CookingLevelField() -> some View {
         FormDialogField(
             label: String(localized: "Cooking Level"),
-            isDialogPresented: $isCookingLevelDialogPresented,
-            hasError: cookingLevel == .unknown) {
-                Text(cookingLevel.uiString)
+            isDialogPresented: $isDifficultyLevelDialogPresented,
+            hasError: difficultyLevel == .unknown) {
+                Text(difficultyLevel.uiString)
             } errorContent: {
                 Text("Providing a cooking level is required")
             }
-        //TODO: Show a cooking level dialog
+            .sheet(isPresented: $isDifficultyLevelDialogPresented) {
+                RecipeDifficultyLevelDialog(difficultyLevel: $difficultyLevel)
+            }
     }
     
     @ViewBuilder func CookingTimeField() -> some View {

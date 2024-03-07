@@ -48,7 +48,6 @@
 		563BC7192B7CB67F008F3C50 /* CookTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7172B7CB67F008F3C50 /* CookTimeFormatter.swift */; };
 		563BC71C2B7CB6D8008F3C50 /* CookTimeFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC71B2B7CB6D8008F3C50 /* CookTimeFormatterTests.swift */; };
 		563BC71E2B7D67A7008F3C50 /* CommentReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC71D2B7D67A7008F3C50 /* CommentReporter.swift */; };
-		563BC71F2B7D67A7008F3C50 /* CommentReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC71D2B7D67A7008F3C50 /* CommentReporter.swift */; };
 		563BC7222B7D6804008F3C50 /* FirebaseReportRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7212B7D6804008F3C50 /* FirebaseReportRepository.swift */; };
 		563BC7242B7D6941008F3C50 /* FirestoreReportedItemDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7232B7D6941008F3C50 /* FirestoreReportedItemDoc.swift */; };
 		563BC7262B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7252B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift */; };
@@ -128,6 +127,7 @@
 		56B88A722B70DC9800C4C0DB /* CurrentUserIdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A712B70DC9800C4C0DB /* CurrentUserIdProvider.swift */; };
 		56B88A742B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A732B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift */; };
 		56B88A772B70DCFD00C4C0DB /* UserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A762B70DCFD00C4C0DB /* UserDataProvider.swift */; };
+		56CD67132B99371B00484788 /* RecipeDifficultyLevelDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67122B99371B00484788 /* RecipeDifficultyLevelDialog.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* PostDetailView.swift */; };
 		56E305072B4A982E0098079A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* Post.swift */; };
@@ -315,6 +315,7 @@
 		56B88A712B70DC9800C4C0DB /* CurrentUserIdProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserIdProvider.swift; sourceTree = "<group>"; };
 		56B88A732B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreUserDataProvider.swift; sourceTree = "<group>"; };
 		56B88A762B70DCFD00C4C0DB /* UserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataProvider.swift; sourceTree = "<group>"; };
+		56CD67122B99371B00484788 /* RecipeDifficultyLevelDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDifficultyLevelDialog.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -769,6 +770,7 @@
 			children = (
 				56A6D0E02B87FA8F003B27E5 /* EditRecipeView.swift */,
 				56A6D0E22B87FA98003B27E5 /* EditRecipeViewModel.swift */,
+				56CD67122B99371B00484788 /* RecipeDifficultyLevelDialog.swift */,
 			);
 			path = EditRecipe;
 			sourceTree = "<group>";
@@ -1199,6 +1201,7 @@
 				56B88A2D2B6CE9EF00C4C0DB /* UserData.swift in Sources */,
 				56B88A552B6F275700C4C0DB /* UserOnboardingStateProvider.swift in Sources */,
 				56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */,
+				56CD67132B99371B00484788 /* RecipeDifficultyLevelDialog.swift in Sources */,
 				569C57F42B8FF5B300CDF337 /* FormMarkdownContentField.swift in Sources */,
 				56A6D0F02B884ED6003B27E5 /* CGFloatExtensions.swift in Sources */,
 				56B88A772B70DCFD00C4C0DB /* UserDataProvider.swift in Sources */,
@@ -1317,7 +1320,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				563BC70F2B7B65D9008F3C50 /* PopularResources.swift in Sources */,
-				563BC71F2B7D67A7008F3C50 /* CommentReporter.swift in Sources */,
 				563BC71C2B7CB6D8008F3C50 /* CookTimeFormatterTests.swift in Sources */,
 				563BC70E2B7B65D1008F3C50 /* PopularResourcesTests.swift in Sources */,
 				563BC7192B7CB67F008F3C50 /* CookTimeFormatter.swift in Sources */,

@@ -71,6 +71,7 @@ struct NumberEntryDialogView: View {
     @ViewBuilder func NumberDisplay() -> some View {
         Text("\(numberStringAsNumber?.formatted() ?? "--")")
                 .font(.titleBold)
+                .foregroundStyle(Color.text)
     }
     
     @ViewBuilder func KeyPad() -> some View {

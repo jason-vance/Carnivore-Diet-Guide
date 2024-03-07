@@ -405,6 +405,9 @@
     "Bookmarked Articles" : {
 
     },
+    "Bulleted List" : {
+
+    },
     "By: %@" : {
       "localizations" : {
         "ar" : {
@@ -1099,6 +1102,9 @@
     "Hard" : {
       "comment" : "Difficulty level is 'Hard'"
     },
+    "Header" : {
+
+    },
     "Home" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1373,6 +1379,9 @@
     "Logout" : {
 
     },
+    "Markdown Content must not be empty" : {
+
+    },
     "moments ago" : {
 
     },
@@ -1386,6 +1395,9 @@
 
     },
     "Next" : {
+
+    },
+    "Numbered List" : {
 
     },
     "Nutritional Info" : {
@@ -1595,7 +1607,13 @@
     "Quick Links" : {
 
     },
+    "Recipe" : {
+
+    },
     "Recipe Details" : {
+
+    },
+    "Recipe must not be empty" : {
 
     },
     "Recipes" : {
@@ -1822,7 +1840,16 @@
     "Start a Disussion" : {
 
     },
+    "Subheader" : {
+
+    },
     "Summary" : {
+
+    },
+    "Summary must not be empty" : {
+
+    },
+    "Tell us about your recipe" : {
 
     },
     "Text must not be empty" : {
