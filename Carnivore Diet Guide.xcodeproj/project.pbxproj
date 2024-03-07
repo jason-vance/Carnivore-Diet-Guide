@@ -129,6 +129,10 @@
 		56B88A772B70DCFD00C4C0DB /* UserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A762B70DCFD00C4C0DB /* UserDataProvider.swift */; };
 		56CD67132B99371B00484788 /* RecipeDifficultyLevelDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67122B99371B00484788 /* RecipeDifficultyLevelDialog.swift */; };
 		56CD67152B99661C00484788 /* MicrowaveTimeEntryDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67142B99661C00484788 /* MicrowaveTimeEntryDialog.swift */; };
+		56CD67182B9A7FBF00484788 /* MicrowaveTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67172B9A7FBF00484788 /* MicrowaveTime.swift */; };
+		56CD671B2B9A801F00484788 /* GreaterThanZeroInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD671A2B9A801F00484788 /* GreaterThanZeroInt.swift */; };
+		56CD671D2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD671C2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift */; };
+		56CD671F2B9A866400484788 /* NonEmptyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD671E2B9A866400484788 /* NonEmptyString.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* PostDetailView.swift */; };
 		56E305072B4A982E0098079A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* Post.swift */; };
@@ -318,6 +322,10 @@
 		56B88A762B70DCFD00C4C0DB /* UserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataProvider.swift; sourceTree = "<group>"; };
 		56CD67122B99371B00484788 /* RecipeDifficultyLevelDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDifficultyLevelDialog.swift; sourceTree = "<group>"; };
 		56CD67142B99661C00484788 /* MicrowaveTimeEntryDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrowaveTimeEntryDialog.swift; sourceTree = "<group>"; };
+		56CD67172B9A7FBF00484788 /* MicrowaveTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrowaveTime.swift; sourceTree = "<group>"; };
+		56CD671A2B9A801F00484788 /* GreaterThanZeroInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreaterThanZeroInt.swift; sourceTree = "<group>"; };
+		56CD671C2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreaterThanZeroMicrowaveTime.swift; sourceTree = "<group>"; };
+		56CD671E2B9A866400484788 /* NonEmptyString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonEmptyString.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -718,6 +726,7 @@
 		5676A1342B47792B009C1DA6 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				56CD67192B9A7FF300484788 /* ValueTypes */,
 				56A6D0F62B8964F8003B27E5 /* Recipes */,
 				56B88A2E2B6CEA6500C4C0DB /* Users */,
 				56E305062B4A982E0098079A /* Post.swift */,
@@ -867,6 +876,7 @@
 		56B88A3E2B6CF0E100C4C0DB /* FormFields */ = {
 			isa = PBXGroup;
 			children = (
+				56CD67162B9A7FAC00484788 /* MicrowaveTimeEntryDialog */,
 				56B88A3F2B6CF0F100C4C0DB /* FormTextField.swift */,
 				56B88A412B6CF10700C4C0DB /* FormFieldOverlay.swift */,
 				56B88A432B6CF14000C4C0DB /* FormFieldErrorView.swift */,
@@ -875,7 +885,6 @@
 				56A6D1052B8D3387003B27E5 /* FormDialogField.swift */,
 				56A6D1072B8E97F4003B27E5 /* FormLongTextField.swift */,
 				569C57F32B8FF5B300CDF337 /* FormMarkdownContentField.swift */,
-				56CD67142B99661C00484788 /* MicrowaveTimeEntryDialog.swift */,
 			);
 			path = FormFields;
 			sourceTree = "<group>";
@@ -947,6 +956,25 @@
 				563BC7252B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift */,
 			);
 			path = Workers;
+			sourceTree = "<group>";
+		};
+		56CD67162B9A7FAC00484788 /* MicrowaveTimeEntryDialog */ = {
+			isa = PBXGroup;
+			children = (
+				56CD67142B99661C00484788 /* MicrowaveTimeEntryDialog.swift */,
+				56CD67172B9A7FBF00484788 /* MicrowaveTime.swift */,
+			);
+			path = MicrowaveTimeEntryDialog;
+			sourceTree = "<group>";
+		};
+		56CD67192B9A7FF300484788 /* ValueTypes */ = {
+			isa = PBXGroup;
+			children = (
+				56CD671A2B9A801F00484788 /* GreaterThanZeroInt.swift */,
+				56CD671C2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift */,
+				56CD671E2B9A866400484788 /* NonEmptyString.swift */,
+			);
+			path = ValueTypes;
 			sourceTree = "<group>";
 		};
 		56E305032B4A55BD0098079A /* PostDetail */ = {
@@ -1218,11 +1246,13 @@
 				56B88A5C2B6F311A00C4C0DB /* FirestoreUserDoc.swift in Sources */,
 				563BC7152B7C4C63008F3C50 /* CommentDeleter.swift in Sources */,
 				56A6D1062B8D3387003B27E5 /* FormDialogField.swift in Sources */,
+				56CD671F2B9A866400484788 /* NonEmptyString.swift in Sources */,
 				56B88A142B6C557B00C4C0DB /* ViewExtensions.swift in Sources */,
 				56A6D0DA2B8582D5003B27E5 /* FeedViewModel.swift in Sources */,
 				563BC6D92B75F0E1008F3C50 /* CommentView.swift in Sources */,
 				563BC6DB2B75F0F1008F3C50 /* CommentViewModel.swift in Sources */,
 				563BC7362B7F506A008F3C50 /* FeedItemView.swift in Sources */,
+				56CD67182B9A7FBF00484788 /* MicrowaveTime.swift in Sources */,
 				5677542C2B70E55C0094EB8C /* CurrentUserDataProvider.swift in Sources */,
 				56A6D0E12B87FA8F003B27E5 /* EditRecipeView.swift in Sources */,
 				56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */,
@@ -1230,6 +1260,7 @@
 				56F2139B2B743A74009DB057 /* RecipeFavoriteCountProvider.swift in Sources */,
 				563BC7302B7E0785008F3C50 /* HomeView.swift in Sources */,
 				56A6D0F22B89432F003B27E5 /* FlowLayout.swift in Sources */,
+				56CD671B2B9A801F00484788 /* GreaterThanZeroInt.swift in Sources */,
 				56B88A3D2B6CF0B800C4C0DB /* ProfileFormNameField.swift in Sources */,
 				56E305072B4A982E0098079A /* Post.swift in Sources */,
 				56CD67152B99661C00484788 /* MicrowaveTimeEntryDialog.swift in Sources */,
@@ -1243,6 +1274,7 @@
 				567754392B7194900094EB8C /* FirebaseUserAccountDeleter.swift in Sources */,
 				56B88A402B6CF0F100C4C0DB /* FormTextField.swift in Sources */,
 				56B88A472B6CF53A00C4C0DB /* EditUserProfileView.swift in Sources */,
+				56CD671D2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift in Sources */,
 				567754372B7184640094EB8C /* UserAccountDeleter.swift in Sources */,
 				567754332B717AAA0094EB8C /* SettingsView.swift in Sources */,
 				563BC6CD2B744C5D008F3C50 /* CollectionReferenceExtensions.swift in Sources */,

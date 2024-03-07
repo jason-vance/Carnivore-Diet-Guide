@@ -25,16 +25,16 @@ Tap the binoculars button to see what this will look like when it is displayed.
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
+    //TODO: Is there a way to turn these resource image fields into a ValueOf?
     @State private var resourceImage: UIImage = .init()
     @State private var resourceImageUrl: URL? = nil
-    @State private var resourceTitle: String = ""
+    @State private var resourceTitle: NonEmptyString?
     @State private var difficultyLevel: Recipe.DifficultyLevel = .unknown
-    @State private var cookTime: MicrowaveTime = .zero
-    @State private var servings: Int? = 1
-    @State private var summary: String = ""
-    @State private var markdownContent: String = ""
+    @State private var cookTime: GreaterThanZeroMicrowaveTime = .default
+    @State private var servings: GreaterThanZeroInt = .one
+    @State private var summary: NonEmptyString?
+    @State private var markdownContent: NonEmptyString?
     @State private var basicNutritionInfo: BasicNutritionInfo = .zero
-    //TODO: I probably need to make a bunch of ValueOf type classes to hold all of this data
     //TODO: I Probably want to make a small library of components that I like to use in my apps
     // IE. StickyHeaderScrollingView, MicrowaveTimeEntryDialog, TaskAwareButton, etc
     
@@ -96,17 +96,22 @@ Tap the binoculars button to see what this will look like when it is displayed.
     
     @ViewBuilder func TitleField() -> some View {
         FormTextField(
-            text: $resourceTitle,
+            text: .init(
+                get: { resourceTitle?.value ?? "" },
+                set: {
+                    guard let newValue = NonEmptyString($0) else {
+                        resourceTitle = nil
+                        return
+                    }
+                    resourceTitle = newValue
+                }
+            ),
             label: String(localized: "Title"),
-            prompt: String(localized: "Seared Ribeye Steak"),
-            hasError: resourceTitle.isEmpty,
+            prompt: String(localized: "ex. Seared Ribeye Steak"),
+            hasError: resourceTitle == nil,
             autoCapitalization: .words,
-            errorContent: TitleErrorView
+            errorContent: { Text("Title cannot be empty") }
         )
-    }
-    
-    @ViewBuilder func TitleErrorView() -> some View {
-        Text("Title cannot be empty")
     }
     
     @ViewBuilder func CookingLevelField() -> some View {
@@ -127,7 +132,7 @@ Tap the binoculars button to see what this will look like when it is displayed.
         FormDialogField(
             label: String(localized: "Cooking Time"),
             isDialogPresented: $isCookingTimeDialogPresented,
-            hasError: cookTime == .zero) {
+            hasError: false) {
                 Text(cookTime.formatted())
             } errorContent: {
                 Text("Cooking time must be greater than zero")
@@ -135,7 +140,16 @@ Tap the binoculars button to see what this will look like when it is displayed.
             .sheet(isPresented: $isCookingTimeDialogPresented) {
                 MicrowaveTimeEntryDialog(
                     prompt: String(localized: "Cooking Time"),
-                    microwaveTime: $cookTime
+                    microwaveTime: .init(
+                        get: { cookTime.value },
+                        set: {
+                            guard let newValue = GreaterThanZeroMicrowaveTime($0) else {
+                                cookTime = .default
+                                return
+                            }
+                            cookTime = newValue
+                        }
+                    )
                 )
             }
     }
@@ -144,36 +158,67 @@ Tap the binoculars button to see what this will look like when it is displayed.
         FormDialogField(
             label: String(localized: "Servings"),
             isDialogPresented: $isServingsDialogPresented,
-            hasError: servings == nil || servings! <= 0) {
-                Text(servings == nil ? "--" : "\(servings!)")
+            hasError: false) {
+                Text("\(servings.value)")
             } errorContent: {
                 Text("Servings must be greater than 0")
             }
             .sheet(isPresented: $isServingsDialogPresented) {
                 NumberEntryDialogView(
                     prompt: String(localized: "Servings", comment: "The amount of servings a recipe has"),
-                    number: $servings
+                    number: .init(
+                        get: { servings.value },
+                        set: {
+                            guard let newValue = $0 else {
+                                servings = .one
+                                return
+                            }
+                            guard let newServings = GreaterThanZeroInt(newValue) else {
+                                servings = .one
+                                return
+                            }
+                            servings = newServings
+                        }
+                    )
                 )
             }
     }
     
     @ViewBuilder func SummaryField() -> some View {
         FormLongTextField(
-            text: $summary,
+            text: .init(
+                get: { summary?.value ?? "" },
+                set: {
+                    guard let newValue = NonEmptyString($0) else {
+                        summary = nil
+                        return
+                    }
+                    summary = newValue
+                }
+            ),
             label: String(localized: "Summary"),
             prompt: String(localized: "Tell us about your recipe"),
-            hasError: summary.isEmpty,
+            hasError: summary == nil,
             errorContent: { Text("Summary must not be empty") }
         )
     }
     
     @ViewBuilder func MarkdownContentField() -> some View {
         FormMarkdownContentField(
-            markdownContent: $markdownContent,
+            markdownContent: .init(
+                get: { markdownContent?.value ?? "" },
+                set: {
+                    guard let newValue = NonEmptyString($0) else {
+                        markdownContent = nil
+                        return
+                    }
+                    markdownContent = newValue
+                }
+            ),
             label: String(localized: "Recipe"),
             prompt: "",
             sampleMarkdown: sampleMarkdown,
-            hasError: markdownContent.isEmpty,
+            hasError: markdownContent == nil,
             errorContent: { Text("Recipe must not be empty") }
         )
     }
