@@ -196,7 +196,7 @@ Tap the binoculars button to see what this will look like when it is displayed.
                 }
             ),
             label: String(localized: "Summary"),
-            prompt: String(localized: "Tell us about your recipe"),
+            prompt: String(localized: "Tell us a bit about your recipe"),
             hasError: summary == nil,
             errorContent: { Text("Summary must not be empty") }
         )

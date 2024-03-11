@@ -542,6 +542,9 @@
     "Calories must be greater than 0" : {
 
     },
+    "Calories: %lld" : {
+
+    },
     "Camera" : {
 
     },
@@ -617,6 +620,9 @@
           }
         }
       }
+    },
+    "Carbs: %lld" : {
+
     },
     "Carnivore" : {
       "comment" : "First line of the app name on the home screen. ie\n\"Carnivore\nDiet Guide\"",
@@ -923,6 +929,9 @@
       }
     },
     "Fat must be greater than 0" : {
+
+    },
+    "Fat: %lld" : {
 
     },
     "Favorite Recipes" : {
@@ -1628,6 +1637,9 @@
     "Protein must be greater than 0" : {
 
     },
+    "Protein: %lld" : {
+
+    },
     "Providing a cooking level is required" : {
 
     },
@@ -1864,9 +1876,6 @@
     "Settings" : {
 
     },
-    "Show" : {
-
-    },
     "Start a Disussion" : {
 
     },
@@ -1879,7 +1888,7 @@
     "Summary must not be empty" : {
 
     },
-    "Tell us about your recipe" : {
+    "Tell us a bit about your recipe" : {
 
     },
     "Text must not be empty" : {
