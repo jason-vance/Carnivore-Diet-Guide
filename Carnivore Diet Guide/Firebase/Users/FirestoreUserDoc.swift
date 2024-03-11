@@ -34,7 +34,7 @@ struct FirestoreUserDoc: Codable {
         guard let id = id else { return nil }
         
         guard let fullName = fullName else { return nil }
-        guard let fullName = PersonName(fullName) else { return nil }
+        guard let fullName = try? PersonName(fullName) else { return nil }
         
         guard let profileImageUrl = profileImageUrl else { return nil }
 

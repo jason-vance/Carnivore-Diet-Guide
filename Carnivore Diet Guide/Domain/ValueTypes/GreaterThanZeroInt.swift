@@ -10,7 +10,13 @@ import ValueOf
 
 class GreaterThanZeroInt: ValueOf<Int> {
     
-    public static let one: GreaterThanZeroInt = GreaterThanZeroInt(1)!
+    public static let one = (try? GreaterThanZeroInt(1))!
     
-    override class func validate(value: Int) -> Bool { value > 0 }
+    required init(_ value: Int) throws {
+        try super.init(
+            value,
+            validator: Self.validate(value:))
+    }
+    
+    static func validate(value: Int) -> Bool { value > 0 }
 }

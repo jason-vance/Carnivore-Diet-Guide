@@ -10,5 +10,12 @@ import ValueOf
 
 class NonEmptyString: ValueOf<String> {
     
-    override class func validate(value: String) -> Bool { !value.isEmpty }
+    required init(_ value: String) throws {
+        try super.init(
+            value,
+            validator: Self.validate(value:)
+        )
+    }
+    
+    static func validate(value: String) -> Bool { !value.isEmpty }
 }

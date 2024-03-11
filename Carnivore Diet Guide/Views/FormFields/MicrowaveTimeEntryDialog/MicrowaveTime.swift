@@ -10,15 +10,18 @@ import ValueOf
 
 class MicrowaveTime: ValueOf<TimeInterval> {
     
-    public static let zero = MicrowaveTime(0)!
+    public static let zero = (try? MicrowaveTime(hours: 0, minutes: 0))!
     
-    convenience init?(hours: Int, minutes: Int) {
+    init(hours: Int, minutes: Int) throws {
         let hoursInSeconds = hours * 3600
         let minutesInSeconds = minutes * 60
-        self.init(TimeInterval(hoursInSeconds + minutesInSeconds))
+        try super.init(
+            TimeInterval(hoursInSeconds + minutesInSeconds),
+            validator: Self.validate(value:)
+        )
     }
     
-    override class func validate(value: TimeInterval) -> Bool {
+    static func validate(value: TimeInterval) -> Bool {
         value >= 0
     }
     

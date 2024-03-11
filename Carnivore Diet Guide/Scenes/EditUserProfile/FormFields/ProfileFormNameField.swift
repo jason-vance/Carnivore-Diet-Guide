@@ -30,7 +30,7 @@ struct ProfileFormNameField: View {
         )
         .onChange(of: nameStr, perform: { value in
             guard name.wrappedValue?.value != value else { return }
-            name.wrappedValue = PersonName(value)
+            name.wrappedValue = try? PersonName(value)
         })
         .onChange(of: name.wrappedValue, perform: { value in
             guard let value = value else { return }
@@ -45,7 +45,7 @@ struct ProfileFormNameField: View {
 }
 
 #Preview("Pre-filled Name") {
-    StatefulPreviewContainer(PersonName("Jason Vance")) { name in
+    StatefulPreviewContainer((try? PersonName("Jason Vance"))) { name in
         ProfileFormNameField(name)
     }
 }

@@ -98,7 +98,7 @@ Tap the binoculars button to see what this will look like when it is displayed.
             text: .init(
                 get: { resourceTitle?.value ?? "" },
                 set: {
-                    guard let newValue = NonEmptyString($0) else {
+                    guard let newValue = try? NonEmptyString($0) else {
                         resourceTitle = nil
                         return
                     }
@@ -142,7 +142,7 @@ Tap the binoculars button to see what this will look like when it is displayed.
                     microwaveTime: .init(
                         get: { cookTime.value },
                         set: {
-                            guard let newValue = GreaterThanZeroMicrowaveTime($0) else {
+                            guard let newValue = try? GreaterThanZeroMicrowaveTime($0) else {
                                 cookTime = .default
                                 return
                             }
@@ -172,7 +172,7 @@ Tap the binoculars button to see what this will look like when it is displayed.
                                 servings = .one
                                 return
                             }
-                            guard let newServings = GreaterThanZeroInt(newValue) else {
+                            guard let newServings = try? GreaterThanZeroInt(newValue) else {
                                 servings = .one
                                 return
                             }
@@ -188,7 +188,7 @@ Tap the binoculars button to see what this will look like when it is displayed.
             text: .init(
                 get: { summary?.value ?? "" },
                 set: {
-                    guard let newValue = NonEmptyString($0) else {
+                    guard let newValue = try? NonEmptyString($0) else {
                         summary = nil
                         return
                     }
@@ -207,7 +207,7 @@ Tap the binoculars button to see what this will look like when it is displayed.
             markdownContent: .init(
                 get: { markdownContent?.value ?? "" },
                 set: {
-                    guard let newValue = NonEmptyString($0) else {
+                    guard let newValue = try? NonEmptyString($0) else {
                         markdownContent = nil
                         return
                     }

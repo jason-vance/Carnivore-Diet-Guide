@@ -134,6 +134,9 @@
 		56CD671D2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD671C2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift */; };
 		56CD671F2B9A866400484788 /* NonEmptyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD671E2B9A866400484788 /* NonEmptyString.swift */; };
 		56CD67212B9FA39400484788 /* BasicNutritionInfoEntryDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67202B9FA39400484788 /* BasicNutritionInfoEntryDialog.swift */; };
+		56CD67232B9FAE2400484788 /* ConstrainedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67222B9FAE2400484788 /* ConstrainedString.swift */; };
+		56CD67272B9FAF3700484788 /* ConstrainedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67222B9FAE2400484788 /* ConstrainedString.swift */; };
+		56CD67292B9FAF4F00484788 /* ConstrainedStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67282B9FAF4F00484788 /* ConstrainedStringTests.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* PostDetailView.swift */; };
 		56E305072B4A982E0098079A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* Post.swift */; };
@@ -328,6 +331,8 @@
 		56CD671C2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreaterThanZeroMicrowaveTime.swift; sourceTree = "<group>"; };
 		56CD671E2B9A866400484788 /* NonEmptyString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonEmptyString.swift; sourceTree = "<group>"; };
 		56CD67202B9FA39400484788 /* BasicNutritionInfoEntryDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfoEntryDialog.swift; sourceTree = "<group>"; };
+		56CD67222B9FAE2400484788 /* ConstrainedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstrainedString.swift; sourceTree = "<group>"; };
+		56CD67282B9FAF4F00484788 /* ConstrainedStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstrainedStringTests.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -636,6 +641,7 @@
 		563BC70C2B7B65C2008F3C50 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				56CD67242B9FAF2000484788 /* ValueTypes */,
 				563BC70D2B7B65D1008F3C50 /* PopularResourcesTests.swift */,
 			);
 			path = Domain;
@@ -976,6 +982,15 @@
 				56CD671A2B9A801F00484788 /* GreaterThanZeroInt.swift */,
 				56CD671C2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift */,
 				56CD671E2B9A866400484788 /* NonEmptyString.swift */,
+				56CD67222B9FAE2400484788 /* ConstrainedString.swift */,
+			);
+			path = ValueTypes;
+			sourceTree = "<group>";
+		};
+		56CD67242B9FAF2000484788 /* ValueTypes */ = {
+			isa = PBXGroup;
+			children = (
+				56CD67282B9FAF4F00484788 /* ConstrainedStringTests.swift */,
 			);
 			path = ValueTypes;
 			sourceTree = "<group>";
@@ -1308,6 +1323,7 @@
 				56E305622B4BF77A0098079A /* DependencyConfigurator.swift in Sources */,
 				56B88A192B6C5FE400C4C0DB /* FirebaseAuthentication.swift in Sources */,
 				563BC6C82B7449E7008F3C50 /* FirebaseRecipeActivityRepository.swift in Sources */,
+				56CD67232B9FAE2400484788 /* ConstrainedString.swift in Sources */,
 				56B88A742B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift in Sources */,
 				56F213802B722A2D009DB057 /* RecipeDetailView.swift in Sources */,
 				56F2137C2B7222CA009DB057 /* PositionObservingView.swift in Sources */,
@@ -1362,6 +1378,8 @@
 				563BC70F2B7B65D9008F3C50 /* PopularResources.swift in Sources */,
 				563BC71C2B7CB6D8008F3C50 /* CookTimeFormatterTests.swift in Sources */,
 				563BC70E2B7B65D1008F3C50 /* PopularResourcesTests.swift in Sources */,
+				56CD67292B9FAF4F00484788 /* ConstrainedStringTests.swift in Sources */,
+				56CD67272B9FAF3700484788 /* ConstrainedString.swift in Sources */,
 				563BC7192B7CB67F008F3C50 /* CookTimeFormatter.swift in Sources */,
 				563BC6F82B78BE31008F3C50 /* DateExtensions.swift in Sources */,
 				563BC6FA2B78BE3E008F3C50 /* DateExtensionsTests.swift in Sources */,

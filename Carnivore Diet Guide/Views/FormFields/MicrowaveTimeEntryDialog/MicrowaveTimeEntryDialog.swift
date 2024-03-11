@@ -22,7 +22,7 @@ struct MicrowaveTimeEntryDialog: View {
         var hours = 0
         var minutes = 0
         let initializer = { (hours:Int, minutes:Int) in
-            MicrowaveTime(hours: hours, minutes: minutes) ?? .zero
+            (try? MicrowaveTime(hours: hours, minutes: minutes)) ?? .zero
         }
         
         if numberString.count <= 2 {

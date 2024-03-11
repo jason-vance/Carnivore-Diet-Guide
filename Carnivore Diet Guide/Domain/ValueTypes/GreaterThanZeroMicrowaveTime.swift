@@ -10,9 +10,16 @@ import ValueOf
 
 class GreaterThanZeroMicrowaveTime: ValueOf<MicrowaveTime> {
     
-    public static let `default`: GreaterThanZeroMicrowaveTime = .init(.init(hours: 0, minutes: 15)!)!
+    public static let `default` = (try? GreaterThanZeroMicrowaveTime((try? .init(hours: 0, minutes: 15))!))!
     
-    override class func validate(value: MicrowaveTime) -> Bool { value.value > 0 }
+    required init(_ value: MicrowaveTime) throws {
+        try super.init(
+            value,
+            validator: Self.validate(value:)
+        )
+    }
+    
+    class func validate(value: MicrowaveTime) -> Bool { value.value > 0 }
     
     func formatted() -> String { value.formatted() }
 }

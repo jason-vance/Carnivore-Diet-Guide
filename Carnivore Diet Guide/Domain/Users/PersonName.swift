@@ -8,9 +8,17 @@
 import Foundation
 import ValueOf
 
+//TODO: Make this a ConstrainedString
 class PersonName: ValueOf<String> {
     
-    override class func validate(value: String) -> Bool {
+    required init(_ value: String) throws {
+        try super.init(
+            value,
+            validator: Self.validate(value:)
+        )
+    }
+    
+    class func validate(value: String) -> Bool {
         hasAtLeastThreeChars(value)
         &&
         beginsAndEndsWithNonWhitespace(value)

@@ -26,7 +26,7 @@ extension UserData {
     
     static let sample = UserData(
         id: "id",
-        fullName: PersonName("Clive Rosfield"),
+        fullName: (try? PersonName("Clive Rosfield"))!,
         profileImageUrl: URL(string:"https://static1.cbrimages.com/wordpress/wp-content/uploads/2023/06/final-fantasy-xvi-clive-profile.jpg")
     )
 }

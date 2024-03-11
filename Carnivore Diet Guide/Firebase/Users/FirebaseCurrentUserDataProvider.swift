@@ -27,7 +27,7 @@ class FirebaseCurrentUserDataProvider: CurrentUserDataProvider {
         
         return UserData(
             id: userId,
-            fullName: PersonName(userDoc?.fullName ?? authProvider.currentUser?.displayName ?? ""),
+            fullName: try? PersonName(userDoc?.fullName ?? authProvider.currentUser?.displayName ?? ""),
             profileImageUrl: userDoc?.profileImageUrl
         )
     }
