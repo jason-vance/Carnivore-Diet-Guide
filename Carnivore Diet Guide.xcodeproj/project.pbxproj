@@ -133,6 +133,7 @@
 		56CD671B2B9A801F00484788 /* GreaterThanZeroInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD671A2B9A801F00484788 /* GreaterThanZeroInt.swift */; };
 		56CD671D2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD671C2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift */; };
 		56CD671F2B9A866400484788 /* NonEmptyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD671E2B9A866400484788 /* NonEmptyString.swift */; };
+		56CD67212B9FA39400484788 /* BasicNutritionInfoEntryDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67202B9FA39400484788 /* BasicNutritionInfoEntryDialog.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* PostDetailView.swift */; };
 		56E305072B4A982E0098079A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* Post.swift */; };
@@ -326,6 +327,7 @@
 		56CD671A2B9A801F00484788 /* GreaterThanZeroInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreaterThanZeroInt.swift; sourceTree = "<group>"; };
 		56CD671C2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreaterThanZeroMicrowaveTime.swift; sourceTree = "<group>"; };
 		56CD671E2B9A866400484788 /* NonEmptyString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonEmptyString.swift; sourceTree = "<group>"; };
+		56CD67202B9FA39400484788 /* BasicNutritionInfoEntryDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfoEntryDialog.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -782,6 +784,7 @@
 				56A6D0E02B87FA8F003B27E5 /* EditRecipeView.swift */,
 				56A6D0E22B87FA98003B27E5 /* EditRecipeViewModel.swift */,
 				56CD67122B99371B00484788 /* RecipeDifficultyLevelDialog.swift */,
+				56CD67202B9FA39400484788 /* BasicNutritionInfoEntryDialog.swift */,
 			);
 			path = EditRecipe;
 			sourceTree = "<group>";
@@ -1275,6 +1278,7 @@
 				56B88A402B6CF0F100C4C0DB /* FormTextField.swift in Sources */,
 				56B88A472B6CF53A00C4C0DB /* EditUserProfileView.swift in Sources */,
 				56CD671D2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift in Sources */,
+				56CD67212B9FA39400484788 /* BasicNutritionInfoEntryDialog.swift in Sources */,
 				567754372B7184640094EB8C /* UserAccountDeleter.swift in Sources */,
 				567754332B717AAA0094EB8C /* SettingsView.swift in Sources */,
 				563BC6CD2B744C5D008F3C50 /* CollectionReferenceExtensions.swift in Sources */,

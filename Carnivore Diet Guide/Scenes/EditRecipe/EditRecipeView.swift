@@ -25,22 +25,21 @@ Tap the binoculars button to see what this will look like when it is displayed.
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
-    //TODO: Is there a way to turn these resource image fields into a ValueOf?
+    //TODO: Limit and trim all of the text inputs
     @State private var resourceImage: UIImage = .init()
     @State private var resourceImageUrl: URL? = nil
     @State private var resourceTitle: NonEmptyString?
-    @State private var difficultyLevel: Recipe.DifficultyLevel = .unknown
+    @State private var difficultyLevel: Recipe.DifficultyLevel = .easy
     @State private var cookTime: GreaterThanZeroMicrowaveTime = .default
     @State private var servings: GreaterThanZeroInt = .one
     @State private var summary: NonEmptyString?
     @State private var markdownContent: NonEmptyString?
     @State private var basicNutritionInfo: BasicNutritionInfo = .zero
-    //TODO: I Probably want to make a small library of components that I like to use in my apps
-    // IE. StickyHeaderScrollingView, MicrowaveTimeEntryDialog, TaskAwareButton, etc
     
     @State private var isDifficultyLevelDialogPresented: Bool = false
     @State private var isCookingTimeDialogPresented: Bool = false
     @State private var isServingsDialogPresented: Bool = false
+    @State private var isNutritionInfoDialogPresented: Bool = false
 
     var body: some View {
         GeometryReader { geo in
@@ -53,7 +52,7 @@ Tap the binoculars button to see what this will look like when it is displayed.
                     ServingsField()
                     SummaryField()
                     MarkdownContentField()
-                    //TODO: Add a field for basicNutritionInfo
+                    NutritionInfoField()
                 }
                 .padding(.paddingDefault)
             }
@@ -221,6 +220,21 @@ Tap the binoculars button to see what this will look like when it is displayed.
             hasError: markdownContent == nil,
             errorContent: { Text("Recipe must not be empty") }
         )
+    }
+    
+    @ViewBuilder func NutritionInfoField() -> some View {
+        FormDialogField(
+            label: String(localized: "Nutrition Info"),
+            isDialogPresented: $isNutritionInfoDialogPresented,
+            hasError: false,
+            valueContent: {
+                Text(basicNutritionInfo.calories > 0 ? "\(basicNutritionInfo.calories) Cals" : "--")
+            },
+            errorContent: { Text("Providing nutrition info is optional") }
+        )
+        .sheet(isPresented: $isNutritionInfoDialogPresented) {
+            BasicNutritionInfoEntryDialog(nutritionInfo: $basicNutritionInfo)
+        }
     }
 }
 

@@ -77,6 +77,9 @@
     "%lld" : {
 
     },
+    "%lld Cals" : {
+
+    },
     "%lld days ago" : {
       "localizations" : {
         "en" : {
@@ -536,10 +539,19 @@
         }
       }
     },
+    "Calories must be greater than 0" : {
+
+    },
     "Camera" : {
 
     },
     "Cancel" : {
+
+    },
+    "Carbohydrate" : {
+
+    },
+    "Carbohydrate must be greater than 0" : {
 
     },
     "Carbohydrates" : {
@@ -670,6 +682,9 @@
           }
         }
       }
+    },
+    "Clear" : {
+
     },
     "Cooking Steps" : {
       "extractionState" : "stale",
@@ -837,6 +852,9 @@
     "Edit Profile" : {
 
     },
+    "ex. Seared Ribeye Steak" : {
+
+    },
     "Failed to report recipe: %@" : {
 
     },
@@ -903,6 +921,9 @@
           }
         }
       }
+    },
+    "Fat must be greater than 0" : {
+
     },
     "Favorite Recipes" : {
 
@@ -1403,6 +1424,9 @@
     "Numbered List" : {
 
     },
+    "Nutrition Info" : {
+
+    },
     "Nutritional Info" : {
       "localizations" : {
         "ar" : {
@@ -1601,7 +1625,13 @@
         }
       }
     },
+    "Protein must be greater than 0" : {
+
+    },
     "Providing a cooking level is required" : {
+
+    },
+    "Providing nutrition info is optional" : {
 
     },
     "Quick Links" : {
@@ -1760,9 +1790,6 @@
     "Save" : {
 
     },
-    "Seared Ribeye Steak" : {
-
-    },
     "Serves %lld" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1835,6 +1862,9 @@
 
     },
     "Settings" : {
+
+    },
+    "Show" : {
 
     },
     "Start a Disussion" : {
