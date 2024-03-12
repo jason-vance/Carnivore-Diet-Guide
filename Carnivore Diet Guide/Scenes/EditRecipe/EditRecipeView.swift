@@ -25,21 +25,38 @@ Tap the binoculars button to see what this will look like when it is displayed.
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
-    //TODO: Limit and trim all of the text inputs
     @State private var resourceImage: UIImage = .init()
     @State private var resourceImageUrl: URL? = nil
-    @State private var resourceTitle: NonEmptyString?
+    @State private var resourceTitle: String = ""
     @State private var difficultyLevel: Recipe.DifficultyLevel = .easy
     @State private var cookTime: GreaterThanZeroMicrowaveTime = .default
     @State private var servings: GreaterThanZeroInt = .one
-    @State private var summary: NonEmptyString?
-    @State private var markdownContent: NonEmptyString?
+    @State private var summary: String = ""
+    @State private var markdownContent: String = ""
     @State private var basicNutritionInfo: BasicNutritionInfo = .zero
     
     @State private var isDifficultyLevelDialogPresented: Bool = false
     @State private var isCookingTimeDialogPresented: Bool = false
     @State private var isServingsDialogPresented: Bool = false
     @State private var isNutritionInfoDialogPresented: Bool = false
+    
+    private var formData: EditRecipeFormData? {
+        guard let resourceImageUrl = resourceImageUrl else { return nil }
+        guard let resourceTitle = try? ResourceTitle(resourceTitle) else { return nil }
+        guard let summary = try? ResourceSummary(summary) else { return nil }
+        guard let markdownContent = try? ResourceMarkdownContent(markdownContent) else { return nil }
+
+        return EditRecipeFormData(
+            resourceImageUrl: resourceImageUrl,
+            resourceTitle: resourceTitle,
+            difficultyLevel: difficultyLevel,
+            cookTime: cookTime,
+            servings: servings,
+            summary: summary,
+            markdownContent: markdownContent,
+            basicNutritionInfo: basicNutritionInfo
+        )
+    }
 
     var body: some View {
         GeometryReader { geo in
@@ -95,21 +112,13 @@ Tap the binoculars button to see what this will look like when it is displayed.
     
     @ViewBuilder func TitleField() -> some View {
         FormTextField(
-            text: .init(
-                get: { resourceTitle?.value ?? "" },
-                set: {
-                    guard let newValue = try? NonEmptyString($0) else {
-                        resourceTitle = nil
-                        return
-                    }
-                    resourceTitle = newValue
-                }
-            ),
+            text: $resourceTitle,
             label: String(localized: "Title"),
             prompt: String(localized: "ex. Seared Ribeye Steak"),
-            hasError: resourceTitle == nil,
+            hasError: (try? ResourceTitle(resourceTitle)) == nil,
             autoCapitalization: .words,
             errorContent: { Text("Title cannot be empty") }
+            //TODO: Get error description from ResourceTitle
         )
     }
     
@@ -185,40 +194,24 @@ Tap the binoculars button to see what this will look like when it is displayed.
     
     @ViewBuilder func SummaryField() -> some View {
         FormLongTextField(
-            text: .init(
-                get: { summary?.value ?? "" },
-                set: {
-                    guard let newValue = try? NonEmptyString($0) else {
-                        summary = nil
-                        return
-                    }
-                    summary = newValue
-                }
-            ),
+            text: $summary,
             label: String(localized: "Summary"),
             prompt: String(localized: "Tell us a bit about your recipe"),
-            hasError: summary == nil,
+            hasError: (try? ResourceSummary(summary)) == nil,
             errorContent: { Text("Summary must not be empty") }
+            //TODO: Get error description from ResourceSummary
         )
     }
     
     @ViewBuilder func MarkdownContentField() -> some View {
         FormMarkdownContentField(
-            markdownContent: .init(
-                get: { markdownContent?.value ?? "" },
-                set: {
-                    guard let newValue = try? NonEmptyString($0) else {
-                        markdownContent = nil
-                        return
-                    }
-                    markdownContent = newValue
-                }
-            ),
+            markdownContent: $markdownContent,
             label: String(localized: "Recipe"),
             prompt: "",
             sampleMarkdown: sampleMarkdown,
-            hasError: markdownContent == nil,
+            hasError: (try? ResourceMarkdownContent(markdownContent)) == nil,
             errorContent: { Text("Recipe must not be empty") }
+            //TODO: Get error description from ResourceMarkdownContent
         )
     }
     
