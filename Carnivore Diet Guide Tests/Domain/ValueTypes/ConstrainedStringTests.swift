@@ -18,11 +18,19 @@ final class ConstrainedStringTests: XCTestCase {
     }
     
     func testLengthLimitConstraint() throws {
-        let notShortEnough = try? ConstrainedString("hello hello hello", validationConstraints: [.lengthLimit(limit: 10)])
-        XCTAssertNil(notShortEnough)
+        let tooLong = try? ConstrainedString("hello hello hello", validationConstraints: [.maximumLength(10)])
+        XCTAssertNil(tooLong)
         
-        let shortEnough = try? ConstrainedString("hello", validationConstraints: [.lengthLimit(limit: 10)])
+        let shortEnough = try? ConstrainedString("hello", validationConstraints: [.maximumLength(10)])
         XCTAssertNotNil(shortEnough)
+    }
+    
+    func testLengthMinimumConstraint() throws {
+        let tooShort = try? ConstrainedString("hi", validationConstraints: [.minimumLength(3)])
+        XCTAssertNil(tooShort)
+        
+        let longEnough = try? ConstrainedString("hello", validationConstraints: [.minimumLength(3)])
+        XCTAssertNotNil(longEnough)
     }
     
     func testRegexConstraint() throws {
@@ -32,7 +40,7 @@ final class ConstrainedStringTests: XCTestCase {
         let match = try? ConstrainedString("hello", validationConstraints: [.regex(regex: /hello/)])
         XCTAssertNotNil(match)
     }
-        
+    
     func testTrimmedConstraint() throws {
         let trimmed = try? ConstrainedString("    hello\n\n", formattingConstraints: [.trimmed])
         XCTAssertEqual("hello", trimmed?.value)

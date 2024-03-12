@@ -12,15 +12,18 @@ class ConstrainedString: ValueOf<String> {
     
     enum ValidationConstraints {
         case notEmpty
-        case lengthLimit(limit: Int)
+        case minimumLength(_ min: Int)
+        case maximumLength(_ max: Int)
         case regex(regex: Regex<Substring>)
         
         func validate(_ value: String) -> Bool {
             switch self {
             case .notEmpty:
                 return !value.isEmpty
-            case .lengthLimit(limit: let length):
-                return value.count <= length
+            case .minimumLength(let min):
+                return value.count >= min
+            case .maximumLength(let max):
+                return value.count <= max
             case .regex(regex: let regex):
                 return value.wholeMatch(of: regex) != nil
             }
