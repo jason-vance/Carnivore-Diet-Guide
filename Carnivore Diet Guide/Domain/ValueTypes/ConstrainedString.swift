@@ -16,16 +16,16 @@ class ConstrainedString: ValueOf<String> {
         case maximumLength(_ max: Int)
         case regex(regex: Regex<Substring>)
         
-        func validate(_ value: String) -> Bool {
+        func throwIfNotValid(_ value: String) throws {
             switch self {
             case .notEmpty:
-                return !value.isEmpty
+                if value.isEmpty { throw "Must not be empty" }
             case .minimumLength(let min):
-                return value.count >= min
+                if value.count < min { throw "Must be at least \(min) characters" }
             case .maximumLength(let max):
-                return value.count <= max
+                if value.count > max { throw "Must be less than \(max) characters" }
             case .regex(regex: let regex):
-                return value.wholeMatch(of: regex) != nil
+                if value.wholeMatch(of: regex) == nil { throw "Must match regex \(regex)" }
             }
         }
     }
@@ -44,17 +44,32 @@ class ConstrainedString: ValueOf<String> {
     init(_ value: String, validationConstraints: [ValidationConstraints] = [], formattingConstraints: [FormattingConstraint] = []) throws {
         try super.init(
             value,
-            validator: { value in Self.validate(value, constraints: validationConstraints) },
+            validator: { value in try Self.throwIfNotValid(value, constraints: validationConstraints) },
             valueFormatter: { value in Self.format(value, constraints: formattingConstraints) }
         )
     }
     
-    static func validate(_ value: String, constraints: [ValidationConstraints]) -> Bool {
-        var isValid = true
-        for constraint in constraints {
-            isValid = isValid && constraint.validate(value)
+    fileprivate static func appendTo(_ errorDescription: inout String, _ error: any Error) {
+        if !errorDescription.isEmpty {
+            errorDescription.append("\n")
         }
-        return isValid
+        errorDescription.append(error.localizedDescription)
+    }
+    
+    static func throwIfNotValid(_ value: String, constraints: [ValidationConstraints]) throws {
+        var errorDescription = ""
+        
+        for constraint in constraints {
+            do {
+                try constraint.throwIfNotValid(value)
+            } catch {
+                appendTo(&errorDescription, error)
+            }
+        }
+        
+        if !errorDescription.isEmpty {
+            throw errorDescription
+        }
     }
     
     static func format(_ value: String, constraints: [FormattingConstraint]) -> String {

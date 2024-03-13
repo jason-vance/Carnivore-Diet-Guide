@@ -21,8 +21,10 @@ class MicrowaveTime: ValueOf<TimeInterval> {
         )
     }
     
-    static func validate(value: TimeInterval) -> Bool {
-        value >= 0
+    static func validate(value: TimeInterval) throws {
+        if value < 0 {
+            throw String(localized: "Must not be negative")
+        }
     }
     
     func formatted() -> String {

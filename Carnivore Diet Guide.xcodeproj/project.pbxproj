@@ -136,7 +136,6 @@
 		56CD67182B9A7FBF00484788 /* MicrowaveTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67172B9A7FBF00484788 /* MicrowaveTime.swift */; };
 		56CD671B2B9A801F00484788 /* GreaterThanZeroInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD671A2B9A801F00484788 /* GreaterThanZeroInt.swift */; };
 		56CD671D2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD671C2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift */; };
-		56CD671F2B9A866400484788 /* NonEmptyString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD671E2B9A866400484788 /* NonEmptyString.swift */; };
 		56CD67212B9FA39400484788 /* BasicNutritionInfoEntryDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67202B9FA39400484788 /* BasicNutritionInfoEntryDialog.swift */; };
 		56CD67232B9FAE2400484788 /* ConstrainedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67222B9FAE2400484788 /* ConstrainedString.swift */; };
 		56CD67272B9FAF3700484788 /* ConstrainedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CD67222B9FAE2400484788 /* ConstrainedString.swift */; };
@@ -337,7 +336,6 @@
 		56CD67172B9A7FBF00484788 /* MicrowaveTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrowaveTime.swift; sourceTree = "<group>"; };
 		56CD671A2B9A801F00484788 /* GreaterThanZeroInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreaterThanZeroInt.swift; sourceTree = "<group>"; };
 		56CD671C2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreaterThanZeroMicrowaveTime.swift; sourceTree = "<group>"; };
-		56CD671E2B9A866400484788 /* NonEmptyString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonEmptyString.swift; sourceTree = "<group>"; };
 		56CD67202B9FA39400484788 /* BasicNutritionInfoEntryDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfoEntryDialog.swift; sourceTree = "<group>"; };
 		56CD67222B9FAE2400484788 /* ConstrainedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstrainedString.swift; sourceTree = "<group>"; };
 		56CD67282B9FAF4F00484788 /* ConstrainedStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstrainedStringTests.swift; sourceTree = "<group>"; };
@@ -1001,7 +999,6 @@
 			children = (
 				56CD671A2B9A801F00484788 /* GreaterThanZeroInt.swift */,
 				56CD671C2B9A838B00484788 /* GreaterThanZeroMicrowaveTime.swift */,
-				56CD671E2B9A866400484788 /* NonEmptyString.swift */,
 				56CD67222B9FAE2400484788 /* ConstrainedString.swift */,
 			);
 			path = ValueTypes;
@@ -1285,7 +1282,6 @@
 				56B88A5C2B6F311A00C4C0DB /* FirestoreUserDoc.swift in Sources */,
 				563BC7152B7C4C63008F3C50 /* CommentDeleter.swift in Sources */,
 				56A6D1062B8D3387003B27E5 /* FormDialogField.swift in Sources */,
-				56CD671F2B9A866400484788 /* NonEmptyString.swift in Sources */,
 				56B88A142B6C557B00C4C0DB /* ViewExtensions.swift in Sources */,
 				56A6D0DA2B8582D5003B27E5 /* FeedViewModel.swift in Sources */,
 				563BC6D92B75F0E1008F3C50 /* CommentView.swift in Sources */,

@@ -13,7 +13,7 @@ class ResourceMarkdownContent: ConstrainedString {
         try super.init(
             value,
             validationConstraints: [
-                .minimumLength(3),
+                .minimumLength(3), //TODO: Should this actually be longer?
                 .maximumLength(10000)
             ],
             formattingConstraints: [.trimmed]

@@ -34,9 +34,9 @@ struct HomeView: View {
                 .background(Color.background)
                 .refreshable { model.refreshNewsFeed() }
                 .onAppear { UIRefreshControl.appearance().tintColor = .accent }
+                .overlay { CreateMenu() }
             }
         }
-        .overlay { CreateMenu() }
         .sheet(isPresented: $showUserProfile) { UserProfileView(userId: currentUserId) }
         .alert(model.alertMessage, isPresented: $model.showAlert) {}
     }

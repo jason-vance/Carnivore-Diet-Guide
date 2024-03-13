@@ -19,7 +19,11 @@ class GreaterThanZeroMicrowaveTime: ValueOf<MicrowaveTime> {
         )
     }
     
-    class func validate(value: MicrowaveTime) -> Bool { value.value > 0 }
+    class func validate(value: MicrowaveTime) throws {
+        if value.value <= 0 {
+            throw "Must be greater than zero"
+        }
+    }
     
     func formatted() -> String { value.formatted() }
 }

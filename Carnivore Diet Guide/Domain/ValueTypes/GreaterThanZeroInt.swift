@@ -18,5 +18,9 @@ class GreaterThanZeroInt: ValueOf<Int> {
             validator: Self.validate(value:))
     }
     
-    static func validate(value: Int) -> Bool { value > 0 }
+    static func validate(value: Int) throws {
+        if value <= 0 {
+            throw String(localized: "Must be greater than zero")
+        }
+    }
 }

@@ -110,6 +110,16 @@ Tap the binoculars button to see what this will look like when it is displayed.
         )
     }
     
+    var resourceTitleErrorDescription: String {
+        var errorDescription = ""
+        do {
+            let _ = try ResourceTitle(resourceTitle)
+        } catch {
+            errorDescription = error.localizedDescription
+        }
+        return errorDescription
+    }
+    
     @ViewBuilder func TitleField() -> some View {
         FormTextField(
             text: $resourceTitle,
@@ -117,8 +127,9 @@ Tap the binoculars button to see what this will look like when it is displayed.
             prompt: String(localized: "ex. Seared Ribeye Steak"),
             hasError: (try? ResourceTitle(resourceTitle)) == nil,
             autoCapitalization: .words,
-            errorContent: { Text("Title cannot be empty") }
-            //TODO: Get error description from ResourceTitle
+            errorContent: {
+                Text(resourceSummaryErrorDescription)
+            }
         )
     }
     
@@ -192,15 +203,36 @@ Tap the binoculars button to see what this will look like when it is displayed.
             }
     }
     
+    var resourceSummaryErrorDescription: String {
+        var errorDescription = ""
+        do {
+            let _ = try ResourceSummary(summary)
+        } catch {
+            errorDescription = error.localizedDescription
+        }
+        return errorDescription
+    }
+    
     @ViewBuilder func SummaryField() -> some View {
         FormLongTextField(
             text: $summary,
             label: String(localized: "Summary"),
             prompt: String(localized: "Tell us a bit about your recipe"),
             hasError: (try? ResourceSummary(summary)) == nil,
-            errorContent: { Text("Summary must not be empty") }
-            //TODO: Get error description from ResourceSummary
+            errorContent: {
+                Text(resourceSummaryErrorDescription)
+            }
         )
+    }
+    
+    var resourceMarkdownContentErrorDescription: String {
+        var errorDescription = ""
+        do {
+            let _ = try ResourceMarkdownContent(markdownContent)
+        } catch {
+            errorDescription = error.localizedDescription
+        }
+        return errorDescription
     }
     
     @ViewBuilder func MarkdownContentField() -> some View {
@@ -210,8 +242,9 @@ Tap the binoculars button to see what this will look like when it is displayed.
             prompt: "",
             sampleMarkdown: sampleMarkdown,
             hasError: (try? ResourceMarkdownContent(markdownContent)) == nil,
-            errorContent: { Text("Recipe must not be empty") }
-            //TODO: Get error description from ResourceMarkdownContent
+            errorContent: {
+                Text(resourceMarkdownContentErrorDescription)
+            }
         )
     }
     

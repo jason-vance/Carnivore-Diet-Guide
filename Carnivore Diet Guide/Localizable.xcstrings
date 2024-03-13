@@ -1418,6 +1418,12 @@
     "moments ago" : {
 
     },
+    "Must be greater than zero" : {
+
+    },
+    "Must not be negative" : {
+
+    },
     "Name" : {
 
     },
@@ -1655,9 +1661,6 @@
     "Recipe Details" : {
 
     },
-    "Recipe must not be empty" : {
-
-    },
     "Recipes" : {
       "localizations" : {
         "ar" : {
@@ -1885,9 +1888,6 @@
     "Summary" : {
 
     },
-    "Summary must not be empty" : {
-
-    },
     "Tell us a bit about your recipe" : {
 
     },
@@ -1963,9 +1963,6 @@
 
     },
     "Title" : {
-
-    },
-    "Title cannot be empty" : {
 
     },
     "Trending Blog Posts" : {

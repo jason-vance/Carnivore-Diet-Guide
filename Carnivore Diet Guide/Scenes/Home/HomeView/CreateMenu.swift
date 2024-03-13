@@ -77,8 +77,8 @@ struct CreateMenu: View {
     }
     
     @ViewBuilder func CreateRecipeButton() -> some View {
-        Button {
-            //Add ability to create a recipe
+        NavigationLink {
+            EditRecipeView()
         } label: {
             ActionButtonLabel(
                 String(localized: "Create a Recipe"),
