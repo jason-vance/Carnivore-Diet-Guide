@@ -10,7 +10,7 @@ import Combine
 
 protocol CommentProvider {
     func listenForCommentsOrderedByDate(
-        onResource resource: CommentSectionView.Resource,
+        onResource resource: CommentSectionResource,
         onUpdate: @escaping ([Comment]) -> (),
         onError: ((Error) -> ())?
     ) -> AnyCancellable
@@ -21,7 +21,7 @@ class MockCommentProvider: CommentProvider {
     var comments = Comment.samples
     
     func listenForCommentsOrderedByDate(
-        onResource resource: CommentSectionView.Resource,
+        onResource resource: CommentSectionResource,
         onUpdate: @escaping ([Comment]) -> (),
         onError: ((Error) -> ())?
     ) -> AnyCancellable {

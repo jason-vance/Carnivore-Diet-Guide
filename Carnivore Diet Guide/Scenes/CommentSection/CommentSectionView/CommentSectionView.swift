@@ -6,24 +6,20 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct CommentSectionView: View {
     
-    struct Resource: Equatable {
-        var id: String
-        var type: ResourceType
-    }
-    
-    enum ResourceType: String {
-        case recipe
-        case post
-    }
-    
     private let controlSize: CGFloat = 48
     
-    @State var resource: Resource
+    @State var resource: CommentSectionResource
     
-    @StateObject private var model = CommentSectionViewModel()
+    @StateObject private var model = CommentSectionViewModel(
+        currentUserIdProvider: iocContainer~>CurrentUserIdProvider.self,
+        commentProvider: iocContainer~>CommentProvider.self,
+        commentSender: iocContainer~>CommentSender.self,
+        commentActivityTracker: iocContainer~>ResourceCommentActivityTracker.self
+    )
     @State private var commentText: String = ""
     @FocusState private var isCommentFieldFocused: Bool
     @State private var showSendButton: Bool = false

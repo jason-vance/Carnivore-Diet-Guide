@@ -12,6 +12,5 @@ protocol RecipeCommentActivityTracker {
 }
 
 class MockRecipeCommentActivityTracker: RecipeCommentActivityTracker {
-    func recipe(_ recipeId: String, wasCommentedOnByUser userId: String) async throws {
-    }
+    func recipe(_ recipeId: String, wasCommentedOnByUser userId: String) async throws { }
 }

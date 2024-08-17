@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwinjectAutoregistration
 import Combine
 
 @MainActor
@@ -15,14 +14,28 @@ class CommentSectionViewModel: ObservableObject {
     @Published var comments: [Comment] = []
     @Published var isSendingComment: Bool = false
     
-    private let commentProvider = iocContainer~>CommentProvider.self
-    private let commentSender = iocContainer~>CommentSender.self
+    private let currentUserIdProvider: CurrentUserIdProvider
+    private let commentProvider: CommentProvider
+    private let commentSender: CommentSender
+    private let commentActivityTracker: ResourceCommentActivityTracker
     
     private var commentSub: AnyCancellable?
     
+    init(
+        currentUserIdProvider: CurrentUserIdProvider,
+        commentProvider: CommentProvider,
+        commentSender: CommentSender,
+        commentActivityTracker: ResourceCommentActivityTracker
+    ) {
+        self.currentUserIdProvider = currentUserIdProvider
+        self.commentProvider = commentProvider
+        self.commentSender = commentSender
+        self.commentActivityTracker = commentActivityTracker
+    }
+    
     func sendComment(
         text: String,
-        toResource resource: CommentSectionView.Resource
+        toResource resource: CommentSectionResource
     ) async throws {
         guard !text.isEmpty else { throw "Comment text is empty" }
         
@@ -33,7 +46,7 @@ class CommentSectionViewModel: ObservableObject {
         addCommentActivity(onResource: resource)
     }
     
-    func startListeningForComments(onResource resource: CommentSectionView.Resource) {
+    func startListeningForComments(onResource resource: CommentSectionResource) {
         commentSub = commentProvider.listenForCommentsOrderedByDate(
             onResource: resource,
             onUpdate: onUpdate(comments:),
@@ -45,10 +58,9 @@ class CommentSectionViewModel: ObservableObject {
         self.comments = comments
     }
     
-    private func addCommentActivity(onResource resource: CommentSectionView.Resource) {
+    private func addCommentActivity(onResource resource: CommentSectionResource) {
         Task {
-            guard let userId = (iocContainer~>CurrentUserIdProvider.self).currentUserId else { return }
-            let commentActivityTracker = iocContainer~>ResourceCommentActivityTracker.self
+            guard let userId = currentUserIdProvider.currentUserId else { return }
             
             try? await commentActivityTracker.resource(resource, wasCommentedOnByUser: userId)
         }

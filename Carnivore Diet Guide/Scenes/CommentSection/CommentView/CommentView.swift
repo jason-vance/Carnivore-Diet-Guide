@@ -13,7 +13,7 @@ struct CommentView: View {
     private let profileImagePadding: CGFloat = 2
     
     @State var comment: Comment
-    @State var resource: CommentSectionView.Resource
+    @State var resource: CommentSectionResource
     @StateObject var model = CommentViewModel()
     
     var body: some View {
@@ -125,7 +125,7 @@ struct CommentView: View {
     }
 }
 
-#Preview("Comment belonging to me and others") {
+#Preview("Comments belonging to me and others") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
         

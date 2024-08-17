@@ -6,18 +6,23 @@
 //
 
 import Foundation
-import SwinjectAutoregistration
 
 protocol ResourceCommentActivityTracker {
     func resource(
-        _ resource: CommentSectionView.Resource,
+        _ resource: CommentSectionResource,
         wasCommentedOnByUser userId: String
     ) async throws
 }
 
 class DefaultResourceCommentActivityTracker: ResourceCommentActivityTracker {
     
-    func resource(_ resource: CommentSectionView.Resource, wasCommentedOnByUser userId: String) async throws {
+    private let activityTracker: RecipeCommentActivityTracker
+    
+    init(activityTracker: RecipeCommentActivityTracker) {
+        self.activityTracker = activityTracker
+    }
+    
+    func resource(_ resource: CommentSectionResource, wasCommentedOnByUser userId: String) async throws {
         switch resource.type {
         case .recipe:
             try await recipe(resource.id, wasCommentedOnByUser: userId)
@@ -27,7 +32,6 @@ class DefaultResourceCommentActivityTracker: ResourceCommentActivityTracker {
     }
     
     private func recipe(_ recipeId: String, wasCommentedOnByUser userId: String) async throws {
-        let recipeActivityRepo = iocContainer~>RecipeCommentActivityTracker.self
-        try await recipeActivityRepo.recipe(recipeId, wasCommentedOnByUser: userId)
+        try await activityTracker.recipe(recipeId, wasCommentedOnByUser: userId)
     }
 }
