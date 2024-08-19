@@ -322,9 +322,6 @@
     "Are you sure you want to logout?" : {
 
     },
-    "Articles" : {
-
-    },
     "Blog" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1358,9 +1355,6 @@
     "Name must contain at least three letters" : {
 
     },
-    "News Feed" : {
-
-    },
     "Next" : {
 
     },
@@ -1562,13 +1556,11 @@
         }
       }
     },
-    "Quick Links" : {
-
-    },
     "Recipe Details" : {
 
     },
     "Recipes" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

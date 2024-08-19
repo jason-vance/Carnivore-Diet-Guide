@@ -77,68 +77,8 @@ struct HomeView: View {
         .frame(height: scrollShroudHeight)
     }
     
-    @ViewBuilder func ScrollableHomeContent(screenWidth: CGFloat) -> some View {
-        VStack {
-            QuickLinks()
-            NewsFeed(screenWidth: screenWidth)
-        }
-        .padding(.top, scrollShroudHeight)
-    }
-    
-    @ViewBuilder func QuickLinks() -> some View {
-        VStack(spacing: 0) {
-            SectionHeader(String(localized: "Quick Links"))
-            ScrollView(.horizontal) {
-                LazyHStack {
-                    QuickLinkItem(String(localized: "Recipes"), imageName: "HomeHero")
-                    QuickLinkItem(String(localized: "Articles"), imageName: "KnowledgeHero")
-                }
-                .padding(defaultPadding)
-            }
-        }
-    }
-    
-    @ViewBuilder func QuickLinkItem(_ text: String, imageName: String) -> some View {
-        NavigationLink {
-            //Navigate to Recipes and Knowledge
-            Text(text)
-        } label: {
-            VStack(spacing: 2) {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 125, height: 125)
-                Text(text)
-                    .font(.system(size: 16, weight: .bold))
-                    .lineLimit(1)
-                    .foregroundStyle(Color.text)
-                    .padding(4)
-            }
-            .background(Color.background)
-            .frame(width: 125)
-            .clipShape(RoundedRectangle(cornerRadius: Corners.radius, style: .continuous))
-            .shadow(color: Color.text, radius: 4)
-        }
-    }
-    
-    @ViewBuilder func NewsFeed(screenWidth: CGFloat) -> some View {
-        VStack(spacing: 0) {
-            SectionHeader(String(localized: "News Feed"))
-            FeedView(screenWidth: screenWidth)
-                .padding(.top, defaultPadding)
-        }
-    }
-    
-    @ViewBuilder func SectionHeader(_ text: String) -> some View {
-        HStack {
-            Text(text)
-                .font(.system(size: 32, weight: .bold))
-                .foregroundStyle(Color.text.opacity(0.8))
-            Spacer()
-        }
-        .padding(.horizontal, defaultPadding)
-        Divider()
-            .padding(.horizontal, defaultPadding)
+    @ViewBuilder func ScrollableHomeContent(screenWidth: CGFloat) -> some View {            FeedView(screenWidth: screenWidth)
+            .padding(.top, scrollShroudHeight)
     }
 }
 
