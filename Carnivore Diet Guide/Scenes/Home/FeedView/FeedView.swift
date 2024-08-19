@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct FeedView: View {
     
     private let itemHorizontalPadding: CGFloat = 8
     
     var screenWidth: CGFloat
-    @StateObject private var model = FeedViewModel()
+    @StateObject private var model = FeedViewModel(
+        feedItemProvider: iocContainer~>FeedViewContentProvider.self
+    )
     
     var body: some View {
         LazyVStack {

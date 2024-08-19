@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwinjectAutoregistration
 import SwiftUI
 import Combine
 
@@ -19,11 +18,15 @@ class FeedViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var alertMessage: String = ""
     
-    private let feedItemProvider = iocContainer~>FeedViewContentProvider.self
+    private let feedItemProvider: FeedViewContentProvider
     
     private var subs: Set<AnyCancellable> = []
     
-    init() {
+    init(
+        feedItemProvider: FeedViewContentProvider
+    ) {
+        self.feedItemProvider = feedItemProvider
+        
         feedItemProvider.feedItemsPublisher
             .receive(on: RunLoop.main)
             .sink(receiveValue: receive(feedItems:))
