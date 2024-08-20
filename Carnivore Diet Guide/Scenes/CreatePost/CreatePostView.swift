@@ -26,9 +26,18 @@ struct CreatePostView: View {
     @State private var postText: String = ""
     
     @State private var showImagePicker: Bool = false
+    @State private var showDiscardDialog: Bool = false
+    
+    private var isFormEmpty: Bool {
+        postTitle.isEmpty && postText.isEmpty && postImages.isEmpty
+    }
     
     private func close() {
-        //TODO: dismiss if empty, show discard changes dialog if not
+        if isFormEmpty {
+            dismiss()
+        } else {
+            showDiscardDialog = true
+        }
     }
     
     private func goToNext() {
@@ -46,6 +55,20 @@ struct CreatePostView: View {
             .listStyle(.plain)
         }
         .background(Color.background)
+        .confirmationDialog("Do you want to discard your post?", isPresented: $showDiscardDialog, titleVisibility: .visible) {
+            DiscardButton()
+            CancelButton()
+        }
+    }
+    
+    @ViewBuilder func DiscardButton() -> some View {
+        Button("Discard", role: .destructive) {
+            dismiss()
+        }
+    }
+    
+    @ViewBuilder func CancelButton() -> some View {
+        Button("Cancel", role: .cancel) { }
     }
     
     @ViewBuilder func TopBar() -> some View {
