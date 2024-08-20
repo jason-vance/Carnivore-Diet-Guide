@@ -54,7 +54,6 @@ struct HomeView: View {
                 .onAppear { UIRefreshControl.appearance().tintColor = .accent }
             }
         }
-        .overlay { CreateMenu() }
     }
     
     @ViewBuilder func TabItemLabel(text: String, image: String) -> some View {

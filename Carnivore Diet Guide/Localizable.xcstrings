@@ -653,6 +653,9 @@
         }
       }
     },
+    "Community Feed" : {
+
+    },
     "Cooking Steps" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -719,6 +722,9 @@
       }
     },
     "Create a Recipe" : {
+
+    },
+    "Create Post" : {
 
     },
     "Create Profile" : {
@@ -1340,6 +1346,9 @@
         }
       }
     },
+    "Knowledge Base" : {
+
+    },
     "Library" : {
       "comment" : "Photo Library"
     },
@@ -1560,7 +1569,6 @@
 
     },
     "Recipes" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

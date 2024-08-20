@@ -48,48 +48,48 @@ struct HomeMenuBar: View {
     
     @ViewBuilder func FeedMenuItem() -> some View {
         let image = selectedTab == .feed ? "house.fill" : "house"
-        MenuItem(.feed, text: "Home", image: image)
+        MenuItem(.feed, text: "Home", image: { MenuItemImage(image) })
     }
     
     @ViewBuilder func KnowledgeMenuItem() -> some View {
         let image = selectedTab == .knowledge ? "books.vertical.fill" : "books.vertical"
-        MenuItem(.knowledge, text: "Knowledge", image: image)
+        MenuItem(.knowledge, text: "Knowledge", image: { MenuItemImage(image) })
     }
     
     @ViewBuilder func CreatePostMenuItem() -> some View {
         let image = selectedTab == .createPost ? "plus.circle.fill" : "plus.circle"
-        MenuItem(.createPost, text: "Create", image: image)
+        MenuItem(.createPost, text: "Create", image: { MenuItemImage(image) })
     }
     
     @ViewBuilder func RecipesMenuItem() -> some View {
         let image = selectedTab == .recipes ? "frying.pan.fill" : "frying.pan"
-        MenuItem(.recipes, text: "Recipes", image: image)
+        MenuItem(.recipes, text: "Recipes", image: { MenuItemImage(image) })
     }
     
     @ViewBuilder func ProfileMenuItem() -> some View {
-        MenuItem(.profile, text: "Profile", image: "person")
+        MenuItem(.profile, text: "Profile", image: ProfileImage)
     }
     
-    @ViewBuilder func MenuItem(_ tab: HomeMenuTab, text: String, image: String) -> some View {
+    @ViewBuilder func MenuItem<Content:View>(_ tab: HomeMenuTab, text: String, image: () -> Content) -> some View {
         Button {
-            withAnimation(.snappy) { selectedTab = tab }
+            selectedTab = tab
         } label: {
             VStack(spacing: 0) {
-                if tab == .profile {
-                    ProfileImageView(profileImageUrl, size: 28, padding: 2)
-                } else {
-                    MenuItemImage(image)
-                }
+                image()
+                    .frame(width: 32, height: 32)
                 MenuItemText(text)
             }
             .foregroundStyle(Color.text)
         }
     }
     
+    @ViewBuilder func ProfileImage() -> some View {
+        ProfileImageView(profileImageUrl, size: 28, padding: 2)
+    }
+    
     @ViewBuilder func MenuItemImage(_ name: String) -> some View {
         Image(systemName: name)
             .font(.system(size: 20))
-            .frame(width: 30, height: 30)
     }
     
     @ViewBuilder func MenuItemText(_ text: String) -> some View {
