@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ScreenTitleBar: View {
     
-    @State var text: String
+    let text: String
     
     init(_ text: String) {
         self.text = text
@@ -38,5 +38,5 @@ struct ScreenTitleBar: View {
 }
 
 #Preview {
-    ScreenTitleBar("Community Feed")
+    ScreenTitleBar("Screen Title Bar")
 }

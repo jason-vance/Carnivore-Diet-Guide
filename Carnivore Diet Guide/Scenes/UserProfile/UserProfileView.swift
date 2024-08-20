@@ -43,7 +43,7 @@ struct UserProfileView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                TitleBar()
+                ScreenTitleBar(userData.fullName?.value ?? String(localized: "User Profile"))
                 ScrollView {
                     VStack {
                         ProfileImage()
@@ -96,27 +96,6 @@ struct UserProfileView: View {
             Text("Cancel")
         }
         
-    }
-    
-    @ViewBuilder func TitleBar() -> some View {
-        Rectangle()
-            .foregroundStyle(Color.accent)
-            .frame(height: 64)
-            .overlay(alignment: .top) {
-                TitleView()
-            }
-            .background(Color.accent)
-    }
-    
-    @ViewBuilder func TitleView() -> some View {
-        VStack(spacing: 0) {
-            Text("Profile")
-                .font(.system(size: 48, weight: .black))
-        }
-        .foregroundStyle(Color.background)
-        .shadow(color: .text, radius: 10, x: 0, y: 4)
-        .shadow(color: .text, radius: 10, x: 0, y: 4)
-        .frame(maxWidth: .infinity)
     }
     
     @ViewBuilder func ProfileImage() -> some View {
