@@ -387,6 +387,9 @@
         }
       }
     },
+    "Body Text" : {
+
+    },
     "Bookmarked Articles" : {
 
     },
@@ -722,9 +725,6 @@
       }
     },
     "Create a Recipe" : {
-
-    },
-    "Create Post" : {
 
     },
     "Create Profile" : {
@@ -1498,9 +1498,6 @@
         }
       }
     },
-    "Profile" : {
-
-    },
     "Protein" : {
       "localizations" : {
         "ar" : {
@@ -1979,6 +1976,9 @@
       "comment" : "Difficulty level is 'Unknown'"
     },
     "Unknown Author" : {
+
+    },
+    "User Profile" : {
 
     },
     "View All" : {

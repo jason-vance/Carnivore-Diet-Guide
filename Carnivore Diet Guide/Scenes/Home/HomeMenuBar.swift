@@ -38,12 +38,8 @@ struct HomeMenuBar: View {
         .padding(.horizontal, 16)
         .frame(height: Self.height)
         .background(Color.background)
-        .overlay(alignment: .top) {
-            Rectangle()
-                .frame(height: 0.25)
-                .foregroundStyle(Color.text)
-                .opacity(0.25)
-        }
+        .overlay(alignment: .top) { BarDivider() }
+
     }
     
     @ViewBuilder func FeedMenuItem() -> some View {

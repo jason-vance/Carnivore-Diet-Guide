@@ -10,3 +10,7 @@ import Foundation
 enum Corners {
     static let radius: CGFloat = 16
 }
+
+extension CGFloat {
+    static let defaultBarHeight: CGFloat = 44
+}

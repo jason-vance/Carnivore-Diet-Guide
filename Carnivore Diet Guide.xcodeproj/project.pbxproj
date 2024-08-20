@@ -33,6 +33,7 @@
 		5622EAD12C753C8D00FE9C36 /* CreatePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622EACF2C753C8D00FE9C36 /* CreatePostViewModel.swift */; };
 		5622EAD32C753CBB00FE9C36 /* RecipesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622EAD22C753CBB00FE9C36 /* RecipesViewModel.swift */; };
 		5622EAD42C753CBB00FE9C36 /* RecipesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622EAD22C753CBB00FE9C36 /* RecipesViewModel.swift */; };
+		5622EAD62C75491500FE9C36 /* BarDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622EAD52C75491500FE9C36 /* BarDivider.swift */; };
 		56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */; };
 		56353B582B440C9900C4E972 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56353B572B440C9900C4E972 /* ContentView.swift */; };
 		56353B5A2B440C9B00C4E972 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56353B592B440C9B00C4E972 /* Assets.xcassets */; };
@@ -218,6 +219,7 @@
 		5622EACC2C753C3300FE9C36 /* KnowledgeBaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeBaseViewModel.swift; sourceTree = "<group>"; };
 		5622EACF2C753C8D00FE9C36 /* CreatePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewModel.swift; sourceTree = "<group>"; };
 		5622EAD22C753CBB00FE9C36 /* RecipesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesViewModel.swift; sourceTree = "<group>"; };
+		5622EAD52C75491500FE9C36 /* BarDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarDivider.swift; sourceTree = "<group>"; };
 		562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Carnivore-Diet-Guide-Info.plist"; sourceTree = SOURCE_ROOT; };
 		56353B522B440C9900C4E972 /* Carnivore Diet Guide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Carnivore Diet Guide.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carnivore_Diet_GuideApp.swift; sourceTree = "<group>"; };
@@ -841,6 +843,7 @@
 				56F2137D2B722305009DB057 /* OffsetObservingScrollView.swift */,
 				56F213812B72C4FC009DB057 /* StickyHeaderScrollingView.swift */,
 				5622EAC12C75231B00FE9C36 /* ScreenTitleBar.swift */,
+				5622EAD52C75491500FE9C36 /* BarDivider.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1250,6 +1253,7 @@
 				563BC6D02B75ECCE008F3C50 /* CommentSectionView.swift in Sources */,
 				563BC6C62B744812008F3C50 /* RecipeFavoriteActivityTracker.swift in Sources */,
 				56F213942B742B1B009DB057 /* DocumentReferenceExtensions.swift in Sources */,
+				5622EAD62C75491500FE9C36 /* BarDivider.swift in Sources */,
 				56025D292B6B8CD000F31A07 /* UI.swift in Sources */,
 				56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */,
 				56B88A092B6C4E6E00C4C0DB /* BundleExtensions.swift in Sources */,

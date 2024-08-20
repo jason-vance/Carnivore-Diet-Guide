@@ -21,13 +21,8 @@ struct ScreenTitleBar: View {
             Spacer()
         }
         .padding(.horizontal)
-        .frame(height: 44)
-        .overlay(alignment: .bottom) {
-            Rectangle()
-                .frame(height: 0.25)
-                .foregroundStyle(Color.text)
-                .opacity(0.25)
-        }
+        .frame(height: .defaultBarHeight)
+        .overlay(alignment: .bottom) { BarDivider() }
     }
     
     @ViewBuilder func TitleText() -> some View {
