@@ -35,7 +35,7 @@ struct HomeMenuBar: View {
             ProfileMenuItem()
         }
         .padding(.top, 4)
-        .padding(.horizontal, 32)
+        .padding(.horizontal, 16)
         .frame(height: Self.height)
         .background(Color.background)
         .overlay(alignment: .top) {
@@ -81,6 +81,7 @@ struct HomeMenuBar: View {
             }
             .foregroundStyle(Color.text)
         }
+        .frame(maxWidth: .infinity)
     }
     
     @ViewBuilder func ProfileImage() -> some View {
@@ -94,7 +95,7 @@ struct HomeMenuBar: View {
     
     @ViewBuilder func MenuItemText(_ text: String) -> some View {
         Text(text)
-            .font(.caption)
+            .font(.caption2)
     }
 }
 
