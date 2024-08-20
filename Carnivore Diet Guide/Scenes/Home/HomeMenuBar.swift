@@ -22,6 +22,8 @@ struct HomeMenuBar: View {
     @Binding public var selectedTab: HomeMenuTab
     @Binding public var profileImageUrl: URL?
     
+    @State private var showCreatePost: Bool = false
+    
     var body: some View {
         HStack {
             FeedMenuItem()
@@ -44,31 +46,47 @@ struct HomeMenuBar: View {
     
     @ViewBuilder func FeedMenuItem() -> some View {
         let image = selectedTab == .feed ? "house.fill" : "house"
-        MenuItem(.feed, text: "Home", image: { MenuItemImage(image) })
+        MenuItem(.feed, text: "Home", image: { MenuItemImage(image) }) {
+            selectedTab = .feed
+        }
     }
     
     @ViewBuilder func KnowledgeMenuItem() -> some View {
         let image = selectedTab == .knowledge ? "books.vertical.fill" : "books.vertical"
-        MenuItem(.knowledge, text: "Knowledge", image: { MenuItemImage(image) })
+        MenuItem(.knowledge, text: "Knowledge", image: { MenuItemImage(image) }) {
+            selectedTab = .knowledge
+        }
     }
     
     @ViewBuilder func CreatePostMenuItem() -> some View {
         let image = selectedTab == .createPost ? "plus.circle.fill" : "plus.circle"
-        MenuItem(.createPost, text: "Create", image: { MenuItemImage(image) })
+        MenuItem(.createPost, text: "Create", image: { MenuItemImage(image) }) {
+            showCreatePost = true
+        }
+        .fullScreenCover(isPresented: $showCreatePost) { CreatePostView() }
     }
     
     @ViewBuilder func RecipesMenuItem() -> some View {
         let image = selectedTab == .recipes ? "frying.pan.fill" : "frying.pan"
-        MenuItem(.recipes, text: "Recipes", image: { MenuItemImage(image) })
+        MenuItem(.recipes, text: "Recipes", image: { MenuItemImage(image) }) {
+            selectedTab = .recipes
+        }
     }
     
     @ViewBuilder func ProfileMenuItem() -> some View {
-        MenuItem(.profile, text: "Profile", image: ProfileImage)
+        MenuItem(.profile, text: "Profile", image: ProfileImage) {
+            selectedTab = .profile
+        }
     }
     
-    @ViewBuilder func MenuItem<Content:View>(_ tab: HomeMenuTab, text: String, image: () -> Content) -> some View {
+    @ViewBuilder func MenuItem<Content:View>(
+        _ tab: HomeMenuTab,
+        text: String,
+        image: () -> Content,
+        onSelected: @escaping () -> ()
+    ) -> some View {
         Button {
-            selectedTab = tab
+            onSelected()
         } label: {
             VStack(spacing: 0) {
                 image()

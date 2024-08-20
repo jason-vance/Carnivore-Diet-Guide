@@ -26,8 +26,6 @@ struct HomeView: View {
                     .opacity(selectedTab == .feed ? 1.0 : 0.0)
                 KnowledgeBaseView()
                     .opacity(selectedTab == .knowledge ? 1.0 : 0.0)
-                CreatePostView()
-                    .opacity(selectedTab == .createPost ? 1.0 : 0.0)
                 RecipesView()
                     .opacity(selectedTab == .recipes ? 1.0 : 0.0)
                 UserProfileView(userId: currentUserId)
