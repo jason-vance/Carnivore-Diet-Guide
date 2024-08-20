@@ -12,12 +12,29 @@ struct FeedView: View {
     
     private let itemHorizontalPadding: CGFloat = 8
     
-    var screenWidth: CGFloat
     @StateObject private var model = FeedViewModel(
         feedItemProvider: iocContainer~>FeedViewContentProvider.self
     )
     
     var body: some View {
+        GeometryReader { proxy in
+            NavigationStack {
+                VStack(spacing: 0) {
+                    ScreenTitleBar(String(localized: "Community Feed"))
+                    ScrollView {
+                        Asdf(screenWidth: proxy.size.width)
+                            .padding(.vertical)
+                    }
+                }
+                .scrollIndicators(.hidden)
+                .background(Color.background)
+                .refreshable { model.refreshNewsFeed() }
+                .onAppear { UIRefreshControl.appearance().tintColor = .accent }
+            }
+        }
+    }
+    
+    @ViewBuilder func Asdf(screenWidth: CGFloat) -> some View {
         LazyVStack {
             ForEach(model.feedItems) { feedItem in
                 NavigationLink {
@@ -70,12 +87,6 @@ struct FeedView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        GeometryReader { proxy in
-            NavigationStack {
-                ScrollView {
-                    FeedView(screenWidth: proxy.size.width)
-                }
-            }
-        }
+        FeedView()
     }
 }

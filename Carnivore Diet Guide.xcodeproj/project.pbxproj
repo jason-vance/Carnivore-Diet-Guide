@@ -23,6 +23,7 @@
 		5622EAB92C70AC1600FE9C36 /* RecipeCommentActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC7272B7D914D008F3C50 /* RecipeCommentActivityTracker.swift */; };
 		5622EABA2C70AC5300FE9C36 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D252B6B04AB00F31A07 /* StringExtensions.swift */; };
 		5622EAC02C7483C500FE9C36 /* HomeMenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622EABF2C7483C500FE9C36 /* HomeMenuBar.swift */; };
+		5622EAC22C75231B00FE9C36 /* ScreenTitleBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5622EAC12C75231B00FE9C36 /* ScreenTitleBar.swift */; };
 		56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */; };
 		56353B582B440C9900C4E972 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56353B572B440C9900C4E972 /* ContentView.swift */; };
 		56353B5A2B440C9B00C4E972 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56353B592B440C9B00C4E972 /* Assets.xcassets */; };
@@ -201,6 +202,7 @@
 		56025D282B6B8CD000F31A07 /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
 		5622EAB62C70AA0300FE9C36 /* CommentSectionResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSectionResource.swift; sourceTree = "<group>"; };
 		5622EABF2C7483C500FE9C36 /* HomeMenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuBar.swift; sourceTree = "<group>"; };
+		5622EAC12C75231B00FE9C36 /* ScreenTitleBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTitleBar.swift; sourceTree = "<group>"; };
 		562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Carnivore-Diet-Guide-Info.plist"; sourceTree = SOURCE_ROOT; };
 		56353B522B440C9900C4E972 /* Carnivore Diet Guide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Carnivore Diet Guide.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carnivore_Diet_GuideApp.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 				566B2D692B469B59008627F8 /* Content */,
 				56B88A052B6C4DD000C4C0DB /* SignIn */,
 				562E03E52B450A8900859F81 /* Home */,
+				56A6D0D62B8582C6003B27E5 /* FeedView */,
 				5676A1312B477853009C1DA6 /* RecipeDetail */,
 				56E305032B4A55BD0098079A /* PostDetail */,
 				56B88A1A2B6C64F200C4C0DB /* UserProfile */,
@@ -435,9 +438,10 @@
 		562E03E52B450A8900859F81 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				56A6D0D62B8582C6003B27E5 /* FeedView */,
-				563BC7312B7E1041008F3C50 /* HomeView */,
-				56554F882B6053790070C079 /* ContentProvider */,
+				563BC72F2B7E0785008F3C50 /* HomeView.swift */,
+				56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */,
+				563BC7322B7E105C008F3C50 /* CreateMenu.swift */,
+				5622EABF2C7483C500FE9C36 /* HomeMenuBar.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -639,17 +643,6 @@
 			path = ReportedItems;
 			sourceTree = "<group>";
 		};
-		563BC7312B7E1041008F3C50 /* HomeView */ = {
-			isa = PBXGroup;
-			children = (
-				563BC72F2B7E0785008F3C50 /* HomeView.swift */,
-				56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */,
-				563BC7322B7E105C008F3C50 /* CreateMenu.swift */,
-				5622EABF2C7483C500FE9C36 /* HomeMenuBar.swift */,
-			);
-			path = HomeView;
-			sourceTree = "<group>";
-		};
 		563BC7342B7F5059008F3C50 /* FeedItemView */ = {
 			isa = PBXGroup;
 			children = (
@@ -745,6 +738,7 @@
 		56A6D0D62B8582C6003B27E5 /* FeedView */ = {
 			isa = PBXGroup;
 			children = (
+				56554F882B6053790070C079 /* ContentProvider */,
 				563BC7342B7F5059008F3C50 /* FeedItemView */,
 				56A6D0DB2B8582DF003B27E5 /* FeedView.swift */,
 				56A6D0D92B8582D5003B27E5 /* FeedViewModel.swift */,
@@ -801,6 +795,7 @@
 				56F2137B2B7222CA009DB057 /* PositionObservingView.swift */,
 				56F2137D2B722305009DB057 /* OffsetObservingScrollView.swift */,
 				56F213812B72C4FC009DB057 /* StickyHeaderScrollingView.swift */,
+				5622EAC12C75231B00FE9C36 /* ScreenTitleBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1256,6 +1251,7 @@
 				56B88A622B6F346F00C4C0DB /* FirestorePostDoc.swift in Sources */,
 				563BC7222B7D6804008F3C50 /* FirebaseReportRepository.swift in Sources */,
 				56E305052B4A55E00098079A /* PostDetailView.swift in Sources */,
+				5622EAC22C75231B00FE9C36 /* ScreenTitleBar.swift in Sources */,
 				563BC7032B7AF8D3008F3C50 /* DefaultRecipeCommentCountProvider.swift in Sources */,
 				563BC7262B7D84B4008F3C50 /* ResourceCommentActivityTracker.swift in Sources */,
 				56B88A2B2B6CE94600C4C0DB /* ProfileFormPictureField.swift in Sources */,

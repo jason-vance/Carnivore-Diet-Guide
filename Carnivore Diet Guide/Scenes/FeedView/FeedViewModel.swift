@@ -61,4 +61,8 @@ class FeedViewModel: ObservableObject {
             }
         }
     }
+    
+    func refreshNewsFeed() {
+        feedItemProvider.refresh()
+    }
 }

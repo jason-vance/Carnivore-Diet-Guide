@@ -22,7 +22,7 @@ struct HomeView: View {
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
-                Feed()
+                FeedView()
                     .opacity(selectedTab == .feed ? 1.0 : 0.0)
                 Text("Knowledge Base")
                     .opacity(selectedTab == .knowledge ? 1.0 : 0.0)
@@ -38,52 +38,10 @@ struct HomeView: View {
         .alert(model.alertMessage, isPresented: $model.showAlert) {}
     }
     
-    @ViewBuilder func Feed() -> some View {
-        GeometryReader { proxy in
-            NavigationStack {
-                VStack(spacing: 0) {
-                    TitleBar()
-                    ScrollView {
-                        ScrollableHomeContent(screenWidth: proxy.size.width)
-                            .padding(.vertical)
-                    }
-                }
-                .scrollIndicators(.hidden)
-                .background(Color.background)
-                .refreshable { model.refreshNewsFeed() }
-                .onAppear { UIRefreshControl.appearance().tintColor = .accent }
-            }
-        }
-    }
-    
     @ViewBuilder func TabItemLabel(text: String, image: String) -> some View {
         LabeledContent(text) {
             Image(systemName: image)
         }
-    }
-    
-    @ViewBuilder func TitleBar() -> some View {
-        HStack {
-            TitleText()
-            Spacer()
-        }
-        .padding(.horizontal)
-        .frame(height: 44)
-        .overlay(alignment: .bottom) {
-            Rectangle()
-                .frame(height: 0.25)
-                .foregroundStyle(Color.text)
-                .opacity(0.25)
-        }
-    }
-    
-    @ViewBuilder func TitleText() -> some View {
-        Text("Community Feed")
-            .font(.title.bold())
-            .foregroundStyle(Color.text)
-    }
-    
-    @ViewBuilder func ScrollableHomeContent(screenWidth: CGFloat) -> some View {            FeedView(screenWidth: screenWidth)
     }
 }
 
