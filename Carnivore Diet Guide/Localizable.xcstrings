@@ -801,6 +801,12 @@
         }
       }
     },
+    "Discard" : {
+
+    },
+    "Do you want to discard your post?" : {
+
+    },
     "Done" : {
 
     },

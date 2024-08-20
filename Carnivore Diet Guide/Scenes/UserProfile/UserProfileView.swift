@@ -11,25 +11,21 @@ import Kingfisher
 
 struct UserProfileView: View {
     
-    private let userDataProvider = iocContainer~>UserDataProvider.self
-    private let signOutService = iocContainer~>UserProfileSignOutService.self
+    let userId: String
     
-    var userId: String
-    
-    @State private var userData: UserData = .empty
+    @StateObject private var model = UserProfileViewModel(
+        userDataProvider: iocContainer~>UserDataProvider.self,
+        signOutService: iocContainer~>UserProfileSignOutService.self
+    )
     
     @State private var showEditProfile: Bool = false
     @State private var showLogoutDialog: Bool = false
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
-    private func listenForUserData() {
-        userDataProvider.startListeningToUser(withId: userId)
-    }
-    
     private func confirmedLogout() {
         do {
-            try signOutService.signOut()
+            try model.signOut()
         } catch {
             show(errorMessage: "Unable to logout: \(error.localizedDescription)")
         }
@@ -43,11 +39,10 @@ struct UserProfileView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                ScreenTitleBar(userData.fullName?.value ?? String(localized: "User Profile"))
+                ScreenTitleBar(model.fullName ?? String(localized: "User Profile"))
                 ScrollView {
                     VStack {
                         ProfileImage()
-                        FullName()
                         VStack {
                             EditProfileButton()
 //                            FavoriteRecipesButton()
@@ -74,11 +69,8 @@ struct UserProfileView: View {
         .sheet(isPresented: $showEditProfile) {
             EditUserProfileView(userId: userId)
         }
-        .onAppear {
-            listenForUserData()
-        }
-        .onReceive(userDataProvider.userDataPublisher) { newData in
-            userData = newData
+        .onChange(of: userId, initial: true) {
+            model.listenForUserData(userId: userId)
         }
     }
     
@@ -99,13 +91,7 @@ struct UserProfileView: View {
     }
     
     @ViewBuilder func ProfileImage() -> some View {
-        ProfileImageView(userData.profileImageUrl)
-    }
-    
-    @ViewBuilder func FullName() -> some View {
-        Text(userData.fullName?.value ?? "<Name Unknown>")
-            .font(.system(size: 32, weight: .bold))
-            .foregroundStyle(Color.text)
+        ProfileImageView(model.profileImageUrl)
     }
     
     @ViewBuilder func EditProfileButton() -> some View {
