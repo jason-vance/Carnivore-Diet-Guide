@@ -142,12 +142,13 @@ struct CreatePostView: View {
     }
     
     @ViewBuilder private func ImageCarouselItem(_ image: CreatePostImageData) -> some View {
-        //TODO: Show upload progress
         Image(uiImage: image.image)
             .resizable()
             .scaledToFill()
             .frame(width: imageSize, height: imageSize)
             .clipShape(RoundedRectangle(cornerRadius: imageCornerRadius, style: .continuous))
+            .opacity(image.url == nil ? 0.8 : 1)
+            .shimmering(isActive: image.url == nil)
             .id(image.id)
             .overlay {
                 RoundedRectangle(cornerRadius: imageCornerRadius, style: .continuous)

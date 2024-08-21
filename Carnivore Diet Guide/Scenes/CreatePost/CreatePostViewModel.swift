@@ -49,6 +49,7 @@ class CreatePostViewModel: ObservableObject {
     }
     
     public func addToPost(image: UIImage) {
+        //TODO: Limit image count
         withAnimation(.snappy) {
             postImages.append(CreatePostImageData(image: image))
         }
