@@ -11,7 +11,9 @@ import YPImagePicker
 struct CreatePostView: View {
     
     private let imageSize: CGFloat = 128
-    
+    private let imageCornerRadius: CGFloat = 12
+    private let imageBorderWidth: CGFloat = 2
+
     private struct PostImage: Identifiable {
         let id = UUID()
         let image: UIImage
@@ -130,14 +132,26 @@ struct CreatePostView: View {
             .resizable()
             .scaledToFill()
             .frame(width: imageSize, height: imageSize)
-            .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: imageCornerRadius, style: .continuous))
             .id(image.id)
             .overlay {
-                RoundedRectangle(cornerRadius: 25, style: .continuous)
-                    .stroke(style: .init(lineWidth: 2))
+                RoundedRectangle(cornerRadius: imageCornerRadius, style: .continuous)
+                    .stroke(style: .init(lineWidth: imageBorderWidth))
                     .foregroundStyle(Color.accent)
             }
-        //TODO: Add a way to remove images
+            .overlay(alignment: .bottomTrailing) {
+                RemoveImageButton(image)
+            }
+    }
+    
+    @ViewBuilder private func RemoveImageButton(_ image: PostImage) -> some View {
+        Button {
+            withAnimation(.snappy) {
+                postImages.removeAll { $0.id == image.id }
+            }
+        } label: {
+            ImageAccessory("minus")
+        }
     }
     
     @ViewBuilder private func AddImageButton() -> some View {
@@ -147,13 +161,33 @@ struct CreatePostView: View {
             Image(systemName: "photo")
                 .foregroundStyle(Color.accent)
                 .frame(width: imageSize, height: imageSize)
+                .background {
+                    RoundedRectangle(cornerRadius: imageCornerRadius, style: .continuous)
+                        .foregroundStyle(Color.background)
+                }
                 .overlay {
-                    RoundedRectangle(cornerRadius: 25, style: .continuous)
-                        .stroke(style: .init(lineWidth: 2))
+                    RoundedRectangle(cornerRadius: imageCornerRadius, style: .continuous)
+                        .stroke(style: .init(lineWidth: imageBorderWidth))
                         .foregroundStyle(Color.accent)
+                }
+                .overlay(alignment: .bottomTrailing) {
+                    ImageAccessory("plus")
                 }
         }
         .sheet(isPresented: $showImagePicker, content: ImagePicker)
+    }
+    
+    @ViewBuilder private func ImageAccessory(_ name: String) -> some View {
+        Image(systemName: name)
+            .foregroundStyle(Color.background)
+            .frame(width: imageCornerRadius * 3, height: imageCornerRadius * 2)
+            .background {
+                UnevenRoundedRectangle(
+                    cornerRadii: .init(topLeading: imageCornerRadius, bottomTrailing: imageCornerRadius),
+                    style: .continuous
+                )
+                .foregroundStyle(Color.accent)
+            }
     }
     
     @ViewBuilder func PostTitleField() -> some View {
@@ -186,7 +220,9 @@ struct CreatePostView: View {
     @ViewBuilder func ImagePicker() -> some View {
         ImagePickerView { selectedImage in
             showImagePicker = false
-            postImages.append(PostImage(image: selectedImage))
+            withAnimation(.snappy) {
+                postImages.append(PostImage(image: selectedImage))
+            }
         } didCancel: {
             showImagePicker = false
         }
