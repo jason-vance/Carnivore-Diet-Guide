@@ -26,8 +26,8 @@ struct Shake<Content: View>: View {
     var body: some View {
         content
             .offset(x: xOffset)
-            .onChange(of: shake) { shouldShake in
-                guard shouldShake else { return }
+            .onChange(of: shake) { _, newShake in
+                guard newShake else { return }
                 Task {
                     await animate()
                     shake = false

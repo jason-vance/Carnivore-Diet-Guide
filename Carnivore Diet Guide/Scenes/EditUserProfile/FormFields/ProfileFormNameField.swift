@@ -28,15 +28,15 @@ struct ProfileFormNameField: View {
                 NameErrorView()
             }
         )
-        .onChange(of: nameStr, perform: { value in
-            guard name.wrappedValue?.value != value else { return }
-            name.wrappedValue = PersonName(value)
-        })
-        .onChange(of: name.wrappedValue, perform: { value in
-            guard let value = value else { return }
+        .onChange(of: nameStr) { _, newValue in
+            guard name.wrappedValue?.value != newValue else { return }
+            name.wrappedValue = PersonName(newValue)
+        }
+        .onChange(of: name.wrappedValue) { _, newValue in
+            guard let value = newValue else { return }
             guard nameStr != value.value else { return }
             nameStr = value.value
-        })
+        }
     }
     
     @ViewBuilder func NameErrorView() -> some View {
