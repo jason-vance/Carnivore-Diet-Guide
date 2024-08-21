@@ -12,6 +12,8 @@ import SwiftUI
 @MainActor
 class CreatePostViewModel: ObservableObject {
     
+    private let imageCountLimit: Int = 5
+    
     @Published public var postTitle: String = ""
     @Published public var postImages: [CreatePostImageData] = []
     @Published public var postText: String = ""
@@ -23,6 +25,8 @@ class CreatePostViewModel: ObservableObject {
     public var isFormEmpty: Bool {
         postTitle.isEmpty && postText.isEmpty && postImages.isEmpty
     }
+    
+    public var canAddImages: Bool { postImages.count < imageCountLimit }
     
     public var reviewPostData: ReviewPostData? {
         guard let userId = userId else { return nil }
@@ -49,11 +53,20 @@ class CreatePostViewModel: ObservableObject {
     }
     
     public func addToPost(image: UIImage) {
-        //TODO: Limit image count
+        guard postImages.count < imageCountLimit else { return }
+
         withAnimation(.snappy) {
             postImages.append(CreatePostImageData(image: image))
         }
         
         //TODO: Upload images to Firebase
+    }
+    
+    public func removeFromPost(image: CreatePostImageData) {
+        //TODO: Delete image from Firebase
+        
+        withAnimation(.snappy) {
+            postImages.removeAll { $0.id == image.id }
+        }
     }
 }

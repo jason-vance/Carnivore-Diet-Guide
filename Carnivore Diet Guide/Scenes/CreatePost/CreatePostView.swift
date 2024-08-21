@@ -129,7 +129,9 @@ struct CreatePostView: View {
                 ForEach(model.postImages) { image in
                     ImageCarouselItem(image)
                 }
-                AddImageButton()
+                if model.canAddImages {
+                    AddImageButton()
+                }
             }
             .scrollTargetLayout()
             .padding(.vertical)
@@ -156,15 +158,15 @@ struct CreatePostView: View {
                     .foregroundStyle(Color.accent)
             }
             .overlay(alignment: .bottomTrailing) {
-                RemoveImageButton(image)
+                if image.url != nil {
+                    RemoveImageButton(image)
+                }
             }
     }
     
     @ViewBuilder private func RemoveImageButton(_ image: CreatePostImageData) -> some View {
         Button {
-            withAnimation(.snappy) {
-                model.postImages.removeAll { $0.id == image.id }
-            }
+            model.removeFromPost(image: image)
         } label: {
             ImageAccessory("minus")
         }
