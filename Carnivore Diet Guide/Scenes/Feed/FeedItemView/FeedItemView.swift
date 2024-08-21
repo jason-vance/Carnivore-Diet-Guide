@@ -39,7 +39,7 @@ struct FeedItemView: View {
     @ViewBuilder func ItemImage() -> some View {
         if feedItem.imageUrls.isEmpty {
             //Do nothing, leave it blank
-        } else if feedItem.imageUrls.count == 1 {
+        } else {
             KFImage(feedItem.imageUrls[0])
                 .resizable()
                 .cacheOriginalImage()
@@ -47,8 +47,6 @@ struct FeedItemView: View {
                 .placeholder(PlaceholderView)
                 .scaledToFill()
                 .frame(width: itemWidth, height: itemWidth)
-        } else {
-            //Handle an array of FeedItem images
         }
     }
     
@@ -106,7 +104,7 @@ struct FeedItemView: View {
         setupMockIocContainer(iocContainer)
     } content: {
         GeometryReader { proxy in
-            FeedItemView(feedItem: .sampleDiscussion, itemWidth: proxy.size.width)
+            FeedItemView(feedItem: .samplePost, itemWidth: proxy.size.width)
         }
     }
 }

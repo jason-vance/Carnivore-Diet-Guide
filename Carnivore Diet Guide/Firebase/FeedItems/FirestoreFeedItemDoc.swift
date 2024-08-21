@@ -11,6 +11,7 @@ import FirebaseFirestoreSwift
 struct FirestoreFeedItemDoc: Codable {
     @DocumentID var id: String?
     var creatorUserId: String?
+    //TODO: Change this to String? so that it doesn't break if I decide to remove a FeedItemType
     var feedItemType: FeedItem.FeedItemType?
     var imageUrls: [String]?
     var publicationDate: Date?

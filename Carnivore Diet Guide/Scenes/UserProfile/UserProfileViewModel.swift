@@ -29,7 +29,6 @@ class UserProfileViewModel: ObservableObject {
     }
     
     public func listenForUserData(userId: String) {
-        print("listenForUserData: \(userId)")
         userDataProvider.startListeningToUser(withId: userId)
         userDataProvider.userDataPublisher
             .receive(on: RunLoop.main)
@@ -38,7 +37,6 @@ class UserProfileViewModel: ObservableObject {
     }
     
     private func receive(userData: UserData) {
-        print("receive(userData: \(userData))")
         self.userData = userData
     }
     

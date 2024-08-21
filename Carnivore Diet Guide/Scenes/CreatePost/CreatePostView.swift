@@ -7,35 +7,34 @@
 
 import SwiftUI
 import YPImagePicker
+import SwinjectAutoregistration
 
 struct CreatePostView: View {
     
     private let imageSize: CGFloat = 128
     private let imageCornerRadius: CGFloat = 12
     private let imageBorderWidth: CGFloat = 2
-
-    private struct PostImage: Identifiable {
-        let id = UUID()
-        let image: UIImage
-    }
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
-    @StateObject private var model = CreatePostViewModel()
+    @StateObject private var model = CreatePostViewModel(
+        userIdProvider: iocContainer~>CurrentUserIdProvider.self
+    )
     
-    @State private var postTitle: String = ""
-    @State private var postImages: [PostImage] = []
-    @State private var postText: String = ""
-    
+    @State private var navigationPath = NavigationPath()
     @State private var showImagePicker: Bool = false
     @State private var showDiscardDialog: Bool = false
     
-    private var isFormEmpty: Bool {
-        postTitle.isEmpty && postText.isEmpty && postImages.isEmpty
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
+    
+    private func show(alertMessage: String) {
+        showAlert = true
+        self.alertMessage = alertMessage
     }
     
     private func close() {
-        if isFormEmpty {
+        if model.isFormEmpty {
             dismiss()
         } else {
             showDiscardDialog = true
@@ -43,24 +42,38 @@ struct CreatePostView: View {
     }
     
     private func goToNext() {
-        //TODO: Implement CreatePostView.goToNext()
+        guard let postData = model.reviewPostData else {
+            show(alertMessage: "Could not create ReviewPostData")
+            return
+        }
+        navigationPath.append(postData)
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            TopBar()
-            List {
-                ImageCarouselField()
-                PostTitleField()
-                PostTextField()
+        NavigationStack(path: $navigationPath) {
+            VStack(spacing: 0) {
+                TopBar()
+                List {
+                    ImageCarouselField()
+                    PostTitleField()
+                    PostTextField()
+                }
+                .listStyle(.plain)
             }
-            .listStyle(.plain)
+            .background(Color.background)
+            .confirmationDialog(
+                "Do you want to discard your post?",
+                isPresented: $showDiscardDialog,
+                titleVisibility: .visible
+            ) {
+                DiscardButton()
+                CancelButton()
+            }
+            .navigationDestination(for: ReviewPostData.self) { postData in
+                ReviewNewPostView(postData: postData)
+            }
         }
-        .background(Color.background)
-        .confirmationDialog("Do you want to discard your post?", isPresented: $showDiscardDialog, titleVisibility: .visible) {
-            DiscardButton()
-            CancelButton()
-        }
+        .alert(alertMessage, isPresented: $showAlert) {}
     }
     
     @ViewBuilder func DiscardButton() -> some View {
@@ -104,15 +117,16 @@ struct CreatePostView: View {
                 .padding(8)
                 .background() {
                     Capsule()
-                        .foregroundStyle(Color.accent)
+                        .foregroundStyle(model.reviewPostData == nil ? Color.gray : Color.accent)
                 }
         }
+        .disabled(model.reviewPostData == nil)
     }
     
     @ViewBuilder func ImageCarouselField() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 16) {
-                ForEach(postImages) { image in
+                ForEach(model.postImages) { image in
                     ImageCarouselItem(image)
                 }
                 AddImageButton()
@@ -127,7 +141,8 @@ struct CreatePostView: View {
         .listRowSeparator(.hidden)
     }
     
-    @ViewBuilder private func ImageCarouselItem(_ image: PostImage) -> some View {
+    @ViewBuilder private func ImageCarouselItem(_ image: CreatePostImageData) -> some View {
+        //TODO: Show upload progress
         Image(uiImage: image.image)
             .resizable()
             .scaledToFill()
@@ -144,10 +159,10 @@ struct CreatePostView: View {
             }
     }
     
-    @ViewBuilder private func RemoveImageButton(_ image: PostImage) -> some View {
+    @ViewBuilder private func RemoveImageButton(_ image: CreatePostImageData) -> some View {
         Button {
             withAnimation(.snappy) {
-                postImages.removeAll { $0.id == image.id }
+                model.postImages.removeAll { $0.id == image.id }
             }
         } label: {
             ImageAccessory("minus")
@@ -191,7 +206,7 @@ struct CreatePostView: View {
     }
     
     @ViewBuilder func PostTitleField() -> some View {
-        TextField("Title", text: $postTitle, prompt: Text("Title"))
+        TextField("Title", text: $model.postTitle, prompt: Text("Title"))
             .textInputAutocapitalization(.words)
             .font(.title.bold())
             .foregroundStyle(Color.text)
@@ -206,8 +221,8 @@ struct CreatePostView: View {
                 .opacity(0.3)
                 .padding(.vertical, 8)
                 .padding(.horizontal, 5)
-                .opacity(postText.isEmpty ? 1 : 0)
-            TextEditor(text: $postText)
+                .opacity(model.postText.isEmpty ? 1 : 0)
+            TextEditor(text: $model.postText)
                 .textInputAutocapitalization(.sentences)
                 .foregroundStyle(Color.text)
                 .scrollContentBackground(.hidden)
@@ -220,9 +235,7 @@ struct CreatePostView: View {
     @ViewBuilder func ImagePicker() -> some View {
         ImagePickerView { selectedImage in
             showImagePicker = false
-            withAnimation(.snappy) {
-                postImages.append(PostImage(image: selectedImage))
-            }
+            model.addToPost(image: selectedImage)
         } didCancel: {
             showImagePicker = false
         }

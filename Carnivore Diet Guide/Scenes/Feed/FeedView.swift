@@ -77,7 +77,7 @@ struct FeedView: View {
             PostDetailView(post: .sample)
         case .recipe:
             RecipeDetailView(recipeId: feedItem.resourceId)
-        case .discussion:
+        case .post:
             Text(feedItem.title)
         }
     }

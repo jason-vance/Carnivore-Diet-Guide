@@ -10,9 +10,9 @@ import Foundation
 struct FeedItem: Identifiable {
     
     enum FeedItemType: String, Codable {
+        case post
         case recipe
         case article
-        case discussion
     }
     
     var id: String
@@ -52,16 +52,16 @@ extension FeedItem {
         summary: "This Seared Ribeye Steak recipe epitomizes the essence of the carnivore diet, focusing solely on the rich, natural flavors of high-quality meat. An 8-ounce, grass-fed ribeye steak is seasoned with just salt (and optional black pepper for those who include spices in their carnivore diet) and seared in a hot skillet to achieve a perfect crust with a juicy, medium-rare center. The simplicity of this dish highlights the steak's succulent texture and deep flavors, making it a pure, satisfying meal for meat lovers. Cooked without oils, butters, or garnishes, it's a straightforward ode to the primal joy of eating well-prepared meat."
     )
     
-    static let sampleDiscussion: FeedItem = .init(
-        id: "discussionFeedItemId",
-        type: .discussion,
+    static let samplePost: FeedItem = .init(
+        id: "postFeedItemId",
+        type: .post,
         resourceId: "resourceId",
         userId: "userId",
         imageUrls: [],
-        calloutText: "Featured Discussion",
+        calloutText: "Featured Post",
         title: "Welcome to the Carnivore Diet Guide!",
         summary: "Are you a meat lover or curious about the health benefits of a carnivorous lifestyle? 'Carnivore Diet Guide' is your essential companion for delving into the world of the carnivore diet. Tailored for both seasoned followers and newcomers, our app offers an in-depth journey into this unique dietary choice."
     )
     
-    static let samples: [FeedItem] = [sampleArticle, sampleDiscussion, sampleRecipe]
+    static let samples: [FeedItem] = [sampleArticle, samplePost, sampleRecipe]
 }
