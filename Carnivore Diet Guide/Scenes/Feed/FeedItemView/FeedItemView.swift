@@ -47,6 +47,10 @@ struct FeedItemView: View {
                 .placeholder(PlaceholderView)
                 .scaledToFill()
                 .frame(width: itemWidth, height: itemWidth)
+                .frame(
+                    maxWidth: itemWidth == nil ? .infinity : nil,
+                    maxHeight: itemWidth == nil ? 400 : nil
+                )
         }
     }
     

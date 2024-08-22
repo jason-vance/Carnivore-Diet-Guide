@@ -9,16 +9,29 @@ import Foundation
 import UIKit
 import SwiftUI
 
+//TODO: Handle cases where uploaded images might get leaked/forgotten
+//  * User uploads images, then app crashes or gets force closed
+
 @MainActor
 class CreatePostViewModel: ObservableObject {
     
     private let imageCountLimit: Int = 5
     
+    @Published public var postId: String = UUID().uuidString
     @Published public var postTitle: String = ""
     @Published public var postImages: [CreatePostImageData] = []
     @Published public var postText: String = ""
     
     private let userIdProvider: CurrentUserIdProvider
+    private let imageUploader: PostImageUploader
+    
+    init(
+        userIdProvider: CurrentUserIdProvider,
+        imageUploader: PostImageUploader
+    ) {
+        self.userIdProvider = userIdProvider
+        self.imageUploader = imageUploader
+    }
     
     private var userId: String? { userIdProvider.currentUserId }
     
@@ -39,6 +52,7 @@ class CreatePostViewModel: ObservableObject {
         guard imageUrls.count == postImages.count else { return nil }
         
         return ReviewPostData(
+            id: postId,
             userId: userId,
             title: postTitle,
             text: postText,
@@ -46,20 +60,37 @@ class CreatePostViewModel: ObservableObject {
         )
     }
     
-    init(
-        userIdProvider: CurrentUserIdProvider
-    ) {
-        self.userIdProvider = userIdProvider
-    }
-    
     public func addToPost(image: UIImage) {
         guard postImages.count < imageCountLimit else { return }
+        guard let userId = userId else { return }
+
+        let imageData = CreatePostImageData(image: image)
 
         withAnimation(.snappy) {
-            postImages.append(CreatePostImageData(image: image))
+            postImages.append(imageData)
         }
         
-        //TODO: Upload images to Firebase
+        Task {
+            do {
+                let imageUrl = try await imageUploader.upload(
+                    image: imageData.image,
+                    withId: imageData.id,
+                    forPost: postId,
+                    byUser: userId
+                )
+                
+                guard let index = postImages.firstIndex(where: { $0.id == imageData.id }) else { return }
+                postImages.remove(at: index)
+                
+                let imageData = CreatePostImageData(id: imageData.id, image: image, url: imageUrl)
+                postImages.insert(imageData, at: index)
+            } catch {
+                print("Image failed to upload: \(error.localizedDescription)")
+                withAnimation(.snappy) {
+                    postImages.removeAll { $0.id == imageData.id }
+                }
+            }
+        }
     }
     
     public func removeFromPost(image: CreatePostImageData) {

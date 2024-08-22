@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ReviewNewPostView: View {
     
+    @Environment(\.dismiss) private var dismiss: DismissAction
+    
     private let itemHorizontalPadding: CGFloat = 8
     
     public let postData: ReviewPostData
@@ -17,7 +19,7 @@ struct ReviewNewPostView: View {
         FeedItem(
             id: UUID().uuidString,
             type: .post,
-            resourceId: UUID().uuidString,
+            resourceId: postData.id,
             userId: postData.userId,
             imageUrls: postData.imageUrls,
             title: postData.title,
@@ -26,7 +28,7 @@ struct ReviewNewPostView: View {
     }
     
     private func goBack() {
-        //TODO: Navigate back one screen
+        dismiss()
     }
     
     private func postAndDismiss() {
@@ -36,21 +38,19 @@ struct ReviewNewPostView: View {
     var body: some View {
         VStack(spacing: 0) {
             ScreenTitleBar(String(localized: "Review Your Post"))
-            GeometryReader { proxy in
-                ScrollView {
-                    FeedItemView(
-                        feedItem: feedItem,
-                        itemWidth: proxy.size.width - (2 * itemHorizontalPadding)
-                    )
-                    .padding(.horizontal, itemHorizontalPadding)
-                    .padding(.vertical)
-                }
+            ScrollView {
+                FeedItemView(
+                    feedItem: feedItem
+                )
+                .padding(.horizontal, itemHorizontalPadding)
+                .padding(.vertical)
             }
         }
         .background(Color.background)
         .overlay(alignment: .bottom) {
             BottomControls()
         }
+        .navigationBarBackButtonHidden()
     }
     
     @ViewBuilder func BottomControls() -> some View {

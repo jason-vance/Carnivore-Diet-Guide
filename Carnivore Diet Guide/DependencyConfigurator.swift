@@ -36,6 +36,9 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(PopularRecipeIdFetcher.self, initializer: FirebaseRecipeActivityRepository.init)
     iocContainer.autoregister(FeedViewContentProvider.self) { DefaultFeedViewContentProvider.instance }
     iocContainer.autoregister(FeedItemRepository.self, initializer: FirebaseFeedItemRepository.init)
+    
+    //Post Creation
+    iocContainer.autoregister(PostImageUploader.self, initializer: FirebasePostImageStorage.init)
 
     //Recipe Detail
     iocContainer.autoregister(RecipeFavoriter.self, argument: Recipe.self, initializer: DefaultRecipeFavoriter.init)

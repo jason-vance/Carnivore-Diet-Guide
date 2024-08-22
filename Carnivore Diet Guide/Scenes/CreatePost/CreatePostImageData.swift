@@ -9,17 +9,17 @@ import Foundation
 import UIKit
 
 struct CreatePostImageData: Identifiable {
-    let id: UUID
+    let id: String
     let image: UIImage
     let url: URL?
     
     init(image: UIImage) {
-        self.id = UUID()
+        self.id = UUID().uuidString
         self.image = image
         self.url = nil
     }
     
-    init(id: UUID, image: UIImage, url: URL?) {
+    init(id: String, image: UIImage, url: URL?) {
         self.id = id
         self.image = image
         self.url = url

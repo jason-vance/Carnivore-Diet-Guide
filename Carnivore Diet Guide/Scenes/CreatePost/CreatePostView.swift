@@ -18,7 +18,8 @@ struct CreatePostView: View {
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     @StateObject private var model = CreatePostViewModel(
-        userIdProvider: iocContainer~>CurrentUserIdProvider.self
+        userIdProvider: iocContainer~>CurrentUserIdProvider.self,
+        imageUploader: iocContainer~>PostImageUploader.self
     )
     
     @State private var navigationPath = NavigationPath()
@@ -246,5 +247,9 @@ struct CreatePostView: View {
 }
 
 #Preview {
-    CreatePostView()
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        CreatePostView()
+    }
 }

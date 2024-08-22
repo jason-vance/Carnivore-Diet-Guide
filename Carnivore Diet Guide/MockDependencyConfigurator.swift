@@ -28,6 +28,9 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(FeedViewContentProvider.self) { DefaultFeedViewContentProvider.instance }
     iocContainer.autoregister(FeedItemRepository.self, initializer: MockFeedItemRepository.init)
     
+    //Post Creation
+    iocContainer.autoregister(PostImageUploader.self, initializer: MockPostImageUploader.init)
+    
     //Recipe Detail
     iocContainer.autoregister(RecipeFavoriter.self, argument: Recipe.self, initializer: MockRecipeFavoriter.init)
     iocContainer.autoregister(RecipeFavoriteCountProvider.self, argument: Recipe.self, initializer: MockRecipeFavoriteCountProvider.init)
