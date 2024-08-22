@@ -10,6 +10,7 @@ import UIKit
 
 protocol PostImageUploader {
     func upload(image: UIImage, withId: String, forPost: String, byUser: String) async throws -> URL
+    func delete(image: String, forPost: String, byUser: String) async throws
 }
 
 class MockPostImageUploader: PostImageUploader {
@@ -23,6 +24,13 @@ class MockPostImageUploader: PostImageUploader {
             throw "error"
         }
         return returnUrl
+    }
+    
+    func delete(image: String, forPost: String, byUser: String) async throws {
+        try? await Task.sleep(for: .seconds(1))
+        if willThrow {
+            throw "error"
+        }
     }
 }
 

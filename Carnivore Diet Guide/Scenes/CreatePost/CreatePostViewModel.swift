@@ -94,10 +94,26 @@ class CreatePostViewModel: ObservableObject {
     }
     
     public func removeFromPost(image: CreatePostImageData) {
-        //TODO: Delete image from Firebase
+        guard let userId = userId else { return }
+        guard let index = postImages.firstIndex(where: { $0.id == image.id }) else { return }
         
         withAnimation(.snappy) {
             postImages.removeAll { $0.id == image.id }
+        }
+        
+        Task {
+            do {
+                try await imageUploader.delete(
+                    image: image.id,
+                    forPost: postId,
+                    byUser: userId
+                )
+            } catch {
+                print("Image failed to delete: \(error.localizedDescription)")
+                withAnimation(.snappy) {
+                    postImages.insert(image, at: min(index, postImages.count))
+                }
+            }
         }
     }
 }
