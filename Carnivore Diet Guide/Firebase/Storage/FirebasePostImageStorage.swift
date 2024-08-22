@@ -9,6 +9,40 @@ import Foundation
 import FirebaseStorage
 import UIKit
 
+fileprivate struct PostImage {
+    
+    let imageData: Data
+    
+    init(image: UIImage) throws {
+        let image = try Self.resize(image: image)
+        let imageData = try Self.compress(image: image)
+        try Self.throwIfTooBig(data: imageData)
+        
+        self.imageData = imageData
+    }
+    
+    private static func compress(image: UIImage) throws -> Data {
+        if let image = image.jpegData(compressionQuality: 0.5) {
+            return image
+        }
+        throw "Image could not be compressed"
+    }
+    
+    private static func throwIfTooBig(data: Data) throws {
+        let fiveMB = 5 * 1024 * 1024
+        if data.count - fiveMB > 0 {
+            throw "Image data must be 5MB or less"
+        }
+    }
+    
+    private static func resize(image: UIImage) throws -> UIImage {
+        if let image = image.resizeToMinSideWithMaxLength(of: 1024) {
+            return image
+        }
+        throw "Image could not be resized"
+    }
+}
+
 public class FirebasePostImageStorage {
     
     var storage: Storage { Storage.storage() }
@@ -23,25 +57,19 @@ public class FirebasePostImageStorage {
         forPost postId: String,
         byUser userId: String
     ) async throws -> URL {
+        let image = try PostImage(image: image)
         let path = imagePath(imageId: imageId, postId: postId, userId: userId)
+        
         return try await upload(image: image, to: path)
     }
     
-    private func upload(image: UIImage, to path: String) async throws -> URL {
-        //TODO: Limit/verify image dimensions
-        guard let jpgImage = image.jpegData(compressionQuality: 0.5) else {
-            throw "Image could not be converted to jpg"
-        }
-        return try await upload(jpgImage: jpgImage, to: path)
-    }
-    
-    private func upload(jpgImage: Data, to path: String) async throws -> URL {
+    private func upload(image: PostImage, to path: String) async throws -> URL {
         let storageReference = storage.reference(withPath: path)
         let storageMetadata = StorageMetadata()
         storageMetadata.contentType = "image/jpeg"
         
         try await withCheckedThrowingContinuation { (continuation:CheckedContinuation<Void,Error>) in
-            let uploadTask = storageReference.putData(jpgImage, metadata: storageMetadata)
+            let uploadTask = storageReference.putData(image.imageData, metadata: storageMetadata)
             uploadTask.observe(.failure) { taskSnapshot in
                 continuation.resume(throwing: taskSnapshot.error ?? "Failed to upload image")
             }
