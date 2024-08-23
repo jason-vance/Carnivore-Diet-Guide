@@ -38,7 +38,7 @@ struct ReviewNewPostView: View {
     
     private var post: Post {
         Post(
-            id: UUID().uuidString,
+            id: postData.id,
             title: postData.title,
             imageUrls: postData.imageUrls,
             author: postData.userId,

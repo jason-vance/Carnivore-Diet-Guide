@@ -322,6 +322,16 @@
     "Are you sure you want to logout?" : {
 
     },
+    "Article\n\n%@\n\n%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Article\n\n%1$@\n\n%2$@"
+          }
+        }
+      }
+    },
     "Blog" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -394,6 +404,7 @@
 
     },
     "By: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1507,6 +1518,9 @@
         }
       }
     },
+    "Post Detail\n(Fails to Load)" : {
+
+    },
     "Protein" : {
       "localizations" : {
         "ar" : {
@@ -1850,6 +1864,9 @@
           }
         }
       }
+    },
+    "The post could not be fetched" : {
+
     },
     "This recipe has been reported. It will be reviewed to make sure it follows our content guidelines." : {
 
