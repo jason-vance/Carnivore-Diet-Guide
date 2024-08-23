@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 class FirebasePostRepository {
     
-    static let POSTS = "BlogPosts"
+    static let POSTS = "Posts"
     private let PUBLICATION_DATE = "publicationDate"
     
     let postsCollection = Firestore.firestore().collection(POSTS)
@@ -27,5 +27,10 @@ class FirebasePostRepository {
         
         return try snapshot.documents
             .compactMap { try $0.data(as: FirestorePostDoc.self).toPost() }
+    }
+    
+    func create(post: Post) async throws {
+        let doc = FirestorePostDoc.from(post)
+        try await postsCollection.document(post.id).setData(from: doc)
     }
 }

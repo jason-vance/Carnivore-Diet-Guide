@@ -19,8 +19,21 @@ struct FirestoreFeedItemDoc: Codable {
     var summary: String?
     var title: String?
     
+    static func from(_ feedItem: FeedItem) -> FirestoreFeedItemDoc {
+        return FirestoreFeedItemDoc(
+            creatorUserId: feedItem.userId,
+            feedItemType: feedItem.type,
+            imageUrls: feedItem.imageUrls.map { $0.absoluteString },
+            publicationDate: feedItem.publicationDate,
+            resourceId: feedItem.resourceId,
+            summary: feedItem.summary,
+            title: feedItem.title
+        )
+    }
+    
     func toFeedItem() -> FeedItem? {
         guard let id = id else { return nil }
+        guard let publicationDate = publicationDate else { return nil }
         guard let feedItemType = feedItemType else { return nil }
         guard let resourceId = resourceId else { return nil }
         guard let creatorUserId = creatorUserId else { return nil }
@@ -31,6 +44,7 @@ struct FirestoreFeedItemDoc: Codable {
 
         return FeedItem(
             id: id,
+            publicationDate: publicationDate,
             type: feedItemType,
             resourceId: resourceId,
             userId: creatorUserId,

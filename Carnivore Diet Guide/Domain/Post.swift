@@ -10,9 +10,7 @@ import Foundation
 struct Post: Identifiable {
     var id: String
     var title: String
-    var imageName: String?
-    //TODO: Handle multiple imageUrls
-    var imageUrl: String?
+    var imageUrls: [URL]
     var author: String
     var markdownContent: String
     var publicationDate: Date
@@ -30,7 +28,9 @@ extension Post {
         .init(
             id: "samplePostId",
             title: "What is the Carnivore Diet?",
-            imageName: "WhatIsTheCarnivoreDiet",
+            imageUrls: [
+                URL(string: "https://firebasestorage.googleapis.com/v0/b/carnivore-diet-guide.appspot.com/o/BlogPostImages%2FWhatIsTheCarnivoreDiet.jpg?alt=media&token=66c254f6-6f9a-4240-97f5-726baa84c75b")!
+            ],
             author: "The Carnivore Diet Guide Team",
             markdownContent: """
 The carnivore diet is an eating plan that focuses almost exclusively on meat and animal products, eliminating most other food groups. This diet is a more extreme version of low-carbohydrate, high-protein diets like the ketogenic and paleo diets.
@@ -76,7 +76,9 @@ While the carnivore diet may offer short-term benefits for weight loss or blood 
         .init(
             id: "longNamedSamplePostId",
             title: "Getting Started with the Carnivore Diet. All of the Whats, Whys, and Hows.",
-            imageName: "WhatIsTheCarnivoreDiet",
+            imageUrls: [
+                URL(string: "https://firebasestorage.googleapis.com/v0/b/carnivore-diet-guide.appspot.com/o/BlogPostImages%2FWhatIsTheCarnivoreDiet.jpg?alt=media&token=66c254f6-6f9a-4240-97f5-726baa84c75b")!
+            ],
             author: "The Carnivore Diet Guide Team",
             markdownContent: """
 The carnivore diet is an eating plan that focuses almost exclusively on meat and animal products, eliminating most other food groups. This diet is a more extreme version of low-carbohydrate, high-protein diets like the ketogenic and paleo diets.

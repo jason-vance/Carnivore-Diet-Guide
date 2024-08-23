@@ -71,7 +71,7 @@ struct CreatePostView: View {
                 CancelButton()
             }
             .navigationDestination(for: ReviewPostData.self) { postData in
-                ReviewNewPostView(postData: postData)
+                ReviewNewPostView(postData: postData) { dismiss() }
             }
         }
         .alert(alertMessage, isPresented: $showAlert) {}

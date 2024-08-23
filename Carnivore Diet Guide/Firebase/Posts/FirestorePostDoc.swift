@@ -9,46 +9,38 @@ import Foundation
 import FirebaseFirestoreSwift
 
 struct FirestorePostDoc: Codable {
-
-    struct Localization: Codable {
-        static let defaultLanguage: String = "default"
-        
-        var language: String?
-        var title: String?
-        var markdownContent: String?
-    }
     
     @DocumentID var id: String?
     var publicationDate: Date?
     var author: String?
-    var imageUrl: String?
-    var localizations: [Localization]
+    var imageUrls: [String]?
+    var title: String?
+    var markdownContent: String?
+    
+    static func from(_ post: Post) -> FirestorePostDoc {
+        return .init(
+            id: post.id,
+            publicationDate: post.publicationDate,
+            author: post.author,
+            imageUrls: post.imageUrls.map { $0.absoluteString },
+            title: post.title,
+            markdownContent: post.markdownContent
+        )
+    }
     
     func toPost() -> Post? {
-        let localization: Localization? = {
-            let languageCode = Locale.current.language.languageCode?.identifier
-            
-            if let localization = (localizations.first { $0.language == languageCode }) {
-                return localization
-            } else if let localization = (localizations.first { $0.language == Localization.defaultLanguage }) {
-                return localization
-            } else {
-                return localizations.first
-            }
-        }()
-        guard let localization = localization else { return nil}
-        
         guard let id = id else { return nil }
-        guard let title = localization.title else { return nil }
-        guard let imageUrl = imageUrl else { return nil }
+        guard let title = title else { return nil }
         guard let author = author else { return nil }
+        guard let markdownContent = markdownContent else { return nil }
         guard let publicationDate = publicationDate else { return nil }
-        guard let markdownContent = localization.markdownContent else { return nil }
+        
+        let imageUrls = imageUrls?.compactMap { URL(string: $0) } ?? []
 
         return .init(
             id: id,
             title: title,
-            imageUrl: imageUrl,
+            imageUrls: imageUrls,
             author: author,
             markdownContent: markdownContent.replacingOccurrences(of: "\\n", with: "\n"),
             publicationDate: publicationDate

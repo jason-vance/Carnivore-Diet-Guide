@@ -16,6 +16,7 @@ struct FeedItem: Identifiable {
     }
     
     var id: String
+    var publicationDate: Date
     var type: FeedItemType
     var resourceId: String
     var userId: String
@@ -28,6 +29,7 @@ struct FeedItem: Identifiable {
 extension FeedItem {
     static let sampleArticle: FeedItem = .init(
         id: "articleFeedItemId",
+        publicationDate: .now,
         type: .article,
         resourceId: "resourceId",
         userId: "userId",
@@ -41,6 +43,7 @@ extension FeedItem {
     
     static let sampleRecipe: FeedItem = .init(
         id: "recipeFeedItemId",
+        publicationDate: .now,
         type: .recipe,
         resourceId: "resourceId",
         userId: "userId",
@@ -54,6 +57,7 @@ extension FeedItem {
     
     static let samplePost: FeedItem = .init(
         id: "postFeedItemId",
+        publicationDate: .now,
         type: .post,
         resourceId: "resourceId",
         userId: "userId",

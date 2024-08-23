@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct ReviewNewPostView: View {
     
@@ -13,11 +14,19 @@ struct ReviewNewPostView: View {
     
     private let itemHorizontalPadding: CGFloat = 8
     
+    private let postPoster = iocContainer~>PostPoster.self
+    
     public let postData: ReviewPostData
+    public let dismissAll: () -> ()
+    
+    @State private var isPosting: Bool = false
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
     
     private var feedItem: FeedItem {
         FeedItem(
             id: UUID().uuidString,
+            publicationDate: .now,
             type: .post,
             resourceId: postData.id,
             userId: postData.userId,
@@ -31,7 +40,7 @@ struct ReviewNewPostView: View {
         Post(
             id: UUID().uuidString,
             title: postData.title,
-            imageUrl: postData.imageUrls.first?.absoluteString,
+            imageUrls: postData.imageUrls,
             author: postData.userId,
             markdownContent: postData.markdownContent,
             publicationDate: .now
@@ -43,7 +52,21 @@ struct ReviewNewPostView: View {
     }
     
     private func postAndDismiss() {
-        //TODO: Post and dismiss post creation UI
+        Task {
+            do {
+                withAnimation(.snappy) { isPosting = true }
+                try await postPoster.post(post: post, feedItem: feedItem)
+                dismissAll()
+            } catch {
+                withAnimation(.snappy) { isPosting = false }
+                show(alert: "Failed to post. Please try again later.\n\(error.localizedDescription)")
+            }
+        }
+    }
+    
+    private func show(alert: String) {
+        showAlert = true
+        alertMessage = alert
     }
     
     var body: some View {
@@ -65,7 +88,28 @@ struct ReviewNewPostView: View {
         .overlay(alignment: .bottom) {
             BottomControls()
         }
+        .overlay {
+            ProgressSpinner()
+        }
         .navigationBarBackButtonHidden()
+        .alert(alertMessage, isPresented: $showAlert) {}
+    }
+    
+    @ViewBuilder func ProgressSpinner() -> some View {
+        if isPosting {
+            ZStack(alignment: .bottom) {
+                Rectangle()
+                    .foregroundStyle(Color.text)
+                    .opacity(0.3)
+                    .ignoresSafeArea()
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .tint(Color.accentColor)
+                    .padding()
+                    .background(Color.background)
+                    .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
+            }
+        }
     }
     
     @ViewBuilder func SectionHeader(_ text: String) -> some View {
@@ -84,12 +128,14 @@ struct ReviewNewPostView: View {
     }
     
     @ViewBuilder func BottomControls() -> some View {
-        HStack {
-            BackButton()
-            LooksGoodButton()
+        if !isPosting {
+            HStack {
+                BackButton()
+                LooksGoodButton()
+            }
+            .padding()
+            .frame(height: .defaultBarHeight)
         }
-        .padding()
-        .frame(height: .defaultBarHeight)
     }
     
     @ViewBuilder func BackButton() -> some View {
@@ -102,7 +148,7 @@ struct ReviewNewPostView: View {
             }
             .foregroundStyle(Color.accent)
             .bold()
-            .padding()
+            .padding(.vertical)
             .frame(maxWidth: .infinity)
             .background {
                 RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
@@ -126,7 +172,7 @@ struct ReviewNewPostView: View {
             }
             .foregroundStyle(Color.background)
             .bold()
-            .padding()
+            .padding(.vertical)
             .frame(maxWidth: .infinity)
             .background {
                 RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
@@ -139,7 +185,9 @@ struct ReviewNewPostView: View {
 #Preview {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
+        
+        iocContainer.autoregister(PostPoster.self, initializer: { DefaultPostPoster.forPreviewsWithFailure })
     } content: {
-        ReviewNewPostView(postData: ReviewPostData.sample)
+        ReviewNewPostView(postData: ReviewPostData.sample) {}
     }
 }

@@ -41,4 +41,9 @@ extension FirebaseFeedItemRepository: FeedItemRepository {
             .compactMap { try $0.data(as: FirestoreFeedItemDoc.self).toFeedItem() }
     }
     
+    func create(feedItem: FeedItem) async throws {
+        let doc = FirestoreFeedItemDoc.from(feedItem)
+        try await feedItemsCollection.addDocument(from: doc)
+    }
+    
 }

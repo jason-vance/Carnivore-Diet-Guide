@@ -30,6 +30,7 @@ func setupMockIocContainer(_ iocContainer: Container) {
     
     //Post Creation
     iocContainer.autoregister(PostImageUploader.self, initializer: MockPostImageUploader.init)
+    iocContainer.autoregister(PostPoster.self, initializer: { DefaultPostPoster.forPreviewsWithSuccess })
     
     //Recipe Detail
     iocContainer.autoregister(RecipeFavoriter.self, argument: Recipe.self, initializer: MockRecipeFavoriter.init)
