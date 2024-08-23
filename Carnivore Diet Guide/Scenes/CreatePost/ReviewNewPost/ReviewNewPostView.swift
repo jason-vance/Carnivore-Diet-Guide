@@ -23,7 +23,18 @@ struct ReviewNewPostView: View {
             userId: postData.userId,
             imageUrls: postData.imageUrls,
             title: postData.title,
-            summary: postData.text
+            summary: postData.markdownContent.markdownToFeedItemSummary()
+        )
+    }
+    
+    private var post: Post {
+        Post(
+            id: UUID().uuidString,
+            title: postData.title,
+            imageUrl: postData.imageUrls.first?.absoluteString,
+            author: postData.userId,
+            markdownContent: postData.markdownContent,
+            publicationDate: .now
         )
     }
     
@@ -39,12 +50,15 @@ struct ReviewNewPostView: View {
         VStack(spacing: 0) {
             ScreenTitleBar(String(localized: "Review Your Post"))
             ScrollView {
-                FeedItemView(
-                    feedItem: feedItem
-                )
+                VStack {
+                    PostView(post: post)
+                    FeedItemView(feedItem: feedItem)
+                }
                 .padding(.horizontal, itemHorizontalPadding)
                 .padding(.vertical)
+                .padding(.bottom, .defaultBarHeight)
             }
+            .scrollIndicators(.hidden)
         }
         .background(Color.background)
         .overlay(alignment: .bottom) {

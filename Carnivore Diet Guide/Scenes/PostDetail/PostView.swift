@@ -13,9 +13,9 @@ struct PostView: View {
     let post: Post
     
     var body: some View {
-        VStack {
-            Title()
+        VStack(spacing: 0) {
             PublicationDate()
+            Title()
             ByLineView(userId: post.author)
             PostContent()
         }

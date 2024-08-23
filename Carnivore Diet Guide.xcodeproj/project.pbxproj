@@ -111,6 +111,8 @@
 		568F72802C7700BD005D16C6 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F727F2C7700BD005D16C6 /* UIImageExtensions.swift */; };
 		568F72812C7700BD005D16C6 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F727F2C7700BD005D16C6 /* UIImageExtensions.swift */; };
 		568F72842C7719FE005D16C6 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72832C7719FE005D16C6 /* PostView.swift */; };
+		568F72862C781A05005D16C6 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* Post.swift */; };
+		568F72882C781EAE005D16C6 /* StringExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72872C781EAE005D16C6 /* StringExtensionsTests.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -305,6 +307,7 @@
 		568F727C2C7699B7005D16C6 /* FirebasePostImageStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebasePostImageStorage.swift; sourceTree = "<group>"; };
 		568F727F2C7700BD005D16C6 /* UIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		568F72832C7719FE005D16C6 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+		568F72872C781EAE005D16C6 /* StringExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionsTests.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -486,7 +489,7 @@
 			isa = PBXGroup;
 			children = (
 				568F72772C769606005D16C6 /* Workers */,
-				568F726A2C75B5DE005D16C6 /* ReviewNewPostView */,
+				568F726A2C75B5DE005D16C6 /* ReviewNewPost */,
 				5622EAC82C75276300FE9C36 /* CreatePostView.swift */,
 				5622EACF2C753C8D00FE9C36 /* CreatePostViewModel.swift */,
 				568F726D2C767A4F005D16C6 /* CreatePostImageData.swift */,
@@ -676,6 +679,7 @@
 			isa = PBXGroup;
 			children = (
 				563BC6F92B78BE3E008F3C50 /* DateExtensionsTests.swift */,
+				568F72872C781EAE005D16C6 /* StringExtensionsTests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -805,13 +809,13 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		568F726A2C75B5DE005D16C6 /* ReviewNewPostView */ = {
+		568F726A2C75B5DE005D16C6 /* ReviewNewPost */ = {
 			isa = PBXGroup;
 			children = (
 				568F726B2C75B5F1005D16C6 /* ReviewNewPostView.swift */,
 				568F72702C767ADF005D16C6 /* ReviewPostData.swift */,
 			);
-			path = ReviewNewPostView;
+			path = ReviewNewPost;
 			sourceTree = "<group>";
 		};
 		568F72772C769606005D16C6 /* Workers */ = {
@@ -1403,10 +1407,12 @@
 				5622EAB82C70AA0300FE9C36 /* CommentSectionResource.swift in Sources */,
 				5622EAB12C70A8C100FE9C36 /* CommentProvider.swift in Sources */,
 				5622EADC2C755F9900FE9C36 /* UserProfileSignOutService.swift in Sources */,
+				568F72882C781EAE005D16C6 /* StringExtensionsTests.swift in Sources */,
 				563BC70E2B7B65D1008F3C50 /* PopularResourcesTests.swift in Sources */,
 				5622EAD42C753CBB00FE9C36 /* RecipesViewModel.swift in Sources */,
 				5622EAB32C70A8D100FE9C36 /* ResourceCommentActivityTracker.swift in Sources */,
 				5622EADD2C755FAD00FE9C36 /* PersonName.swift in Sources */,
+				568F72862C781A05005D16C6 /* Post.swift in Sources */,
 				568F726F2C767A4F005D16C6 /* CreatePostImageData.swift in Sources */,
 				563BC7192B7CB67F008F3C50 /* CookTimeFormatter.swift in Sources */,
 				5622EAB22C70A8C800FE9C36 /* CommentSender.swift in Sources */,

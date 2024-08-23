@@ -11,6 +11,7 @@ struct Post: Identifiable {
     var id: String
     var title: String
     var imageName: String?
+    //TODO: Handle multiple imageUrls
     var imageUrl: String?
     var author: String
     var markdownContent: String

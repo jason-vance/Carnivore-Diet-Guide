@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ByLineView: View {
     
-    private let profileImageSize: CGFloat = 44
+    private let profileImageSize: CGFloat = 32
     private let profileImagePadding: CGFloat = 2
     
     @State var userId: String
@@ -22,11 +22,9 @@ struct ByLineView: View {
                 size: profileImageSize,
                 padding: profileImagePadding
             )
-            VStack {
-                Text(model.authorFullName)
-                    .font(.system(size: 16, weight: .bold))
-                    .opacity(0.8)
-            }
+            Text(model.authorFullName)
+                .font(.system(size: 16, weight: .bold))
+                .opacity(0.8)
             Spacer()
         }
         .foregroundStyle(Color.text)

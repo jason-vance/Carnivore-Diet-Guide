@@ -79,6 +79,7 @@ struct CreatePostView: View {
     
     @ViewBuilder func DiscardButton() -> some View {
         Button("Discard", role: .destructive) {
+            //TODO: Delete any images
             dismiss()
         }
     }
@@ -145,6 +146,7 @@ struct CreatePostView: View {
     }
     
     @ViewBuilder private func ImageCarouselItem(_ image: CreatePostImageData) -> some View {
+        //TODO: Maybe tap this (or another accessory button) to add the image as markdown content
         Image(uiImage: image.image)
             .resizable()
             .scaledToFill()

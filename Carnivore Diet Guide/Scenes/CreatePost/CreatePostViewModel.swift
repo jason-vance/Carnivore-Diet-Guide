@@ -55,7 +55,7 @@ class CreatePostViewModel: ObservableObject {
             id: postId,
             userId: userId,
             title: postTitle,
-            text: postText,
+            markdownContent: postText,
             imageUrls: imageUrls
         )
     }
