@@ -116,4 +116,13 @@ class CreatePostViewModel: ObservableObject {
             }
         }
     }
+    
+    public func deleteImagesUnsafely() {
+        guard let userId = userId else { return }
+        
+        postImages.forEach { image in
+            guard let _ = image.url else { return }
+            Task { try? await imageUploader.delete(image: image.id, forPost: postId, byUser: userId) }
+        }
+    }
 }

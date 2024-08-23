@@ -79,7 +79,7 @@ struct CreatePostView: View {
     
     @ViewBuilder func DiscardButton() -> some View {
         Button("Discard", role: .destructive) {
-            //TODO: Delete any images
+            model.deleteImagesUnsafely()
             dismiss()
         }
     }
