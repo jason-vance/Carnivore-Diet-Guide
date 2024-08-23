@@ -51,6 +51,7 @@ struct CreatePostView: View {
     }
     
     var body: some View {
+        //TODO: Add some kind of tutorial so that people know how to add markdown, images, etc
         NavigationStack(path: $navigationPath) {
             VStack(spacing: 0) {
                 TopBar()

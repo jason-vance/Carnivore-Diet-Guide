@@ -33,4 +33,12 @@ class FirebasePostRepository {
         let doc = FirestorePostDoc.from(post)
         try await postsCollection.document(post.id).setData(from: doc)
     }
+    
+    func fetchPost(withId postId: String) async throws -> Post {
+        let doc = try await postsCollection.document(postId).getDocument()
+        guard let post = try doc.data(as: FirestorePostDoc.self).toPost() else {
+            throw "Could convert Firestore doc to Post"
+        }
+        return post
+    }
 }

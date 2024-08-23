@@ -40,6 +40,7 @@ struct FeedItemView: View {
         if feedItem.imageUrls.isEmpty {
             //Do nothing, leave it blank
         } else {
+            //TODO: Handle multiple images
             KFImage(feedItem.imageUrls[0])
                 .resizable()
                 .cacheOriginalImage()

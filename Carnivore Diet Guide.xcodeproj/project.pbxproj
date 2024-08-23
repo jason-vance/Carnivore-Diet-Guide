@@ -117,6 +117,9 @@
 		568F728C2C787FC2005D16C6 /* PostPoster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F728A2C787FC2005D16C6 /* PostPoster.swift */; };
 		568F728E2C793213005D16C6 /* FirebasePostPoster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F728D2C793213005D16C6 /* FirebasePostPoster.swift */; };
 		568F728F2C793731005D16C6 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563BC73E2B7F53D7008F3C50 /* FeedItem.swift */; };
+		568F72922C793C17005D16C6 /* PostFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72912C793C17005D16C6 /* PostFetcher.swift */; };
+		568F72932C793C17005D16C6 /* PostFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72912C793C17005D16C6 /* PostFetcher.swift */; };
+		568F72952C794022005D16C6 /* FirebasePostFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72942C794022005D16C6 /* FirebasePostFetcher.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -314,6 +317,8 @@
 		568F72872C781EAE005D16C6 /* StringExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionsTests.swift; sourceTree = "<group>"; };
 		568F728A2C787FC2005D16C6 /* PostPoster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPoster.swift; sourceTree = "<group>"; };
 		568F728D2C793213005D16C6 /* FirebasePostPoster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebasePostPoster.swift; sourceTree = "<group>"; };
+		568F72912C793C17005D16C6 /* PostFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostFetcher.swift; sourceTree = "<group>"; };
+		568F72942C794022005D16C6 /* FirebasePostFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebasePostFetcher.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -843,6 +848,15 @@
 			path = Storage;
 			sourceTree = "<group>";
 		};
+		568F72902C793C07005D16C6 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				568F72912C793C17005D16C6 /* PostFetcher.swift */,
+				568F72942C794022005D16C6 /* FirebasePostFetcher.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
 		56A6D0D02B835145003B27E5 /* FeedItems */ = {
 			isa = PBXGroup;
 			children = (
@@ -1023,6 +1037,7 @@
 		56E305032B4A55BD0098079A /* PostDetail */ = {
 			isa = PBXGroup;
 			children = (
+				568F72902C793C07005D16C6 /* Workers */,
 				56E305042B4A55E00098079A /* PostDetailView.swift */,
 				568F72832C7719FE005D16C6 /* PostView.swift */,
 			);
@@ -1292,6 +1307,7 @@
 				563BC6DB2B75F0F1008F3C50 /* CommentViewModel.swift in Sources */,
 				563BC7362B7F506A008F3C50 /* FeedItemView.swift in Sources */,
 				5677542C2B70E55C0094EB8C /* CurrentUserDataProvider.swift in Sources */,
+				568F72952C794022005D16C6 /* FirebasePostFetcher.swift in Sources */,
 				56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */,
 				5677542E2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift in Sources */,
 				5622EAB72C70AA0300FE9C36 /* CommentSectionResource.swift in Sources */,
@@ -1306,6 +1322,7 @@
 				563BC7332B7E105C008F3C50 /* CreateMenu.swift in Sources */,
 				56F2137E2B722305009DB057 /* OffsetObservingScrollView.swift in Sources */,
 				567754302B7168DD0094EB8C /* BlockingSpinnerView.swift in Sources */,
+				568F72922C793C17005D16C6 /* PostFetcher.swift in Sources */,
 				563BC72A2B7D93FB008F3C50 /* RecipeReporter.swift in Sources */,
 				567754392B7194900094EB8C /* FirebaseUserAccountDeleter.swift in Sources */,
 				56B88A402B6CF0F100C4C0DB /* FormTextField.swift in Sources */,
@@ -1417,6 +1434,7 @@
 				5622EAB82C70AA0300FE9C36 /* CommentSectionResource.swift in Sources */,
 				5622EAB12C70A8C100FE9C36 /* CommentProvider.swift in Sources */,
 				5622EADC2C755F9900FE9C36 /* UserProfileSignOutService.swift in Sources */,
+				568F72932C793C17005D16C6 /* PostFetcher.swift in Sources */,
 				568F72882C781EAE005D16C6 /* StringExtensionsTests.swift in Sources */,
 				568F728C2C787FC2005D16C6 /* PostPoster.swift in Sources */,
 				563BC70E2B7B65D1008F3C50 /* PopularResourcesTests.swift in Sources */,

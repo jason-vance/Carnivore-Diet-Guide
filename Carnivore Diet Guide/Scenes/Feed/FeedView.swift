@@ -22,7 +22,7 @@ struct FeedView: View {
                 VStack(spacing: 0) {
                     ScreenTitleBar(String(localized: "Community Feed"))
                     ScrollView {
-                        Asdf(screenWidth: proxy.size.width)
+                        Feed(screenWidth: proxy.size.width)
                             .padding(.vertical)
                     }
                 }
@@ -34,7 +34,7 @@ struct FeedView: View {
         }
     }
     
-    @ViewBuilder func Asdf(screenWidth: CGFloat) -> some View {
+    @ViewBuilder func Feed(screenWidth: CGFloat) -> some View {
         LazyVStack {
             ForEach(model.feedItems) { feedItem in
                 NavigationLink {
@@ -74,11 +74,11 @@ struct FeedView: View {
     @ViewBuilder func FeedItemDetailView(_ feedItem: FeedItem) -> some View {
         switch feedItem.type {
         case .article:
-            PostDetailView(post: .sample)
+            Text("Article\n\n\(feedItem.title)\n\n\(feedItem.summary)")
         case .recipe:
             RecipeDetailView(recipeId: feedItem.resourceId)
         case .post:
-            Text(feedItem.title)
+            PostDetailView(postId: feedItem.resourceId)
         }
     }
 }

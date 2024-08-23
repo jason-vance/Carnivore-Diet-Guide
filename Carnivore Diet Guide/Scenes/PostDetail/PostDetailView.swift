@@ -7,76 +7,124 @@
 
 import SwiftUI
 import MarkdownUI
+import SwinjectAutoregistration
 
 struct PostDetailView: View {
     
-    let post: Post
+    let postId: String
+    
+    private let postFetcher = iocContainer~>PostFetcher.self
     
     @Environment(\.dismiss) private var dismiss: DismissAction
+    
+    @State private var post: Post? = nil
+    
+    @State private var showPostFailedToFetch: Bool = false
+    
+    private func fetchPost(withId postId: String) {
+        Task {
+            do {
+                post = try await postFetcher.fetchPost(withId: postId)
+            } catch {
+                print("Post failed to fetch")
+                showPostFailedToFetch = true
+            }
+        }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
-            PostHeader()
-            ZStack(alignment: .top) {
-                Rectangle()
-                    .foregroundStyle(Color.text)
+            NavigationBar()
+            if let post = post {
                 ScrollView {
-                    PostContent()
+                    PostView(post: post)
                         .padding()
-                        .frame(maxWidth: .infinity)
                 }
-                .background(Color.background)
-                .clipShape(.rect(topLeadingRadius: Corners.radius, topTrailingRadius: Corners.radius))
+            } else {
+                LoadingView()
             }
         }
         .background(Color.background)
         .navigationBarBackButtonHidden()
-    }
-    
-    @ViewBuilder func PostHeader() -> some View {
-        VStack(alignment: .leading) {
-            Text(post.title)
-                .font(.title).bold()
-                .foregroundStyle(Color.background)
-            Text("By: \(String(localized: .init(post.author)))")
-                .font(.subheadline).bold()
-                .foregroundStyle(Color.darkAccentText)
-            Text(post.publicationDate, style: .date)
-                .font(.caption).bold()
-                .foregroundStyle(Color.background)
-            CloseButton()
+        .onChange(of: postId, initial: true) { oldPostId, newPostId in
+            fetchPost(withId: newPostId)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(Color.text, ignoresSafeAreaEdges: .top)
+        .alert("The post could not be fetched", isPresented: $showPostFailedToFetch) {
+            Button("OK", role: .cancel) {
+                dismiss()
+            }
+        }
     }
     
-    @ViewBuilder func PostContent() -> some View {
-        Markdown(post.markdownContent)
-            .markdownTextStyle {
-                ForegroundColor(Color.text)
-            }
+    @ViewBuilder func NavigationBar() -> some View {
+        HStack {
+            CloseButton()
+            Spacer()
+        }
+        .padding()
+        .frame(height: .defaultBarHeight)
+        .overlay(alignment: .bottom) {
+            BarDivider()
+        }
+    }
+    
+    @ViewBuilder private func LoadingView() -> some View {
+        ZStack {
+            Rectangle()
+                .foregroundStyle(Color.text)
+                .opacity(0.3)
+                .ignoresSafeArea()
+            ProgressView()
+                .progressViewStyle(.circular)
+                .tint(Color.accentColor)
+                .padding()
+                .background(Color.background)
+                .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
+        }
     }
     
     @ViewBuilder func CloseButton() -> some View {
         Button {
             dismiss()
         } label: {
-            ZStack {
-                Circle()
-                    .foregroundStyle(Color.accent)
-                    .frame(width: 44, height: 44)
-                Image(systemName: "chevron.backward")
-                    .resizable()
-                    .bold()
-                    .foregroundStyle(Color.background)
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 18, height: 18)
-            }
+            Image(systemName: "chevron.backward")
+                .resizable()
+                .bold()
+                .foregroundStyle(Color.accent)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 18, height: 18)
         }
     }
 }
 
-#Preview {
-    PostDetailView(post: .sample)
+#Preview("Default") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        PostDetailView(postId: Post.sample.id)
+    }
+}
+
+#Preview("Fails to load") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+        iocContainer.autoregister(PostFetcher.self, initializer: { DefaultPostFetcher.forPreviewsWithFailure })
+    } content: {
+        NavigationStack {
+            NavigationLink {
+                PostDetailView(postId: Post.sample.id)
+            } label: {
+                HStack {
+                    Text("Post Detail\n(Fails to Load)")
+                    Image(systemName: "chevron.forward")
+                }
+                .foregroundStyle(Color.background)
+                .padding()
+                .background {
+                    RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
+                        .foregroundStyle(Color.accent)
+                }
+            }
+        }
+    }
 }
