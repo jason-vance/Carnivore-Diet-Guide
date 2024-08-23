@@ -51,11 +51,12 @@ struct ReviewNewPostView: View {
             ScreenTitleBar(String(localized: "Review Your Post"))
             ScrollView {
                 VStack {
-                    PostView(post: post)
+                    SectionHeader("As seen in the Community Feed")
                     FeedItemView(feedItem: feedItem)
+                    SectionHeader("As seen while reading")
+                    PostView(post: post)
                 }
                 .padding(.horizontal, itemHorizontalPadding)
-                .padding(.vertical)
                 .padding(.bottom, .defaultBarHeight)
             }
             .scrollIndicators(.hidden)
@@ -65,6 +66,21 @@ struct ReviewNewPostView: View {
             BottomControls()
         }
         .navigationBarBackButtonHidden()
+    }
+    
+    @ViewBuilder func SectionHeader(_ text: String) -> some View {
+        ZStack {
+            Rectangle()
+                .frame(height: 0.5)
+                .foregroundStyle(Color.text)
+            Text(text)
+                .font(.callout)
+                .padding(.horizontal, 8)
+                .background(Color.background)
+                .foregroundStyle(Color.text)
+        }
+        .padding(.horizontal)
+        .padding(.top)
     }
     
     @ViewBuilder func BottomControls() -> some View {
