@@ -60,6 +60,9 @@ struct PostDetailView: View {
         HStack {
             CloseButton()
             Spacer()
+            if let resource = post?.asResource {
+                FavoriteButton(resource: resource)
+            }
         }
         .padding()
         .frame(height: .defaultBarHeight)
@@ -87,12 +90,7 @@ struct PostDetailView: View {
         Button {
             dismiss()
         } label: {
-            Image(systemName: "chevron.backward")
-                .resizable()
-                .bold()
-                .foregroundStyle(Color.accent)
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 18, height: 18)
+            ResourceMenuButtonLabel(sfSymbol: "chevron.backward")
         }
     }
 }

@@ -61,6 +61,69 @@ class FirebaseUserRepository {
     func deleteUserDoc(withId userId: String) async throws {
         try await usersCollection.document(userId).delete()
     }
+    
+    private static func favoritesField(for resource: Resource) -> String {
+        switch resource.type {
+        case .post:
+            return FirestoreUserDoc.CodingKeys.favoritePosts.rawValue
+        }
+        
+    }
+    
+    func listenToFavoriteStatusOf(
+        resource: Resource,
+        byUser userId: String,
+        onUpdate: @escaping (Bool)->(),
+        onError: ((Error)->())? = nil
+    ) -> AnyCancellable {
+        let listener = usersCollection.document(userId).addSnapshotListener { snapshot, error in
+            guard let snapshot = snapshot else {
+                onError?(error ?? "¯\\_(ツ)_/¯ While listening to user's recipe favorite status")
+                return
+            }
+            
+            let field = Self.favoritesField(for: resource)
+            let favoritesAsAny = snapshot.get(field)
+            
+            guard let favorites = favoritesAsAny as? [String]? else {
+                onError?("Couldn't cast to array of favorites")
+                return
+            }
+            
+            guard let favorites = favorites else {
+                onUpdate(false)
+                return
+            }
+            
+            onUpdate(favorites.contains { $0 == resource.id })
+        }
+        
+        return AnyCancellable({ listener.remove() })
+    }
+    
+    func add(resource: Resource, toFavoritesOf userId: String) async throws {
+        guard !resource.id.isEmpty else { throw "`resource.id` was empty." }
+        
+        let field = Self.favoritesField(for: resource)
+
+        try await usersCollection
+            .document(userId)
+            .updateData(
+                [field : FieldValue.arrayUnion([resource.id])]
+            )
+    }
+    
+    func remove(resource: Resource, fromFavoritesOf userId: String) async throws {
+        guard !resource.id.isEmpty else { throw "`resource.id` was empty." }
+        
+        let field = Self.favoritesField(for: resource)
+
+        try await usersCollection
+            .document(userId)
+            .updateData(
+                [field : FieldValue.arrayRemove([resource.id])]
+            )
+    }
 }
 
 extension FirebaseUserRepository: UserDataSaver {

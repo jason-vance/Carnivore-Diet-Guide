@@ -16,6 +16,17 @@ struct Post: Identifiable {
     var publicationDate: Date
 }
 
+extension Post {
+    var asResource: Resource {
+        Resource(
+            id: id,
+            authorUserId: author,
+            title: title,
+            type: .post
+        )
+    }
+}
+
 extension Post: Equatable {
     static func == (lhs: Post, rhs: Post) -> Bool {
         lhs.id == rhs.id

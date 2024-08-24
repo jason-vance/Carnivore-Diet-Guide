@@ -15,19 +15,19 @@ struct PostView: View {
     var body: some View {
         //TODO: Show post's images
         VStack(spacing: 0) {
-            PublicationDate()
+            PostMetadata()
             Title()
             ByLineView(userId: post.author)
             PostContent()
         }
     }
     
-    @ViewBuilder func Title() -> some View {
-        Text(post.title)
-            .font(.system(size: 32, weight: .black))
-            .foregroundStyle(Color.text)
-            .multilineTextAlignment(.leading)
-            .frame(maxWidth: .infinity, alignment: .leading)
+    @ViewBuilder func PostMetadata() -> some View {
+        HStack {
+            PublicationDate()
+            Spacer()
+            FavoriteCountView(resource: post.asResource)
+        }
     }
     
     @ViewBuilder func PublicationDate() -> some View {
@@ -37,6 +37,14 @@ struct PostView: View {
                 .foregroundStyle(Color.text)
             Spacer()
         }
+    }
+    
+    @ViewBuilder func Title() -> some View {
+        Text(post.title)
+            .font(.system(size: 32, weight: .black))
+            .foregroundStyle(Color.text)
+            .multilineTextAlignment(.leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
     
     @ViewBuilder func PostContent() -> some View {

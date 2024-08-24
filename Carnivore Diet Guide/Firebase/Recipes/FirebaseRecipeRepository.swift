@@ -52,7 +52,7 @@ extension FirebaseRecipeRepository: RecipeRepository {
 extension FirebaseRecipeRepository: RecipeFavoritersRepo {
     
     func addUser(_ userId: String, asFavoriterOf recipe: Recipe) async throws {
-        let favoriterDoc = FirestoreRecipeFavoriterDoc(userId: userId, date: .now)
+        let favoriterDoc = FirestoreFavoriterDoc(userId: userId, date: .now)
         
         let favoritersCollection = recipesCollection.document(recipe.id).collection(FAVORITERS)
         try await favoritersCollection.document(userId).setData(from: favoriterDoc)

@@ -14,12 +14,14 @@ struct FirestoreUserDoc: Codable {
     var fullName: String?
     var profileImageUrl: URL?
     var favoriteRecipes: [String]?
-    
+    var favoritePosts: [String]?
+
     enum CodingKeys: String, CodingKey {
         case id
         case fullName
         case profileImageUrl
         case favoriteRecipes
+        case favoritePosts
     }
     
     static func from(_ userData: UserData) -> FirestoreUserDoc {
