@@ -42,6 +42,7 @@ struct FirestorePostDoc: Codable {
             title: title,
             imageUrls: imageUrls,
             author: author,
+            //TODO: Do I still need this replacement?
             markdownContent: markdownContent.replacingOccurrences(of: "\\n", with: "\n"),
             publicationDate: publicationDate
         )

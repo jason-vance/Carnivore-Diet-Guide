@@ -10,9 +10,9 @@ import FirebaseFirestore
 
 class FirebaseResourceActivityRepository {
     
-    private static let RESOURCE_ACTIVITY = "ResourceActivity"
+    private static let RESOURCE_ACTIVITIES = "ResourceActivities"
 
-    let activityCollection = Firestore.firestore().collection(RESOURCE_ACTIVITY)
+    let activitiesCollection = Firestore.firestore().collection(RESOURCE_ACTIVITIES)
     
     func addActivity(
         _ type: FirestoreResourceActivityDoc.ActivityType,
@@ -28,7 +28,7 @@ class FirebaseResourceActivityRepository {
             date: .now
         )
         
-        try await activityCollection.addDocument(from: doc)
+        try await activitiesCollection.addDocument(from: doc)
     }
 }
 
@@ -41,7 +41,7 @@ extension FirebaseResourceActivityRepository: ResourceFavoriteActivityTracker {
         let favorite = FirestoreResourceActivityDoc.ActivityType.favorite.rawValue
         let resourceType = resource.type.rawValue
         
-        let docs = try await activityCollection
+        let docs = try await activitiesCollection
             .whereField(FirestoreResourceActivityDoc.CodingKeys.userId.rawValue, isEqualTo: userId)
             .whereField(FirestoreResourceActivityDoc.CodingKeys.resourceId.rawValue, isEqualTo: resource.id)
             .whereField(FirestoreResourceActivityDoc.CodingKeys.resourceType.rawValue, isEqualTo: resourceType)
@@ -79,7 +79,7 @@ extension FirebaseResourceActivityRepository: PopularResourceIdFetcher {
     ) async throws -> [String:Int] {
         let resourceType = resourceType.rawValue
         
-        let docs = try await activityCollection
+        let docs = try await activitiesCollection
             .whereField(FirestoreResourceActivityDoc.CodingKeys.date.rawValue, isGreaterThanOrEqualTo: date)
             .whereField(FirestoreResourceActivityDoc.CodingKeys.resourceType.rawValue, isEqualTo: resourceType)
             .getDocuments()
