@@ -20,14 +20,15 @@ struct ResourceMenuButtonLabel: View {
             .aspectRatio(contentMode: .fit)
             .frame(width: 18, height: 18)
             .contentTransition(.symbolEffect(.replace))
-            .onChange(of: sfSymbol, initial: true) { oldSfSymbol, newSfSymbol in
-                withAnimation(.snappy) {
-                    self.image = newSfSymbol
-                }
+        .onChange(of: sfSymbol, initial: true) { oldSfSymbol, newSfSymbol in
+            withAnimation(.snappy) {
+                self.image = newSfSymbol
             }
+        }
     }
 }
 
 #Preview {
     ResourceMenuButtonLabel(sfSymbol: "circle")
+        .background(Color.background)
 }

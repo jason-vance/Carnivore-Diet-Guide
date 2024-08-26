@@ -60,18 +60,23 @@ struct PostDetailView: View {
         HStack {
             CloseButton()
             Spacer()
-            if let post = post {
-                let resource = Resource(post)
-                
-                //TODO: Make these easier to tap (bigger), and space them out better
-                CommentButton(resource: resource)
-                FavoriteButton(resource: resource)
-            }
+            OptionsMenu()
         }
         .padding()
         .frame(height: .defaultBarHeight)
         .overlay(alignment: .bottom) {
             BarDivider()
+        }
+    }
+    
+    @ViewBuilder func OptionsMenu() -> some View {
+        if let post = post {
+            let resource = Resource(post)
+            
+            HStack(spacing: 16) {
+                CommentButton(resource: resource)
+                FavoriteButton(resource: resource)
+            }
         }
     }
     

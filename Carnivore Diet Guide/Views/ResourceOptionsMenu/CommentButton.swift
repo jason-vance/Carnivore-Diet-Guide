@@ -17,7 +17,7 @@ struct CommentButton: View {
         Button {
             showCommentSection = true
         } label: {
-            ResourceMenuButtonLabel(sfSymbol: "text.bubble.fill")
+            ResourceMenuButtonLabel(sfSymbol: "text.bubble")
         }
         .sheet(isPresented: $showCommentSection) {
             CommentSectionView(resource: resource)
