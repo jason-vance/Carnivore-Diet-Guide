@@ -17,13 +17,15 @@ class FirestoreFavoritersRepository {
 
     let recipesCollection = Firestore.firestore().collection(RECIPES)
     let postsCollection = Firestore.firestore().collection(POSTS)
-    
+
     private var currentUserId: String? {
         FirebaseAuthenticationProvider.instance.currentUserId
     }
 
     func favoritersCollection(forResource resource: Resource) -> CollectionReference {
         switch resource.type {
+        case .recipe:
+            return recipesCollection.document(resource.id).collection(FAVORITERS)
         case .post:
             return postsCollection.document(resource.id).collection(FAVORITERS)
         }

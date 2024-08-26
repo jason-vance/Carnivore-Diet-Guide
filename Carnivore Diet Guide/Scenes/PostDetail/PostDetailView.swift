@@ -60,7 +60,10 @@ struct PostDetailView: View {
         HStack {
             CloseButton()
             Spacer()
-            if let resource = post?.asResource {
+            if let post = post {
+                let resource = Resource(post)
+                
+                CommentButton(resource: resource)
                 FavoriteButton(resource: resource)
             }
         }

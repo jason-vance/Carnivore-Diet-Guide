@@ -35,7 +35,7 @@ class CommentSectionViewModel: ObservableObject {
     
     func sendComment(
         text: String,
-        toResource resource: CommentSectionResource
+        toResource resource: Resource
     ) async throws {
         guard !text.isEmpty else { throw "Comment text is empty" }
         
@@ -46,7 +46,7 @@ class CommentSectionViewModel: ObservableObject {
         addCommentActivity(onResource: resource)
     }
     
-    func startListeningForComments(onResource resource: CommentSectionResource) {
+    func startListeningForComments(onResource resource: Resource) {
         commentSub = commentProvider.listenForCommentsOrderedByDate(
             onResource: resource,
             onUpdate: onUpdate(comments:),
@@ -58,7 +58,7 @@ class CommentSectionViewModel: ObservableObject {
         self.comments = comments
     }
     
-    private func addCommentActivity(onResource resource: CommentSectionResource) {
+    private func addCommentActivity(onResource resource: Resource) {
         Task {
             guard let userId = currentUserIdProvider.currentUserId else { return }
             

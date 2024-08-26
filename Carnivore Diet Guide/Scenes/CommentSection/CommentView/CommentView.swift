@@ -13,7 +13,7 @@ struct CommentView: View {
     private let profileImagePadding: CGFloat = 2
     
     @State var comment: Comment
-    @State var resource: CommentSectionResource
+    @State var resource: Resource
     @StateObject var model = CommentViewModel()
     
     var body: some View {
@@ -119,7 +119,7 @@ struct CommentView: View {
     } content: {
         CommentView(
             comment: .sample,
-            resource: .init(id: "resourceId", type: .recipe)
+            resource: .sample
         )
         .padding()
     }
@@ -154,7 +154,7 @@ struct CommentView: View {
             return mock
         }
     } content: {
-        CommentSectionView(resource: .init(id: "resourceId", type: .recipe))
+        CommentSectionView(resource: .sample)
     }
 }
 
@@ -199,6 +199,6 @@ struct CommentView: View {
             return mock
         }
     } content: {
-        CommentSectionView(resource: .init(id: "resourceId", type: .recipe))
+        CommentSectionView(resource: .sample)
     }
 }

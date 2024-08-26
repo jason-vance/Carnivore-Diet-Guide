@@ -20,7 +20,7 @@ class RecipeDetailViewModel: ObservableObject {
     @Published var recipe: Recipe?
     
     private let recipeRepo = iocContainer~>RecipeRepository.self
-    private let recipeActivities = iocContainer~>RecipeViewActivityTracker.self
+    private let activityTracker = iocContainer~>ResourceViewActivityTracker.self
     private let currentUserIdProvider = iocContainer~>CurrentUserIdProvider.self
     
     func set(recipeId: String) {
@@ -44,7 +44,7 @@ class RecipeDetailViewModel: ObservableObject {
         Task {
             guard let recipe = recipe else { return }
             guard let userId = currentUserIdProvider.currentUserId else { return }
-            try? await recipeActivities.recipe(recipe, wasViewedByUser: userId)
+            try? await activityTracker.resource(.init(recipe), wasViewedByUser: userId)
         }
     }
 }

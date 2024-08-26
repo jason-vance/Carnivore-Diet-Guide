@@ -15,7 +15,7 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
     private let currentUserIdProvider = iocContainer~>CurrentUserIdProvider.self
     private let favoritesRepo = iocContainer~>FavoriteRecipeRepo.self
     private let recipeFavoriters = iocContainer~>RecipeFavoritersRepo.self
-    private let recipeActivities = iocContainer~>RecipeFavoriteActivityTracker.self
+    private let recipeActivities = iocContainer~>ResourceFavoriteActivityTracker.self
 
     @Published var isMarkedAsFavorite: Bool?
     var isMarkedAsFavoritePublisher: Published<Bool?>.Publisher { $isMarkedAsFavorite }
@@ -82,7 +82,7 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
         
         Task {
             do {
-                try await recipeActivities.addRecipe(recipe, wasFavoritedByUser: userId)
+                try await recipeActivities.resource(.init(recipe), wasFavoritedByUser: userId)
             } catch {
                 print("Failed to add recipe favoriting activity: \(error.localizedDescription)")
             }
@@ -94,7 +94,7 @@ class DefaultRecipeFavoriter: RecipeFavoriter {
         
         Task {
             do {
-                try await recipeActivities.removeRecipe(recipe, wasFavoritedByUser: userId)
+                try await recipeActivities.resource(.init(recipe), wasUnfavoritedByUser: userId)
             } catch {
                 print("Failed to remove recipe favoriting activity: \(error.localizedDescription)")
             }

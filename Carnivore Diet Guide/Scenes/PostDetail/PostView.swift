@@ -26,7 +26,7 @@ struct PostView: View {
         HStack {
             PublicationDate()
             Spacer()
-            FavoriteCountView(resource: post.asResource)
+            FavoriteCountView(resource: .init(post))
         }
     }
     

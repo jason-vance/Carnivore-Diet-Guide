@@ -66,6 +66,8 @@ class FirebaseUserRepository {
         switch resource.type {
         case .post:
             return FirestoreUserDoc.CodingKeys.favoritePosts.rawValue
+        case .recipe:
+            return FirestoreUserDoc.CodingKeys.favoriteRecipes.rawValue
         }
         
     }

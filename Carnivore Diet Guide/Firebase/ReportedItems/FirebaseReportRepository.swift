@@ -18,7 +18,7 @@ class FirebaseReportRepository {
 extension FirebaseReportRepository: CommentReporter {
     func reportComment(
         _ comment: Comment,
-        onResource resource: CommentSectionResource,
+        onResource resource: Resource,
         reportedBy reporterId: String
     ) async throws {
         let doc = FirestoreReportedItemDoc(

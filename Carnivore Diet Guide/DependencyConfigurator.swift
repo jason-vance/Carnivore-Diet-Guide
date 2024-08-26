@@ -23,7 +23,6 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(FirebaseUserRepository.self, initializer: FirebaseUserRepository.init)
     iocContainer.autoregister(UserFetcher.self, initializer: FirebaseUserRepository.init)
     iocContainer.autoregister(RecipeRepository.self, initializer: FirebaseRecipeRepository.init)
-    iocContainer.autoregister(ResourceCommentActivityTracker.self, initializer: DefaultResourceCommentActivityTracker.init)
     
     //Resources
     iocContainer.autoregister(ResourceFavoriter.self, initializer: { ResourceFavoriter.forProd })
@@ -37,7 +36,7 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(SignInAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }
 
     //Home
-    iocContainer.autoregister(PopularRecipeIdFetcher.self, initializer: FirebaseRecipeActivityRepository.init)
+    iocContainer.autoregister(PopularResourceIdFetcher.self, initializer: FirebaseResourceActivityRepository.init)
     iocContainer.autoregister(FeedViewContentProvider.self) { DefaultFeedViewContentProvider.instance }
     iocContainer.autoregister(FeedItemRepository.self, initializer: FirebaseFeedItemRepository.init)
     
@@ -53,8 +52,8 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(FavoriteRecipeRepo.self, initializer: FirebaseUserRepository.init)
     iocContainer.autoregister(RecipeFavoritersRepo.self, initializer: FirebaseRecipeRepository.init)
     iocContainer.autoregister(RecipeCommentsRepo.self, initializer: FirebaseRecipeRepository.init)
-    iocContainer.autoregister(RecipeFavoriteActivityTracker.self, initializer: FirebaseRecipeActivityRepository.init)
-    iocContainer.autoregister(RecipeViewActivityTracker.self, initializer: FirebaseRecipeActivityRepository.init)
+    iocContainer.autoregister(ResourceFavoriteActivityTracker.self, initializer: FirebaseResourceActivityRepository.init)
+    iocContainer.autoregister(ResourceViewActivityTracker.self, initializer: FirebaseResourceActivityRepository.init)
     iocContainer.autoregister(RecipeFavoriteCountProvider.self, argument: Recipe.self, initializer: DefaultRecipeFavoriteCountProvider.init)
     iocContainer.autoregister(RecipeCommentCountProvider.self, argument: Recipe.self, initializer: DefaultRecipeCommentCountProvider.init)
     iocContainer.autoregister(RecipeReporter.self, initializer: FirebaseReportRepository.init)
@@ -76,5 +75,5 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(CommentSender.self, initializer: FirebaseCommentRepository.init)
     iocContainer.autoregister(CommentDeleter.self, initializer: FirebaseCommentRepository.init)
     iocContainer.autoregister(CommentReporter.self, initializer: FirebaseReportRepository.init)
-    iocContainer.autoregister(RecipeCommentActivityTracker.self, initializer: FirebaseRecipeActivityRepository.init)
+    iocContainer.autoregister(ResourceCommentActivityTracker.self, initializer: FirebaseResourceActivityRepository.init)
 }

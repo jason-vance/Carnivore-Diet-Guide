@@ -12,7 +12,7 @@ struct CommentSectionView: View {
     
     private let controlSize: CGFloat = 48
     
-    @State var resource: CommentSectionResource
+    @State var resource: Resource
     
     @StateObject private var model = CommentSectionViewModel(
         currentUserIdProvider: iocContainer~>CurrentUserIdProvider.self,
@@ -176,10 +176,7 @@ struct CommentSectionView: View {
     } content: {
         Rectangle()
             .sheet(isPresented: .constant(true)) {
-                CommentSectionView(resource: .init(
-                    id: "recipeId",
-                    type: .recipe
-                ))
+                CommentSectionView(resource: .sample)
             }
     }
 }
@@ -190,10 +187,7 @@ struct CommentSectionView: View {
     } content: {
         Rectangle()
             .sheet(isPresented: .constant(true)) {
-                CommentSectionView(resource: .init(
-                    id: "recipeId",
-                    type: .recipe
-                ))
+                CommentSectionView(resource: .sample)
             }
     }
 }
@@ -210,10 +204,7 @@ struct CommentSectionView: View {
     } content: {
         Rectangle()
             .sheet(isPresented: .constant(true)) {
-                CommentSectionView(resource: .init(
-                    id: "recipeId",
-                    type: .recipe
-                ))
+                CommentSectionView(resource: .sample)
             }
     }
 }

@@ -46,10 +46,7 @@ struct RecipeDetailsHeaderContent: View {
         }
         .sheet(isPresented: $showCommentSection) {
             if let recipe = recipe {
-                CommentSectionView(resource: .init(
-                    id: recipe.id,
-                    type: .recipe
-                ))
+                CommentSectionView(resource: .init(recipe))
             }
         }
         .alert(model.alertMessage, isPresented: $model.showAlert) {}

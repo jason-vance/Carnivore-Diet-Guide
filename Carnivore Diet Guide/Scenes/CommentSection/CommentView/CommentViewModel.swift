@@ -27,9 +27,9 @@ class CommentViewModel: ObservableObject {
     private let commentReporter = iocContainer~>CommentReporter.self
 
     private var comment: Comment?
-    private var resource: CommentSectionResource?
+    private var resource: Resource?
     
-    func set(comment: Comment, resource: CommentSectionResource) {
+    func set(comment: Comment, resource: Resource) {
         self.comment = comment
         self.resource = resource
         

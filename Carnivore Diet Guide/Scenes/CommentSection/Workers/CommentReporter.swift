@@ -10,7 +10,7 @@ import Foundation
 protocol CommentReporter {
     func reportComment(
         _ comment: Comment,
-        onResource resource: CommentSectionResource,
+        onResource resource: Resource,
         reportedBy reporterId: String
     ) async throws
 }
@@ -21,7 +21,7 @@ class MockCommentReporter: CommentReporter {
     
     func reportComment(
         _ comment: Comment,
-        onResource resource: CommentSectionResource,
+        onResource resource: Resource,
         reportedBy reporterId: String
     ) async throws {
         try await Task.sleep(for: .seconds(1))
