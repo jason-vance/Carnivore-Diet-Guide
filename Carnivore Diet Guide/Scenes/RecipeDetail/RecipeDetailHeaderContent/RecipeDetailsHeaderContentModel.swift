@@ -26,7 +26,7 @@ class RecipeDetailsHeaderContentModel: ObservableObject {
     
     private let currentUserIdProvider = iocContainer~>CurrentUserIdProvider.self
     private var recipeFavoriter: RecipeFavoriter?
-    private let recipeReporter = iocContainer~>RecipeReporter.self
+    private let recipeReporter = iocContainer~>ResourceReporter.self
     
     private var subs: Set<AnyCancellable> = []
     
@@ -67,7 +67,7 @@ class RecipeDetailsHeaderContentModel: ObservableObject {
                 guard let recipe = recipe else { throw "`recipe` was nil" }
                 guard let userId = currentUserIdProvider.currentUserId else { throw "User is not logged in" }
 
-                try await recipeReporter.reportRecipe(recipe, reportedBy: userId)
+                try await recipeReporter.reportResource(.init(recipe), reportedBy: userId)
                 show(alertMessage: String(localized: "This recipe has been reported. It will be reviewed to make sure it follows our content guidelines."))
             } catch {
                 show(alertMessage: String(localized: "Failed to report recipe: \(error.localizedDescription)"))

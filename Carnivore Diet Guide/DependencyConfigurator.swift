@@ -28,6 +28,7 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(ResourceFavoriter.self, initializer: { ResourceFavoriter.forProd })
     iocContainer.autoregister(FavoriteCountProvider.self, initializer: FirebaseFavoriteCountProvider.init)
     iocContainer.autoregister(CommentCountProvider.self, initializer: FirebaseCommentCountProvider.init)
+    iocContainer.autoregister(ResourceReporter.self, initializer: FirebaseReportRepository.init)
 
     //Content
     iocContainer.autoregister(ContentAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }
@@ -57,7 +58,6 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(ResourceViewActivityTracker.self, initializer: FirebaseResourceActivityRepository.init)
     iocContainer.autoregister(RecipeFavoriteCountProvider.self, argument: Recipe.self, initializer: DefaultRecipeFavoriteCountProvider.init)
     iocContainer.autoregister(RecipeCommentCountProvider.self, argument: Recipe.self, initializer: DefaultRecipeCommentCountProvider.init)
-    iocContainer.autoregister(RecipeReporter.self, initializer: FirebaseReportRepository.init)
     
     //User Profile
     iocContainer.autoregister(UserProfileSignOutService.self) { FirebaseAuthenticationProvider.instance }

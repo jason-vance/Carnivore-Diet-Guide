@@ -1,5 +1,5 @@
 //
-//  RecipeReporter.swift
+//  ResourceReporter.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 2/14/24.
@@ -7,19 +7,19 @@
 
 import Foundation
 
-protocol RecipeReporter {
-    func reportRecipe(
-        _ recipe: Recipe,
+protocol ResourceReporter {
+    func reportResource(
+        _ resource: Resource,
         reportedBy reporterId: String
     ) async throws
 }
 
-class MockRecipeReporter: RecipeReporter {
+class MockResourceReporter: ResourceReporter {
     
     var error: Error?
     
-    func reportRecipe(
-        _ recipe: Recipe,
+    func reportResource(
+        _ resource: Resource,
         reportedBy reporterId: String
     ) async throws {
         try await Task.sleep(for: .seconds(1))

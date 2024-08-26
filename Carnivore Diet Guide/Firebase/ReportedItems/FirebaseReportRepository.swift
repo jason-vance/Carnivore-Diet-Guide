@@ -22,11 +22,7 @@ extension FirebaseReportRepository: CommentReporter {
         reportedBy reporterId: String
     ) async throws {
         let doc = FirestoreReportedItemDoc(
-            item: .comment(
-                commentId: comment.id,
-                resourceId: resource.id,
-                resourceType: resource.type.rawValue
-            ),
+            item: .itemFrom(comment: comment, onResource: resource),
             itemOwnerId: comment.userId,
             reporterId: reporterId,
             date: .now
@@ -36,14 +32,14 @@ extension FirebaseReportRepository: CommentReporter {
     }
 }
 
-extension FirebaseReportRepository: RecipeReporter {
-    func reportRecipe(
-        _ recipe: Recipe,
+extension FirebaseReportRepository: ResourceReporter {
+    func reportResource(
+        _ resource: Resource,
         reportedBy reporterId: String
     ) async throws {
         let doc = FirestoreReportedItemDoc(
-            item: .recipe(recipeId: recipe.id),
-            itemOwnerId: recipe.authorUserId,
+            item: .itemFrom(resource: resource),
+            itemOwnerId: resource.authorUserId,
             reporterId: reporterId,
             date: .now
         )

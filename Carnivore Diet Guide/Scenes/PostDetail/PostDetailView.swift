@@ -74,6 +74,7 @@ struct PostDetailView: View {
             let resource = Resource(post)
             
             HStack(spacing: 16) {
+                ExtraOptionsButton(resource: resource)
                 CommentButton(resource: resource)
                 FavoriteButton(resource: resource)
             }
