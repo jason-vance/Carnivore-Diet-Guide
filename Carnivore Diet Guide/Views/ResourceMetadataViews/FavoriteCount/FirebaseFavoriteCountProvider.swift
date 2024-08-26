@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwinjectAutoregistration
 import Combine
 
 class FirebaseFavoriteCountProvider: FavoriteCountProvider {

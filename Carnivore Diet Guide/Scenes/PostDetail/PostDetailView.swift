@@ -63,6 +63,7 @@ struct PostDetailView: View {
             if let post = post {
                 let resource = Resource(post)
                 
+                //TODO: Make these easier to tap (bigger), and space them out better
                 CommentButton(resource: resource)
                 FavoriteButton(resource: resource)
             }

@@ -26,6 +26,8 @@ struct PostView: View {
         HStack {
             PublicationDate()
             Spacer()
+            CommentCountView(resource: .init(post))
+            //TODO: Put a separator between these two
             FavoriteCountView(resource: .init(post))
         }
     }

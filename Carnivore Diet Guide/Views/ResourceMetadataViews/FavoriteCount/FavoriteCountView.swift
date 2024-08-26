@@ -31,5 +31,9 @@ struct FavoriteCountView: View {
 }
 
 #Preview {
-    FavoriteCountView(resource: .sample)
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        FavoriteCountView(resource: .sample)
+    }
 }

@@ -134,6 +134,10 @@
 		568F72BA2C7C2A19005D16C6 /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		568F72BD2C7C2BC9005D16C6 /* FavoriteButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72BC2C7C2BC9005D16C6 /* FavoriteButtonModel.swift */; };
 		568F72BE2C7C2BC9005D16C6 /* FavoriteButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72BC2C7C2BC9005D16C6 /* FavoriteButtonModel.swift */; };
+		568F72C12C7D0BD7005D16C6 /* CommentCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72C02C7D0BD7005D16C6 /* CommentCountView.swift */; };
+		568F72C32C7D0C32005D16C6 /* CommentCountProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72C22C7D0C32005D16C6 /* CommentCountProvider.swift */; };
+		568F72C42C7D0C32005D16C6 /* CommentCountProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72C22C7D0C32005D16C6 /* CommentCountProvider.swift */; };
+		568F72C62C7D0C40005D16C6 /* FirebaseCommentCountProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72C52C7D0C40005D16C6 /* FirebaseCommentCountProvider.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -343,6 +347,9 @@
 		568F72B52C79F129005D16C6 /* FirebaseFavoriteCountProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFavoriteCountProvider.swift; sourceTree = "<group>"; };
 		568F72B72C7A76B9005D16C6 /* CommentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentButton.swift; sourceTree = "<group>"; };
 		568F72BC2C7C2BC9005D16C6 /* FavoriteButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButtonModel.swift; sourceTree = "<group>"; };
+		568F72C02C7D0BD7005D16C6 /* CommentCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCountView.swift; sourceTree = "<group>"; };
+		568F72C22C7D0C32005D16C6 /* CommentCountProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCountProvider.swift; sourceTree = "<group>"; };
+		568F72C52C7D0C40005D16C6 /* FirebaseCommentCountProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCommentCountProvider.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -913,6 +920,7 @@
 		568F72AC2C79EDB8005D16C6 /* ResourceMetadataViews */ = {
 			isa = PBXGroup;
 			children = (
+				568F72BF2C7D0BB7005D16C6 /* CommentCount */,
 				568F72B12C79F0C0005D16C6 /* FavoriteCount */,
 				568F72AF2C79EDDE005D16C6 /* MetadataItemView.swift */,
 			);
@@ -937,6 +945,16 @@
 				568F72BC2C7C2BC9005D16C6 /* FavoriteButtonModel.swift */,
 			);
 			path = FavoriteButton;
+			sourceTree = "<group>";
+		};
+		568F72BF2C7D0BB7005D16C6 /* CommentCount */ = {
+			isa = PBXGroup;
+			children = (
+				568F72C02C7D0BD7005D16C6 /* CommentCountView.swift */,
+				568F72C22C7D0C32005D16C6 /* CommentCountProvider.swift */,
+				568F72C52C7D0C40005D16C6 /* FirebaseCommentCountProvider.swift */,
+			);
+			path = CommentCount;
 			sourceTree = "<group>";
 		};
 		56A6D0D02B835145003B27E5 /* FeedItems */ = {
@@ -1377,6 +1395,7 @@
 				563BC7182B7CB67F008F3C50 /* CookTimeFormatter.swift in Sources */,
 				56B88A6A2B6FA73000C4C0DB /* Shake.swift in Sources */,
 				56F213882B737159009DB057 /* RecipeFavoriter.swift in Sources */,
+				568F72C62C7D0C40005D16C6 /* FirebaseCommentCountProvider.swift in Sources */,
 				567754352B717B420094EB8C /* ProfileControlLabel.swift in Sources */,
 				568F728E2C793213005D16C6 /* FirebasePostPoster.swift in Sources */,
 				56F2139D2B743B37009DB057 /* DefaultRecipeFavoriteCountProvider.swift in Sources */,
@@ -1384,6 +1403,7 @@
 				568F72792C76961B005D16C6 /* PostImageUploader.swift in Sources */,
 				563BC7152B7C4C63008F3C50 /* CommentDeleter.swift in Sources */,
 				56B88A142B6C557B00C4C0DB /* ViewExtensions.swift in Sources */,
+				568F72C12C7D0BD7005D16C6 /* CommentCountView.swift in Sources */,
 				5622EAC92C75276300FE9C36 /* CreatePostView.swift in Sources */,
 				56A6D0DA2B8582D5003B27E5 /* FeedViewModel.swift in Sources */,
 				563BC6D92B75F0E1008F3C50 /* CommentView.swift in Sources */,
@@ -1424,6 +1444,7 @@
 				568F72B62C79F129005D16C6 /* FirebaseFavoriteCountProvider.swift in Sources */,
 				563BC7282B7D914D008F3C50 /* ResourceCommentActivityTracker.swift in Sources */,
 				56A6D0D22B835593003B27E5 /* FirebaseFeedItemRepository.swift in Sources */,
+				568F72C32C7D0C32005D16C6 /* CommentCountProvider.swift in Sources */,
 				56F2138F2B7426A6009DB057 /* RecipeFavoritersRepo.swift in Sources */,
 				568F72802C7700BD005D16C6 /* UIImageExtensions.swift in Sources */,
 				56353B582B440C9900C4E972 /* ContentView.swift in Sources */,
@@ -1514,6 +1535,7 @@
 				5622EAB02C70A8B800FE9C36 /* CurrentUserIdProvider.swift in Sources */,
 				5622EAB42C70A95D00FE9C36 /* UI.swift in Sources */,
 				563BC70F2B7B65D9008F3C50 /* PopularResources.swift in Sources */,
+				568F72C42C7D0C32005D16C6 /* CommentCountProvider.swift in Sources */,
 				568F72BE2C7C2BC9005D16C6 /* FavoriteButtonModel.swift in Sources */,
 				568F72B42C79F0DE005D16C6 /* FavoriteCountProvider.swift in Sources */,
 				563BC71F2B7D67A7008F3C50 /* CommentReporter.swift in Sources */,

@@ -18,6 +18,7 @@ func setupMockIocContainer(_ iocContainer: Container) {
     //Resources
     iocContainer.autoregister(ResourceFavoriter.self, initializer: { ResourceFavoriter.forPreviews })
     iocContainer.autoregister(FavoriteCountProvider.self, initializer: MockFavoriteCountProvider.init)
+    iocContainer.autoregister(CommentCountProvider.self, initializer: MockCommentCountProvider.init)
 
     //Content
     iocContainer.autoregister(ContentAuthenticationProvider.self, initializer: MockContentAuthenticationProvider.init)

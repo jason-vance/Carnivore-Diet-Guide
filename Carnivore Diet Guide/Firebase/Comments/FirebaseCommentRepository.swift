@@ -28,6 +28,24 @@ class FirebaseCommentRepository {
             return postsCollection.document(resource.id).collection(COMMENTS)
         }
     }
+    
+    func listenToCommentCountOf(
+        resource: Resource,
+        onUpdate: @escaping (UInt) -> (),
+        onError: ((Error) -> ())?
+    ) -> AnyCancellable {
+        let listener = commentsCollection(forResource: resource)
+            .addSnapshotListener { snapshot, error in
+                guard let snapshot = snapshot else {
+                    onError?(error ?? "¯\\_(ツ)_/¯ While listening to recipe's comments")
+                    return
+                }
+                
+                onUpdate(UInt(snapshot.count))
+            }
+        
+        return .init({ listener.remove() })
+    }
 }
 
 extension FirebaseCommentRepository: CommentProvider {
