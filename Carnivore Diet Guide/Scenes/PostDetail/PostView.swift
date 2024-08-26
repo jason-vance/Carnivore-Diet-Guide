@@ -27,7 +27,7 @@ struct PostView: View {
             PublicationDate()
             Spacer()
             CommentCountView(resource: .init(post))
-            //TODO: Put a separator between these two
+            MetadataSeparatorView()
             FavoriteCountView(resource: .init(post))
         }
     }

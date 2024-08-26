@@ -138,6 +138,7 @@
 		568F72C32C7D0C32005D16C6 /* CommentCountProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72C22C7D0C32005D16C6 /* CommentCountProvider.swift */; };
 		568F72C42C7D0C32005D16C6 /* CommentCountProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72C22C7D0C32005D16C6 /* CommentCountProvider.swift */; };
 		568F72C62C7D0C40005D16C6 /* FirebaseCommentCountProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72C52C7D0C40005D16C6 /* FirebaseCommentCountProvider.swift */; };
+		568F72C82C7D18B8005D16C6 /* MetadataSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72C72C7D18B8005D16C6 /* MetadataSeparatorView.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -350,6 +351,7 @@
 		568F72C02C7D0BD7005D16C6 /* CommentCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCountView.swift; sourceTree = "<group>"; };
 		568F72C22C7D0C32005D16C6 /* CommentCountProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCountProvider.swift; sourceTree = "<group>"; };
 		568F72C52C7D0C40005D16C6 /* FirebaseCommentCountProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCommentCountProvider.swift; sourceTree = "<group>"; };
+		568F72C72C7D18B8005D16C6 /* MetadataSeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataSeparatorView.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -923,6 +925,7 @@
 				568F72BF2C7D0BB7005D16C6 /* CommentCount */,
 				568F72B12C79F0C0005D16C6 /* FavoriteCount */,
 				568F72AF2C79EDDE005D16C6 /* MetadataItemView.swift */,
+				568F72C72C7D18B8005D16C6 /* MetadataSeparatorView.swift */,
 			);
 			path = ResourceMetadataViews;
 			sourceTree = "<group>";
@@ -1402,6 +1405,7 @@
 				56B88A5C2B6F311A00C4C0DB /* FirestoreUserDoc.swift in Sources */,
 				568F72792C76961B005D16C6 /* PostImageUploader.swift in Sources */,
 				563BC7152B7C4C63008F3C50 /* CommentDeleter.swift in Sources */,
+				568F72C82C7D18B8005D16C6 /* MetadataSeparatorView.swift in Sources */,
 				56B88A142B6C557B00C4C0DB /* ViewExtensions.swift in Sources */,
 				568F72C12C7D0BD7005D16C6 /* CommentCountView.swift in Sources */,
 				5622EAC92C75276300FE9C36 /* CreatePostView.swift in Sources */,
