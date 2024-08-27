@@ -11,8 +11,9 @@ import FirebaseFirestore
 class FirebaseFeedItemRepository {
     
     static let FEED_ITEMS = "FeedItems"
-    private let PUBLICATION_DATE = "publicationDate"
-    
+    private let PUBLICATION_DATE = FirestoreFeedItemDoc.CodingKeys.publicationDate.rawValue
+    private let CREATOR_USER_ID = FirestoreFeedItemDoc.CodingKeys.creatorUserId.rawValue
+
     let feedItemsCollection = Firestore.firestore().collection(FEED_ITEMS)
     
     func deleteFeedItem(forResource resource: Resource) async throws {
@@ -36,9 +37,14 @@ extension FirebaseFeedItemRepository: FeedItemRepository {
         let document: DocumentSnapshot
     }
     
-    func getFeedItemsNewestToOldest(after cursor: inout FeedItemRepositoryCursor?, limit: Int) async throws -> [FeedItem] {
+    func getFeedItemsNewestToOldest(
+        after cursor: inout FeedItemRepositoryCursor?,
+        limit: Int,
+        excludeItemsFrom userIdToExclude: String
+    ) async throws -> [FeedItem] {
         var query = feedItemsCollection
             .whereField(PUBLICATION_DATE, isLessThan: Date.now)
+            .whereField(CREATOR_USER_ID, isNotEqualTo: userIdToExclude)
             .order(by: PUBLICATION_DATE, descending: true)
             .limit(to: limit)
         if let cursor = cursor as? Cursor {

@@ -10,7 +10,11 @@ import Foundation
 protocol FeedItemRepositoryCursor { }
 
 protocol FeedItemRepository {
-    func getFeedItemsNewestToOldest(after cursor: inout FeedItemRepositoryCursor?, limit: Int) async throws -> [FeedItem]
+    func getFeedItemsNewestToOldest(
+        after cursor: inout FeedItemRepositoryCursor?,
+        limit: Int,
+        excludeItemsFrom userIdToExclude: String
+    ) async throws -> [FeedItem]
 }
 
 class MockFeedItemRepository: FeedItemRepository {
@@ -21,7 +25,11 @@ class MockFeedItemRepository: FeedItemRepository {
     
     let totalFeedItems: Int = 22
     
-    func getFeedItemsNewestToOldest(after cursor: inout FeedItemRepositoryCursor?, limit: Int) async throws -> [FeedItem] {
+    func getFeedItemsNewestToOldest(
+        after cursor: inout FeedItemRepositoryCursor?,
+        limit: Int,
+        excludeItemsFrom userIdToExclude: String
+    ) async throws -> [FeedItem] {
         try await Task.sleep(for: .seconds(0.5))
         
         var limit = limit

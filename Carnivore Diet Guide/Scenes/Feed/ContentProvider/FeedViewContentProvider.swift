@@ -28,6 +28,9 @@ class DefaultFeedViewContentProvider: FeedViewContentProvider {
     var canFetchMoreFeedItemsPublisher: Published<Bool>.Publisher { $canFetchMore }
         
     private let feedItemRepo = iocContainer~>FeedItemRepository.self
+    private let userIdProvider = iocContainer~>CurrentUserIdProvider.self
+    
+    private var currentUser: String { userIdProvider.currentUserId! }
     
     private init() {
         resetProperties()
@@ -44,8 +47,11 @@ class DefaultFeedViewContentProvider: FeedViewContentProvider {
     }
 
     func fetchMoreFeedItems() async throws {
-        //TODO: Exclude user's own posts
-        let newFeedItems = try await feedItemRepo.getFeedItemsNewestToOldest(after: &cursor, limit: Self.limit)
+        let newFeedItems = try await feedItemRepo.getFeedItemsNewestToOldest(
+            after: &cursor,
+            limit: Self.limit,
+            excludeItemsFrom: currentUser
+        )
         if newFeedItems.isEmpty {
             canFetchMore = false
         }
