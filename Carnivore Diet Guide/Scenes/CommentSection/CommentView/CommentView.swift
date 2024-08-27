@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CommentView: View {
     
-    private let profileImageSize: CGFloat = 44
+    private let profileImageSize: CGFloat = 28
     private let profileImagePadding: CGFloat = 2
     
     @State var comment: Comment
@@ -50,7 +50,6 @@ struct CommentView: View {
     
     @ViewBuilder func CommentHeader() -> some View {
         HStack {
-            //TODO: Make this smaller
             ProfileImageView(
                 model.userImageUrl,
                 size: profileImageSize,
@@ -59,12 +58,12 @@ struct CommentView: View {
             .redacted(reason: model.isLoading ? [.placeholder] : [] )
             VStack {
                 Text(model.userFullName)
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.system(size: 12, weight: .bold))
                     .foregroundStyle(Color.text)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .redacted(reason: model.isLoading ? [.placeholder] : [] )
                 Text(model.dateString)
-                    .font(.system(size: 12))
+                    .font(.system(size: 10))
                     .foregroundStyle(Color.text)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .opacity(0.8)
