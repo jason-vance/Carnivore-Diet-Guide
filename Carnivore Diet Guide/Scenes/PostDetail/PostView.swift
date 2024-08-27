@@ -15,10 +15,15 @@ struct PostView: View {
     var body: some View {
         //TODO: Show post's images
         VStack(spacing: 0) {
-            PostMetadata()
-            Title()
-            ByLineView(userId: post.author)
-            PostContent()
+            ResourceImageViewPager(urls: post.imageUrls)
+            VStack(spacing: 0) {
+                PostMetadata()
+                Title()
+                ByLineView(userId: post.author)
+                PostContent()
+            }
+            .padding(.horizontal)
+            .padding(.top, 4)
         }
     }
     

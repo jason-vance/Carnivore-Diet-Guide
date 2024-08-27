@@ -50,6 +50,7 @@ struct CommentView: View {
     
     @ViewBuilder func CommentHeader() -> some View {
         HStack {
+            //TODO: Make this smaller
             ProfileImageView(
                 model.userImageUrl,
                 size: profileImageSize,

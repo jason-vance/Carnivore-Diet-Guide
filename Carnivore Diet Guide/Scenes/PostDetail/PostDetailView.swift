@@ -38,7 +38,6 @@ struct PostDetailView: View {
             if let post = post {
                 ScrollView {
                     PostView(post: post)
-                        .padding()
                 }
             } else {
                 LoadingView()

@@ -39,8 +39,7 @@ struct FeedItemView: View {
         if feedItem.imageUrls.isEmpty {
             //Do nothing, leave it blank
         } else {
-            //TODO: Handle multiple images
-            ResourceImageView(url: feedItem.imageUrls[0])
+            ResourceImageViewPager(urls: feedItem.imageUrls)
         }
     }
     

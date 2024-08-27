@@ -74,12 +74,14 @@ struct ReviewNewPostView: View {
             ScreenTitleBar(String(localized: "Review Your Post"))
             ScrollView {
                 VStack {
-                    SectionHeader("As seen in the Community Feed")
-                    FeedItemView(feedItem: feedItem)
-                    SectionHeader("As seen while reading")
+                    VStack {
+                        SectionHeader("As seen in the Community Feed")
+                        FeedItemView(feedItem: feedItem)
+                        SectionHeader("As seen while reading")
+                    }
+                    .padding(.horizontal, itemHorizontalPadding)
                     PostView(post: post)
                 }
-                .padding(.horizontal, itemHorizontalPadding)
                 .padding(.bottom, .defaultBarHeight)
             }
             .scrollIndicators(.hidden)
