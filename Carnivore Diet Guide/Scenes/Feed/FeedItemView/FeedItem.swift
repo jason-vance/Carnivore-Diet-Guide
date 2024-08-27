@@ -9,15 +9,9 @@ import Foundation
 
 struct FeedItem: Identifiable {
     
-    enum FeedItemType: String, Codable {
-        case post
-        case recipe
-        case article
-    }
-    
     var id: String
     var publicationDate: Date
-    var type: FeedItemType
+    var type: Resource.ResourceType
     var resourceId: String
     var userId: String
     var imageUrls: [URL]
@@ -27,19 +21,19 @@ struct FeedItem: Identifiable {
 }
 
 extension FeedItem {
-    static let sampleArticle: FeedItem = .init(
-        id: "articleFeedItemId",
-        publicationDate: .now,
-        type: .article,
-        resourceId: "resourceId",
-        userId: "userId",
-        imageUrls: [
-            URL(string: "https://ancestralsupplements.com/cdn/shop/articles/Modified_Carnivore_Diet.jpg?v=1698546054")!
-        ],
-        calloutText: "Featured Article",
-        title: "What is the Carnivore Diet?",
-        summary: "The carnivore diet is a dietary regimen characterized by the exclusive consumption of animal products, primarily focusing on meat. Its key characteristics include a strict elimination of all plant-based foods, resulting in a diet that is extremely low in carbohydrates and high in proteins and fats. This diet typically includes various types of meat such as beef, pork, chicken, and fish, along with eggs and, in some variations, limited dairy products like cheese and butter. It eschews fruits, vegetables, grains, nuts, and seeds, positioning itself as a counterpoint to conventional dietary guidelines. Proponents tout benefits such as weight loss, improved energy levels, enhanced mental clarity, reduction in inflammation, and potential relief from certain health conditions. The carnivore diet's emphasis on simplicity and a return to an ancestral way of eating, with a focus on whole, unprocessed animal foods, forms its core ethos."
-    )
+//    static let sampleArticle: FeedItem = .init(
+//        id: "articleFeedItemId",
+//        publicationDate: .now,
+//        type: .article,
+//        resourceId: "resourceId",
+//        userId: "userId",
+//        imageUrls: [
+//            URL(string: "https://ancestralsupplements.com/cdn/shop/articles/Modified_Carnivore_Diet.jpg?v=1698546054")!
+//        ],
+//        calloutText: "Featured Article",
+//        title: "What is the Carnivore Diet?",
+//        summary: "The carnivore diet is a dietary regimen characterized by the exclusive consumption of animal products, primarily focusing on meat. Its key characteristics include a strict elimination of all plant-based foods, resulting in a diet that is extremely low in carbohydrates and high in proteins and fats. This diet typically includes various types of meat such as beef, pork, chicken, and fish, along with eggs and, in some variations, limited dairy products like cheese and butter. It eschews fruits, vegetables, grains, nuts, and seeds, positioning itself as a counterpoint to conventional dietary guidelines. Proponents tout benefits such as weight loss, improved energy levels, enhanced mental clarity, reduction in inflammation, and potential relief from certain health conditions. The carnivore diet's emphasis on simplicity and a return to an ancestral way of eating, with a focus on whole, unprocessed animal foods, forms its core ethos."
+//    )
     
     static let sampleRecipe: FeedItem = .init(
         id: "recipeFeedItemId",
@@ -67,5 +61,5 @@ extension FeedItem {
         summary: "Are you a meat lover or curious about the health benefits of a carnivorous lifestyle? 'Carnivore Diet Guide' is your essential companion for delving into the world of the carnivore diet. Tailored for both seasoned followers and newcomers, our app offers an in-depth journey into this unique dietary choice."
     )
     
-    static let samples: [FeedItem] = [sampleArticle, samplePost, sampleRecipe]
+    static let samples: [FeedItem] = [/*sampleArticle,*/ samplePost, sampleRecipe]
 }

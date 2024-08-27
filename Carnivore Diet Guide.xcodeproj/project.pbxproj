@@ -140,6 +140,9 @@
 		568F72C62C7D0C40005D16C6 /* FirebaseCommentCountProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72C52C7D0C40005D16C6 /* FirebaseCommentCountProvider.swift */; };
 		568F72C82C7D18B8005D16C6 /* MetadataSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72C72C7D18B8005D16C6 /* MetadataSeparatorView.swift */; };
 		568F72CA2C7D1C20005D16C6 /* ExtraOptionsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72C92C7D1C20005D16C6 /* ExtraOptionsButton.swift */; };
+		568F72CE2C7D28CE005D16C6 /* ResourceDeleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72CD2C7D28CE005D16C6 /* ResourceDeleter.swift */; };
+		568F72CF2C7D28CE005D16C6 /* ResourceDeleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72CD2C7D28CE005D16C6 /* ResourceDeleter.swift */; };
+		568F72D12C7D299C005D16C6 /* FirebaseResourceDeleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72D02C7D299C005D16C6 /* FirebaseResourceDeleter.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -354,6 +357,8 @@
 		568F72C52C7D0C40005D16C6 /* FirebaseCommentCountProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCommentCountProvider.swift; sourceTree = "<group>"; };
 		568F72C72C7D18B8005D16C6 /* MetadataSeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataSeparatorView.swift; sourceTree = "<group>"; };
 		568F72C92C7D1C20005D16C6 /* ExtraOptionsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtraOptionsButton.swift; sourceTree = "<group>"; };
+		568F72CD2C7D28CE005D16C6 /* ResourceDeleter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDeleter.swift; sourceTree = "<group>"; };
+		568F72D02C7D299C005D16C6 /* FirebaseResourceDeleter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseResourceDeleter.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -976,6 +981,8 @@
 			isa = PBXGroup;
 			children = (
 				563BC7292B7D93FB008F3C50 /* ResourceReporter.swift */,
+				568F72CD2C7D28CE005D16C6 /* ResourceDeleter.swift */,
+				568F72D02C7D299C005D16C6 /* FirebaseResourceDeleter.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -1450,6 +1457,7 @@
 				567754302B7168DD0094EB8C /* BlockingSpinnerView.swift in Sources */,
 				568F72922C793C17005D16C6 /* PostFetcher.swift in Sources */,
 				563BC72A2B7D93FB008F3C50 /* ResourceReporter.swift in Sources */,
+				568F72D12C7D299C005D16C6 /* FirebaseResourceDeleter.swift in Sources */,
 				567754392B7194900094EB8C /* FirebaseUserAccountDeleter.swift in Sources */,
 				56B88A402B6CF0F100C4C0DB /* FormTextField.swift in Sources */,
 				56B88A472B6CF53A00C4C0DB /* EditUserProfileView.swift in Sources */,
@@ -1531,6 +1539,7 @@
 				568F727D2C7699B7005D16C6 /* FirebasePostImageStorage.swift in Sources */,
 				568F72AB2C79AAE1005D16C6 /* FirestoreFavoritersRepository.swift in Sources */,
 				56B88A6F2B70DB0600C4C0DB /* DefaultOnboardingStateProvider.swift in Sources */,
+				568F72CE2C7D28CE005D16C6 /* ResourceDeleter.swift in Sources */,
 				56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */,
 				56025D202B6B006600F31A07 /* FirebaseRecipeRepository.swift in Sources */,
 				563BC73B2B7F51E3008F3C50 /* ByLineView.swift in Sources */,
@@ -1561,6 +1570,7 @@
 				563BC70F2B7B65D9008F3C50 /* PopularResources.swift in Sources */,
 				568F72C42C7D0C32005D16C6 /* CommentCountProvider.swift in Sources */,
 				568F72BE2C7C2BC9005D16C6 /* FavoriteButtonModel.swift in Sources */,
+				568F72CF2C7D28CE005D16C6 /* ResourceDeleter.swift in Sources */,
 				568F72B42C79F0DE005D16C6 /* FavoriteCountProvider.swift in Sources */,
 				563BC71F2B7D67A7008F3C50 /* CommentReporter.swift in Sources */,
 				5622EAB52C70A9DD00FE9C36 /* CommentSectionViewModel.swift in Sources */,

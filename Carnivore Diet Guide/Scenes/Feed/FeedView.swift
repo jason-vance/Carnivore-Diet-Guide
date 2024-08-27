@@ -8,6 +8,7 @@
 import SwiftUI
 import SwinjectAutoregistration
 
+//TODO: Remove FeedItem if deleted/hidden in detail view
 struct FeedView: View {
     
     private let itemHorizontalPadding: CGFloat = 8
@@ -73,8 +74,6 @@ struct FeedView: View {
     
     @ViewBuilder func FeedItemDetailView(_ feedItem: FeedItem) -> some View {
         switch feedItem.type {
-        case .article:
-            Text("Article\n\n\(feedItem.title)\n\n\(feedItem.summary)")
         case .recipe:
             RecipeDetailView(recipeId: feedItem.resourceId)
         case .post:

@@ -31,6 +31,10 @@ class FirebaseRecipeRepository {
         return try snapshot.documents
             .compactMap { try $0.data(as: FirestoreRecipeDoc.self).toRecipe() }
     }
+    
+    func deleteRecipe(withId recipeId: String) async throws {
+        try await recipesCollection.document(recipeId).delete()
+    }
 }
 
 extension FirebaseRecipeRepository: RecipeRepository {

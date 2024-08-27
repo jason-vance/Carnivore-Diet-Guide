@@ -14,6 +14,20 @@ class FirebaseFeedItemRepository {
     private let PUBLICATION_DATE = "publicationDate"
     
     let feedItemsCollection = Firestore.firestore().collection(FEED_ITEMS)
+    
+    func deleteFeedItem(forResource resource: Resource) async throws {
+        let resourceIdField = FirestoreFeedItemDoc.CodingKeys.resourceId.rawValue
+        let typeField = FirestoreFeedItemDoc.CodingKeys.resourceType.rawValue
+
+        let snapshot = try await feedItemsCollection
+            .whereField(resourceIdField, isEqualTo: resource.id)
+            .whereField(typeField, isEqualTo: resource.type.rawValue)
+            .getDocuments()
+        
+        for doc in snapshot.documents {
+            try await doc.reference.delete()
+        }
+    }
 }
 
 extension FirebaseFeedItemRepository: FeedItemRepository {

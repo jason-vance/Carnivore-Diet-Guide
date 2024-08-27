@@ -94,15 +94,15 @@ struct FeedItemView: View {
     }
 }
 
-#Preview("Article") {
-    PreviewContainerWithSetup {
-        setupMockIocContainer(iocContainer)
-    } content: {
-        GeometryReader { proxy in
-            FeedItemView(feedItem: .sampleArticle, itemWidth: proxy.size.width)
-        }
-    }
-}
+//#Preview("Article") {
+//    PreviewContainerWithSetup {
+//        setupMockIocContainer(iocContainer)
+//    } content: {
+//        GeometryReader { proxy in
+//            FeedItemView(feedItem: .sampleArticle, itemWidth: proxy.size.width)
+//        }
+//    }
+//}
 
 #Preview("Discussion") {
     PreviewContainerWithSetup {

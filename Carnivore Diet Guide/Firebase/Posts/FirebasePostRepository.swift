@@ -41,4 +41,8 @@ class FirebasePostRepository {
         }
         return post
     }
+    
+    func deletePost(withId postId: String) async throws {
+        try await postsCollection.document(postId).delete()
+    }
 }

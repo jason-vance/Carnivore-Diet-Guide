@@ -20,6 +20,7 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(FavoriteCountProvider.self, initializer: MockFavoriteCountProvider.init)
     iocContainer.autoregister(CommentCountProvider.self, initializer: MockCommentCountProvider.init)
     iocContainer.autoregister(ResourceReporter.self, initializer: MockResourceReporter.init)
+    iocContainer.autoregister(ResourceDeleter.self, initializer: MockResourceDeleter.init)
 
     //Content
     iocContainer.autoregister(ContentAuthenticationProvider.self, initializer: MockContentAuthenticationProvider.init)

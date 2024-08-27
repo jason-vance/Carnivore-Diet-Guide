@@ -65,6 +65,9 @@
         }
       }
     },
+    "\"%@\"\n\nAre you sure you want to delete this? Once deleted, it can not be recovered." : {
+
+    },
     "%lld" : {
 
     },
@@ -321,16 +324,6 @@
     },
     "Are you sure you want to logout?" : {
 
-    },
-    "Article\n\n%@\n\n%@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Article\n\n%1$@\n\n%2$@"
-          }
-        }
-      }
     },
     "Blog" : {
       "extractionState" : "stale",
@@ -828,6 +821,12 @@
 
     },
     "Edit Profile" : {
+
+    },
+    "Failed to delete: %@" : {
+
+    },
+    "Failed to file report: %@" : {
 
     },
     "Failed to report recipe: %@" : {
@@ -1866,6 +1865,9 @@
       }
     },
     "The post could not be fetched" : {
+
+    },
+    "The report has been filed. It will be reviewed to make sure that our content guidelines are being followed." : {
 
     },
     "This recipe has been reported. It will be reviewed to make sure it follows our content guidelines." : {

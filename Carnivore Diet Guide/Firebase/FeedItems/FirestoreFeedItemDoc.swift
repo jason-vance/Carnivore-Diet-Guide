@@ -11,18 +11,28 @@ import FirebaseFirestoreSwift
 struct FirestoreFeedItemDoc: Codable {
     @DocumentID var id: String?
     var creatorUserId: String?
-    //TODO: Change this to String? so that it doesn't break if I decide to remove a FeedItemType
-    var feedItemType: FeedItem.FeedItemType?
+    var resourceType: String?
     var imageUrls: [String]?
     var publicationDate: Date?
     var resourceId: String?
     var summary: String?
     var title: String?
     
+    enum CodingKeys: String, CodingKey {
+        case id
+        case creatorUserId
+        case resourceType
+        case imageUrls
+        case publicationDate
+        case resourceId
+        case summary
+        case title
+    }
+    
     static func from(_ feedItem: FeedItem) -> FirestoreFeedItemDoc {
         return FirestoreFeedItemDoc(
             creatorUserId: feedItem.userId,
-            feedItemType: feedItem.type,
+            resourceType: feedItem.type.rawValue,
             imageUrls: feedItem.imageUrls.map { $0.absoluteString },
             publicationDate: feedItem.publicationDate,
             resourceId: feedItem.resourceId,
@@ -34,7 +44,8 @@ struct FirestoreFeedItemDoc: Codable {
     func toFeedItem() -> FeedItem? {
         guard let id = id else { return nil }
         guard let publicationDate = publicationDate else { return nil }
-        guard let feedItemType = feedItemType else { return nil }
+        guard let resourceTypeStr = resourceType else { return nil }
+        guard let resourceType = Resource.ResourceType.init(rawValue: resourceTypeStr) else { return nil }
         guard let resourceId = resourceId else { return nil }
         guard let creatorUserId = creatorUserId else { return nil }
         guard let summary = summary else { return nil }
@@ -45,7 +56,7 @@ struct FirestoreFeedItemDoc: Codable {
         return FeedItem(
             id: id,
             publicationDate: publicationDate,
-            type: feedItemType,
+            type: resourceType,
             resourceId: resourceId,
             userId: creatorUserId,
             imageUrls: imageUrls,
