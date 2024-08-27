@@ -18,33 +18,28 @@ struct FeedView: View {
     )
     
     var body: some View {
-        GeometryReader { proxy in
-            NavigationStack {
-                VStack(spacing: 0) {
-                    ScreenTitleBar(String(localized: "Community Feed"))
-                    ScrollView {
-                        Feed(screenWidth: proxy.size.width)
-                            .padding(.vertical)
-                    }
+        NavigationStack {
+            VStack(spacing: 0) {
+                ScreenTitleBar(String(localized: "Community Feed"))
+                ScrollView {
+                    Feed()
+                        .padding(.vertical)
                 }
-                .scrollIndicators(.hidden)
-                .background(Color.background)
-                .refreshable { model.refreshNewsFeed() }
-                .onAppear { UIRefreshControl.appearance().tintColor = .accent }
             }
+            .scrollIndicators(.hidden)
+            .background(Color.background)
+            .refreshable { model.refreshNewsFeed() }
+            .onAppear { UIRefreshControl.appearance().tintColor = .accent }
         }
     }
     
-    @ViewBuilder func Feed(screenWidth: CGFloat) -> some View {
+    @ViewBuilder func Feed() -> some View {
         LazyVStack {
             ForEach(model.feedItems) { feedItem in
                 NavigationLink {
                     FeedItemDetailView(feedItem)
                 } label: {
-                    FeedItemView(
-                        feedItem: feedItem,
-                        itemWidth: screenWidth - (2 * itemHorizontalPadding)
-                    )
+                    FeedItemView(feedItem: feedItem)
                 }
                 .padding(.horizontal, itemHorizontalPadding)
             }

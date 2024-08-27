@@ -11,7 +11,6 @@ import Kingfisher
 struct FeedItemView: View {
     
     @State var feedItem: FeedItem
-    @State var itemWidth: CGFloat?
     @StateObject private var model = FeedItemViewModel()
     
     var body: some View {
@@ -40,31 +39,30 @@ struct FeedItemView: View {
         if feedItem.imageUrls.isEmpty {
             //Do nothing, leave it blank
         } else {
-            //TODO: Handle multiple images
-            //TODO: Tall images go out of bounds, prob just need a clipShape
-            KFImage(feedItem.imageUrls[0])
-                .resizable()
-                .cacheOriginalImage()
-                .diskCacheExpiration(.days(7))
-                .placeholder(PlaceholderView)
-                .scaledToFill()
-                .frame(width: itemWidth, height: itemWidth)
-                .frame(
-                    maxWidth: itemWidth == nil ? .infinity : nil,
-                    maxHeight: itemWidth == nil ? 400 : nil
-                )
+            GeometryReader { proxy in
+                let itemWidth = proxy.size.width
+                
+                //TODO: Handle multiple images
+                KFImage(feedItem.imageUrls[0])
+                    .resizable()
+                    .cacheOriginalImage()
+                    .diskCacheExpiration(.days(7))
+                    .placeholder { PlaceholderView(itemWidth: itemWidth) }
+                    .scaledToFill()
+                    .frame(width: itemWidth, height: itemWidth)
+                    .clipShape(Square())
+            }
+            .aspectRatio(1, contentMode: .fill)
         }
     }
     
-    @ViewBuilder func PlaceholderView() -> some View {
-        if let imageSize = itemWidth {
-            ZStack {
-                Rectangle()
-                    .fill(Color.text.opacity(0.8))
-                Image(systemName: "photo")
-                    .font(.system(size: imageSize/2))
-                    .foregroundStyle(Color.background)
-            }
+    @ViewBuilder func PlaceholderView(itemWidth: CGFloat) -> some View {
+        ZStack {
+            Rectangle()
+                .fill(Color.text.opacity(0.8))
+            Image(systemName: "photo")
+                .font(.system(size: itemWidth/2))
+                .foregroundStyle(Color.background)
         }
     }
     
@@ -95,22 +93,12 @@ struct FeedItemView: View {
     }
 }
 
-//#Preview("Article") {
-//    PreviewContainerWithSetup {
-//        setupMockIocContainer(iocContainer)
-//    } content: {
-//        GeometryReader { proxy in
-//            FeedItemView(feedItem: .sampleArticle, itemWidth: proxy.size.width)
-//        }
-//    }
-//}
-
-#Preview("Discussion") {
+#Preview("Post") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        GeometryReader { proxy in
-            FeedItemView(feedItem: .samplePost, itemWidth: proxy.size.width)
+        VStack {
+            FeedItemView(feedItem: .samplePost)
         }
     }
 }
@@ -119,8 +107,8 @@ struct FeedItemView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        GeometryReader { proxy in
-            FeedItemView(feedItem: .sampleRecipe, itemWidth: proxy.size.width)
+        VStack {
+            FeedItemView(feedItem: .sampleRecipe)
         }
     }
 }
@@ -130,5 +118,15 @@ struct FeedItemView: View {
         setupMockIocContainer(iocContainer)
     } content: {
         HomeView()
+    }
+}
+
+#Preview("Review New Post") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        ReviewNewPostView(
+            postData: .sample,
+            dismissAll: {})
     }
 }
