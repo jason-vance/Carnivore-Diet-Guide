@@ -31,6 +31,12 @@ struct ExtraOptionsButton: View {
         resource.authorUserId == userIdProvider.currentUserId
     }
     
+    private func dismissOnMainThread() {
+        DispatchQueue.main.async {
+            dismissResource()
+        }
+    }
+    
     private func reportResource() {
         guard let userId = userIdProvider.currentUserId else { return }
         
@@ -48,9 +54,7 @@ struct ExtraOptionsButton: View {
         Task {
             do {
                 try await resourceDeleter.delete(resource: resource)
-                DispatchQueue.main.async {
-                    dismissResource()
-                }
+                dismissOnMainThread()
             } catch {
                 show(alertMessage: String(localized: "Failed to delete: \(error.localizedDescription)"))
             }
@@ -61,7 +65,6 @@ struct ExtraOptionsButton: View {
         Menu {
             Text(resource.title)
             if resourceIsMine {
-                EditResourceButton()
                 DeleteResourceButton()
             } else {
                 ReportResourceButton()
@@ -85,14 +88,6 @@ struct ExtraOptionsButton: View {
             reportResource()
         } label: {
             Label("Report", systemImage: "megaphone")
-        }
-    }
-    
-    @ViewBuilder func EditResourceButton() -> some View {
-        Button {
-            //TODO: Add ability to edit resource
-        } label: {
-            Label("Edit", systemImage: "pencil")
         }
     }
     

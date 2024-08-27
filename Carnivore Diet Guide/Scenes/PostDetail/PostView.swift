@@ -13,7 +13,6 @@ struct PostView: View {
     let post: Post
     
     var body: some View {
-        //TODO: Show post's images
         VStack(spacing: 0) {
             ResourceImageViewPager(urls: post.imageUrls)
             VStack(spacing: 0) {
