@@ -18,6 +18,7 @@ struct PostDetailView: View {
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     @State private var post: Post? = nil
+    @State private var isWorking: Bool = false
     
     @State private var showPostFailedToFetch: Bool = false
     
@@ -35,7 +36,7 @@ struct PostDetailView: View {
     var body: some View {
         VStack(spacing: 0) {
             NavigationBar()
-            if let post = post {
+            if let post = post, !isWorking {
                 ScrollView {
                     PostView(post: post)
                 }
@@ -73,7 +74,11 @@ struct PostDetailView: View {
             let resource = Resource(post)
             
             HStack(spacing: 16) {
-                ExtraOptionsButton(resource: resource, dismissResource: { dismiss() })
+                ExtraOptionsButton(
+                    resource: resource,
+                    isWorking: $isWorking,
+                    dismissResource: { dismiss() }
+                )
                 CommentButton(resource: resource)
                 FavoriteButton(resource: resource)
             }

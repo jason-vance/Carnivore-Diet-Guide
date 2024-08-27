@@ -11,6 +11,7 @@ import SwinjectAutoregistration
 struct ExtraOptionsButton: View {
     
     @State public var resource: Resource
+    @Binding public var isWorking: Bool
     @State public var dismissResource: () -> ()
     
     @State private var showDeleteDialog: Bool = false
@@ -40,10 +41,13 @@ struct ExtraOptionsButton: View {
     private func reportResource() {
         guard let userId = userIdProvider.currentUserId else { return }
         
+        isWorking = true
+        
         Task {
             do {
                 try await resourceReporter.reportResource(resource, reportedBy: userId)
                 show(alertMessage: String(localized: "The report has been filed. It will be reviewed to make sure that our content guidelines are being followed."))
+                DispatchQueue.main.async { isWorking = false }
             } catch {
                 show(alertMessage: String(localized: "Failed to file report: \(error.localizedDescription)"))
             }
@@ -51,10 +55,13 @@ struct ExtraOptionsButton: View {
     }
     
     private func deleteResource() {
+        isWorking = true
+        
         Task {
             do {
                 try await resourceDeleter.delete(resource: resource)
                 dismissOnMainThread()
+                DispatchQueue.main.async { isWorking = false }
             } catch {
                 show(alertMessage: String(localized: "Failed to delete: \(error.localizedDescription)"))
             }
@@ -130,11 +137,19 @@ fileprivate func previewSetup(isMine: Bool, fails: Bool) {
     }
 }
 
+@ViewBuilder fileprivate func ExtraOptionsButton_Preview() -> some View {
+    ExtraOptionsButton(
+        resource: .sample,
+        isWorking: .constant(false),
+        dismissResource: {}
+    )
+}
+
 #Preview("isMine, Succeeds") {
     PreviewContainerWithSetup {
         previewSetup(isMine: true, fails: false)
     } content: {
-        ExtraOptionsButton(resource: .sample, dismissResource: {})
+        ExtraOptionsButton_Preview()
     }
 }
 
@@ -142,7 +157,7 @@ fileprivate func previewSetup(isMine: Bool, fails: Bool) {
     PreviewContainerWithSetup {
         previewSetup(isMine: false, fails: false)
     } content: {
-        ExtraOptionsButton(resource: .sample, dismissResource: {})
+        ExtraOptionsButton_Preview()
     }
 }
 
@@ -150,7 +165,7 @@ fileprivate func previewSetup(isMine: Bool, fails: Bool) {
     PreviewContainerWithSetup {
         previewSetup(isMine: false, fails: true)
     } content: {
-        ExtraOptionsButton(resource: .sample, dismissResource: {})
+        ExtraOptionsButton_Preview()
     }
 }
 
@@ -158,6 +173,6 @@ fileprivate func previewSetup(isMine: Bool, fails: Bool) {
     PreviewContainerWithSetup {
         previewSetup(isMine: true, fails: true)
     } content: {
-        ExtraOptionsButton(resource: .sample, dismissResource: {})
+        ExtraOptionsButton_Preview()
     }
 }

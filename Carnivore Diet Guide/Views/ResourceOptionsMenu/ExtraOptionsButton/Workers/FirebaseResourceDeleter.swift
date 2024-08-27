@@ -19,7 +19,7 @@ class FirebaseResourceDeleter: ResourceDeleter {
             try await deleteRecipe(withId: resource.id)
         }
         
-        //TODO: Delet resource's images too
+        //TODO: Delete resource's images too
     }
     
     private func deleteFeedItem(for resource: Resource) async throws {
