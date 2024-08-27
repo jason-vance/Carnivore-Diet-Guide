@@ -9,9 +9,6 @@ import Foundation
 import UIKit
 import SwiftUI
 
-//TODO: Handle cases where uploaded images might get leaked/forgotten
-//  * User uploads images, then app crashes or gets force closed
-
 @MainActor
 class CreatePostViewModel: ObservableObject {
     

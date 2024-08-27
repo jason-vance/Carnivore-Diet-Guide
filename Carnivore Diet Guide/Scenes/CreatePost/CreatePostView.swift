@@ -51,7 +51,6 @@ struct CreatePostView: View {
     }
     
     var body: some View {
-        //TODO: Add some kind of tutorial so that people know how to add markdown, images, etc
         NavigationStack(path: $navigationPath) {
             VStack(spacing: 0) {
                 TopBar()
@@ -147,7 +146,6 @@ struct CreatePostView: View {
     }
     
     @ViewBuilder private func ImageCarouselItem(_ image: CreatePostImageData) -> some View {
-        //TODO: Maybe tap this (or another accessory button) to add the image as markdown content
         Image(uiImage: image.image)
             .resizable()
             .scaledToFill()

@@ -8,8 +8,6 @@
 import SwiftUI
 import FirebaseCore
 
-//TODO: How do I prevent people from impersonating the "The Carnivore Diet Guide Team" user
-
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
         _ application: UIApplication,

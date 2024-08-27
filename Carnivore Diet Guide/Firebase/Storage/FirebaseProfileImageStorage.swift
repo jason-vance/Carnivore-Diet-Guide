@@ -23,7 +23,6 @@ class FirebaseProfileImageStorage {
     }
     
     private func upload(image: UIImage, to path: String) async throws -> URL {
-        //TODO: Limit/verify image dimensions
         guard let jpgImage = image.jpegData(compressionQuality: 0.5) else {
             throw "Image could not be converted to jpg"
         }
