@@ -14,12 +14,10 @@ class FirebaseResourceDeleter: ResourceDeleter {
         
         switch resource.type {
         case .post:
-            try await deletePost(withId: resource.id)
+            try await deletePost(forResource: resource)
         case .recipe:
             try await deleteRecipe(withId: resource.id)
         }
-        
-        //TODO: Delete resource's images too
     }
     
     private func deleteFeedItem(for resource: Resource) async throws {
@@ -27,9 +25,18 @@ class FirebaseResourceDeleter: ResourceDeleter {
         try await repo.deleteFeedItem(forResource: resource)
     }
     
-    private func deletePost(withId postId: String) async throws {
+    private func deletePost(forResource resource: Resource) async throws {
+        let postId = resource.id
+        let userId = resource.authorUserId
+        
         let repo = FirebasePostRepository()
         try await repo.deletePost(withId: postId)
+        
+        Task {
+            let storage = FirebasePostImageStorage()
+            try? await storage.deleteImages(forPost: postId, byUser: userId)
+        }
+        
     }
     
     private func deleteRecipe(withId recipeId: String) async throws {

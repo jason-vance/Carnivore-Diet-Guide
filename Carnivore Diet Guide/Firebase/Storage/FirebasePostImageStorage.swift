@@ -47,8 +47,12 @@ public class FirebasePostImageStorage {
     
     var storage: Storage { Storage.storage() }
     
+    private func postPath(postId: String, userId: String) -> String {
+        "PostImages/\(userId)/\(postId)"
+    }
+    
     private func imagePath(imageId: String, postId: String, userId: String) -> String {
-        "PostImages/\(userId)/\(postId)/\(imageId).jpg"
+        postPath(postId: postId, userId: userId) + "/\(imageId).jpg"
     }
     
     func upload(
@@ -82,6 +86,13 @@ public class FirebasePostImageStorage {
     
     func delete(image imageId: String, forPost postId: String, byUser userId: String) async throws {
         let path = imagePath(imageId: imageId, postId: postId, userId: userId)
+        let storageReference = storage.reference(withPath: path)
+        try await storageReference.delete()
+    }
+    
+    func deleteImages(forPost postId: String, byUser userId: String) async throws {
+        //TODO: Test this after MyPostsView is added
+        let path = postPath(postId: postId, userId: userId)
         let storageReference = storage.reference(withPath: path)
         try await storageReference.delete()
     }
