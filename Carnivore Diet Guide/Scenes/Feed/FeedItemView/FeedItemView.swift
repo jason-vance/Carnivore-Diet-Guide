@@ -41,6 +41,7 @@ struct FeedItemView: View {
             //Do nothing, leave it blank
         } else {
             //TODO: Handle multiple images
+            //TODO: Tall images go out of bounds, prob just need a clipShape
             KFImage(feedItem.imageUrls[0])
                 .resizable()
                 .cacheOriginalImage()

@@ -11,6 +11,7 @@ import SwinjectAutoregistration
 struct ExtraOptionsButton: View {
     
     @State public var resource: Resource
+    @State public var dismissResource: () -> ()
     
     @State private var showDeleteDialog: Bool = false
     
@@ -47,7 +48,9 @@ struct ExtraOptionsButton: View {
         Task {
             do {
                 try await resourceDeleter.delete(resource: resource)
-                //TODO: Dismiss resource detail view
+                DispatchQueue.main.async {
+                    dismissResource()
+                }
             } catch {
                 show(alertMessage: String(localized: "Failed to delete: \(error.localizedDescription)"))
             }
@@ -136,7 +139,7 @@ fileprivate func previewSetup(isMine: Bool, fails: Bool) {
     PreviewContainerWithSetup {
         previewSetup(isMine: true, fails: false)
     } content: {
-        ExtraOptionsButton(resource: .sample)
+        ExtraOptionsButton(resource: .sample, dismissResource: {})
     }
 }
 
@@ -144,7 +147,7 @@ fileprivate func previewSetup(isMine: Bool, fails: Bool) {
     PreviewContainerWithSetup {
         previewSetup(isMine: false, fails: false)
     } content: {
-        ExtraOptionsButton(resource: .sample)
+        ExtraOptionsButton(resource: .sample, dismissResource: {})
     }
 }
 
@@ -152,7 +155,7 @@ fileprivate func previewSetup(isMine: Bool, fails: Bool) {
     PreviewContainerWithSetup {
         previewSetup(isMine: false, fails: true)
     } content: {
-        ExtraOptionsButton(resource: .sample)
+        ExtraOptionsButton(resource: .sample, dismissResource: {})
     }
 }
 
@@ -160,6 +163,6 @@ fileprivate func previewSetup(isMine: Bool, fails: Bool) {
     PreviewContainerWithSetup {
         previewSetup(isMine: true, fails: true)
     } content: {
-        ExtraOptionsButton(resource: .sample)
+        ExtraOptionsButton(resource: .sample, dismissResource: {})
     }
 }
