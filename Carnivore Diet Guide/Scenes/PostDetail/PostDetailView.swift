@@ -11,7 +11,7 @@ import SwinjectAutoregistration
 
 struct PostDetailView: View {
     
-    let postId: String
+    public let postId: String
     
     private let postFetcher = iocContainer~>PostFetcher.self
     

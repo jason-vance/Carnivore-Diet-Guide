@@ -8,7 +8,7 @@
 import SwiftUI
 import SwinjectAutoregistration
 
-//TODO: Remove FeedItem if deleted/hidden in detail view
+
 struct FeedView: View {
     
     private let itemHorizontalPadding: CGFloat = 8

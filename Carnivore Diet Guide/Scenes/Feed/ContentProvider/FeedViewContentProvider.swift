@@ -44,6 +44,7 @@ class DefaultFeedViewContentProvider: FeedViewContentProvider {
     }
 
     func fetchMoreFeedItems() async throws {
+        //TODO: Exclude user's own posts
         let newFeedItems = try await feedItemRepo.getFeedItemsNewestToOldest(after: &cursor, limit: Self.limit)
         if newFeedItems.isEmpty {
             canFetchMore = false
