@@ -39,30 +39,8 @@ struct FeedItemView: View {
         if feedItem.imageUrls.isEmpty {
             //Do nothing, leave it blank
         } else {
-            GeometryReader { proxy in
-                let itemWidth = proxy.size.width
-                
-                //TODO: Handle multiple images
-                KFImage(feedItem.imageUrls[0])
-                    .resizable()
-                    .cacheOriginalImage()
-                    .diskCacheExpiration(.days(7))
-                    .placeholder { PlaceholderView(itemWidth: itemWidth) }
-                    .scaledToFill()
-                    .frame(width: itemWidth, height: itemWidth)
-                    .clipShape(Square())
-            }
-            .aspectRatio(1, contentMode: .fill)
-        }
-    }
-    
-    @ViewBuilder func PlaceholderView(itemWidth: CGFloat) -> some View {
-        ZStack {
-            Rectangle()
-                .fill(Color.text.opacity(0.8))
-            Image(systemName: "photo")
-                .font(.system(size: itemWidth/2))
-                .foregroundStyle(Color.background)
+            //TODO: Handle multiple images
+            ResourceImageView(url: feedItem.imageUrls[0])
         }
     }
     
