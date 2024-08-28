@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 import SwinjectAutoregistration
 
 struct PostsView: View {
@@ -14,6 +15,7 @@ struct PostsView: View {
     
     public let userData: UserData
     
+    private let resourceDeleter = iocContainer~>ResourceDeleter.self
     private let postsFetcher = iocContainer~>PostsFetcher.self
     private let fetchLimit: Int = 10
     @State private var fetchCursor: PostsFetcherCursor? = nil
@@ -24,6 +26,14 @@ struct PostsView: View {
 
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
+    
+    private var deletedPost: AnyPublisher<Resource, Never> {
+        resourceDeleter
+            .deletedResourcePublisher
+            .filter { $0.type == .post }
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
     
     private var screenTitle: String {
         if let fullName = userData.fullName?.value {
@@ -77,6 +87,9 @@ struct PostsView: View {
             .navigationDestination(for: Post.self) { post in
                 PostDetailView(postId: post.id)
             }
+        }
+        .onReceive(deletedPost) { deletedResource in
+            self.posts.removeAll { $0.id == deletedResource.id }
         }
     }
     

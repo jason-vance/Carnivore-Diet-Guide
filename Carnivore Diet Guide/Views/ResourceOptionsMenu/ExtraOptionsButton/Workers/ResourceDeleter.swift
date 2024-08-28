@@ -6,12 +6,26 @@
 //
 
 import Foundation
+import Combine
 
 protocol ResourceDeleter {
     func delete(resource: Resource) async throws
+    var deletedResourcePublisher: AnyPublisher<Resource, Never> { get }
 }
 
 class MockResourceDeleter: ResourceDeleter {
+    
+    public static let instance: MockResourceDeleter = .init()
+    public static func getInstance() -> MockResourceDeleter { instance }
+    
+    private var deletedResourceSubject: CurrentValueSubject<Resource?, Never> = .init(nil)
+    public var deletedResourcePublisher: AnyPublisher<Resource, Never> {
+        deletedResourceSubject
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
+    }
+    
+    private init() {}
     
     public var error: Error? = nil
     
@@ -20,5 +34,6 @@ class MockResourceDeleter: ResourceDeleter {
         if let error = error {
             throw error
         }
+        deletedResourceSubject.send(resource)
     }
 }

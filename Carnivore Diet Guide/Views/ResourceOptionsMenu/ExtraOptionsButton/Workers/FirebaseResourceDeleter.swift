@@ -6,8 +6,21 @@
 //
 
 import Foundation
+import Combine
 
 class FirebaseResourceDeleter: ResourceDeleter {
+    
+    public static let instance: FirebaseResourceDeleter = .init()
+    public static func getInstance() -> FirebaseResourceDeleter { instance }
+    
+    private var deletedResourceSubject: CurrentValueSubject<Resource?, Never> = .init(nil)
+    public var deletedResourcePublisher: AnyPublisher<Resource, Never> {
+        deletedResourceSubject
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
+    }
+    
+    private init() {}
     
     func delete(resource: Resource) async throws {
         try await deleteFeedItem(for: resource)
@@ -18,6 +31,8 @@ class FirebaseResourceDeleter: ResourceDeleter {
         case .recipe:
             try await deleteRecipe(withId: resource.id)
         }
+        
+        deletedResourceSubject.send(resource)
     }
     
     private func deleteFeedItem(for resource: Resource) async throws {

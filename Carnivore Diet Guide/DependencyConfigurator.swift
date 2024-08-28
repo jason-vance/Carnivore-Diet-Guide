@@ -29,7 +29,7 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(FavoriteCountProvider.self, initializer: FirebaseFavoriteCountProvider.init)
     iocContainer.autoregister(CommentCountProvider.self, initializer: FirebaseCommentCountProvider.init)
     iocContainer.autoregister(ResourceReporter.self, initializer: FirebaseReportRepository.init)
-    iocContainer.autoregister(ResourceDeleter.self, initializer: FirebaseResourceDeleter.init)
+    iocContainer.autoregister(ResourceDeleter.self, initializer: FirebaseResourceDeleter.getInstance)
 
     //Content
     iocContainer.autoregister(ContentAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }
