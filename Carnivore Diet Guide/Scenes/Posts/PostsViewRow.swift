@@ -20,7 +20,7 @@ struct PostsViewRow: View {
                 PostTitle()
                 Spacer()
                 HStack {
-                    PostPublicationDate()
+                    PublicationDateView(resource: .init(post))
                     Spacer()
                     CommentCountView(resource: .init(post))
                     MetadataSeparatorView()
@@ -50,12 +50,6 @@ struct PostsViewRow: View {
                 .lineLimit(2, reservesSpace: true)
             Spacer()
         }
-    }
-    
-    @ViewBuilder func PostPublicationDate() -> some View {
-        Text(post.publicationDate.toBasicUiString())
-            .font(.footnote)
-            .foregroundStyle(Color.text)
     }
 }
 

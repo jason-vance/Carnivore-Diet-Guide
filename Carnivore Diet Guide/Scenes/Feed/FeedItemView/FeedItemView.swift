@@ -17,6 +17,7 @@ struct FeedItemView: View {
         VStack(spacing: 4) {
             ItemImage()
             VStack(spacing: 4) {
+                FeedItemMetadata()
                 ItemCalloutText()
                 ItemTitle()
                 ByLineView(userId: feedItem.userId)
@@ -40,6 +41,16 @@ struct FeedItemView: View {
             //Do nothing, leave it blank
         } else {
             ResourceImageViewPager(urls: feedItem.imageUrls)
+        }
+    }
+    
+    @ViewBuilder func FeedItemMetadata() -> some View {
+        HStack {
+            PublicationDateView(resource: .init(feedItem))
+            Spacer()
+            CommentCountView(resource: .init(feedItem))
+            MetadataSeparatorView()
+            FavoriteCountView(resource: .init(feedItem))
         }
     }
     

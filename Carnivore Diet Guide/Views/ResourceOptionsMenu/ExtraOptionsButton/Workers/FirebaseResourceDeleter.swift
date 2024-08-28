@@ -55,7 +55,6 @@ class FirebaseResourceDeleter: ResourceDeleter {
                 print("Failed to delete images. \(error.localizedDescription)")
             }
         }
-        
     }
     
     private func deleteRecipe(withId recipeId: String) async throws {

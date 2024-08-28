@@ -28,20 +28,11 @@ struct PostView: View {
     
     @ViewBuilder func PostMetadata() -> some View {
         HStack {
-            PublicationDate()
+            PublicationDateView(resource: .init(post))
             Spacer()
             CommentCountView(resource: .init(post))
             MetadataSeparatorView()
             FavoriteCountView(resource: .init(post))
-        }
-    }
-    
-    @ViewBuilder func PublicationDate() -> some View {
-        HStack {
-            Text(post.publicationDate.toBasicUiString())
-                .font(.caption)
-                .foregroundStyle(Color.text)
-            Spacer()
         }
     }
     

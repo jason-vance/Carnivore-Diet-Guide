@@ -18,12 +18,14 @@ struct Resource: Equatable {
     
     let id: String
     let authorUserId: String
+    let publicationDate: Date
     let title: String
     let type: ResourceType
     
     static let sample: Resource = .init(
         id: "resourceId",
         authorUserId: "authorUserId",
+        publicationDate: .now,
         title: "Sample Resource",
         type: .post
     )
@@ -35,6 +37,7 @@ extension Resource {
         self.init(
             id: post.id,
             authorUserId: post.author,
+            publicationDate: post.publicationDate,
             title: post.title,
             type: .post
         )
@@ -44,8 +47,19 @@ extension Resource {
         self.init(
             id: recipe.id,
             authorUserId: recipe.authorUserId,
+            publicationDate: recipe.publicationDate,
             title: recipe.title,
             type: .recipe
+        )
+    }
+    
+    init(_ feedItem: FeedItem) {
+        self.init(
+            id: feedItem.resourceId,
+            authorUserId: feedItem.userId,
+            publicationDate: feedItem.publicationDate,
+            title: feedItem.title,
+            type: feedItem.type
         )
     }
 }
