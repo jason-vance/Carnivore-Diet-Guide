@@ -49,29 +49,18 @@ struct SettingsView: View {
     }
     
     var body: some View {
-        ZStack {
-            NavigationStack {
-                VStack(spacing: 0) {
-                    TitleBar()
-                    ScrollView {
-                        VStack {
-                            DeleteAccountButton()
-                        }
-                        .padding()
-                    }
-                    .overlay(alignment: .top) {
-                        LinearGradient(
-                            colors: [Color.background, Color.clear],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                        .frame(height: 16)
-                    }
+        VStack(spacing: 0) {
+            TitleBar()
+            List {
+                Section {
+                    DeleteAccountButton()
                 }
-                .background(Color.background)
+                AppVersionRow()
             }
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
         }
-        .toolbar(.hidden, for: .automatic)
+        .background(Color.background)
         .alert(errorMessage, isPresented: $showError) {}
         .confirmationDialog(
             "Are you sure you want to delete your account?",
@@ -84,6 +73,21 @@ struct SettingsView: View {
         .sheet(isPresented: $showConfirmDeleteAccountSheet, content: {
             ConfirmDeleteAccountSheet()
         })
+    }
+    
+    @ViewBuilder func TitleBar() -> some View {
+        ScreenTitleBar(
+            String(localized: "Settings"),
+            leftBarContent: BackButton
+        )
+    }
+    
+    @ViewBuilder func BackButton() -> some View {
+        Button {
+            dismiss()
+        } label: {
+            ResourceMenuButtonLabel(sfSymbol: "chevron.backward")
+        }
     }
     
     @ViewBuilder func ConfirmDeleteAccountSheet() -> some View {
@@ -137,26 +141,6 @@ struct SettingsView: View {
         .frame(height: 48)
     }
     
-    @ViewBuilder func TitleBar() -> some View {
-        Text("Settings")
-            .bold()
-            .foregroundStyle(Color.text)
-            .frame(maxWidth: .infinity)
-            .overlay(alignment: .leading) {
-                BackButton()
-            }
-            .padding()
-    }
-    
-    @ViewBuilder func BackButton() -> some View {
-        Button {
-            dismiss()
-        } label: {
-            Image(systemName: "chevron.backward")
-                .bold()
-        }
-    }
-    
     @ViewBuilder func DeleteAccountButton() -> some View {
         Button {
             showDeleteAccountDialog = true
@@ -167,6 +151,7 @@ struct SettingsView: View {
                 showNavigationAccessories: false
             )
         }
+        .listRowBackground(Color.background)
     }
 }
 

@@ -154,6 +154,9 @@
 		568F72EA2C7EAC78005D16C6 /* PostsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72E92C7EAC78005D16C6 /* PostsFetcher.swift */; };
 		568F72EB2C7EAC78005D16C6 /* PostsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72E92C7EAC78005D16C6 /* PostsFetcher.swift */; };
 		568F72ED2C7EB1A8005D16C6 /* PostsViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72EC2C7EB1A8005D16C6 /* PostsViewRow.swift */; };
+		568F72EF2C7FB9C2005D16C6 /* AppVersionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72EE2C7FB9C2005D16C6 /* AppVersionRow.swift */; };
+		568F72F12C7FB9F3005D16C6 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72F02C7FB9F3005D16C6 /* AppVersion.swift */; };
+		568F72F22C7FB9F3005D16C6 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72F02C7FB9F3005D16C6 /* AppVersion.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -379,6 +382,8 @@
 		568F72E72C7EA9E3005D16C6 /* PostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsView.swift; sourceTree = "<group>"; };
 		568F72E92C7EAC78005D16C6 /* PostsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFetcher.swift; sourceTree = "<group>"; };
 		568F72EC2C7EB1A8005D16C6 /* PostsViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewRow.swift; sourceTree = "<group>"; };
+		568F72EE2C7FB9C2005D16C6 /* AppVersionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionRow.swift; sourceTree = "<group>"; };
+		568F72F02C7FB9F3005D16C6 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -777,6 +782,7 @@
 			isa = PBXGroup;
 			children = (
 				563BC7172B7CB67F008F3C50 /* CookTimeFormatter.swift */,
+				568F72F02C7FB9F3005D16C6 /* AppVersion.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -878,6 +884,7 @@
 			isa = PBXGroup;
 			children = (
 				567754322B717AAA0094EB8C /* SettingsView.swift */,
+				568F72EE2C7FB9C2005D16C6 /* AppVersionRow.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1561,6 +1568,7 @@
 				568F728B2C787FC2005D16C6 /* PostPoster.swift in Sources */,
 				56F213802B722A2D009DB057 /* RecipeDetailView.swift in Sources */,
 				56F2137C2B7222CA009DB057 /* PositionObservingView.swift in Sources */,
+				568F72F12C7FB9F3005D16C6 /* AppVersion.swift in Sources */,
 				56B88A122B6C541F00C4C0DB /* SignInViewModel.swift in Sources */,
 				563BC7012B7AF866008F3C50 /* RecipeCommentCountProvider.swift in Sources */,
 				56B88A1F2B6CE4F100C4C0DB /* UserProfileSignOutService.swift in Sources */,
@@ -1617,6 +1625,7 @@
 				5622EAC22C75231B00FE9C36 /* ScreenTitleBar.swift in Sources */,
 				563BC7032B7AF8D3008F3C50 /* DefaultRecipeCommentCountProvider.swift in Sources */,
 				568F72D42C7E635D005D16C6 /* Square.swift in Sources */,
+				568F72EF2C7FB9C2005D16C6 /* AppVersionRow.swift in Sources */,
 				568F72B32C79F0DE005D16C6 /* FavoriteCountProvider.swift in Sources */,
 				56B88A2B2B6CE94600C4C0DB /* ProfileFormPictureField.swift in Sources */,
 			);
@@ -1636,6 +1645,7 @@
 				568F72CF2C7D28CE005D16C6 /* ResourceDeleter.swift in Sources */,
 				568F72B42C79F0DE005D16C6 /* FavoriteCountProvider.swift in Sources */,
 				563BC71F2B7D67A7008F3C50 /* CommentReporter.swift in Sources */,
+				568F72F22C7FB9F3005D16C6 /* AppVersion.swift in Sources */,
 				5622EAB52C70A9DD00FE9C36 /* CommentSectionViewModel.swift in Sources */,
 				568F72722C767ADF005D16C6 /* ReviewPostData.swift in Sources */,
 				568F727E2C7699B7005D16C6 /* FirebasePostImageStorage.swift in Sources */,
