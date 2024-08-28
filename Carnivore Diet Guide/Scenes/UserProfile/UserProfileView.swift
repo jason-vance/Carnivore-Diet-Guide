@@ -104,7 +104,7 @@ struct UserProfileView: View {
     
     @ViewBuilder func PostCountButton() -> some View {
         NavigationLink {
-            
+            PostsView(userData: model.userData)
         } label: {
             PostCountStatView(userId: userId)
         }

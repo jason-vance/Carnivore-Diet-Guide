@@ -64,6 +64,9 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(UserProfileSignOutService.self) { FirebaseAuthenticationProvider.instance }
     iocContainer.autoregister(UserDataProvider.self, initializer: FirestoreUserDataProvider.init)
     iocContainer.autoregister(PostCountProvider.self, initializer: FirebasePostRepository.init)
+    
+    //Posts
+    iocContainer.autoregister(PostsFetcher.self, initializer: FirebasePostRepository.init)
 
     //Edit User Profile
     iocContainer.autoregister(CurrentUserDataProvider.self, initializer: FirebaseCurrentUserDataProvider.init)

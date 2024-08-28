@@ -51,6 +51,9 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(UserProfileSignOutService.self, initializer: MockUserProfileSignOutService.init)
     iocContainer.autoregister(UserDataProvider.self, initializer: MockUserDataProvider.init)
     iocContainer.autoregister(PostCountProvider.self, initializer: MockPostCountProvider.init)
+    
+    //Posts
+    iocContainer.autoregister(PostsFetcher.self, initializer: MockPostsFetcher.init)
 
     //Edit User Profile
     iocContainer.autoregister(CurrentUserDataProvider.self, initializer: MockCurrentUserDataProvider.init)

@@ -829,6 +829,9 @@
     "Failed to file report: %@" : {
 
     },
+    "Failed to get posts. %@" : {
+
+    },
     "Failed to report recipe: %@" : {
 
     },
@@ -1518,6 +1521,12 @@
       }
     },
     "Post Detail\n(Fails to Load)" : {
+
+    },
+    "Posts" : {
+
+    },
+    "Posts by %@" : {
 
     },
     "Protein" : {

@@ -11,14 +11,16 @@ import FirebaseFirestore
 class FirebasePostRepository {
     
     static let POSTS = "Posts"
-    private let PUBLICATION_DATE = "publicationDate"
     
+    private let publicationDateField = FirestorePostDoc.CodingKeys.publicationDate.rawValue
+    private let authorField = FirestorePostDoc.CodingKeys.author.rawValue
+
     let postsCollection = Firestore.firestore().collection(POSTS)
     
     func getPublishedPostsNewestToOldest(limit: Int? = nil) async throws -> [Post] {
         var query = postsCollection
-            .whereField(PUBLICATION_DATE, isLessThan: Date.now)
-            .order(by: PUBLICATION_DATE, descending: true)
+            .whereField(publicationDateField, isLessThan: Date.now)
+            .order(by: publicationDateField, descending: true)
         if let limit = limit {
             query = query.limit(to: limit)
         }
@@ -49,13 +51,42 @@ class FirebasePostRepository {
 
 extension FirebasePostRepository: PostCountProvider {
     func fetchPostCount(forUser userId: String) async throws -> Int {
-        let authorField = FirestorePostDoc.CodingKeys.author.rawValue
-        
         return try await postsCollection
             .whereField(authorField, isEqualTo: userId)
             .count
             .getAggregation(source: .server)
             .count
             .intValue
+    }
+}
+
+extension FirebasePostRepository: PostsFetcher {
+    
+    struct Cursor: PostsFetcherCursor {
+        let document: DocumentSnapshot
+    }
+    
+    func fetchPosts(
+        byUser userId: String,
+        after cursor: inout PostsFetcherCursor?,
+        limit: Int
+    ) async throws -> [Post] {
+        var query = postsCollection
+            .whereField(authorField, isEqualTo: userId)
+            .order(by: publicationDateField, descending: true)
+            .limit(to: limit)
+        if let cursor = cursor as? Cursor {
+            query = query.start(afterDocument: cursor.document)
+        }
+        
+        let snapshot = try await query.getDocuments()
+        
+        if let last = snapshot.documents.last {
+            cursor = Cursor(document: last)
+        }
+        
+        return try snapshot
+            .documents
+            .compactMap { try $0.data(as: FirestorePostDoc.self).toPost() }
     }
 }

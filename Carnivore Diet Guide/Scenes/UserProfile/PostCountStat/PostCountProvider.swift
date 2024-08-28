@@ -13,7 +13,7 @@ protocol PostCountProvider {
 
 class MockPostCountProvider: PostCountProvider {
     
-    var postCount: Int = 0
+    var postCount: Int = Post.samples.count
     var errorToThrow: Error? = nil
     
     func fetchPostCount(forUser userId: String) async throws -> Int {

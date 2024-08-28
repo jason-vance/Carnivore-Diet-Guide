@@ -150,6 +150,10 @@
 		568F72DF2C7E9FE4005D16C6 /* UserProfileStatLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72DE2C7E9FE4005D16C6 /* UserProfileStatLabel.swift */; };
 		568F72E22C7EA376005D16C6 /* PostCountProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72E12C7EA376005D16C6 /* PostCountProvider.swift */; };
 		568F72E32C7EA376005D16C6 /* PostCountProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72E12C7EA376005D16C6 /* PostCountProvider.swift */; };
+		568F72E82C7EA9E3005D16C6 /* PostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72E72C7EA9E3005D16C6 /* PostsView.swift */; };
+		568F72EA2C7EAC78005D16C6 /* PostsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72E92C7EAC78005D16C6 /* PostsFetcher.swift */; };
+		568F72EB2C7EAC78005D16C6 /* PostsFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72E92C7EAC78005D16C6 /* PostsFetcher.swift */; };
+		568F72ED2C7EB1A8005D16C6 /* PostsViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72EC2C7EB1A8005D16C6 /* PostsViewRow.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -372,6 +376,9 @@
 		568F72DC2C7E9FD6005D16C6 /* PostCountStatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCountStatView.swift; sourceTree = "<group>"; };
 		568F72DE2C7E9FE4005D16C6 /* UserProfileStatLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileStatLabel.swift; sourceTree = "<group>"; };
 		568F72E12C7EA376005D16C6 /* PostCountProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCountProvider.swift; sourceTree = "<group>"; };
+		568F72E72C7EA9E3005D16C6 /* PostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsView.swift; sourceTree = "<group>"; };
+		568F72E92C7EAC78005D16C6 /* PostsFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsFetcher.swift; sourceTree = "<group>"; };
+		568F72EC2C7EB1A8005D16C6 /* PostsViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsViewRow.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -565,6 +572,7 @@
 		562E03E22B4507C500859F81 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				568F72E62C7EA9B5005D16C6 /* Posts */,
 				566B2D692B469B59008627F8 /* Content */,
 				56B88A052B6C4DD000C4C0DB /* SignIn */,
 				562E03E52B450A8900859F81 /* Home */,
@@ -1017,6 +1025,16 @@
 			path = PostCountStat;
 			sourceTree = "<group>";
 		};
+		568F72E62C7EA9B5005D16C6 /* Posts */ = {
+			isa = PBXGroup;
+			children = (
+				568F72E72C7EA9E3005D16C6 /* PostsView.swift */,
+				568F72E92C7EAC78005D16C6 /* PostsFetcher.swift */,
+				568F72EC2C7EB1A8005D16C6 /* PostsViewRow.swift */,
+			);
+			path = Posts;
+			sourceTree = "<group>";
+		};
 		56A6D0D02B835145003B27E5 /* FeedItems */ = {
 			isa = PBXGroup;
 			children = (
@@ -1443,6 +1461,7 @@
 				563BC7132B7B6EED008F3C50 /* RecipeRepository.swift in Sources */,
 				568F72AE2C79EDD5005D16C6 /* FavoriteCountView.swift in Sources */,
 				56B88A572B6F27DE00C4C0DB /* UserOnboardingState.swift in Sources */,
+				568F72EA2C7EAC78005D16C6 /* PostsFetcher.swift in Sources */,
 				56B88A232B6CE7E500C4C0DB /* ImagePickerView.swift in Sources */,
 				563BC6C22B74453C008F3C50 /* RecipeDetailMetadataView.swift in Sources */,
 				563BC7112B7B6DEB008F3C50 /* PopularResourceIdFetcher.swift in Sources */,
@@ -1487,6 +1506,7 @@
 				56E305072B4A982E0098079A /* Post.swift in Sources */,
 				56A6D0DC2B8582DF003B27E5 /* FeedView.swift in Sources */,
 				56B88A6C2B70D51D00C4C0DB /* UserDataSaver.swift in Sources */,
+				568F72E82C7EA9E3005D16C6 /* PostsView.swift in Sources */,
 				563BC7332B7E105C008F3C50 /* CreateMenu.swift in Sources */,
 				56F2137E2B722305009DB057 /* OffsetObservingScrollView.swift in Sources */,
 				567754302B7168DD0094EB8C /* BlockingSpinnerView.swift in Sources */,
@@ -1546,6 +1566,7 @@
 				56B88A1F2B6CE4F100C4C0DB /* UserProfileSignOutService.swift in Sources */,
 				563BC6F62B78BDFA008F3C50 /* DateExtensions.swift in Sources */,
 				5676A1362B477933009C1DA6 /* Recipe.swift in Sources */,
+				568F72ED2C7EB1A8005D16C6 /* PostsViewRow.swift in Sources */,
 				568F726E2C767A4F005D16C6 /* CreatePostImageData.swift in Sources */,
 				56F213842B730F06009DB057 /* RecipeDetailsHeaderContent.swift in Sources */,
 				56B88A072B6C4DEC00C4C0DB /* SignInView.swift in Sources */,
@@ -1621,6 +1642,7 @@
 				568F727A2C76961B005D16C6 /* PostImageUploader.swift in Sources */,
 				5622EAB92C70AC1600FE9C36 /* ResourceCommentActivityTracker.swift in Sources */,
 				563BC71C2B7CB6D8008F3C50 /* CookTimeFormatterTests.swift in Sources */,
+				568F72EB2C7EAC78005D16C6 /* PostsFetcher.swift in Sources */,
 				5622EAAC2C70A71400FE9C36 /* Comment.swift in Sources */,
 				5622EADB2C755F9200FE9C36 /* UserDataProvider.swift in Sources */,
 				5622EAB12C70A8C100FE9C36 /* CommentProvider.swift in Sources */,
