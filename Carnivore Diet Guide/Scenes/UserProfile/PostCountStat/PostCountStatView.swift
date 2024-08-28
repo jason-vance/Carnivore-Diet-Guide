@@ -22,6 +22,7 @@ struct PostCountStatView: View {
         }
     }
     
+    //TODO: This needs to update live
     var body: some View {
         UserProfileStatLabel(
             value: postsCount,

@@ -211,12 +211,16 @@ struct CreatePostView: View {
     }
     
     @ViewBuilder func PostTitleField() -> some View {
-        TextField("Title", text: $model.postTitle, prompt: Text("Title"))
-            .textInputAutocapitalization(.words)
-            .font(.title.bold())
-            .foregroundStyle(Color.text)
-            .listRowBackground(Color.background)
-            .listRowSeparator(.hidden)
+        TextField(
+            "Title",
+            text: $model.postTitle,
+            prompt: Text("Title").foregroundStyle(Color.text.opacity(0.3))
+        )
+        .textInputAutocapitalization(.words)
+        .font(.title.bold())
+        .foregroundStyle(Color.text)
+        .listRowBackground(Color.background)
+        .listRowSeparator(.hidden)
     }
     
     @ViewBuilder func PostTextField() -> some View {
