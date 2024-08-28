@@ -33,8 +33,12 @@ class FirebaseResourceDeleter: ResourceDeleter {
         try await repo.deletePost(withId: postId)
         
         Task {
-            let storage = FirebasePostImageStorage()
-            try? await storage.deleteImages(forPost: postId, byUser: userId)
+            do {
+                let storage = FirebasePostImageStorage()
+                try await storage.deleteImages(forPost: postId, byUser: userId)
+            } catch {
+                print("Failed to delete images. \(error.localizedDescription)")
+            }
         }
         
     }

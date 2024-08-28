@@ -91,10 +91,17 @@ public class FirebasePostImageStorage {
     }
     
     func deleteImages(forPost postId: String, byUser userId: String) async throws {
-        //TODO: Test this after MyPostsView is added
         let path = postPath(postId: postId, userId: userId)
-        let storageReference = storage.reference(withPath: path)
-        try await storageReference.delete()
+        let items = try await storage.reference(withPath: path).listAll().items
+        items.forEach { item in
+            Task {
+                do {
+                    try await item.delete()
+                } catch {
+                    print("Failed to delete image. \(error.localizedDescription)")
+                }
+            }
+        }
     }
 }
 
