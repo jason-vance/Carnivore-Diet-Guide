@@ -7,22 +7,24 @@
 
 import SwiftUI
 import SwinjectAutoregistration
+import Combine
 
 struct PostCountStatView: View {
     
     public let userId: String
     
     @State private var postsCount: Int? = nil
+    @State private var postsCountSub: AnyCancellable? = nil
     
     private let postsCountProvider = iocContainer~>PostCountProvider.self
     
     private func fetchPostCount() {
-        Task {
-            postsCount = try await postsCountProvider.fetchPostCount(forUser: userId)
-        }
+        postsCountSub = postsCountProvider.listenToPostCount(
+            forUser: userId,
+            onUpdate: { count in self.postsCount = count }
+        )
     }
     
-    //TODO: This needs to update live
     var body: some View {
         UserProfileStatLabel(
             value: postsCount,

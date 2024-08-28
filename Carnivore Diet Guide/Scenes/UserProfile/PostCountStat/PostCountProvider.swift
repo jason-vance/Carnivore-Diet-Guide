@@ -6,22 +6,40 @@
 //
 
 import Foundation
+import Combine
 
 protocol PostCountProvider {
-    func fetchPostCount(forUser userId: String) async throws -> Int
+    func listenToPostCount(
+        forUser userId: String,
+        onUpdate: @escaping (Int) -> (),
+        onError: @escaping (Error) -> ()
+    ) -> AnyCancellable
+}
+
+extension PostCountProvider {
+    func listenToPostCount(
+        forUser userId: String,
+        onUpdate: @escaping (Int) -> ()
+    ) -> AnyCancellable {
+        return listenToPostCount(forUser: userId, onUpdate: onUpdate, onError: { _ in })
+    }
 }
 
 class MockPostCountProvider: PostCountProvider {
     
     var postCount: Int = Post.samples.count
-    var errorToThrow: Error? = nil
+    var error: Error? = nil
     
-    func fetchPostCount(forUser userId: String) async throws -> Int {
-        try await Task.sleep(for: .seconds(1))
-        if let errorToThrow = errorToThrow {
-            throw errorToThrow
+    func listenToPostCount(
+        forUser userId: String,
+        onUpdate: @escaping (Int) -> (),
+        onError: @escaping (Error) -> ()
+    ) -> AnyCancellable {
+        if let error = error {
+            onError(error)
+        } else {
+            onUpdate(postCount)
         }
-        
-        return postCount
+        return .init({})
     }
 }

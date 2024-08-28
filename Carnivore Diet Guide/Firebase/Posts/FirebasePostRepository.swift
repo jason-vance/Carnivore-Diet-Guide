@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import Combine
 
 class FirebasePostRepository {
     
@@ -50,13 +51,22 @@ class FirebasePostRepository {
 }
 
 extension FirebasePostRepository: PostCountProvider {
-    func fetchPostCount(forUser userId: String) async throws -> Int {
-        return try await postsCollection
+    func listenToPostCount(
+        forUser userId: String,
+        onUpdate: @escaping (Int) -> (),
+        onError: @escaping (Error) -> ()
+    ) -> AnyCancellable {
+        let listener = postsCollection
             .whereField(authorField, isEqualTo: userId)
-            .count
-            .getAggregation(source: .server)
-            .count
-            .intValue
+            .addSnapshotListener { snapshot, error in
+                if let snapshot = snapshot {
+                    onUpdate(snapshot.count)
+                } else {
+                    onError(error ?? "¯\\_(ツ)_/¯ While listening to recipe's favoriters")
+                }
+            }
+        
+        return .init({ listener.remove() })
     }
 }
 
