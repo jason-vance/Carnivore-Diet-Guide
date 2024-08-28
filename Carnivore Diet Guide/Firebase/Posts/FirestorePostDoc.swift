@@ -17,6 +17,15 @@ struct FirestorePostDoc: Codable {
     var title: String?
     var markdownContent: String?
     
+    enum CodingKeys: String, CodingKey {
+        case id
+        case publicationDate
+        case author
+        case imageUrls
+        case title
+        case markdownContent
+    }
+    
     static func from(_ post: Post) -> FirestorePostDoc {
         return .init(
             id: post.id,

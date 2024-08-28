@@ -44,6 +44,7 @@ struct UserProfileView: View {
                     VStack {
                         ProfileImage()
                         VStack {
+                            ProfileStatsView()
                             EditProfileButton()
 //                            FavoriteRecipesButton()
 //                            BookmarkedArticlesButton()
@@ -92,6 +93,21 @@ struct UserProfileView: View {
     
     @ViewBuilder func ProfileImage() -> some View {
         ProfileImageView(model.profileImageUrl)
+    }
+    
+    @ViewBuilder func ProfileStatsView() -> some View {
+        HStack {
+            PostCountButton()
+        }
+        .padding()
+    }
+    
+    @ViewBuilder func PostCountButton() -> some View {
+        NavigationLink {
+            
+        } label: {
+            PostCountStatView(userId: userId)
+        }
     }
     
     @ViewBuilder func EditProfileButton() -> some View {

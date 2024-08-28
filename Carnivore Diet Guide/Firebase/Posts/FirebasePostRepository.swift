@@ -46,3 +46,16 @@ class FirebasePostRepository {
         try await postsCollection.document(postId).delete()
     }
 }
+
+extension FirebasePostRepository: PostCountProvider {
+    func fetchPostCount(forUser userId: String) async throws -> Int {
+        let authorField = FirestorePostDoc.CodingKeys.author.rawValue
+        
+        return try await postsCollection
+            .whereField(authorField, isEqualTo: userId)
+            .count
+            .getAggregation(source: .server)
+            .count
+            .intValue
+    }
+}

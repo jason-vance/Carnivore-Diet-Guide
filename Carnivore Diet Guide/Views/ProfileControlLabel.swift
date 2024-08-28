@@ -28,7 +28,7 @@ struct ProfileControlLabel: View {
             }
             .frame(width: 24, height: 24)
             Text(title)
-                .font(.system(size: 18, weight: .bold))
+                .font(.system(size: 18))
             Spacer()
             Image(systemName: "chevron.forward")
                 .font(.system(size: 14, weight: .bold))
