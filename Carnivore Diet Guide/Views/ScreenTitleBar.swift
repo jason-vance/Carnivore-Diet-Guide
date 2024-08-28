@@ -7,16 +7,26 @@
 
 import SwiftUI
 
-struct ScreenTitleBar: View {
+struct ScreenTitleBar<LeftBarContent:View>: View {
     
     let text: String
+    let leftBarContent: (() -> LeftBarContent)?
     
-    init(_ text: String) {
+    init(_ text: String) where LeftBarContent == Text {
         self.text = text
+        self.leftBarContent = nil
+    }
+    
+    init(_ text: String, leftBarContent: @escaping () -> LeftBarContent) {
+        self.text = text
+        self.leftBarContent = leftBarContent
     }
     
     var body: some View {
         HStack {
+            if let leftBarContent = leftBarContent {
+                leftBarContent()
+            }
             TitleText()
             Spacer()
         }
@@ -32,6 +42,18 @@ struct ScreenTitleBar: View {
     }
 }
 
-#Preview {
+#Preview("Title Only") {
     ScreenTitleBar("Screen Title Bar")
+}
+
+#Preview("LeftBarContent") {
+    ScreenTitleBar("Screen Title Bar") {
+        Button {
+            
+        } label: {
+            Image(systemName: "chevron.backward")
+                .font(.title.bold())
+                .foregroundStyle(Color.accent)
+        }
+    }
 }
