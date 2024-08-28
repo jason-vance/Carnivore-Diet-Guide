@@ -20,7 +20,8 @@ struct PostsView: View {
     @State private var canFetchMorePosts: Bool = true
     
     @State private var posts: [Post] = []
-    
+    @State private var navigationPath = NavigationPath()
+
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     
@@ -59,22 +60,33 @@ struct PostsView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            TitleBar()
-            List {
-                ForEach(posts) { post in
-                    //TODO: Make a NavigationLink
-                    PostsViewRow(post: post)
-                        .listRowBackground(Color.background)
+        NavigationStack(path: $navigationPath) {
+            VStack(spacing: 0) {
+                TitleBar()
+                List {
+                    ForEach(posts) { post in
+                        PostRow(post)
+                    }
+                    LoadNextFeedItemsView()
                 }
-                LoadNextFeedItemsView()
+                .listStyle(.plain)
             }
-            .listStyle(.plain)
-            .scrollContentBackground(.hidden)
+            .background(Color.background)
+            .navigationBarBackButtonHidden()
+            .alert(alertMessage, isPresented: $showAlert) {}
+            .navigationDestination(for: Post.self) { post in
+                PostDetailView(postId: post.id)
+            }
         }
-        .background(Color.background)
-        .navigationBarBackButtonHidden()
-        .alert(alertMessage, isPresented: $showAlert) {}
+    }
+    
+    @ViewBuilder func PostRow(_ post: Post) -> some View {
+        Button {
+            navigationPath.append(post)
+        } label: {
+            PostsViewRow(post: post)
+        }
+        .listRowBackground(Color.background)
     }
     
     @ViewBuilder func TitleBar() -> some View {

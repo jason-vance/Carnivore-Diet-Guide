@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Post: Identifiable {
+struct Post: Identifiable, Hashable {
     var id: String
     var title: String
     var imageUrls: [URL]

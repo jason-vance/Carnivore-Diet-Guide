@@ -15,19 +15,17 @@ struct PostsViewRow: View {
     public let post: Post
     
     var body: some View {
-        HStack {
+        HStack(spacing: 16) {
             VStack {
                 PostTitle()
                 Spacer()
-                HStack{
+                HStack {
                     PostPublicationDate()
-                    MetadataSeparatorView()
+                    Spacer()
                     CommentCountView(resource: .init(post))
                     MetadataSeparatorView()
                     FavoriteCountView(resource: .init(post))
-                    Spacer()
                 }
-                
             }
             PostCoverImage()
         }
@@ -48,6 +46,7 @@ struct PostsViewRow: View {
         HStack {
             Text(post.title)
                 .font(.headline)
+                .foregroundStyle(Color.text)
                 .lineLimit(2, reservesSpace: true)
             Spacer()
         }
@@ -56,6 +55,7 @@ struct PostsViewRow: View {
     @ViewBuilder func PostPublicationDate() -> some View {
         Text(post.publicationDate.toBasicUiString())
             .font(.footnote)
+            .foregroundStyle(Color.text)
     }
 }
 

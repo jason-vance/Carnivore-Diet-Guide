@@ -393,9 +393,6 @@
     "Body Text" : {
 
     },
-    "Bookmarked Articles" : {
-
-    },
     "By: %@" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -898,9 +895,6 @@
           }
         }
       }
-    },
-    "Favorite Recipes" : {
-
     },
     "Featured Blog Post" : {
       "extractionState" : "stale",

@@ -18,8 +18,13 @@ struct UserProfileView: View {
         signOutService: iocContainer~>UserProfileSignOutService.self
     )
     
+    @State private var navigationPath = NavigationPath()
+    
+    @State private var showPosts: Bool = false
     @State private var showEditProfile: Bool = false
+    @State private var showSettings: Bool = false
     @State private var showLogoutDialog: Bool = false
+    
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
@@ -37,27 +42,23 @@ struct UserProfileView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                ScreenTitleBar(model.fullName ?? String(localized: "User Profile"))
-                ScrollView {
+        VStack(spacing: 0) {
+            ScreenTitleBar(model.fullName ?? String(localized: "User Profile"))
+            ScrollView {
+                VStack {
+                    ProfileImage()
                     VStack {
-                        ProfileImage()
-                        VStack {
-                            ProfileStatsView()
-                            EditProfileButton()
-//                            FavoriteRecipesButton()
-//                            BookmarkedArticlesButton()
-                            SettingsButton()
-                        }
-                        .padding(.bottom, 32)
-                        LogoutButton()
+                        ProfileStatsView()
+                        EditProfileButton()
+                        SettingsButton()
                     }
-                    .padding()
+                    .padding(.bottom, 32)
+                    LogoutButton()
                 }
+                .padding()
             }
-            .background(Color.background)
         }
+        .background(Color.background)
         .alert(errorMessage, isPresented: $showError) {}
         .confirmationDialog(
             "Are you sure you want to logout?",
@@ -72,6 +73,12 @@ struct UserProfileView: View {
         }
         .onChange(of: userId, initial: true) {
             model.listenForUserData(userId: userId)
+        }
+        .fullScreenCover(isPresented: $showPosts) {
+            PostsView(userData: model.userData)
+        }
+        .fullScreenCover(isPresented: $showSettings) {
+            SettingsView()
         }
     }
     
@@ -103,8 +110,8 @@ struct UserProfileView: View {
     }
     
     @ViewBuilder func PostCountButton() -> some View {
-        NavigationLink {
-            PostsView(userData: model.userData)
+        Button {
+            showPosts = true
         } label: {
             PostCountStatView(userId: userId)
         }
@@ -122,30 +129,15 @@ struct UserProfileView: View {
         }
     }
     
-    @ViewBuilder func FavoriteRecipesButton() -> some View {
-        ProfileNavigationLink(
-            String(localized: "Favorite Recipes"),
-            icon: "heart.fill"
-        ) {
-            Text("Favorite Recipes")
-        }
-    }
-    
-    @ViewBuilder func BookmarkedArticlesButton() -> some View {
-        ProfileNavigationLink(
-            String(localized: "Bookmarked Articles"),
-            icon: "bookmark.fill"
-        ) {
-            Text("Favorite Recipes")
-        }
-    }
-    
     @ViewBuilder func SettingsButton() -> some View {
-        ProfileNavigationLink(
-            String(localized: "Settings"),
-            icon: "gearshape.fill"
-        ) {
-            SettingsView()
+        Button {
+            showSettings = true
+        } label: {
+            ProfileControlLabel(
+                String(localized: "Settings"),
+                icon: "gearshape.fill",
+                showNavigationAccessories: true
+            )
         }
     }
     
@@ -155,18 +147,6 @@ struct UserProfileView: View {
             icon: "iphone.and.arrow.forward"
         ) {
             showLogoutDialog = true
-        }
-    }
-    
-    @ViewBuilder func ProfileNavigationLink<Content>(
-        _ title: String,
-        icon: String,
-        content: @escaping () -> Content
-    ) -> some View where Content: View {
-        NavigationLink {
-            content()
-        } label: {
-            ProfileControlLabel(title, icon: icon, showNavigationAccessories: true)
         }
     }
     
