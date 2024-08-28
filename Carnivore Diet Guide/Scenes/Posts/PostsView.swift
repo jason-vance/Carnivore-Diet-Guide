@@ -10,6 +10,8 @@ import SwinjectAutoregistration
 
 struct PostsView: View {
     
+    @Environment(\.dismiss) private var dismiss: DismissAction
+    
     public let userData: UserData
     
     private let postsFetcher = iocContainer~>PostsFetcher.self
@@ -58,8 +60,7 @@ struct PostsView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            //TODO: Add a back button option to this
-            ScreenTitleBar(screenTitle)
+            TitleBar()
             List {
                 ForEach(posts) { post in
                     //TODO: Make a NavigationLink
@@ -74,6 +75,21 @@ struct PostsView: View {
         .background(Color.background)
         .navigationBarBackButtonHidden()
         .alert(alertMessage, isPresented: $showAlert) {}
+    }
+    
+    @ViewBuilder func TitleBar() -> some View {
+        ScreenTitleBar(
+            screenTitle,
+            leftBarContent: BackButton
+        )
+    }
+    
+    @ViewBuilder func BackButton() -> some View {
+        Button {
+            dismiss()
+        } label: {
+            ResourceMenuButtonLabel(sfSymbol: "chevron.backward")
+        }
     }
     
     @ViewBuilder func LoadNextFeedItemsView() -> some View {
