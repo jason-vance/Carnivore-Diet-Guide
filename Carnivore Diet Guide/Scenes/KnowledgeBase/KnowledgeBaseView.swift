@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Kingfisher
+import SwinjectAutoregistration
 
 struct KnowledgeBaseView: View {
     
@@ -14,7 +15,9 @@ struct KnowledgeBaseView: View {
     private let regularItemHeight: CGFloat = 100
     private let subduedItemHeight: CGFloat = 72
 
-    @StateObject private var model = KnowledgeBaseViewModel()
+    @StateObject private var model = KnowledgeBaseViewModel(
+        topicProvider: iocContainer~>TopicProvider.self
+    )
     
     var body: some View {
         NavigationStack {
@@ -29,6 +32,8 @@ struct KnowledgeBaseView: View {
                 .scrollContentBackground(.hidden)
             }
             .background(Color.background)
+            .alert(model.alertMessage, isPresented: $model.showAlert) {}
+            .onAppear { model.fetchTopics() }
         }
     }
     

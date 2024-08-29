@@ -43,6 +43,9 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(FeedViewContentProvider.self) { DefaultFeedViewContentProvider.instance }
     iocContainer.autoregister(FeedItemRepository.self, initializer: FirebaseFeedItemRepository.init)
     
+    // Knowledge Base
+    iocContainer.autoregister(TopicProvider.self, initializer: FirebaseTopicRepository.init)
+    
     //Post Creation
     iocContainer.autoregister(PostImageUploader.self, initializer: FirebasePostImageStorage.init)
     iocContainer.autoregister(PostPoster.self, initializer: { DefaultPostPoster.forProd })
