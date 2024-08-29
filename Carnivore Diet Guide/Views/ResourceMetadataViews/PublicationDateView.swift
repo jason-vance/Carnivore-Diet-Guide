@@ -11,6 +11,7 @@ struct PublicationDateView: View {
     
     public let date: Date
     
+    //TODO: Get rid of this init
     init(resource: Resource) {
         self.date = resource.publicationDate
     }

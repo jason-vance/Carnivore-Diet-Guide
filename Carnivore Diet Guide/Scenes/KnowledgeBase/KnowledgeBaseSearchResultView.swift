@@ -9,7 +9,7 @@ import SwiftUI
 
 struct KnowledgeBaseSearchResultView: View {
     
-    @State public var item: KnowledgeBaseContent
+    @State public var item: Article
     
     var body: some View {
         VStack(spacing: 0) {

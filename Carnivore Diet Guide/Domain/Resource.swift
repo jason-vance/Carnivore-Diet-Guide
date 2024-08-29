@@ -12,6 +12,7 @@ struct Resource: Equatable {
     enum ResourceType: String {
         case post
         case recipe
+        //TODO: Add article type
 //        case article
 //        case user (?)
     }
@@ -62,4 +63,6 @@ extension Resource {
             type: feedItem.type
         )
     }
+    
+    //TODO: Add init for article
 }

@@ -25,8 +25,8 @@ struct KnowledgeBaseView: View {
     @StateObject private var searchModel = KnowledgeBaseSearchViewModel(
     )
     
-    @State var searchCategories: [ContentCategory] = ContentCategory.allCategories
-    @State var selectedCategory: ContentCategory = .featured
+    @State var searchCategories: [ArticleCategory] = ArticleCategory.allCategories
+    @State var selectedCategory: ArticleCategory = .featured
     
     var body: some View {
         NavigationStack {
@@ -122,6 +122,7 @@ struct KnowledgeBaseView: View {
     }
     
     @ViewBuilder func NonSearchContent() -> some View {
+        
         ProminentTopicsSection()
         RegularTopicsSection()
         SubduedTopicsSection()
