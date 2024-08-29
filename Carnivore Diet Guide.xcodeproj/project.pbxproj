@@ -158,6 +158,8 @@
 		568F72F12C7FB9F3005D16C6 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72F02C7FB9F3005D16C6 /* AppVersion.swift */; };
 		568F72F22C7FB9F3005D16C6 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72F02C7FB9F3005D16C6 /* AppVersion.swift */; };
 		568F72F42C7FC607005D16C6 /* PublicationDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72F32C7FC607005D16C6 /* PublicationDateView.swift */; };
+		568F72F62C7FD541005D16C6 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72F52C7FD541005D16C6 /* Topic.swift */; };
+		568F72F72C7FD541005D16C6 /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72F52C7FD541005D16C6 /* Topic.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -386,6 +388,7 @@
 		568F72EE2C7FB9C2005D16C6 /* AppVersionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionRow.swift; sourceTree = "<group>"; };
 		568F72F02C7FB9F3005D16C6 /* AppVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		568F72F32C7FC607005D16C6 /* PublicationDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationDateView.swift; sourceTree = "<group>"; };
+		568F72F52C7FD541005D16C6 /* Topic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -551,6 +554,7 @@
 			children = (
 				5622EAC62C7526AE00FE9C36 /* KnowledgeBaseView.swift */,
 				5622EACC2C753C3300FE9C36 /* KnowledgeBaseViewModel.swift */,
+				568F72F52C7FD541005D16C6 /* Topic.swift */,
 			);
 			path = KnowledgeBase;
 			sourceTree = "<group>";
@@ -1598,6 +1602,7 @@
 				56B88A642B6F896000C4C0DB /* ProfileImageUploader.swift in Sources */,
 				5622EAD82C755D8900FE9C36 /* UserProfileViewModel.swift in Sources */,
 				568F72B02C79EDDE005D16C6 /* MetadataItemView.swift in Sources */,
+				568F72F62C7FD541005D16C6 /* Topic.swift in Sources */,
 				563BC7082B7B0166008F3C50 /* PopularResources.swift in Sources */,
 				5622EAD32C753CBB00FE9C36 /* RecipesViewModel.swift in Sources */,
 				563BC6FC2B7A0973008F3C50 /* UserFetcher.swift in Sources */,
@@ -1640,6 +1645,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5622EACE2C753C3300FE9C36 /* KnowledgeBaseViewModel.swift in Sources */,
+				568F72F72C7FD541005D16C6 /* Topic.swift in Sources */,
 				5622EAB02C70A8B800FE9C36 /* CurrentUserIdProvider.swift in Sources */,
 				568F72E32C7EA376005D16C6 /* PostCountProvider.swift in Sources */,
 				5622EAB42C70A95D00FE9C36 /* UI.swift in Sources */,
