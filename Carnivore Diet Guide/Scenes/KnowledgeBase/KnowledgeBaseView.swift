@@ -14,6 +14,7 @@ struct KnowledgeBaseView: View {
     private let prominentItemHeight: CGFloat = 150
     private let regularItemHeight: CGFloat = 100
     private let subduedItemHeight: CGFloat = 72
+    private let margin: CGFloat = 16
 
     @StateObject private var model = KnowledgeBaseViewModel(
         topicProvider: iocContainer~>TopicProvider.self
@@ -50,7 +51,7 @@ struct KnowledgeBaseView: View {
             .padding()
             .frame(height: prominentItemHeight)
             .containerRelativeFrame(.horizontal) { length, axes in
-                return length - (2 * 16)
+                return length - (2 * margin)
             }
             .background { ItemBackground(topic) }
             .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
@@ -67,13 +68,13 @@ struct KnowledgeBaseView: View {
     }
     
     @ViewBuilder private func RegularTopicRow(_ topicPair: Topic.Pair) -> some View {
-        HStack(spacing: 16) {
+        HStack(spacing: margin) {
             let left = topicPair.left
             ItemContent(text: left.name, prominence: left.prominence)
                 .padding()
                 .frame(height: regularItemHeight)
                 .containerRelativeFrame(.horizontal) { length, axes in
-                    return (length / 2) - (1.5 * 16)
+                    return (length / 2) - (1.5 * margin)
                 }
                 .background { ItemBackground(left) }
                 .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
@@ -82,7 +83,7 @@ struct KnowledgeBaseView: View {
                     .padding()
                     .frame(height: regularItemHeight)
                     .containerRelativeFrame(.horizontal) { length, axes in
-                        return (length / 2) - (1.5 * 16)
+                        return (length / 2) - (1.5 * margin)
                     }
                     .background { ItemBackground(right) }
                     .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
@@ -101,13 +102,13 @@ struct KnowledgeBaseView: View {
     }
     
     @ViewBuilder private func SubduedTopicRow(_ topicPair: Topic.Pair) -> some View {
-        HStack(spacing: 16) {
+        HStack(spacing: margin) {
             let left = topicPair.left
             ItemContent(text: left.name, prominence: left.prominence)
                 .padding()
                 .frame(height: subduedItemHeight)
                 .containerRelativeFrame(.horizontal) { length, axes in
-                    return (length / 2) - (1.5 * 16)
+                    return (length / 2) - (1.5 * margin)
                 }
                 .background { ItemBackground(left) }
                 .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
@@ -116,7 +117,7 @@ struct KnowledgeBaseView: View {
                     .padding()
                     .frame(height: subduedItemHeight)
                     .containerRelativeFrame(.horizontal) { length, axes in
-                        return (length / 2) - (1.5 * 16)
+                        return (length / 2) - (1.5 * margin)
                     }
                     .background { ItemBackground(right) }
                     .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
