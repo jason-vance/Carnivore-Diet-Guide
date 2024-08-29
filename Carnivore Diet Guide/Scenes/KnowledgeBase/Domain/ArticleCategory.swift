@@ -7,6 +7,7 @@
 
 import Foundation
 
+//TODO: Change this to two enums Article.MetadataCategory, Article.Category
 struct ArticleCategory: Identifiable, Equatable {
     
     var id: String { name }
@@ -26,18 +27,18 @@ struct ArticleCategory: Identifiable, Equatable {
         all, featured, trending, liked
     ]
     
+    public var isMetadataBased: Bool {
+        Self.metadataBasedCategories.contains(self)
+    }
+    
     // Metadata-based Categories
-    static let all: ArticleCategory = .init(
-        name: "All",
-        image: "rectangle.grid.3x2.fill"
+    static let featured: ArticleCategory = .init(
+        name: "Featured",
+        image: "star.fill"
     )
     static let trending: ArticleCategory = .init(
         name: "Trending",
         image: "arrowshape.up.fill"
-    )
-    static let featured: ArticleCategory = .init(
-        name: "Featured",
-        image: "star.fill"
     )
     static let liked: ArticleCategory = .init(
         name: "Liked",
@@ -45,6 +46,10 @@ struct ArticleCategory: Identifiable, Equatable {
     )
     
     // Content-based Categories
+    static let all: ArticleCategory = .init(
+        name: "All",
+        image: "rectangle.grid.3x2.fill"
+    )
     static let food: ArticleCategory = .init(
         name: "Food",
         image: "fork.knife"

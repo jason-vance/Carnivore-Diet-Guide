@@ -36,7 +36,8 @@ func setupMockIocContainer(_ iocContainer: Container) {
     
     // Knowledge Base
     iocContainer.autoregister(TopicProvider.self, initializer: MockTopicProvider.init)
-    
+    iocContainer.autoregister(ArticleFetcher.self, initializer: MockArticleFetcher.init)
+
     //Post Creation
     iocContainer.autoregister(PostImageUploader.self, initializer: MockPostImageUploader.init)
     iocContainer.autoregister(PostPoster.self, initializer: { DefaultPostPoster.forPreviewsWithSuccess })

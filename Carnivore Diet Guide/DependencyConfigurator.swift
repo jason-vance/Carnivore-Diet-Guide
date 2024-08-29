@@ -45,7 +45,8 @@ fileprivate func setup(iocContainer: Container) {
     
     // Knowledge Base
     iocContainer.autoregister(TopicProvider.self, initializer: FirebaseTopicRepository.init)
-    
+    iocContainer.autoregister(ArticleFetcher.self, initializer: FirebaseArticleRepository.init)
+
     //Post Creation
     iocContainer.autoregister(PostImageUploader.self, initializer: FirebasePostImageStorage.init)
     iocContainer.autoregister(PostPoster.self, initializer: { DefaultPostPoster.forProd })

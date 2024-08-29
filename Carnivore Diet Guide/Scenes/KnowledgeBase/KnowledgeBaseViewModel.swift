@@ -7,6 +7,7 @@
 
 import Foundation
 
+//TODO: I might not need this view model anymore
 @MainActor
 class KnowledgeBaseViewModel: ObservableObject {
     

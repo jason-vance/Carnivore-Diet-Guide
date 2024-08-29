@@ -9,6 +9,10 @@ import SwiftUI
 import YPImagePicker
 import SwinjectAutoregistration
 
+//TODO: CreateArticleContentView (title, coverImage, markdownContent)
+//TODO: CreateArticleMetadataView (summary, tags, categories)
+//TODO: ReviewArticleView (prominent, tall, wide ArticleItemViews, and content)
+
 struct CreatePostView: View {
     
     private let imageSize: CGFloat = 128

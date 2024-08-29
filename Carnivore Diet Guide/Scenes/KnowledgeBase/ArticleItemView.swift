@@ -1,5 +1,5 @@
 //
-//  KnowledgeBaseSearchResultView.swift
+//  ArticleItemView.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 8/28/24.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct KnowledgeBaseSearchResultView: View {
+struct ArticleItemView: View {
     
-    @State public var item: Article
+    @State public var article: Article
     
     var body: some View {
         VStack(spacing: 0) {
@@ -25,7 +25,7 @@ struct KnowledgeBaseSearchResultView: View {
     }
     
     @ViewBuilder func TextContent() -> some View {
-        Text(item.summary)
+        Text(article.summary)
             .font(.body.weight(.medium).width(.condensed))
             .foregroundStyle(Color.text)
             .lineLimit(5, reservesSpace: true)
@@ -33,13 +33,13 @@ struct KnowledgeBaseSearchResultView: View {
     }
     
     @ViewBuilder func ImageContent() -> some View {
-        ResourceImageView(url: item.coverImageUrl)
+        ResourceImageView(url: article.coverImageUrl)
             .aspectRatio(5/4)
     }
     
     @ViewBuilder func PublicationDate() -> some View {
         HStack {
-            PublicationDateView(date: item.publicationDate)
+            PublicationDateView(date: article.publicationDate)
             Spacer()
         }
         .padding(.horizontal, 8)
@@ -48,5 +48,5 @@ struct KnowledgeBaseSearchResultView: View {
 }
 
 #Preview {
-    KnowledgeBaseSearchResultView(item: .sample)
+    ArticleItemView(article: .sample)
 }
