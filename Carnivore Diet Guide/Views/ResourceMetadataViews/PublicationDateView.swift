@@ -9,10 +9,18 @@ import SwiftUI
 
 struct PublicationDateView: View {
     
-    public let resource: Resource
+    public let date: Date
+    
+    init(resource: Resource) {
+        self.date = resource.publicationDate
+    }
+    
+    init(date: Date) {
+        self.date = date
+    }
     
     var body: some View {
-        Text(resource.publicationDate.toBasicUiString())
+        Text(date.toBasicUiString())
             .font(.caption)
             .foregroundStyle(Color.text)
     }

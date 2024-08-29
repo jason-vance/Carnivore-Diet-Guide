@@ -174,6 +174,7 @@
 		568F73122C8010E6005D16C6 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F73112C8010E6005D16C6 /* SearchBar.swift */; };
 		568F73142C803CB2005D16C6 /* ContentCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F73132C803CB2005D16C6 /* ContentCategory.swift */; };
 		568F73152C803CB2005D16C6 /* ContentCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F73132C803CB2005D16C6 /* ContentCategory.swift */; };
+		568F731B2C805B32005D16C6 /* KnowledgeBaseSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F731A2C805B32005D16C6 /* KnowledgeBaseSearchResultView.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -412,6 +413,7 @@
 		568F730E2C800F5C005D16C6 /* KnowledgeBaseSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeBaseSearchViewModel.swift; sourceTree = "<group>"; };
 		568F73112C8010E6005D16C6 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		568F73132C803CB2005D16C6 /* ContentCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCategory.swift; sourceTree = "<group>"; };
+		568F731A2C805B32005D16C6 /* KnowledgeBaseSearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeBaseSearchResultView.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -576,12 +578,12 @@
 		5622EAC32C7525F300FE9C36 /* KnowledgeBase */ = {
 			isa = PBXGroup;
 			children = (
+				568F73162C805348005D16C6 /* Workers */,
 				568F73052C8009BB005D16C6 /* Domain */,
 				5622EAC62C7526AE00FE9C36 /* KnowledgeBaseView.swift */,
 				5622EACC2C753C3300FE9C36 /* KnowledgeBaseViewModel.swift */,
-				568F72F52C7FD541005D16C6 /* Topic.swift */,
-				568F72F82C7FF25B005D16C6 /* TopicProvider.swift */,
 				568F730E2C800F5C005D16C6 /* KnowledgeBaseSearchViewModel.swift */,
+				568F731A2C805B32005D16C6 /* KnowledgeBaseSearchResultView.swift */,
 			);
 			path = KnowledgeBase;
 			sourceTree = "<group>";
@@ -1089,11 +1091,20 @@
 		568F73052C8009BB005D16C6 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				568F72F52C7FD541005D16C6 /* Topic.swift */,
 				568F73062C8009CB005D16C6 /* KnowledgeBaseContent.swift */,
 				568F73092C800C66005D16C6 /* ContentTag.swift */,
 				568F73132C803CB2005D16C6 /* ContentCategory.swift */,
 			);
 			path = Domain;
+			sourceTree = "<group>";
+		};
+		568F73162C805348005D16C6 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				568F72F82C7FF25B005D16C6 /* TopicProvider.swift */,
+			);
+			path = Workers;
 			sourceTree = "<group>";
 		};
 		56A6D0D02B835145003B27E5 /* FeedItems */ = {
@@ -1535,6 +1546,7 @@
 				563BC73F2B7F53D7008F3C50 /* FeedItem.swift in Sources */,
 				563BC6FE2B7AF4E8008F3C50 /* ResourceViewActivityTracker.swift in Sources */,
 				56B88A2D2B6CE9EF00C4C0DB /* UserData.swift in Sources */,
+				568F731B2C805B32005D16C6 /* KnowledgeBaseSearchResultView.swift in Sources */,
 				56B88A552B6F275700C4C0DB /* UserOnboardingStateProvider.swift in Sources */,
 				56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */,
 				56B88A772B70DCFD00C4C0DB /* UserDataProvider.swift in Sources */,

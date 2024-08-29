@@ -13,6 +13,8 @@ class KnowledgeBaseSearchViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var searchPresented: Bool = false
     
+    @Published var searchResults: [KnowledgeBaseContent] = [ .sample, .sample2 ]
+    
     func doSearch() {
         
     }

@@ -33,7 +33,7 @@ struct KnowledgeBaseView: View {
             VStack(spacing: 0) {
                 ScreenTitleBar(String(localized: "Knowledge Base"))
                 ScrollView {
-                    LazyVStack {
+                    VStack {
                         SearchArea()
                         ListContent()
                     }
@@ -67,34 +67,35 @@ struct KnowledgeBaseView: View {
             )
             .padding(.top)
             .padding(.horizontal)
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(searchCategories) { category in
-                        let isSelected = selectedCategory == category
-                        
-                        Button {
-                            withAnimation(.snappy) { selectedCategory = category }
-                        } label: {
-                            HStack(spacing: 4) {
-                                Image(systemName: category.image)
-                                Text(category.name)
-                            }
-                            .font(.caption.bold())
-                            .foregroundStyle(isSelected ? Color.background : Color.accent)
-                            .padding(.vertical, 12)
-                            .padding(.horizontal, 16)
-                            .background {
-                                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                    .foregroundStyle(isSelected ? Color.accent : Color.accent.opacity(0.1))
-//                                RoundedRectangle(cornerRadius: 12, style: .continuous)
-//                                    .stroke(style: .init(lineWidth: 2))
-//                                    .foregroundStyle(Color.accent)
-                            }
+            SearchCategoryPicker()
+        }
+    }
+    
+    @ViewBuilder func SearchCategoryPicker() -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(searchCategories) { category in
+                    let isSelected = selectedCategory == category
+                    
+                    Button {
+                        withAnimation(.snappy) { selectedCategory = category }
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: category.image)
+                            Text(category.name)
+                        }
+                        .font(.caption.bold())
+                        .foregroundStyle(isSelected ? Color.background : Color.accent)
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 16)
+                        .background {
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .foregroundStyle(isSelected ? Color.accent : Color.accent.opacity(0.1))
                         }
                     }
                 }
-                .padding()
             }
+            .padding()
         }
     }
     
@@ -107,13 +108,17 @@ struct KnowledgeBaseView: View {
     }
     
     @ViewBuilder func SearchContent() -> some View {
-        SearchResults()
-    }
-    
-    @ViewBuilder func SearchResults() -> some View {
-        ForEach(0...10, id:\.self) { i in
-            Text("\(i)")
+        let columns = [
+            GridItem.init(.adaptive(minimum: 100, maximum: 300)),
+            GridItem.init(.adaptive(minimum: 100, maximum: 300))
+        ]
+        
+        LazyVGrid(columns: columns) {
+            ForEach(searchModel.searchResults) { result in
+                KnowledgeBaseSearchResultView(item: result)
+            }
         }
+        .padding(.horizontal)
     }
     
     @ViewBuilder func NonSearchContent() -> some View {

@@ -11,6 +11,21 @@ import Kingfisher
 struct ResourceImageView: View {
     
     public let url: URL?
+    private var __aspectRatio: CGFloat
+    
+    @State private var aspectRatio: CGFloat
+    
+    init(url: URL?) {
+        self.url = url
+        self.__aspectRatio = 1
+        self.aspectRatio = 1
+    }
+    
+    public func aspectRatio(_ aspectRatio: CGFloat) -> ResourceImageView {
+        var view = self
+        view.__aspectRatio = aspectRatio
+        return view
+    }
     
     var body: some View {
         GeometryReader { proxy in
@@ -22,10 +37,13 @@ struct ResourceImageView: View {
                 .diskCacheExpiration(.days(7))
                 .placeholder { PlaceholderView(imageWidth: imageWidth) }
                 .scaledToFill()
-                .frame(width: imageWidth, height: imageWidth)
-                .clipShape(Square())
+                .frame(width: imageWidth, height: imageWidth / aspectRatio)
+                .clipShape(Rectangle())
         }
-        .aspectRatio(1, contentMode: .fill)
+        .aspectRatio(aspectRatio, contentMode: .fill)
+        .onChange(of: __aspectRatio, initial: true) { _, newAspectRatio in
+            self.aspectRatio = newAspectRatio
+        }
     }
     
     @ViewBuilder func PlaceholderView(imageWidth: CGFloat) -> some View {
