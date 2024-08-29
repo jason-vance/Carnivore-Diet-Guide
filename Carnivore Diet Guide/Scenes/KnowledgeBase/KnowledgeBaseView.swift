@@ -15,27 +15,111 @@ struct KnowledgeBaseView: View {
     private let regularItemHeight: CGFloat = 100
     private let subduedItemHeight: CGFloat = 72
     private let margin: CGFloat = 16
+    
+    @State private var showSearchContent: Bool = false
 
     @StateObject private var model = KnowledgeBaseViewModel(
         topicProvider: iocContainer~>TopicProvider.self
     )
     
+    @StateObject private var searchModel = KnowledgeBaseSearchViewModel(
+    )
+    
+    @State var searchCategories: [ContentCategory] = ContentCategory.allCategories
+    @State var selectedCategory: ContentCategory = .featured
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 ScreenTitleBar(String(localized: "Knowledge Base"))
-                List {
-                    ProminentTopicsSection()
-                    RegularTopicsSection()
-                    SubduedTopicsSection()
+                ScrollView {
+                    LazyVStack {
+                        SearchArea()
+                        ListContent()
+                    }
                 }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
+                .overlay {
+                    if model.isWorking {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .tint(Color.accent)
+                    }
+                }
             }
             .background(Color.background)
             .alert(model.alertMessage, isPresented: $model.showAlert) {}
             .onAppear { model.fetchTopics() }
+            .onChange(of: searchModel.searchPresented, initial: true) { _, showSearchContent in
+                withAnimation(.snappy) {
+                    self.showSearchContent = showSearchContent
+                }
+            }
         }
+    }
+    
+    @ViewBuilder func SearchArea() -> some View {
+        VStack(spacing: 0) {
+            SearchBar(
+                prompt: String(localized: "Articles, Guides, and more"),
+                searchText: $searchModel.searchText,
+                searchPresented: $searchModel.searchPresented,
+                action: { searchModel.doSearch() }
+            )
+            .padding(.top)
+            .padding(.horizontal)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(searchCategories) { category in
+                        let isSelected = selectedCategory == category
+                        
+                        Button {
+                            withAnimation(.snappy) { selectedCategory = category }
+                        } label: {
+                            HStack(spacing: 4) {
+                                Image(systemName: category.image)
+                                Text(category.name)
+                            }
+                            .font(.caption.bold())
+                            .foregroundStyle(isSelected ? Color.background : Color.accent)
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 16)
+                            .background {
+                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                    .foregroundStyle(isSelected ? Color.accent : Color.accent.opacity(0.1))
+//                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+//                                    .stroke(style: .init(lineWidth: 2))
+//                                    .foregroundStyle(Color.accent)
+                            }
+                        }
+                    }
+                }
+                .padding()
+            }
+        }
+    }
+    
+    @ViewBuilder func ListContent() -> some View {
+        if showSearchContent {
+            SearchContent()
+        } else {
+            NonSearchContent()
+        }
+    }
+    
+    @ViewBuilder func SearchContent() -> some View {
+        SearchResults()
+    }
+    
+    @ViewBuilder func SearchResults() -> some View {
+        ForEach(0...10, id:\.self) { i in
+            Text("\(i)")
+        }
+    }
+    
+    @ViewBuilder func NonSearchContent() -> some View {
+        ProminentTopicsSection()
+        RegularTopicsSection()
+        SubduedTopicsSection()
     }
     
     @ViewBuilder func ProminentTopicsSection() -> some View {

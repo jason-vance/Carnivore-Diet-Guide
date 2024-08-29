@@ -328,6 +328,9 @@
     "Are you sure you want to logout?" : {
 
     },
+    "Articles, Guides, and more" : {
+
+    },
     "Blog" : {
       "extractionState" : "stale",
       "localizations" : {
