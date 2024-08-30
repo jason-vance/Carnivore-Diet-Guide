@@ -8,14 +8,14 @@
 import Foundation
 
 struct CreateContentData: Hashable {
-    public let id: String
+    public let id: UUID
     public let userId: String
     public let title: String
     public let markdownContent: String
     public let imageUrls: [URL]
     
     public static let sample: CreateContentData = .init(
-        id: "reviewPostDataId",
+        id: UUID(),
         userId: UserData.sample.id,
         title: "Welcome to the Carnivore Diet Guide",
         markdownContent: """

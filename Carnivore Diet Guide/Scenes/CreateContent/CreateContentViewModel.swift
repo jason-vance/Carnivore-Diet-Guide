@@ -14,10 +14,11 @@ class CreateContentViewModel: ObservableObject {
     
     private let imageCountLimit: Int = 5
     
-    @Published public var postId: String = UUID().uuidString
-    @Published public var postTitle: String = ""
-    @Published public var postImages: [ContentCreationImageData] = []
-    @Published public var postText: String = ""
+    @Published public var contentId: UUID = UUID()
+    @Published public var contentType: Resource.ResourceType = .post
+    @Published public var contentTitle: String = ""
+    @Published public var contentImages: [ContentCreationImageData] = []
+    @Published public var contentText: String = ""
     
     private let userIdProvider: CurrentUserIdProvider
     private let imageUploader: PostImageUploader
@@ -33,38 +34,38 @@ class CreateContentViewModel: ObservableObject {
     private var userId: String? { userIdProvider.currentUserId }
     
     public var isFormEmpty: Bool {
-        postTitle.isEmpty && postText.isEmpty && postImages.isEmpty
+        contentTitle.isEmpty && contentText.isEmpty && contentImages.isEmpty
     }
     
-    public var canAddImages: Bool { postImages.count < imageCountLimit }
+    public var canAddImages: Bool { contentImages.count < imageCountLimit }
     
     public var reviewPostData: CreateContentData? {
         guard let userId = userId else { return nil }
         
-        guard !postTitle.isEmpty else { return nil }
+        guard !contentTitle.isEmpty else { return nil }
         
-        guard !postText.isEmpty else { return nil }
+        guard !contentText.isEmpty else { return nil }
         
-        let imageUrls = postImages.compactMap({ $0.url })
-        guard imageUrls.count == postImages.count else { return nil }
+        let imageUrls = contentImages.compactMap({ $0.url })
+        guard imageUrls.count == contentImages.count else { return nil }
         
         return CreateContentData(
-            id: postId,
+            id: contentId,
             userId: userId,
-            title: postTitle,
-            markdownContent: postText,
+            title: contentTitle,
+            markdownContent: contentText,
             imageUrls: imageUrls
         )
     }
     
     public func addToPost(image: UIImage) {
-        guard postImages.count < imageCountLimit else { return }
+        guard contentImages.count < imageCountLimit else { return }
         guard let userId = userId else { return }
 
         let imageData = ContentCreationImageData(image: image)
 
         withAnimation(.snappy) {
-            postImages.append(imageData)
+            contentImages.append(imageData)
         }
         
         Task {
@@ -72,19 +73,19 @@ class CreateContentViewModel: ObservableObject {
                 let imageUrl = try await imageUploader.upload(
                     image: imageData.image,
                     withId: imageData.id,
-                    forPost: postId,
+                    forPost: contentId.uuidString,
                     byUser: userId
                 )
                 
-                guard let index = postImages.firstIndex(where: { $0.id == imageData.id }) else { return }
-                postImages.remove(at: index)
+                guard let index = contentImages.firstIndex(where: { $0.id == imageData.id }) else { return }
+                contentImages.remove(at: index)
                 
                 let imageData = ContentCreationImageData(id: imageData.id, image: image, url: imageUrl)
-                postImages.insert(imageData, at: index)
+                contentImages.insert(imageData, at: index)
             } catch {
                 print("Image failed to upload: \(error.localizedDescription)")
                 withAnimation(.snappy) {
-                    postImages.removeAll { $0.id == imageData.id }
+                    contentImages.removeAll { $0.id == imageData.id }
                 }
             }
         }
@@ -92,23 +93,23 @@ class CreateContentViewModel: ObservableObject {
     
     public func removeFromPost(image: ContentCreationImageData) {
         guard let userId = userId else { return }
-        guard let index = postImages.firstIndex(where: { $0.id == image.id }) else { return }
+        guard let index = contentImages.firstIndex(where: { $0.id == image.id }) else { return }
         
         withAnimation(.snappy) {
-            postImages.removeAll { $0.id == image.id }
+            contentImages.removeAll { $0.id == image.id }
         }
         
         Task {
             do {
                 try await imageUploader.delete(
                     image: image.id,
-                    forPost: postId,
+                    forPost: contentId.uuidString,
                     byUser: userId
                 )
             } catch {
                 print("Image failed to delete: \(error.localizedDescription)")
                 withAnimation(.snappy) {
-                    postImages.insert(image, at: min(index, postImages.count))
+                    contentImages.insert(image, at: min(index, contentImages.count))
                 }
             }
         }
@@ -117,9 +118,9 @@ class CreateContentViewModel: ObservableObject {
     public func deleteImagesUnsafely() {
         guard let userId = userId else { return }
         
-        postImages.forEach { image in
+        contentImages.forEach { image in
             guard let _ = image.url else { return }
-            Task { try? await imageUploader.delete(image: image.id, forPost: postId, byUser: userId) }
+            Task { try? await imageUploader.delete(image: image.id, forPost: contentId.uuidString, byUser: userId) }
         }
     }
 }

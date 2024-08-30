@@ -22,8 +22,6 @@ struct CreateContentView: View {
         userIdProvider: iocContainer~>CurrentUserIdProvider.self,
         imageUploader: iocContainer~>PostImageUploader.self
     )
-    
-    @State private var contentType: Resource.ResourceType = .post
 
     @State private var navigationPath = NavigationPath()
     @State private var showImagePicker: Bool = false
@@ -33,7 +31,7 @@ struct CreateContentView: View {
     @State private var alertMessage: String = ""
     
     private var screenTitle: String {
-        switch contentType {
+        switch model.contentType {
         case .article :
             String(localized: "Create Article")
         case .post :
@@ -92,7 +90,7 @@ struct CreateContentView: View {
     }
     
     @ViewBuilder func NextCreationStepView(data: CreateContentData) -> some View {
-        switch contentType {
+        switch model.contentType {
         case .post:
             ReviewNewPostView(postData: data) { dismiss() }
         case .recipe:
@@ -129,28 +127,28 @@ struct CreateContentView: View {
         //TODO: Disable this for everyone except me
         Menu {
             Button {
-                contentType = .article
+                model.contentType = .article
             } label: {
                 LabeledContent("Article") {
-                    if contentType == .article {
+                    if model.contentType == .article {
                         Image(systemName: "checkmark")
                     }
                 }
             }
             Button {
-                contentType = .post
+                model.contentType = .post
             } label: {
                 LabeledContent("Post") {
-                    if contentType == .post {
+                    if model.contentType == .post {
                         Image(systemName: "checkmark")
                     }
                 }
             }
             Button {
-                contentType = .recipe
+                model.contentType = .recipe
             } label: {
                 LabeledContent("Recipe") {
-                    if contentType == .recipe {
+                    if model.contentType == .recipe {
                         Image(systemName: "checkmark")
                     }
                 }
@@ -191,7 +189,7 @@ struct CreateContentView: View {
     @ViewBuilder func ImageCarouselField() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 16) {
-                ForEach(model.postImages) { image in
+                ForEach(model.contentImages) { image in
                     ImageCarouselItem(image)
                 }
                 if model.canAddImages {
@@ -276,7 +274,7 @@ struct CreateContentView: View {
     @ViewBuilder func PostTitleField() -> some View {
         TextField(
             "Title",
-            text: $model.postTitle,
+            text: $model.contentTitle,
             prompt: Text("Title").foregroundStyle(Color.text.opacity(0.3))
         )
         .textInputAutocapitalization(.words)
@@ -293,8 +291,8 @@ struct CreateContentView: View {
                 .opacity(0.3)
                 .padding(.vertical, 8)
                 .padding(.horizontal, 5)
-                .opacity(model.postText.isEmpty ? 1 : 0)
-            TextEditor(text: $model.postText)
+                .opacity(model.contentText.isEmpty ? 1 : 0)
+            TextEditor(text: $model.contentText)
                 .textInputAutocapitalization(.sentences)
                 .foregroundStyle(Color.text)
                 .scrollContentBackground(.hidden)
