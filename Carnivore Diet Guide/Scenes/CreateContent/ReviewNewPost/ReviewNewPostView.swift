@@ -16,7 +16,7 @@ struct ReviewNewPostView: View {
     
     private let postPoster = iocContainer~>PostPoster.self
     
-    public let postData: ReviewPostData
+    public let postData: CreateContentData
     public let dismissAll: () -> ()
     
     @State private var isPosting: Bool = false
@@ -190,6 +190,6 @@ struct ReviewNewPostView: View {
         
         iocContainer.autoregister(PostPoster.self, initializer: { DefaultPostPoster.forPreviewsWithFailure })
     } content: {
-        ReviewNewPostView(postData: ReviewPostData.sample) {}
+        ReviewNewPostView(postData: CreateContentData.sample) {}
     }
 }

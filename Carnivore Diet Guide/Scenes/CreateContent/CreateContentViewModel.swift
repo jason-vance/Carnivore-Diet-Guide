@@ -1,5 +1,5 @@
 //
-//  CreatePostViewModel.swift
+//  CreateContentViewModel.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 8/20/24.
@@ -10,13 +10,13 @@ import UIKit
 import SwiftUI
 
 @MainActor
-class CreatePostViewModel: ObservableObject {
+class CreateContentViewModel: ObservableObject {
     
     private let imageCountLimit: Int = 5
     
     @Published public var postId: String = UUID().uuidString
     @Published public var postTitle: String = ""
-    @Published public var postImages: [CreatePostImageData] = []
+    @Published public var postImages: [ContentCreationImageData] = []
     @Published public var postText: String = ""
     
     private let userIdProvider: CurrentUserIdProvider
@@ -38,7 +38,7 @@ class CreatePostViewModel: ObservableObject {
     
     public var canAddImages: Bool { postImages.count < imageCountLimit }
     
-    public var reviewPostData: ReviewPostData? {
+    public var reviewPostData: CreateContentData? {
         guard let userId = userId else { return nil }
         
         guard !postTitle.isEmpty else { return nil }
@@ -48,7 +48,7 @@ class CreatePostViewModel: ObservableObject {
         let imageUrls = postImages.compactMap({ $0.url })
         guard imageUrls.count == postImages.count else { return nil }
         
-        return ReviewPostData(
+        return CreateContentData(
             id: postId,
             userId: userId,
             title: postTitle,
@@ -61,7 +61,7 @@ class CreatePostViewModel: ObservableObject {
         guard postImages.count < imageCountLimit else { return }
         guard let userId = userId else { return }
 
-        let imageData = CreatePostImageData(image: image)
+        let imageData = ContentCreationImageData(image: image)
 
         withAnimation(.snappy) {
             postImages.append(imageData)
@@ -79,7 +79,7 @@ class CreatePostViewModel: ObservableObject {
                 guard let index = postImages.firstIndex(where: { $0.id == imageData.id }) else { return }
                 postImages.remove(at: index)
                 
-                let imageData = CreatePostImageData(id: imageData.id, image: image, url: imageUrl)
+                let imageData = ContentCreationImageData(id: imageData.id, image: image, url: imageUrl)
                 postImages.insert(imageData, at: index)
             } catch {
                 print("Image failed to upload: \(error.localizedDescription)")
@@ -90,7 +90,7 @@ class CreatePostViewModel: ObservableObject {
         }
     }
     
-    public func removeFromPost(image: CreatePostImageData) {
+    public func removeFromPost(image: ContentCreationImageData) {
         guard let userId = userId else { return }
         guard let index = postImages.firstIndex(where: { $0.id == image.id }) else { return }
         

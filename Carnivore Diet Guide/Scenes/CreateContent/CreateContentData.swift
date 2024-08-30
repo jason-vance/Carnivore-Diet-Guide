@@ -1,5 +1,5 @@
 //
-//  ReviewPostData.swift
+//  CreateContentData.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 8/21/24.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct ReviewPostData: Hashable {
+struct CreateContentData: Hashable {
     public let id: String
     public let userId: String
     public let title: String
     public let markdownContent: String
     public let imageUrls: [URL]
     
-    public static let sample: ReviewPostData = .init(
+    public static let sample: CreateContentData = .init(
         id: "reviewPostDataId",
         userId: UserData.sample.id,
         title: "Welcome to the Carnivore Diet Guide",

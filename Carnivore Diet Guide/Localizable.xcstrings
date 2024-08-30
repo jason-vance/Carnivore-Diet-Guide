@@ -331,9 +331,6 @@
     "Article" : {
 
     },
-    "Article creation next step" : {
-
-    },
     "Articles, Guides, and more" : {
 
     },
@@ -826,13 +823,7 @@
     "Discard" : {
 
     },
-    "Do you want to discard your article?" : {
-
-    },
     "Do you want to discard your post?" : {
-
-    },
-    "Do you want to discard your recipe?" : {
 
     },
     "Done" : {
@@ -1618,9 +1609,6 @@
       }
     },
     "Recipe" : {
-
-    },
-    "Recipe creation next step" : {
 
     },
     "Recipe Details" : {

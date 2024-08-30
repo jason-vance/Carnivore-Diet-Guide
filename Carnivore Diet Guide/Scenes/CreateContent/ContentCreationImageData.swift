@@ -1,5 +1,5 @@
 //
-//  CreatePostImageData.swift
+//  ContentCreationImageData.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 8/21/24.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct CreatePostImageData: Identifiable {
+struct ContentCreationImageData: Identifiable {
     let id: String
     let image: UIImage
     let url: URL?
