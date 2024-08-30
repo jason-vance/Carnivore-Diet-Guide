@@ -30,13 +30,26 @@ struct ScreenTitleBar<PrimaryContent:View,LeadingContent:View,TrailingContent:Vi
         self.trailingContent = nil
     }
     
+    init(
+        primaryContent: @escaping () -> PrimaryContent,
+        leadingContent: @escaping () -> LeadingContent,
+        trailingContent: @escaping () -> TrailingContent
+    ) {
+        self.primaryContent = primaryContent
+        self.leadingContent = leadingContent
+        self.trailingContent = trailingContent
+    }
+    
     var body: some View {
-        HStack {
+        HStack(spacing: 16) {
             if let leadingContent = leadingContent {
                 leadingContent()
             }
             TitleText()
-            Spacer()
+            Spacer(minLength: 0)
+            if let trailingContent = trailingContent {
+                trailingContent()
+            }
         }
         .padding(.horizontal)
         .frame(height: .defaultBarHeight)
@@ -62,6 +75,40 @@ struct ScreenTitleBar<PrimaryContent:View,LeadingContent:View,TrailingContent:Vi
             Image(systemName: "chevron.backward")
                 .font(.title.bold())
                 .foregroundStyle(Color.accent)
+        }
+    }
+}
+
+#Preview("ComplexContent") {
+    ScreenTitleBar {
+        Menu {
+            Text("Posts")
+            Text("Article")
+            Text("Recipe")
+        } label: {
+            HStack {
+                Text("Post")
+                ResourceMenuButtonLabel(sfSymbol: "chevron.down")
+            }
+        }
+    } leadingContent: {
+        Button {
+            
+        } label: {
+            ResourceMenuButtonLabel(sfSymbol: "xmark")
+        }
+    } trailingContent: {
+        HStack {
+            Button {
+                
+            } label: {
+                ResourceMenuButtonLabel(sfSymbol: "circle")
+            }
+            Button {
+                
+            } label: {
+                ResourceMenuButtonLabel(sfSymbol: "heart")
+            }
         }
     }
 }
