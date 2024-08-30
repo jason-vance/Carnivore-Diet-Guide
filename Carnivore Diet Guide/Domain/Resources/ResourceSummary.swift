@@ -10,6 +10,9 @@ import Foundation
 extension Resource {
     struct Summary: Hashable {
         
+        static let minTextLength: Int = 12
+        static let maxTextLength: Int = 128
+
         let text: String
         
         init?(_ text: String) {
@@ -17,7 +20,7 @@ extension Resource {
             let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
             
             // Check for minimum and maximum length
-            guard trimmedText.count >= 12, trimmedText.count <= 128 else {
+            guard trimmedText.count >= Self.minTextLength, trimmedText.count <= Self.maxTextLength else {
                 return nil
             }
             

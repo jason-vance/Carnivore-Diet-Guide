@@ -8,11 +8,13 @@
 import Foundation
 
 extension Resource {
-    struct Category: Hashable {
+    struct Category: Identifiable, Hashable {
         
+        var id: String { name }
         let name: String
+        let image: String?
         
-        init?(_ name: String) {
+        init?(_ name: String, image: String? = nil) {
             // Trim whitespace
             let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
             
@@ -29,6 +31,7 @@ extension Resource {
             
             // Convert to lowercase
             self.name = trimmedName.capitalized
+            self.image = image
         }
     }
 }

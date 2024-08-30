@@ -16,9 +16,11 @@ struct CreateArticleMetadataView: View {
     )
     
     @State public var contentData: ContentData
-    @State public var navigationPath: NavigationPath
+    @Binding public var navigationPath: NavigationPath
     
     @State private var summaryText: String = ""
+    @State private var showAddCategoryDialog: Bool = false
+    @State private var showAddKeywordDialog: Bool = false
     @State private var showDiscardDialog: Bool = false
     
     @State private var showAlert: Bool = false
@@ -50,10 +52,15 @@ struct CreateArticleMetadataView: View {
         VStack(spacing: 0) {
             TopBar()
             List {
-                
+                SummaryField()
+                CategoriesField()
+                SearchKeywordsField()
             }
-            .scrollIndicators(.hidden)
+            .listStyle(.grouped)
+            .scrollContentBackground(.hidden)
         }
+        .navigationBarBackButtonHidden()
+        .background(Color.background)
         .onChange(of: summaryText, initial: false) { _, newSummaryText in
             model.articleSummary = .init(newSummaryText)
         }
@@ -76,6 +83,7 @@ struct CreateArticleMetadataView: View {
             Image(systemName: "chevron.backward")
                 .bold()
         }
+        //TODO: Add discard dialog
     }
     
     @ViewBuilder func NextButton() -> some View {
@@ -93,6 +101,94 @@ struct CreateArticleMetadataView: View {
         }
         .disabled(model.contentMetadata == nil)
     }
+    
+    @ViewBuilder func SummaryField() -> some View {
+        Section("Summary") {
+            VStack(spacing: 0) {
+                TextField(
+                    "Summary",
+                    text: $summaryText,
+                    prompt: Text("Summary text in TextField").foregroundStyle(Color.text.opacity(0.3)),
+                    axis: .vertical
+                )
+                .textInputAutocapitalization(.sentences)
+                .foregroundStyle(Color.text)
+                HStack {
+                    Spacer()
+                    Text("\(summaryText.count)/\(Resource.Summary.maxTextLength)")
+                        .font(.caption2)
+                        .foregroundStyle(Color.text.opacity(0.5))
+                }
+            }
+            .listRowBackground(Color.background)
+            .listRowSeparator(.hidden)
+        }
+    }
+    
+    @ViewBuilder func CategoriesField() -> some View {
+        Section("Categories") {
+            ForEach(model.articleCategories) { category in
+                CategoryRow(category)
+            }
+            AddCategoryRow()
+        }
+    }
+    
+    @ViewBuilder func CategoryRow(_ category: Resource.Category) -> some View {
+        //TODO: Allow removing of categories
+        HStack(spacing: 4) {
+            if let image = category.image {
+                Image(systemName: image)
+            }
+            Text(category.name)
+        }
+        .font(.caption.bold())
+        .foregroundStyle(Color.accent)
+        .padding(.vertical, 12)
+        .padding(.horizontal, 16)
+        .background {
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .foregroundStyle(Color.accent.opacity(0.1))
+        }
+    }
+    
+    @ViewBuilder func AddCategoryRow() -> some View {
+        Button {
+            showAddCategoryDialog = true
+        } label: {
+            HStack {
+                Image(systemName: "plus")
+                Text("Category")
+            }
+            .foregroundStyle(Color.accent)
+        }
+        .listRowBackground(Color.background)
+        .listRowSeparator(.hidden)
+        //TODO: Add AddCategoryDialog
+    }
+    
+    @ViewBuilder func SearchKeywordsField() -> some View {
+        Section("Search Keywords") {
+            //TODO: Add KeywordCloud
+            //TODO: Allow removing of keywords
+            AddSearchKeyword()
+        }
+    }
+    
+    @ViewBuilder func AddSearchKeyword() -> some View {
+        Button {
+            showAddKeywordDialog = true
+        } label: {
+            HStack {
+                Image(systemName: "plus")
+                Text("Keyword")
+            }
+            .foregroundStyle(Color.accent)
+        }
+        .listRowBackground(Color.background)
+        .listRowSeparator(.hidden)
+        //TODO: Add AddKeywordDialog
+    }
 }
 
 #Preview {
@@ -101,7 +197,7 @@ struct CreateArticleMetadataView: View {
     } content: {
         CreateArticleMetadataView(
             contentData: .sample,
-            navigationPath: .init()
+            navigationPath: .constant(.init())
         )
     }
 }

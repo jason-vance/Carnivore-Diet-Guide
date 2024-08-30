@@ -97,8 +97,10 @@ struct CreateContentView: View {
             //TODO: Navigate to the next correct recipe creation step
             Text(data.title)
         case .article:
-            //TODO: Navigate to the next correct article creation step
-            Text(data.title)
+            CreateArticleMetadataView(
+                contentData: data,
+                navigationPath: $navigationPath
+            )
         }
     }
     
