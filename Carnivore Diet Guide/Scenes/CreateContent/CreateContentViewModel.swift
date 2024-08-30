@@ -39,7 +39,7 @@ class CreateContentViewModel: ObservableObject {
     
     public var canAddImages: Bool { contentImages.count < imageCountLimit }
     
-    public var reviewPostData: CreateContentData? {
+    public var contentData: ContentData? {
         guard let userId = userId else { return nil }
         
         guard !contentTitle.isEmpty else { return nil }
@@ -49,7 +49,7 @@ class CreateContentViewModel: ObservableObject {
         let imageUrls = contentImages.compactMap({ $0.url })
         guard imageUrls.count == contentImages.count else { return nil }
         
-        return CreateContentData(
+        return ContentData(
             id: contentId,
             userId: userId,
             title: contentTitle,

@@ -1,5 +1,5 @@
 //
-//  CreateContentData.swift
+//  ContentData.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 8/21/24.
@@ -7,14 +7,15 @@
 
 import Foundation
 
-struct CreateContentData: Hashable {
+struct ContentData: Hashable {
+    
     public let id: UUID
     public let userId: String
     public let title: String
     public let markdownContent: String
     public let imageUrls: [URL]
     
-    public static let sample: CreateContentData = .init(
+    public static let sample: ContentData = .init(
         id: UUID(),
         userId: UserData.sample.id,
         title: "Welcome to the Carnivore Diet Guide",

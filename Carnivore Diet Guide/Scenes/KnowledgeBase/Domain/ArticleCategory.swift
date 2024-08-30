@@ -31,7 +31,11 @@ struct ArticleCategory: Identifiable, Equatable {
         Self.metadataBasedCategories.contains(self)
     }
     
-    // Metadata-based Categories
+    // Community-based Categories
+    static let all: ArticleCategory = .init(
+        name: "All",
+        image: "rectangle.grid.3x2.fill"
+    )
     static let featured: ArticleCategory = .init(
         name: "Featured",
         image: "star.fill"
@@ -46,10 +50,6 @@ struct ArticleCategory: Identifiable, Equatable {
     )
     
     // Content-based Categories
-    static let all: ArticleCategory = .init(
-        name: "All",
-        image: "rectangle.grid.3x2.fill"
-    )
     static let food: ArticleCategory = .init(
         name: "Food",
         image: "fork.knife"

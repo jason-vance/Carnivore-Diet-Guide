@@ -55,8 +55,8 @@ struct CreateContentView: View {
     }
     
     private func goToNext() {
-        guard let postData = model.reviewPostData else {
-            show(alertMessage: "Could not create ReviewPostData")
+        guard let postData = model.contentData else {
+            show(alertMessage: "Could not create ContentData")
             return
         }
         navigationPath.append(postData)
@@ -82,14 +82,14 @@ struct CreateContentView: View {
                 DiscardButton()
                 CancelButton()
             }
-            .navigationDestination(for: CreateContentData.self) { contentData in
+            .navigationDestination(for: ContentData.self) { contentData in
                 NextCreationStepView(data: contentData)
             }
         }
         .alert(alertMessage, isPresented: $showAlert) {}
     }
     
-    @ViewBuilder func NextCreationStepView(data: CreateContentData) -> some View {
+    @ViewBuilder func NextCreationStepView(data: ContentData) -> some View {
         switch model.contentType {
         case .post:
             ReviewNewPostView(postData: data) { dismiss() }
@@ -180,10 +180,10 @@ struct CreateContentView: View {
                 .padding(8)
                 .background() {
                     Capsule()
-                        .foregroundStyle(model.reviewPostData == nil ? Color.gray : Color.accent)
+                        .foregroundStyle(model.contentData == nil ? Color.gray : Color.accent)
                 }
         }
-        .disabled(model.reviewPostData == nil)
+        .disabled(model.contentData == nil)
     }
     
     @ViewBuilder func ImageCarouselField() -> some View {
