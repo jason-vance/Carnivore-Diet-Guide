@@ -105,7 +105,7 @@ struct PostsView: View {
     @ViewBuilder func TitleBar() -> some View {
         ScreenTitleBar(
             screenTitle,
-            leftBarContent: BackButton
+            leadingContent: BackButton
         )
     }
     

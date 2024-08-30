@@ -78,7 +78,7 @@ struct SettingsView: View {
     @ViewBuilder func TitleBar() -> some View {
         ScreenTitleBar(
             String(localized: "Settings"),
-            leftBarContent: BackButton
+            leadingContent: BackButton
         )
     }
     

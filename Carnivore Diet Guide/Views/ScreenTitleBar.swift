@@ -7,25 +7,33 @@
 
 import SwiftUI
 
-struct ScreenTitleBar<LeftBarContent:View>: View {
+struct ScreenTitleBar<PrimaryContent:View,LeadingContent:View,TrailingContent:View>: View {
     
-    let text: String
-    let leftBarContent: (() -> LeftBarContent)?
-    
-    init(_ text: String) where LeftBarContent == Text {
-        self.text = text
-        self.leftBarContent = nil
+    let primaryContent: () -> PrimaryContent
+    let leadingContent: (() -> LeadingContent)?
+    let trailingContent: (() -> TrailingContent)?
+
+    init(
+        _ text: String
+    ) where PrimaryContent == Text, LeadingContent == Text, TrailingContent == Text {
+        self.primaryContent = { Text(text) }
+        self.leadingContent = nil
+        self.trailingContent = nil
     }
     
-    init(_ text: String, leftBarContent: @escaping () -> LeftBarContent) {
-        self.text = text
-        self.leftBarContent = leftBarContent
+    init(
+        _ text: String,
+        leadingContent: @escaping () -> LeadingContent
+    ) where PrimaryContent == Text, TrailingContent == Text {
+        self.primaryContent = { Text(text) }
+        self.leadingContent = leadingContent
+        self.trailingContent = nil
     }
     
     var body: some View {
         HStack {
-            if let leftBarContent = leftBarContent {
-                leftBarContent()
+            if let leadingContent = leadingContent {
+                leadingContent()
             }
             TitleText()
             Spacer()
@@ -36,7 +44,7 @@ struct ScreenTitleBar<LeftBarContent:View>: View {
     }
     
     @ViewBuilder func TitleText() -> some View {
-        Text(text)
+        primaryContent()
             .font(.title.bold())
             .foregroundStyle(Color.text)
     }
