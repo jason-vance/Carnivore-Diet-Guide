@@ -24,25 +24,31 @@ struct CreateContentView: View {
     
     @ViewBuilder static func TitleMenu(_ text: String, contentType: Binding<Resource.ResourceType>) -> some View {
         Menu {
-            if contentType.wrappedValue != .article {
-                Button {
-                    contentType.wrappedValue = .article
-                } label: {
-                    Text("Article")
+            Button {
+                contentType.wrappedValue = .article
+            } label: {
+                LabeledContent("Article") {
+                    if contentType.wrappedValue == .article {
+                        Image(systemName: "checkmark")
+                    }
                 }
             }
-            if contentType.wrappedValue != .post {
-                Button {
-                    contentType.wrappedValue = .post
-                } label: {
-                    Text("Post")
+            Button {
+                contentType.wrappedValue = .post
+            } label: {
+                LabeledContent("Post") {
+                    if contentType.wrappedValue == .post {
+                        Image(systemName: "checkmark")
+                    }
                 }
             }
-            if contentType.wrappedValue != .recipe {
-                Button {
-                    contentType.wrappedValue = .recipe
-                } label: {
-                    Text("Recipe")
+            Button {
+                contentType.wrappedValue = .recipe
+            } label: {
+                LabeledContent("Recipe") {
+                    if contentType.wrappedValue == .recipe {
+                        Image(systemName: "checkmark")
+                    }
                 }
             }
         } label: {
