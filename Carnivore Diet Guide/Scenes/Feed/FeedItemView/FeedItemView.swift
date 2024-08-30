@@ -46,7 +46,7 @@ struct FeedItemView: View {
     
     @ViewBuilder func FeedItemMetadata() -> some View {
         HStack {
-            PublicationDateView(resource: .init(feedItem))
+            PublicationDateView(date: feedItem.publicationDate)
             Spacer()
             CommentCountView(resource: .init(feedItem))
             MetadataSeparatorView()

@@ -20,7 +20,7 @@ struct PostsViewRow: View {
                 PostTitle()
                 Spacer()
                 HStack {
-                    PublicationDateView(resource: .init(post))
+                    PublicationDateView(date: post.publicationDate)
                     Spacer()
                     CommentCountView(resource: .init(post))
                     MetadataSeparatorView()

@@ -11,11 +11,6 @@ struct PublicationDateView: View {
     
     public let date: Date
     
-    //TODO: Get rid of this init
-    init(resource: Resource) {
-        self.date = resource.publicationDate
-    }
-    
     init(date: Date) {
         self.date = date
     }
@@ -28,5 +23,5 @@ struct PublicationDateView: View {
 }
 
 #Preview {
-    PublicationDateView(resource: .sample)
+    PublicationDateView(date: .now)
 }

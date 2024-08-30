@@ -28,7 +28,7 @@ struct PostView: View {
     
     @ViewBuilder func PostMetadata() -> some View {
         HStack {
-            PublicationDateView(resource: .init(post))
+            PublicationDateView(date: post.publicationDate)
             Spacer()
             CommentCountView(resource: .init(post))
             MetadataSeparatorView()
