@@ -328,6 +328,12 @@
     "Are you sure you want to logout?" : {
 
     },
+    "Article" : {
+
+    },
+    "Article creation next step" : {
+
+    },
     "Articles, Guides, and more" : {
 
     },
@@ -734,7 +740,13 @@
     "Create a Recipe" : {
 
     },
+    "Create Post" : {
+
+    },
     "Create Profile" : {
+
+    },
+    "Create Recipe" : {
 
     },
     "Delete" : {
@@ -811,7 +823,13 @@
     "Discard" : {
 
     },
+    "Do you want to discard your article?" : {
+
+    },
     "Do you want to discard your post?" : {
+
+    },
+    "Do you want to discard your recipe?" : {
 
     },
     "Done" : {
@@ -1520,6 +1538,9 @@
         }
       }
     },
+    "Post" : {
+
+    },
     "Post Detail\n(Fails to Load)" : {
 
     },
@@ -1592,6 +1613,12 @@
           }
         }
       }
+    },
+    "Recipe" : {
+
+    },
+    "Recipe creation next step" : {
+
     },
     "Recipe Details" : {
 

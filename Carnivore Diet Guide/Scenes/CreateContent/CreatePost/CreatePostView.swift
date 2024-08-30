@@ -26,6 +26,8 @@ struct CreatePostView: View {
         imageUploader: iocContainer~>PostImageUploader.self
     )
     
+    @Binding public var selectedContentType: Resource.ResourceType
+    
     @State private var navigationPath = NavigationPath()
     @State private var showImagePicker: Bool = false
     @State private var showDiscardDialog: Bool = false
@@ -93,15 +95,17 @@ struct CreatePostView: View {
     }
     
     @ViewBuilder func TopBar() -> some View {
-        HStack {
+        ScreenTitleBar {
+            TitleMenu()
+        } leadingContent: {
             CloseButton()
-            Spacer()
+        } trailingContent: {
             NextButton()
         }
-        .padding(.horizontal)
-        .frame(height: .defaultBarHeight)
-        .overlay(alignment: .bottom) { BarDivider() }
-        
+    }
+    
+    @ViewBuilder func TitleMenu() -> some View {
+        CreateContentView.TitleMenu(String(localized: "Create Post"), contentType: $selectedContentType)
     }
     
     @ViewBuilder func CloseButton() -> some View {
@@ -259,6 +263,6 @@ struct CreatePostView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        CreatePostView()
+        CreatePostView(selectedContentType: .constant(.post))
     }
 }

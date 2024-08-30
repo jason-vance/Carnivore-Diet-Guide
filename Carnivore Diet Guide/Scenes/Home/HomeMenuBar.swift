@@ -63,7 +63,7 @@ struct HomeMenuBar: View {
         MenuItem(.createPost, text: "Create", image: { MenuItemImage(image) }) {
             showCreatePost = true
         }
-        .fullScreenCover(isPresented: $showCreatePost) { CreatePostView() }
+        .fullScreenCover(isPresented: $showCreatePost) { CreateContentView() }
     }
     
     @ViewBuilder func RecipesMenuItem() -> some View {
