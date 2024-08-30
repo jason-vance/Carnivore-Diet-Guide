@@ -11,12 +11,14 @@ import Combine
 
 class FirestoreFavoritersRepository {
     
-    private static let RECIPES = FirebaseRecipeRepository.RECIPES
+    private static let ARTICLES = FirebaseArticleRepository.ARTICLES
     private static let POSTS = FirebasePostRepository.POSTS
+    private static let RECIPES = FirebaseRecipeRepository.RECIPES
     private let FAVORITERS = "Favoriters"
 
-    let recipesCollection = Firestore.firestore().collection(RECIPES)
+    let articlesCollection = Firestore.firestore().collection(ARTICLES)
     let postsCollection = Firestore.firestore().collection(POSTS)
+    let recipesCollection = Firestore.firestore().collection(RECIPES)
 
     private var currentUserId: String? {
         FirebaseAuthenticationProvider.instance.currentUserId
@@ -24,10 +26,12 @@ class FirestoreFavoritersRepository {
 
     func favoritersCollection(forResource resource: Resource) -> CollectionReference {
         switch resource.type {
-        case .recipe:
-            return recipesCollection.document(resource.id).collection(FAVORITERS)
+        case .article:
+            return articlesCollection.document(resource.id).collection(FAVORITERS)
         case .post:
             return postsCollection.document(resource.id).collection(FAVORITERS)
+        case .recipe:
+            return recipesCollection.document(resource.id).collection(FAVORITERS)
         }
     }
 

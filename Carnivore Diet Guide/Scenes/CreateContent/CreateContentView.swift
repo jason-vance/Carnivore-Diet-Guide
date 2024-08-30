@@ -13,6 +13,8 @@ struct CreateContentView: View {
     
     var body: some View {
         switch contentType {
+        case .article:
+            CreateArticleView(selectedContentType: $contentType)
         case .post:
             CreatePostView(selectedContentType: $contentType)
         case .recipe:
@@ -22,6 +24,13 @@ struct CreateContentView: View {
     
     @ViewBuilder static func TitleMenu(_ text: String, contentType: Binding<Resource.ResourceType>) -> some View {
         Menu {
+            if contentType.wrappedValue != .article {
+                Button {
+                    contentType.wrappedValue = .article
+                } label: {
+                    Text("Article")
+                }
+            }
             if contentType.wrappedValue != .post {
                 Button {
                     contentType.wrappedValue = .post

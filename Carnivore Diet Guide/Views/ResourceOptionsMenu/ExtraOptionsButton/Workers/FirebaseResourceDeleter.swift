@@ -26,6 +26,8 @@ class FirebaseResourceDeleter: ResourceDeleter {
         try await deleteFeedItem(for: resource)
         
         switch resource.type {
+        case .article:
+            try await deleteArticle(forResource: resource)
         case .post:
             try await deletePost(forResource: resource)
         case .recipe:
@@ -38,6 +40,10 @@ class FirebaseResourceDeleter: ResourceDeleter {
     private func deleteFeedItem(for resource: Resource) async throws {
         let repo = FirebaseFeedItemRepository()
         try await repo.deleteFeedItem(forResource: resource)
+    }
+    
+    private func deleteArticle(forResource resource: Resource) async throws {
+        //TODO: Implement FirebaseResourceDeleter.deleteArticle(forResource: Resource)
     }
     
     private func deletePost(forResource resource: Resource) async throws {

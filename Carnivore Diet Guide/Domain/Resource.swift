@@ -12,9 +12,7 @@ struct Resource: Equatable {
     enum ResourceType: String {
         case post
         case recipe
-        //TODO: Add article type
-//        case article
-//        case user (?)
+        case article
     }
     
     let id: String
@@ -54,6 +52,16 @@ extension Resource {
         )
     }
     
+    init(_ article: Article) {
+        self.init(
+            id: article.id,
+            authorUserId: article.author,
+            publicationDate: article.publicationDate,
+            title: article.title,
+            type: .article
+        )
+    }
+    
     init(_ feedItem: FeedItem) {
         self.init(
             id: feedItem.resourceId,
@@ -63,6 +71,4 @@ extension Resource {
             type: feedItem.type
         )
     }
-    
-    //TODO: Add init for article
 }

@@ -11,21 +11,25 @@ import Combine
 
 class FirebaseCommentRepository {
     
-    private static let RECIPES = FirebaseRecipeRepository.RECIPES
+    private static let ARTICLES = FirebaseArticleRepository.ARTICLES
     private static let POSTS = FirebasePostRepository.POSTS
+    private static let RECIPES = FirebaseRecipeRepository.RECIPES
 
     private let COMMENTS = "Comments"
     private let DATE = "date"
 
-    let recipesCollection = Firestore.firestore().collection(RECIPES)
+    let articlesCollection = Firestore.firestore().collection(ARTICLES)
     let postsCollection = Firestore.firestore().collection(POSTS)
+    let recipesCollection = Firestore.firestore().collection(RECIPES)
 
     func commentsCollection(forResource resource: Resource) -> CollectionReference {
         switch resource.type {
-        case .recipe:
-            return recipesCollection.document(resource.id).collection(COMMENTS)
+        case .article:
+            return articlesCollection.document(resource.id).collection(COMMENTS)
         case .post:
             return postsCollection.document(resource.id).collection(COMMENTS)
+        case .recipe:
+            return recipesCollection.document(resource.id).collection(COMMENTS)
         }
     }
     

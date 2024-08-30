@@ -16,6 +16,8 @@ struct CreateArticleView: View {
     @StateObject private var model = CreateArticleViewModel(
     )
     
+    @Binding public var selectedContentType: Resource.ResourceType
+    
     @State private var navigationPath = NavigationPath()
     @State private var showImagePicker: Bool = false
     @State private var showDiscardDialog: Bool = false
@@ -77,14 +79,17 @@ struct CreateArticleView: View {
     }
     
     @ViewBuilder func TopBar() -> some View {
-        HStack {
+        ScreenTitleBar {
+            TitleMenu()
+        } leadingContent: {
             CloseButton()
-            Spacer()
+        } trailingContent: {
             NextButton()
         }
-        .padding(.horizontal)
-        .frame(height: .defaultBarHeight)
-        .overlay(alignment: .bottom) { BarDivider() }
+    }
+    
+    @ViewBuilder func TitleMenu() -> some View {
+        CreateContentView.TitleMenu(String(localized: "Create Article"), contentType: $selectedContentType)
     }
     
     @ViewBuilder func CloseButton() -> some View {
@@ -117,6 +122,6 @@ struct CreateArticleView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        CreateArticleView()
+        CreateArticleView(selectedContentType: .constant(.article))
     }
 }

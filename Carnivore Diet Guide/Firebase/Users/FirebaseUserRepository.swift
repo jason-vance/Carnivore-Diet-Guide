@@ -64,6 +64,8 @@ class FirebaseUserRepository {
     
     private static func favoritesField(for resource: Resource) -> String {
         switch resource.type {
+        case .article:
+            return FirestoreUserDoc.CodingKeys.favoriteArticles.rawValue
         case .post:
             return FirestoreUserDoc.CodingKeys.favoritePosts.rawValue
         case .recipe:

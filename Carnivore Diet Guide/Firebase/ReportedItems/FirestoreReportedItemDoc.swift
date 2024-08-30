@@ -14,9 +14,12 @@ struct FirestoreReportedItemDoc: Codable {
         case recipe(recipeId: String?)
         case comment(commentId: String?, resourceId: String?, resourceType: String?)
         case post(postId: String?)
-        
+        case article(articleId: String?)
+
         public static func itemFrom(resource: Resource) -> Item {
             switch resource.type {
+            case .article:
+                return .article(articleId: resource.id)
             case .post:
                 return .post(postId: resource.id)
             case .recipe:

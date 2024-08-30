@@ -69,10 +69,14 @@ struct FeedView: View {
     
     @ViewBuilder func FeedItemDetailView(_ feedItem: FeedItem) -> some View {
         switch feedItem.type {
-        case .recipe:
-            RecipeDetailView(recipeId: feedItem.resourceId)
+        case .article:
+            //TODO: Uncomment this when ArticleDetailView exists
+            Text(feedItem.title)
+//            ArticleDetailView(articleId: feedItem.resourceId)
         case .post:
             PostDetailView(postId: feedItem.resourceId)
+        case .recipe:
+            RecipeDetailView(recipeId: feedItem.resourceId)
         }
     }
 }

@@ -11,9 +11,9 @@ import FirebaseFirestore
 
 class FirebaseArticleRepository {
     
-    private static let articlesName = "Articles"
+    public static let ARTICLES = "Articles"
     
-    private let articlesCollection = Firestore.firestore().collection(articlesName)
+    private let articlesCollection = Firestore.firestore().collection(ARTICLES)
     
 }
 
