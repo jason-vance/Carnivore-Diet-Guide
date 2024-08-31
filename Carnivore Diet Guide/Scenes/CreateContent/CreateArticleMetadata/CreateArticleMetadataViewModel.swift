@@ -6,20 +6,21 @@
 //
 
 import Foundation
+import SwiftUI
 
 @MainActor
 class CreateArticleMetadataViewModel: ObservableObject {
     
     
     @Published public var articleSummary: Resource.Summary? = nil
-    @Published public var articleCategories: [Resource.Category] = []
-    @Published public var articleSearchKeywords: [SearchKeyword] = []
+    @Published public var articleCategories: Set<Resource.Category> = []
+    @Published public var articleSearchKeywords: Set<SearchKeyword> = []
     
     public var isFormEmpty: Bool {
-        articleSummary == nil || articleCategories.isEmpty || articleSearchKeywords.isEmpty
+        articleSummary == nil && articleCategories.isEmpty && articleSearchKeywords.isEmpty
     }
     
-    public func contentMetadata(id: UUID) -> ContentMetadata? {
+    public func getContentMetadata(id: UUID) -> ContentMetadata? {
         guard let articleSummary = articleSummary else { return nil }
         guard !articleCategories.isEmpty else { return nil }
         guard !articleSearchKeywords.isEmpty else { return nil }
@@ -33,10 +34,14 @@ class CreateArticleMetadataViewModel: ObservableObject {
     }
     
     public func add(category: Resource.Category) {
-        articleCategories.append(category)
+        articleCategories.insert(category)
+    }
+    
+    public func remove(category: Resource.Category) {
+        articleCategories.remove(category)
     }
     
     public func add(keyword: SearchKeyword) {
-        articleSearchKeywords.append(keyword)
+        articleSearchKeywords.insert(keyword)
     }
 }

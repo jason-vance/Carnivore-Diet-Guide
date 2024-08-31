@@ -26,6 +26,18 @@ struct CreateArticleMetadataView: View {
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     
+    private var contentMetadata: ContentMetadata? {
+        model.getContentMetadata(id: contentData.id)
+    }
+    
+    private var sortedCategories: [Resource.Category] {
+        model.articleCategories.sorted { $0.name < $1.name }
+    }
+    
+    private var sortedKeywords: [SearchKeyword] {
+        model.articleSearchKeywords.sorted { $0.text < $1.text }
+    }
+    
     private func show(alertMessage: String) {
         showAlert = true
         self.alertMessage = alertMessage
@@ -96,14 +108,14 @@ struct CreateArticleMetadataView: View {
                 .padding(8)
                 .background() {
                     Capsule()
-                        .foregroundStyle(model.contentMetadata == nil ? Color.gray : Color.accent)
+                        .foregroundStyle(contentMetadata == nil ? Color.gray : Color.accent)
                 }
         }
-        .disabled(model.contentMetadata == nil)
+        .disabled(contentMetadata == nil)
     }
     
     @ViewBuilder func SummaryField() -> some View {
-        Section("Summary") {
+        Section {
             VStack(spacing: 0) {
                 TextField(
                     "Summary",
@@ -122,19 +134,46 @@ struct CreateArticleMetadataView: View {
             }
             .listRowBackground(Color.background)
             .listRowSeparator(.hidden)
+        } header: {
+            Text("Summary")
+                .foregroundStyle(Color.text)
         }
     }
     
     @ViewBuilder func CategoriesField() -> some View {
-        Section("Categories") {
-            ForEach(model.articleCategories) { category in
-                ResourceCategoryView(category)
+        Section {
+            if !sortedCategories.isEmpty {
+                ForEach(sortedCategories) { category in
+                    RemoveCategoryButton(category)
+                }
             }
-            AddCategoryRow()
+            AddCategoryButton()
+        } header: {
+            Text("Categories")
+                .foregroundStyle(Color.text)
         }
     }
     
-    @ViewBuilder func AddCategoryRow() -> some View {
+    @ViewBuilder func RemoveCategoryButton(_ category: Resource.Category) -> some View {
+        Button {
+            withAnimation(.snappy) {
+                model.remove(category: category)
+            }
+        } label: {
+            HStack {
+                Image(systemName: "minus")
+                    .foregroundStyle(Color.accent)
+                ResourceCategoryView(category)
+                Spacer()
+            }
+        }
+        .listRowSeparator(.hidden)
+        .listRowBackground(Color.background)
+    }
+    
+    @ViewBuilder func AddCategoryButton() -> some View {
+        let isHighlighted = model.articleCategories.isEmpty
+        
         Button {
             showAddCategoryDialog = true
         } label: {
@@ -143,26 +182,39 @@ struct CreateArticleMetadataView: View {
                 Image(systemName: "plus")
                 Text("Category")
             }
-            .foregroundStyle(Color.accent)
+            .foregroundStyle(isHighlighted ? Color.background : Color.accent)
+            .padding(.vertical, isHighlighted ? 12 : 0)
+            .padding(.horizontal, isHighlighted ? 16 : 0)
+            .background {
+                RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
+                    .foregroundStyle(isHighlighted ? Color.accent : Color.background)
+            }
         }
-        .listRowBackground(Color.background)
         .listRowSeparator(.hidden)
+        .listRowBackground(Color.background)
         .sheet(isPresented: $showAddCategoryDialog) {
             SelectCategoryView { selectedCategory in
-                model.add(category: selectedCategory)
+                withAnimation(.snappy) {
+                    model.add(category: selectedCategory)
+                }
             }
         }
     }
     
     @ViewBuilder func SearchKeywordsField() -> some View {
-        Section("Search Keywords") {
+        Section {
             //TODO: Add KeywordCloud
             //TODO: Allow removing of keywords
             AddSearchKeyword()
+        } header: {
+            Text("Search Keywords")
+                .foregroundStyle(Color.text)
         }
     }
     
     @ViewBuilder func AddSearchKeyword() -> some View {
+        let isHighlighted = model.articleSearchKeywords.isEmpty
+        
         Button {
             showAddKeywordDialog = true
         } label: {
@@ -171,7 +223,13 @@ struct CreateArticleMetadataView: View {
                 Image(systemName: "plus")
                 Text("Keyword")
             }
-            .foregroundStyle(Color.accent)
+            .foregroundStyle(isHighlighted ? Color.background : Color.accent)
+            .padding(.vertical, isHighlighted ? 12 : 0)
+            .padding(.horizontal, isHighlighted ? 16 : 0)
+            .background {
+                RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
+                    .foregroundStyle(isHighlighted ? Color.accent : Color.background)
+            }
         }
         .listRowBackground(Color.background)
         .listRowSeparator(.hidden)

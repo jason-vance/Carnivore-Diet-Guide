@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwinjectAutoregistration
+import SwiftUIFlowLayout
 
 struct SelectCategoryView: View {
     
@@ -14,7 +15,7 @@ struct SelectCategoryView: View {
     
     public let onSelect: (Resource.Category) -> ()
     
-    @State private var categories: [Resource.Category] = []
+    @State private var categories: Set<Resource.Category> = []
     @State private var searchText: String = ""
     @State private var searchPresented: Bool = false
     
@@ -23,7 +24,10 @@ struct SelectCategoryView: View {
     private func fetchCategories() {
         Task {
             do {
-                categories = try await categoryProvider.fetchAllCategories()
+                let categories = try await categoryProvider.fetchAllCategories()
+                withAnimation(.snappy) {
+                    self.categories = Set(categories)
+                }
             } catch {
                 print("Failed to fetch categories: \(error.localizedDescription)")
                 dismiss()
@@ -31,26 +35,47 @@ struct SelectCategoryView: View {
         }
     }
     
+    private func select(category: Resource.Category) {
+        onSelect(category)
+        dismiss()
+    }
+    
     private var filteredCategories: [Resource.Category] {
         if searchText.isEmpty {
-            return categories
+            return Array(categories)
         }
-        return categories.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        return categories
+            .filter { $0.name.lowercased().contains(searchText.lowercased()) }
     }
     
     var body: some View {
         VStack(spacing: 0) {
             ScreenTitleBar("Select a Category")
                 .padding(.top)
-            SearchArea()
             ScrollView {
                 VStack {
-                    //TODO: Put this into a flow layout
-                    ForEach(filteredCategories) { category in
-                        ResourceCategoryView(category)
+                    SearchArea()
+                    FlowLayout(
+                        mode: .vstack,
+                        items: filteredCategories.sorted { $0.name < $1.name },
+                        itemSpacing: 0
+                    ) { category in
+                        Button {
+                            select(category: category)
+                        } label: {
+                            ResourceCategoryView(category)
+                                .id(category.id)
+                                .padding(.trailing, 8)
+                                .padding(.bottom, 8)
+                        }
+                    }
+                    if categories.isEmpty {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .tint(Color.accent)
                     }
                 }
-                .padding(.horizontal)
+                .padding()
             }
         }
         .background(Color.background)
@@ -64,7 +89,6 @@ struct SelectCategoryView: View {
             searchPresented: $searchPresented,
             action: {}
         )
-        .padding()
     }
 }
 

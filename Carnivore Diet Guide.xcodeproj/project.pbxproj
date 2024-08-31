@@ -199,6 +199,7 @@
 		568F735F2C827F01005D16C6 /* ResourceCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F735E2C827F01005D16C6 /* ResourceCategoryView.swift */; };
 		568F73622C82CB30005D16C6 /* FirebaseResourceCategoryDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F73612C82CB30005D16C6 /* FirebaseResourceCategoryDoc.swift */; };
 		568F73642C82CB44005D16C6 /* FirebaseResourceCategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F73632C82CB44005D16C6 /* FirebaseResourceCategoryRepository.swift */; };
+		568F73682C82D3FB005D16C6 /* SwiftUIFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 568F73672C82D3FB005D16C6 /* SwiftUIFlowLayout */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -553,6 +554,7 @@
 				56E3055E2B4BF7190098079A /* SwinjectAutoregistration in Frameworks */,
 				56B88A372B6CEC8D00C4C0DB /* ValueOf in Frameworks */,
 				56E3054F2B4BE4470098079A /* FirebaseStorageCombine-Community in Frameworks */,
+				568F73682C82D3FB005D16C6 /* SwiftUIFlowLayout in Frameworks */,
 				56E305492B4BE4470098079A /* FirebaseRemoteConfig in Frameworks */,
 				56E305252B4BE4470098079A /* FirebaseAppDistribution-Beta in Frameworks */,
 				56E305292B4BE4470098079A /* FirebaseAuthCombine-Community in Frameworks */,
@@ -682,6 +684,7 @@
 				56353B542B440C9900C4E972 /* Carnivore Diet Guide */,
 				563BC6EC2B78BDC5008F3C50 /* Carnivore Diet Guide Tests */,
 				56353B532B440C9900C4E972 /* Products */,
+				568F73662C82D3FB005D16C6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1208,6 +1211,13 @@
 			path = ResourceCategories;
 			sourceTree = "<group>";
 		};
+		568F73662C82D3FB005D16C6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		56A6D0D02B835145003B27E5 /* FeedItems */ = {
 			isa = PBXGroup;
 			children = (
@@ -1520,6 +1530,7 @@
 				56E305752B4D4DC50098079A /* Kingfisher */,
 				56B88A252B6CE8A600C4C0DB /* YPImagePicker */,
 				56B88A362B6CEC8D00C4C0DB /* ValueOf */,
+				568F73672C82D3FB005D16C6 /* SwiftUIFlowLayout */,
 			);
 			productName = "Carnivore Diet Guide";
 			productReference = 56353B522B440C9900C4E972 /* Carnivore Diet Guide.app */;
@@ -1589,6 +1600,7 @@
 				56E305742B4D4DC50098079A /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				56B88A242B6CE8A600C4C0DB /* XCRemoteSwiftPackageReference "YPImagePicker" */,
 				56B88A352B6CEC8D00C4C0DB /* XCRemoteSwiftPackageReference "valueof" */,
+				568F73652C82D375005D16C6 /* XCRemoteSwiftPackageReference "swiftui-flow-layout" */,
 			);
 			productRefGroup = 56353B532B440C9900C4E972 /* Products */;
 			projectDirPath = "";
@@ -2171,6 +2183,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		568F73652C82D375005D16C6 /* XCRemoteSwiftPackageReference "swiftui-flow-layout" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/globulus/swiftui-flow-layout.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.5;
+			};
+		};
 		56B88A242B6CE8A600C4C0DB /* XCRemoteSwiftPackageReference "YPImagePicker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/LawrenceNorman/YPImagePicker.git";
@@ -2230,6 +2250,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		568F73672C82D3FB005D16C6 /* SwiftUIFlowLayout */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 568F73652C82D375005D16C6 /* XCRemoteSwiftPackageReference "swiftui-flow-layout" */;
+			productName = SwiftUIFlowLayout;
+		};
 		56B88A252B6CE8A600C4C0DB /* YPImagePicker */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 56B88A242B6CE8A600C4C0DB /* XCRemoteSwiftPackageReference "YPImagePicker" */;
