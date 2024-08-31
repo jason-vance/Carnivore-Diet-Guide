@@ -9,13 +9,14 @@ import XCTest
 
 final class SearchKeywordTests: XCTestCase {
     
-    func testAcceptsValidSummary() {
+    func testAcceptsValidKeywords() {
         XCTAssertNotNil(SearchKeyword("Swift"))
         XCTAssertNotNil(SearchKeyword("swift"))
         XCTAssertNotNil(SearchKeyword("coding"))
+        XCTAssertNotNil(SearchKeyword("coding", score: 1))
     }
     
-    func testRejectsInvalidTags() {
+    func testRejectsInvalidKeywords() {
         // Empty
         XCTAssertNil(SearchKeyword(""))
         
@@ -27,9 +28,12 @@ final class SearchKeywordTests: XCTestCase {
         XCTAssertNil(SearchKeyword("hello world"))
         XCTAssertNil(SearchKeyword("invalid-keyword!"))
         XCTAssertNil(SearchKeyword("butter1"))
-
+        
         // Contains only spaces
         XCTAssertNil(SearchKeyword("    "))
+        
+        // Valid text, but invalid score
+        XCTAssertNil(SearchKeyword("hello", score: 0))
     }
     
     func testKeywordNormalization() {

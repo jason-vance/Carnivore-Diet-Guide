@@ -14,6 +14,26 @@ struct EditKeywordsView: View {
     
     @Binding public var keywords: Set<SearchKeyword>
     
+    @State private var newKeywordText: String = ""
+    @State private var newKeywordScore: String = ""
+
+    private var newKeyword: SearchKeyword? {
+        guard let score = UInt(newKeywordScore) else { return nil }
+        return SearchKeyword(newKeywordText, score: score)
+    }
+    
+    private var sortedKeywords: [SearchKeyword] {
+        keywords
+            .sorted { $0.text < $1.text }
+            .sorted { $0.score > $1.score }
+    }
+    
+    private func add(keyword: SearchKeyword) {
+        keywords.insert(keyword)
+        newKeywordText = ""
+        newKeywordScore = ""
+    }
+    
     private func remove(keyword: SearchKeyword) {
         keywords.remove(keyword)
     }
@@ -22,6 +42,7 @@ struct EditKeywordsView: View {
     var body: some View {
         VStack(spacing: 0) {
             ScreenTitleBar("Edit Search Keywords")
+            KeywordField()
             ScrollView {
                 VStack {
                     KeywordCloud()
@@ -33,10 +54,66 @@ struct EditKeywordsView: View {
         .background(Color.background)
     }
     
+    @ViewBuilder func KeywordField() -> some View {
+        HStack {
+            TextField(
+                "New Keyword",
+                text: $newKeywordText,
+                prompt: Text("Keyword").foregroundStyle(Color.text.opacity(0.3))
+            )
+            .keyboardType(.alphabet)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .frame(height: .defaultBarHeight)
+            .background {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .stroke(style: .init(lineWidth: 1))
+                    .foregroundStyle(Color.accent)
+            }
+            TextField(
+                "Relevance Score",
+                text: $newKeywordScore,
+                prompt: Text("Score").foregroundStyle(Color.text.opacity(0.3))
+            )
+            .keyboardType(.numberPad)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .frame(width: 2 * .defaultBarHeight, height: .defaultBarHeight)
+            .background {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .stroke(style: .init(lineWidth: 1))
+                    .foregroundStyle(Color.accent)
+            }
+            Button {
+                if let newKeyword = newKeyword {
+                    withAnimation(.snappy) {
+                        add(keyword: newKeyword)
+                    }
+                }
+            } label: {
+                Image(systemName: "plus")
+                    .bold()
+                    .foregroundStyle(Color.background)
+                    .frame(width: .defaultBarHeight, height: .defaultBarHeight)
+                    .background {
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .foregroundStyle(newKeyword == nil ? Color.gray : Color.accent)
+                    }
+            }
+            .disabled(newKeyword == nil)
+        }
+        .foregroundStyle(Color.text)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .overlay(alignment: .bottom) {
+            BarDivider()
+        }
+    }
+    
     @ViewBuilder func KeywordCloud() -> some View {
         FlowLayout(
             mode: .scrollable,
-            items: keywords.sorted { $0.text < $1.text },
+            items: sortedKeywords,
             itemSpacing: 0
         ) { keyword in
             RemoveSearchKeywordButton(keyword)

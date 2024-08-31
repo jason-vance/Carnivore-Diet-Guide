@@ -18,7 +18,7 @@ struct KeywordItemButton: View {
             action()
         } label: {
             HStack(spacing: 0) {
-                Text(keyword.text)
+                Text("\(keyword.text) (\(keyword.score))")
                     .padding(.vertical, 6)
                     .padding(.horizontal, 8)
                 Image(systemName: accessoryImage)

@@ -120,7 +120,7 @@ struct CreateArticleMetadataView: View {
                 TextField(
                     "Summary",
                     text: $summaryText,
-                    prompt: Text("Summary text in TextField").foregroundStyle(Color.text.opacity(0.3)),
+                    prompt: Text("Summary text").foregroundStyle(Color.text.opacity(0.3)),
                     axis: .vertical
                 )
                 .textInputAutocapitalization(.sentences)
