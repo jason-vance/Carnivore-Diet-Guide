@@ -38,7 +38,6 @@ struct EditKeywordsView: View {
         keywords.remove(keyword)
     }
     
-    //TODO: Add keywords
     var body: some View {
         VStack(spacing: 0) {
             ScreenTitleBar("Edit Search Keywords")

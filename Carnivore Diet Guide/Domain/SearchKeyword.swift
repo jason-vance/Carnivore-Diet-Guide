@@ -8,9 +8,7 @@
 import Foundation
 
 struct SearchKeyword: Identifiable, Hashable {
-    //TODO: I think I need to add a relevanceScore
-    //(would make an article that mentions "exercise" 5x show up before one that mentions it 1x)
-    
+
     var id: String { text }
     let text: String
     let score: UInt

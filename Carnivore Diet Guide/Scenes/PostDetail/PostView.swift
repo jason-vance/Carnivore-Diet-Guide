@@ -14,8 +14,9 @@ struct PostView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            //TODO: Doen't show if urls is empty
-            ResourceImageViewPager(urls: post.imageUrls)
+            if !post.imageUrls.isEmpty {
+                ResourceImageViewPager(urls: post.imageUrls)
+            }
             VStack(spacing: 0) {
                 PostMetadata()
                 Title()
