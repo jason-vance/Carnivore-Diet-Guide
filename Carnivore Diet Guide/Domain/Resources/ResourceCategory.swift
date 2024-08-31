@@ -10,11 +10,11 @@ import Foundation
 extension Resource {
     struct Category: Identifiable, Hashable {
         
-        var id: String { name }
+        let id: String
         let name: String
         let image: String?
         
-        init?(_ name: String, image: String? = nil) {
+        init?(_ name: String, image: String? = nil, id: String = UUID().uuidString) {
             // Trim whitespace
             let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
             
@@ -32,6 +32,14 @@ extension Resource {
             // Convert to lowercase
             self.name = trimmedName.capitalized
             self.image = image
+            self.id = id
         }
+        
+        static let samples: [Resource.Category] = [
+            .init("Test Category", image: "signature", id: UUID().uuidString)!,
+            .init("Exercise", image: "dumbbell.fill", id: UUID().uuidString)!,
+            .init("FAQs", image: "questionmark", id: UUID().uuidString)!,
+            .init("Science", image: "testtube.2", id: UUID().uuidString)!,
+        ]
     }
 }

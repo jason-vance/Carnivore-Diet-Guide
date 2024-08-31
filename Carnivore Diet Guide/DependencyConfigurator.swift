@@ -50,7 +50,8 @@ fileprivate func setup(iocContainer: Container) {
     //Post Creation
     iocContainer.autoregister(PostImageUploader.self, initializer: FirebasePostImageStorage.init)
     iocContainer.autoregister(PostPoster.self, initializer: { DefaultPostPoster.forProd })
-    
+    iocContainer.autoregister(ResourceCategoryProvider.self, initializer: FirebaseResourceCategoryRepository.init)
+
     //Post Detail
     iocContainer.autoregister(PostFetcher.self, initializer: { DefaultPostFetcher.forProd })
 

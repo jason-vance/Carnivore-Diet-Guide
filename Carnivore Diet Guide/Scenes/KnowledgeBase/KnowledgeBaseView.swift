@@ -80,18 +80,9 @@ struct KnowledgeBaseView: View {
                     Button {
                         withAnimation(.snappy) { selectedCategory = category }
                     } label: {
-                        HStack(spacing: 4) {
-                            Image(systemName: category.image)
-                            Text(category.name)
-                        }
-                        .font(.caption.bold())
-                        .foregroundStyle(isSelected ? Color.background : Color.accent)
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 16)
-                        .background {
-                            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                .foregroundStyle(isSelected ? Color.accent : Color.accent.opacity(0.1))
-                        }
+                        //TODO: Uncomment this when I stop using ArticleCategory
+//                        ResourceCategoryView(category)
+//                            .highlighted(selectedCategory == category)
                     }
                 }
             }

@@ -128,27 +128,9 @@ struct CreateArticleMetadataView: View {
     @ViewBuilder func CategoriesField() -> some View {
         Section("Categories") {
             ForEach(model.articleCategories) { category in
-                CategoryRow(category)
+                ResourceCategoryView(category)
             }
             AddCategoryRow()
-        }
-    }
-    
-    @ViewBuilder func CategoryRow(_ category: Resource.Category) -> some View {
-        //TODO: Allow removing of categories
-        HStack(spacing: 4) {
-            if let image = category.image {
-                Image(systemName: image)
-            }
-            Text(category.name)
-        }
-        .font(.caption.bold())
-        .foregroundStyle(Color.accent)
-        .padding(.vertical, 12)
-        .padding(.horizontal, 16)
-        .background {
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .foregroundStyle(Color.accent.opacity(0.1))
         }
     }
     
@@ -156,6 +138,7 @@ struct CreateArticleMetadataView: View {
         Button {
             showAddCategoryDialog = true
         } label: {
+            //TODO: Highlight this if categories is empty
             HStack {
                 Image(systemName: "plus")
                 Text("Category")
@@ -164,7 +147,11 @@ struct CreateArticleMetadataView: View {
         }
         .listRowBackground(Color.background)
         .listRowSeparator(.hidden)
-        //TODO: Add AddCategoryDialog
+        .sheet(isPresented: $showAddCategoryDialog) {
+            SelectCategoryView { selectedCategory in
+                model.add(category: selectedCategory)
+            }
+        }
     }
     
     @ViewBuilder func SearchKeywordsField() -> some View {
@@ -179,6 +166,7 @@ struct CreateArticleMetadataView: View {
         Button {
             showAddKeywordDialog = true
         } label: {
+            //TODO: Highlight this if keywords is empty
             HStack {
                 Image(systemName: "plus")
                 Text("Keyword")

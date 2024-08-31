@@ -8,7 +8,6 @@
 import Foundation
 import FirebaseFirestore
 
-
 class FirebaseArticleRepository {
     
     public static let ARTICLES = "Articles"

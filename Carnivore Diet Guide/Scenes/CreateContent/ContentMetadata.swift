@@ -17,7 +17,7 @@ struct ContentMetadata: Hashable {
     public static let sample: ContentMetadata = .init(
         id: UUID(),
         summary: .sample,
-        categories: [ .init("food")!, .init("exercise")! ],
+        categories: Resource.Category.samples,
         searchKeywords: [ .init("chicken")!, .init("running")! ]
     )
 }
