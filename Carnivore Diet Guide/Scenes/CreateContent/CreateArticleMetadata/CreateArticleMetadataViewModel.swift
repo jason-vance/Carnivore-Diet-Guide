@@ -14,6 +14,7 @@ class CreateArticleMetadataViewModel: ObservableObject {
     
     @Published public var articleSummary: Resource.Summary? = nil
     @Published public var articleCategories: Set<Resource.Category> = []
+    //TODO: Extract keywords from markdownContent
     @Published public var articleSearchKeywords: Set<SearchKeyword> = []
     
     public var isFormEmpty: Bool {
@@ -39,9 +40,5 @@ class CreateArticleMetadataViewModel: ObservableObject {
     
     public func remove(category: Resource.Category) {
         articleCategories.remove(category)
-    }
-    
-    public func add(keyword: SearchKeyword) {
-        articleSearchKeywords.insert(keyword)
     }
 }

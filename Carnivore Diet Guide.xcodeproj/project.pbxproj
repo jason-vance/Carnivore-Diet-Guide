@@ -200,6 +200,8 @@
 		568F73622C82CB30005D16C6 /* FirebaseResourceCategoryDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F73612C82CB30005D16C6 /* FirebaseResourceCategoryDoc.swift */; };
 		568F73642C82CB44005D16C6 /* FirebaseResourceCategoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F73632C82CB44005D16C6 /* FirebaseResourceCategoryRepository.swift */; };
 		568F73682C82D3FB005D16C6 /* SwiftUIFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 568F73672C82D3FB005D16C6 /* SwiftUIFlowLayout */; };
+		568F736B2C83083F005D16C6 /* EditKeywordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F736A2C83083F005D16C6 /* EditKeywordsView.swift */; };
+		568F736D2C830E52005D16C6 /* KeywordItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F736C2C830E52005D16C6 /* KeywordItemView.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -458,6 +460,8 @@
 		568F735E2C827F01005D16C6 /* ResourceCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCategoryView.swift; sourceTree = "<group>"; };
 		568F73612C82CB30005D16C6 /* FirebaseResourceCategoryDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseResourceCategoryDoc.swift; sourceTree = "<group>"; };
 		568F73632C82CB44005D16C6 /* FirebaseResourceCategoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseResourceCategoryRepository.swift; sourceTree = "<group>"; };
+		568F736A2C83083F005D16C6 /* EditKeywordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditKeywordsView.swift; sourceTree = "<group>"; };
+		568F736C2C830E52005D16C6 /* KeywordItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordItemView.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -1160,6 +1164,7 @@
 		568F73292C815CF1005D16C6 /* CreateContent */ = {
 			isa = PBXGroup;
 			children = (
+				568F73692C83082A005D16C6 /* EditKeywords */,
 				568F73582C827CE1005D16C6 /* SelectCategory */,
 				568F72772C769606005D16C6 /* Workers */,
 				568F726A2C75B5DE005D16C6 /* ReviewNewPost */,
@@ -1216,6 +1221,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		568F73692C83082A005D16C6 /* EditKeywords */ = {
+			isa = PBXGroup;
+			children = (
+				568F736A2C83083F005D16C6 /* EditKeywordsView.swift */,
+				568F736C2C830E52005D16C6 /* KeywordItemView.swift */,
+			);
+			path = EditKeywords;
 			sourceTree = "<group>";
 		};
 		56A6D0D02B835145003B27E5 /* FeedItems */ = {
@@ -1646,6 +1660,7 @@
 				56B88A3B2B6CEE0100C4C0DB /* ProfileImageView.swift in Sources */,
 				563BC7052B7AF93C008F3C50 /* RecipeCommentsRepo.swift in Sources */,
 				56B88A0C2B6C4FCF00C4C0DB /* SignInAuthenticationProvider.swift in Sources */,
+				568F736D2C830E52005D16C6 /* KeywordItemView.swift in Sources */,
 				56025D222B6B01E800F31A07 /* FirebasePostRepository.swift in Sources */,
 				563BC7132B7B6EED008F3C50 /* RecipeRepository.swift in Sources */,
 				568F72AE2C79EDD5005D16C6 /* FavoriteCountView.swift in Sources */,
@@ -1751,6 +1766,7 @@
 				568F72BD2C7C2BC9005D16C6 /* FavoriteButtonModel.swift in Sources */,
 				568F72A82C79AA17005D16C6 /* FirebaseResourceFavoriter.swift in Sources */,
 				5622EAD62C75491500FE9C36 /* BarDivider.swift in Sources */,
+				568F736B2C83083F005D16C6 /* EditKeywordsView.swift in Sources */,
 				568F729D2C794E81005D16C6 /* Resource.swift in Sources */,
 				56025D292B6B8CD000F31A07 /* UI.swift in Sources */,
 				56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */,

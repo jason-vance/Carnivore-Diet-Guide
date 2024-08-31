@@ -32,7 +32,7 @@ final class SearchKeywordTests: XCTestCase {
         XCTAssertNil(SearchKeyword("    "))
     }
     
-    func testTagNormalization() {
+    func testKeywordNormalization() {
         // Check if input is converted to lowercase
         let keyword = SearchKeyword("SWIFT")
         XCTAssertEqual(keyword?.text, "swift")

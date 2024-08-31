@@ -51,7 +51,6 @@ struct SelectCategoryView: View {
     var body: some View {
         VStack(spacing: 0) {
             ScreenTitleBar("Select a Category")
-                .padding(.top)
             ScrollView {
                 VStack {
                     SearchArea()

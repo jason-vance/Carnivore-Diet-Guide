@@ -854,6 +854,9 @@
     "Edit" : {
 
     },
+    "Edit %lld Keywords" : {
+
+    },
     "Edit Profile" : {
 
     },
@@ -1330,9 +1333,6 @@
           }
         }
       }
-    },
-    "Keyword" : {
-
     },
     "Knowledge" : {
       "extractionState" : "stale",

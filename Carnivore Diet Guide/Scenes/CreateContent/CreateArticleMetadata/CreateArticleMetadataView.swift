@@ -20,7 +20,7 @@ struct CreateArticleMetadataView: View {
     
     @State private var summaryText: String = ""
     @State private var showAddCategoryDialog: Bool = false
-    @State private var showAddKeywordDialog: Bool = false
+    @State private var showEditKeywordsDialog: Bool = false
     @State private var showDiscardDialog: Bool = false
     
     @State private var showAlert: Bool = false
@@ -177,7 +177,6 @@ struct CreateArticleMetadataView: View {
         Button {
             showAddCategoryDialog = true
         } label: {
-            //TODO: Highlight this if categories is empty
             HStack {
                 Image(systemName: "plus")
                 Text("Category")
@@ -198,42 +197,42 @@ struct CreateArticleMetadataView: View {
                     model.add(category: selectedCategory)
                 }
             }
+            .padding(.top)
+            .presentationBackground(Color.background)
         }
     }
     
     @ViewBuilder func SearchKeywordsField() -> some View {
         Section {
-            //TODO: Add KeywordCloud
-            //TODO: Allow removing of keywords
-            AddSearchKeyword()
+            AddSearchKeywordButton()
         } header: {
             Text("Search Keywords")
                 .foregroundStyle(Color.text)
         }
     }
     
-    @ViewBuilder func AddSearchKeyword() -> some View {
+    @ViewBuilder func AddSearchKeywordButton() -> some View {
         let isHighlighted = model.articleSearchKeywords.isEmpty
         
         Button {
-            showAddKeywordDialog = true
+            showEditKeywordsDialog = true
         } label: {
-            //TODO: Highlight this if keywords is empty
-            HStack {
-                Image(systemName: "plus")
-                Text("Keyword")
-            }
-            .foregroundStyle(isHighlighted ? Color.background : Color.accent)
-            .padding(.vertical, isHighlighted ? 12 : 0)
-            .padding(.horizontal, isHighlighted ? 16 : 0)
-            .background {
-                RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
-                    .foregroundStyle(isHighlighted ? Color.accent : Color.background)
-            }
+            Text("Edit \(model.articleSearchKeywords.count) Keywords")
+                .foregroundStyle(isHighlighted ? Color.background : Color.accent)
+                .padding(.vertical, isHighlighted ? 12 : 0)
+                .padding(.horizontal, isHighlighted ? 16 : 0)
+                .background {
+                    RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
+                        .foregroundStyle(isHighlighted ? Color.accent : Color.background)
+                }
         }
         .listRowBackground(Color.background)
         .listRowSeparator(.hidden)
-        //TODO: Add AddKeywordDialog
+        .sheet(isPresented: $showEditKeywordsDialog) {
+            EditKeywordsView(keywords: $model.articleSearchKeywords)
+                .padding(.top)
+                .presentationBackground(Color.background)
+        }
     }
 }
 
