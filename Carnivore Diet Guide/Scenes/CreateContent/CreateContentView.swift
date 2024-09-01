@@ -118,7 +118,7 @@ struct CreateContentView: View {
         } leadingContent: {
             CloseButton()
         } trailingContent: {
-            NextButton()
+            GoToNextButton()
         }
     }
     
@@ -169,18 +169,9 @@ struct CreateContentView: View {
         }
     }
     
-    @ViewBuilder func NextButton() -> some View {
-        Button {
+    @ViewBuilder func GoToNextButton() -> some View {
+        NextButton {
             goToNext()
-        } label: {
-            Text("Next")
-                .foregroundStyle(Color.background)
-                .font(.caption.bold())
-                .padding(8)
-                .background() {
-                    Capsule()
-                        .foregroundStyle(model.contentData == nil ? Color.gray : Color.accent)
-                }
         }
         .disabled(model.contentData == nil)
     }

@@ -19,11 +19,11 @@ struct KeywordItemButton: View {
         } label: {
             HStack(spacing: 0) {
                 Text("\(keyword.text) (\(keyword.score))")
-                    .padding(.horizontal, .paddingHorizontalButtonSmall)
-                    .padding(.vertical, .paddingVerticalButtonSmall)
+                    .padding(.horizontal, .paddingHorizontalButtonXSmall)
+                    .padding(.vertical, .paddingVerticalButtonXSmall)
                 Image(systemName: accessoryImage)
-                    .padding(.horizontal, .paddingHorizontalButtonSmall)
-                    .padding(.vertical, .paddingVerticalButtonSmall)
+                    .padding(.horizontal, .paddingHorizontalButtonXSmall)
+                    .padding(.vertical, .paddingVerticalButtonXSmall)
                     .opacity(0.5)
                     .overlay(alignment: .leading) {
                         Rectangle()

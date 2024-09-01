@@ -101,7 +101,7 @@ struct CreateArticleMetadataView: View {
         } leadingContent: {
             BackButton()
         } trailingContent: {
-            NextButton()
+            GoToNextButton()
         }
     }
     
@@ -132,18 +132,9 @@ struct CreateArticleMetadataView: View {
         Button("Cancel", role: .cancel) { }
     }
     
-    @ViewBuilder func NextButton() -> some View {
-        Button {
+    @ViewBuilder func GoToNextButton() -> some View {
+        NextButton {
             goToNext()
-        } label: {
-            Text("Next")
-                .foregroundStyle(Color.background)
-                .font(.caption.bold())
-                .padding(8)
-                .background() {
-                    Capsule()
-                        .foregroundStyle(contentMetadata == nil ? Color.gray : Color.accent)
-                }
         }
         .disabled(contentMetadata == nil)
     }
