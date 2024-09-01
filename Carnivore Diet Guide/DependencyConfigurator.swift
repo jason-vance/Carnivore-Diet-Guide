@@ -44,7 +44,6 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(FeedItemRepository.self, initializer: FirebaseFeedItemRepository.init)
     
     // Knowledge Base
-    iocContainer.autoregister(TopicProvider.self, initializer: FirebaseTopicRepository.init)
     iocContainer.autoregister(ArticleFetcher.self, initializer: FirebaseArticleRepository.init)
 
     //Post Creation
