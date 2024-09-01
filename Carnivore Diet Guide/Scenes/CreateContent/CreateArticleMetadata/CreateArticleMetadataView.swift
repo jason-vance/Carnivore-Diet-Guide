@@ -30,6 +30,20 @@ struct CreateArticleMetadataView: View {
         model.getContentMetadata(id: contentData.id)
     }
     
+    private var summaryInstructions: String {
+        if summaryText.count == 0 {
+            return String(localized: "Cannot be empty")
+        }
+        if summaryText.count < Resource.Summary.minTextLength {
+            return String(localized: "Too short")
+        }
+        let count = "\(summaryText.count)/\(Resource.Summary.maxTextLength)"
+        if summaryText.count > Resource.Summary.maxTextLength {
+            return String(localized: "Too long, \(count)")
+        }
+        return count
+    }
+    
     private var sortedCategories: [Resource.Category] {
         model.articleCategories.sorted { $0.name < $1.name }
     }
@@ -147,7 +161,7 @@ struct CreateArticleMetadataView: View {
                 .foregroundStyle(Color.text)
                 HStack {
                     Spacer()
-                    Text("\(summaryText.count)/\(Resource.Summary.maxTextLength)")
+                    Text(summaryInstructions)
                         .font(.caption2)
                         .foregroundStyle(Color.text.opacity(0.5))
                 }
