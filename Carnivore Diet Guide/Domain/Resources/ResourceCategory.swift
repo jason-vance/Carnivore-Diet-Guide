@@ -35,6 +35,16 @@ extension Resource {
             self.id = id
         }
         
+        var isContentAgnostic: Bool { Self.contentAgnosticCategories.contains(self) }
+        
+        static var contentAgnosticCategories: [Category] = [ .all, .featured, .trending, .liked ]
+        
+        // Content Agnostic Categories (Not supplied by Firebase)
+        static let all: Category = .init("All", image: "rectangle.grid.3x2.fill", id: UUID().uuidString)!
+        static let featured: Category = .init("Featured", image: "star.fill", id: UUID().uuidString)!
+        static let trending: Category = .init("Trending", image: "arrowshape.up.fill", id: UUID().uuidString)!
+        static let liked: Category = .init("Liked", image: "heart.fill", id: UUID().uuidString)!
+        
         static let samples: [Resource.Category] = [
             .init("Test Category", image: "signature", id: UUID().uuidString)!,
             .init("Exercise", image: "dumbbell.fill", id: UUID().uuidString)!,

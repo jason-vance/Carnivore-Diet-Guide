@@ -10,7 +10,7 @@ import SwinjectAutoregistration
 
 struct ArticlesByContentCategoryView: View {
     
-    @State public var category: ArticleCategory
+    @State public var category: Resource.Category
     
     @StateObject private var model = ArticlesByContentCategoryViewModel(
         articleFetcher: iocContainer~>ArticleFetcher.self
@@ -36,6 +36,6 @@ struct ArticlesByContentCategoryView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        ArticlesByContentCategoryView(category: .food)
+        ArticlesByContentCategoryView(category: .samples[0])
     }
 }

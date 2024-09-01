@@ -18,7 +18,7 @@ class FirebaseArticleRepository {
 
 extension FirebaseArticleRepository: ArticleFetcher {
     func fetchArticles(
-        byCategory category: ArticleCategory,
+        byCategory category: Resource.Category,
         after cursor: inout (any ArticleCursor)?,
         limit: Int
     ) async throws -> [Article] {

@@ -169,8 +169,6 @@
 		568F730F2C800F5C005D16C6 /* KnowledgeBaseSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F730E2C800F5C005D16C6 /* KnowledgeBaseSearchViewModel.swift */; };
 		568F73102C800F5C005D16C6 /* KnowledgeBaseSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F730E2C800F5C005D16C6 /* KnowledgeBaseSearchViewModel.swift */; };
 		568F73122C8010E6005D16C6 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F73112C8010E6005D16C6 /* SearchBar.swift */; };
-		568F73142C803CB2005D16C6 /* ArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F73132C803CB2005D16C6 /* ArticleCategory.swift */; };
-		568F73152C803CB2005D16C6 /* ArticleCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F73132C803CB2005D16C6 /* ArticleCategory.swift */; };
 		568F731B2C805B32005D16C6 /* ArticleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F731A2C805B32005D16C6 /* ArticleItemView.swift */; };
 		568F731D2C807227005D16C6 /* ArticlesByContentCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F731C2C807227005D16C6 /* ArticlesByContentCategoryView.swift */; };
 		568F731F2C8073CB005D16C6 /* ArticlesByContentCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F731E2C8073CB005D16C6 /* ArticlesByContentCategoryViewModel.swift */; };
@@ -440,7 +438,6 @@
 		568F730C2C800DCE005D16C6 /* ResourceTagTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTagTests.swift; sourceTree = "<group>"; };
 		568F730E2C800F5C005D16C6 /* KnowledgeBaseSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeBaseSearchViewModel.swift; sourceTree = "<group>"; };
 		568F73112C8010E6005D16C6 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
-		568F73132C803CB2005D16C6 /* ArticleCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCategory.swift; sourceTree = "<group>"; };
 		568F731A2C805B32005D16C6 /* ArticleItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleItemView.swift; sourceTree = "<group>"; };
 		568F731C2C807227005D16C6 /* ArticlesByContentCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesByContentCategoryView.swift; sourceTree = "<group>"; };
 		568F731E2C8073CB005D16C6 /* ArticlesByContentCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesByContentCategoryViewModel.swift; sourceTree = "<group>"; };
@@ -1140,7 +1137,6 @@
 			children = (
 				568F72F52C7FD541005D16C6 /* Topic.swift */,
 				568F73062C8009CB005D16C6 /* Article.swift */,
-				568F73132C803CB2005D16C6 /* ArticleCategory.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -1752,7 +1748,6 @@
 				563BC7282B7D914D008F3C50 /* ResourceCommentActivityTracker.swift in Sources */,
 				56A6D0D22B835593003B27E5 /* FirebaseFeedItemRepository.swift in Sources */,
 				568F72D82C7E706B005D16C6 /* ResourceImageViewPager.swift in Sources */,
-				568F73142C803CB2005D16C6 /* ArticleCategory.swift in Sources */,
 				568F72C32C7D0C32005D16C6 /* CommentCountProvider.swift in Sources */,
 				56F2138F2B7426A6009DB057 /* RecipeFavoritersRepo.swift in Sources */,
 				568F73442C824775005D16C6 /* CreateArticleMetadataView.swift in Sources */,
@@ -1866,7 +1861,6 @@
 				568F72F72C7FD541005D16C6 /* Topic.swift in Sources */,
 				568F730B2C800C66005D16C6 /* ResourceTag.swift in Sources */,
 				5622EAB02C70A8B800FE9C36 /* CurrentUserIdProvider.swift in Sources */,
-				568F73152C803CB2005D16C6 /* ArticleCategory.swift in Sources */,
 				568F72E32C7EA376005D16C6 /* PostCountProvider.swift in Sources */,
 				5622EAB42C70A95D00FE9C36 /* UI.swift in Sources */,
 				563BC70F2B7B65D9008F3C50 /* PopularResources.swift in Sources */,

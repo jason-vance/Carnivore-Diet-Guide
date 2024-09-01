@@ -7,69 +7,38 @@
 
 import Foundation
 
-//TODO: I might not need this view model anymore
 @MainActor
 class KnowledgeBaseViewModel: ObservableObject {
     
     @Published public var isWorking: Bool = false
-    @Published public var topics: [Topic] = []
+    @Published public var articleCategories: [Resource.Category] = Resource.Category.contentAgnosticCategories
     
     @Published public var showAlert: Bool = false
     @Published public var alertMessage: String = ""
     
-    private let topicProvider: TopicProvider
+    private let categoryProvider: ResourceCategoryProvider
     
-    init(topicProvider: TopicProvider) {
-        self.topicProvider = topicProvider
-    }
-    
-    public var prominentTopics: [Topic] {
-        topics
-            .filter { $0.prominence == .prominent }
-            .sorted { $0.name < $1.name }
-    }
-    
-    public var regularTopics: [Topic.Pair] {
-        let regularTopics = topics
-            .filter { $0.prominence == .regular }
-            .sorted { $0.name < $1.name }
-        return pairUp(regularTopics)
-    }
-    
-    public var subduedTopics: [Topic.Pair] {
-        let subduedTopics = topics
-            .filter { $0.prominence == .subdued }
-            .sorted { $0.name < $1.name }
-        return pairUp(subduedTopics)
-    }
-    
-    private func pairUp(_ topics: [Topic]) -> [Topic.Pair] {
-        var pairs: [Topic.Pair] = []
+    init(
+        categoryProvider: ResourceCategoryProvider
+    ) {
+        self.categoryProvider = categoryProvider
         
-        for i in 0...topics.count/2 {
-            let leftIndex = i * 2
-            let rightIndex = leftIndex + 1
-            
-            guard leftIndex < topics.count else { break }
-            
-            let left = topics[leftIndex]
-            let right = rightIndex < topics.count ? topics[rightIndex] : nil
-            
-            pairs.append(.init(left: left, right: right))
-        }
-        
-        return pairs
+        fetchCategories()
     }
     
-    public func fetchTopics() {
-        isWorking = true
-        Task {
+    private func fetchCategories() {
+        Task { [self] in
+            var categories = Resource.Category.contentAgnosticCategories
+            
             do {
-                topics = try await topicProvider.fetchTopics()
+                let contentCategories = try await categoryProvider.fetchAllCategories()
+                    .sorted { $0.name < $1.name }
+                categories.append(contentsOf: contentCategories)
             } catch {
-                show(alert: "Failed to fetch Knowledge Base content. \(error.localizedDescription)")
+                print("KnowledgeBaseViewModel: Failed to fetch categories. \(error.localizedDescription)")
             }
-            DispatchQueue.main.async { [weak self] in self?.isWorking = false }
+            
+            articleCategories = categories
         }
     }
     

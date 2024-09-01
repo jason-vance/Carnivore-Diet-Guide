@@ -16,7 +16,7 @@ class KnowledgeBaseSearchViewModel: ObservableObject {
     //TODO: Get real search results
     @Published var searchResults: [Article] = [ .sample, .sample2 ]
     
-    func doSearch(in category: ArticleCategory) {
+    func doSearchIn(category: Resource.Category) {
         
     }
 }

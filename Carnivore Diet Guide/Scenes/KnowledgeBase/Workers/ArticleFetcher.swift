@@ -11,7 +11,7 @@ protocol ArticleCursor { }
 
 protocol ArticleFetcher {
     func fetchArticles(
-        byCategory category: ArticleCategory,
+        byCategory category: Resource.Category,
         after cursor: inout ArticleCursor?,
         limit: Int
     ) async throws -> [Article]
@@ -25,7 +25,7 @@ class MockArticleFetcher: ArticleFetcher {
     var error: Error? = nil
     
     func fetchArticles(
-        byCategory category: ArticleCategory,
+        byCategory category: Resource.Category,
         after cursor: inout ArticleCursor?,
         limit: Int
     ) async throws -> [Article] {

@@ -19,14 +19,13 @@ struct KnowledgeBaseView: View {
     @State private var showSearchContent: Bool = false
 
     @StateObject private var model = KnowledgeBaseViewModel(
-        topicProvider: iocContainer~>TopicProvider.self
+        categoryProvider: iocContainer~>ResourceCategoryProvider.self
     )
     
     @StateObject private var searchModel = KnowledgeBaseSearchViewModel(
     )
     
-    @State var searchCategories: [ArticleCategory] = ArticleCategory.allCategories
-    @State var selectedCategory: ArticleCategory = .featured
+    @State var selectedCategory: Resource.Category = .featured
     
     var body: some View {
         NavigationStack {
@@ -48,7 +47,6 @@ struct KnowledgeBaseView: View {
             }
             .background(Color.background)
             .alert(model.alertMessage, isPresented: $model.showAlert) {}
-            .onAppear { model.fetchTopics() }
             .onChange(of: searchModel.searchPresented, initial: true) { _, showSearchContent in
                 withAnimation(.snappy) {
                     self.showSearchContent = showSearchContent
@@ -63,7 +61,7 @@ struct KnowledgeBaseView: View {
                 prompt: String(localized: "Articles, Guides, and more"),
                 searchText: $searchModel.searchText,
                 searchPresented: $searchModel.searchPresented,
-                action: { searchModel.doSearch(in: selectedCategory) }
+                action: { searchModel.doSearchIn(category: selectedCategory) }
             )
             .padding(.top)
             .padding(.horizontal)
@@ -74,15 +72,12 @@ struct KnowledgeBaseView: View {
     @ViewBuilder func SearchCategoryPicker() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
-                ForEach(searchCategories) { category in
-                    let isSelected = selectedCategory == category
-                    
+                ForEach(model.articleCategories) { category in
                     Button {
                         withAnimation(.snappy) { selectedCategory = category }
                     } label: {
-                        //TODO: Uncomment this when I stop using ArticleCategory
-//                        ResourceCategoryView(category)
-//                            .highlighted(isSelected)
+                        ResourceCategoryView(category)
+                            .highlighted(selectedCategory == category)
                     }
                 }
             }
@@ -113,19 +108,19 @@ struct KnowledgeBaseView: View {
     }
     
     @ViewBuilder func NonSearchContent() -> some View {
-        if selectedCategory.isMetadataBased {
-            MetadataBasedCategoryView()
+        if selectedCategory.isContentAgnostic {
+            ContentAgnosticCategoryView()
         } else {
-            ContentBasedCategoryView()
+            ContentCategoryView()
         }
     }
     
-    @ViewBuilder func MetadataBasedCategoryView() -> some View {
-        //TODO: Implement MetadataBasedCategoryView
+    @ViewBuilder func ContentAgnosticCategoryView() -> some View {
+        //TODO: Implement ContentAgnosticCategoryView
     }
     
-    @ViewBuilder func ContentBasedCategoryView() -> some View {
-        //TODO: Implement ContentBasedCategoryView
+    @ViewBuilder func ContentCategoryView() -> some View {
+        //TODO: Implement ContentCategoryView
     }
 }
 
