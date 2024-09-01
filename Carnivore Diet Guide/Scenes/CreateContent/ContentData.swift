@@ -18,14 +18,52 @@ struct ContentData: Hashable {
     public static let sample: ContentData = .init(
         id: UUID(),
         userId: UserData.sample.id,
-        title: "Welcome to the Carnivore Diet Guide",
+        title: "Assessing Personal Health and Dietary Needs",
         markdownContent: """
-### Lorem ipsum dolor sit amet.
+# Assessing Personal Health and Dietary Needs in Regards to the Carnivore Diet
 
-1. **Consectetur adipiscing elit**, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-2. **Ut enim ad minim veniam**, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+## Introduction
+In recent years, the carnivore diet, a regimen that involves consuming primarily animal products, has gained popularity. This diet, often seen as an extreme form of the ketogenic diet, excludes plant-based foods and focuses on meat, fish, eggs, and certain dairy products. While some individuals report improved health outcomes, the carnivore diet is a subject of debate among health professionals. This article examines the key considerations for assessing personal health and dietary needs when adopting or considering the carnivore diet.
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+## Understanding the Carnivore Diet
+The carnivore diet is rooted in the belief that human beings thrived historically on animal-based diets. Proponents argue that this way of eating is more aligned with human evolutionary biology. Key components of the diet include:
+
+- **Meat**: Beef, pork, lamb, and other red meats are staples.
+- **Poultry**: Chicken, turkey, and other birds.
+- **Fish**: Especially fatty fish like salmon for omega-3 fatty acids.
+- **Eggs**: A source of protein and vitamins.
+- **Limited Dairy**: Some versions allow for dairy like cheese and butter.
+
+## Health Assessment Before Starting
+Before embarking on such a diet, it's crucial to assess your health. This includes:
+
+- **Medical History Review**: Understanding your genetic predisposition to certain conditions like heart disease or high cholesterol.
+- **Current Health Status**: Evaluating factors such as weight, blood pressure, and overall health.
+- **Blood Tests**: To establish a baseline for cholesterol, blood sugar, and nutrient levels.
+
+## Potential Benefits
+Some individuals report benefits from the carnivore diet, including:
+
+- **Weight Loss**: Due to its high-protein content and the satiating nature of meat.
+- **Improved Digestion**: Some find that eliminating plant fibers aids digestion.
+- **Reduction in Inflammation**: Reported by some due to the exclusion of certain plant-based foods.
+
+## Risks and Considerations
+However, there are significant risks and concerns:
+
+- **Nutritional Deficiencies**: Lack of vitamins and minerals found in plant-based foods.
+- **Increased Risk of Heart Disease**: Due to high saturated fat and cholesterol intake.
+- **Impact on Gut Health**: The absence of fiber can affect gut microbiota negatively.
+
+## Personalizing the Diet
+If considering the carnivore diet, it's essential to tailor it to individual health needs:
+
+- **Monitor Nutrient Intake**: Ensuring adequate intake of all essential nutrients.
+- **Regular Health Check-ups**: To monitor cholesterol, blood pressure, and other vital health markers.
+- **Consult a Dietitian**: Professional guidance is crucial in managing risks and ensuring nutritional adequacy.
+
+## Conclusion
+The carnivore diet is a controversial and extreme dietary choice that may offer benefits for some but poses significant risks. It is vital for anyone considering this diet to conduct a thorough health assessment, understand the potential risks and benefits, and seek guidance from healthcare professionals. Personalizing the diet to one's specific health needs and regularly monitoring health indicators is crucial in mitigating risks associated with this diet. As with any dietary change, individual responses can vary widely, and what works for one person may not be suitable for another.
 """,
         imageUrls: [
             URL(string: "https://plantbasednews.org/app/uploads/2023/04/plant-based-news-what-is-carnivore-diet.jpg")!,

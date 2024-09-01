@@ -34,6 +34,31 @@ class CreateArticleMetadataViewModel: ObservableObject {
         )
     }
     
+    public func set(markdownContent: String) {
+        var dict = Dictionary<String, UInt>()
+        
+        markdownContent
+            .stripMarkdown()
+            .lemmatized()
+            .forEach { token in
+                dict[token] = dict[token, default: 0] + 1
+            }
+        
+        var keywords = Set<SearchKeyword>()
+        dict.forEach { key, value in
+            guard let keyword = SearchKeyword(key, score: value) else {
+                return
+            }
+            keywords.insert(keyword)
+        }
+        
+        articleSearchKeywords = Set(
+            keywords
+                .sorted { $0.score > $1.score }
+                .prefix(50)
+        )
+    }
+    
     public func add(category: Resource.Category) {
         articleCategories.insert(category)
     }

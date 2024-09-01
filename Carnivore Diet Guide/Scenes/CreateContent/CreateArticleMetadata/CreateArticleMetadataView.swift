@@ -73,6 +73,9 @@ struct CreateArticleMetadataView: View {
         }
         .navigationBarBackButtonHidden()
         .background(Color.background)
+        .onChange(of: contentData, initial: true) { _, newData in
+            model.set(markdownContent: newData.markdownContent)
+        }
         .onChange(of: summaryText, initial: false) { _, newSummaryText in
             model.articleSummary = .init(newSummaryText)
         }
