@@ -55,7 +55,7 @@ struct SelectCategoryView: View {
                 VStack {
                     SearchArea()
                     FlowLayout(
-                        mode: .vstack,
+                        mode: .scrollable,
                         items: filteredCategories.sorted { $0.name < $1.name },
                         itemSpacing: 0
                     ) { category in
