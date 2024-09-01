@@ -82,7 +82,7 @@ struct KnowledgeBaseView: View {
                     } label: {
                         //TODO: Uncomment this when I stop using ArticleCategory
 //                        ResourceCategoryView(category)
-//                            .highlighted(selectedCategory == category)
+//                            .highlighted(isSelected)
                     }
                 }
             }

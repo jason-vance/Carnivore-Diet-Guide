@@ -29,7 +29,7 @@ struct FeedItemView: View {
         .foregroundStyle(Color.text)
         .background(Color.background)
         .clipShape(RoundedRectangle(
-            cornerRadius: Corners.radius,
+            cornerRadius: .cornerRadiusMedium,
             style: .continuous
         ))
         .clipped()

@@ -63,7 +63,7 @@ struct PostDetailView: View {
             OptionsMenu()
         }
         .padding()
-        .frame(height: .defaultBarHeight)
+        .frame(height: .barHeight)
         .overlay(alignment: .bottom) {
             BarDivider()
         }
@@ -96,7 +96,7 @@ struct PostDetailView: View {
                 .tint(Color.accentColor)
                 .padding()
                 .background(Color.background)
-                .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
+                .clipShape(.rect(cornerRadius: .cornerRadiusMedium, style: .continuous))
         }
     }
     
@@ -133,7 +133,7 @@ struct PostDetailView: View {
                 .foregroundStyle(Color.background)
                 .padding()
                 .background {
-                    RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
+                    RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                         .foregroundStyle(Color.accent)
                 }
             }

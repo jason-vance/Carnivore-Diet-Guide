@@ -19,10 +19,10 @@ struct FormFieldOverlay: View {
         Button {
             action()
         } label: {
-            RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
+            RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                 .stroke(
                     Color.accentColor,
-                    style: .init(lineWidth: 1))
+                    style: .init(lineWidth: .borderWidthThin))
         }
     }
 }

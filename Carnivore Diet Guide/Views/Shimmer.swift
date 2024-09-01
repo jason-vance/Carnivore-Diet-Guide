@@ -62,8 +62,8 @@ extension View {
 #Preview {
     StatefulPreviewContainer(true) { isActive in
         ZStack {
-            RoundedRectangle(cornerRadius: 25.0, style: .continuous)
-                .stroke(lineWidth: 1.0)
+            RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                .stroke(lineWidth: .borderWidthThin)
                 .foregroundStyle(Color.indigo)
                 .frame(width: 100, height: 100)
             Button("Tap to turn\non and off") {

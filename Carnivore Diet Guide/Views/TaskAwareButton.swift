@@ -74,7 +74,7 @@ struct TaskAwareButton<Label: View>: View {
                 .lineLimit(1)
                 .frame(width: isWorking ? 48 : nil, height: 48)
                 .background {
-                    RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
+                    RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                         .fill(taskStatus == .idle
                               ? buttonColor
                               : taskStatus == .success

@@ -38,7 +38,7 @@ struct SearchBar: View {
                 .padding(.horizontal, 12)
                 .padding(.vertical, 10)
                 .background {
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                         .foregroundStyle(Color.text.opacity(0.1))
                 }
             if showCancel {

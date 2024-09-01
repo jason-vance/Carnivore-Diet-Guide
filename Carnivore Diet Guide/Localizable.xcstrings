@@ -277,16 +277,6 @@
         }
       }
     },
-    "%lld/%lld" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lld/%2$lld"
-          }
-        }
-      }
-    },
     "%lldhrs" : {
       "comment" : "Abbreviation for hours",
       "localizations" : {
@@ -558,6 +548,9 @@
 
     },
     "Cancel" : {
+
+    },
+    "Cannot be empty" : {
 
     },
     "Carbohydrates" : {
@@ -1960,6 +1953,12 @@
 
     },
     "Title" : {
+
+    },
+    "Too long, %@" : {
+
+    },
+    "Too short" : {
 
     },
     "Trending Blog Posts" : {

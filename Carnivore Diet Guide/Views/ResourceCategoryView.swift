@@ -32,10 +32,10 @@ struct ResourceCategoryView: View {
         }
         .font(.caption.bold())
         .foregroundStyle(isHighlighted ? Color.background : Color.accent)
-        .padding(.vertical, 12)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, .paddingHorizontalButtonMedium)
+        .padding(.vertical, .paddingVerticalButtonMedium)
         .background {
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
+            RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                 .foregroundStyle(isHighlighted ? Color.accent : Color.accent.opacity(0.1))
         }
     }

@@ -107,7 +107,7 @@ struct SettingsView: View {
             }
             .padding()
             .background(Color.background)
-            .clipShape(RoundedRectangle(cornerRadius: Corners.radius, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous))
             .padding()
         }
         .presentationCompactAdaptation(.fullScreenCover)

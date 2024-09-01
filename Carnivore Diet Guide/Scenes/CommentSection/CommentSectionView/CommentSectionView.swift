@@ -153,7 +153,7 @@ struct CommentSectionView: View {
                 .aspectRatio(contentMode: .fit)
                 .foregroundStyle(Color.background)
                 .background {
-                    RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
+                    RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                         .fill(Color.accent)
                 }
         }

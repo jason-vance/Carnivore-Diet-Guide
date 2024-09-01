@@ -65,7 +65,7 @@ struct StickyHeaderScrollingView<HeaderContent: View, HeaderBackground: View, Sc
                 Text("\(asdf)")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
-                    .background(RoundedRectangle(cornerRadius: 8).fill(.gray))
+                    .background(RoundedRectangle(cornerRadius: .cornerRadiusSmall).fill(.gray))
             }
         }
         .padding()

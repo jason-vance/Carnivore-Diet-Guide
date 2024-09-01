@@ -216,10 +216,10 @@ struct CreateArticleMetadataView: View {
                 Text("Category")
             }
             .foregroundStyle(isHighlighted ? Color.background : Color.accent)
-            .padding(.vertical, isHighlighted ? 12 : 0)
-            .padding(.horizontal, isHighlighted ? 16 : 0)
+            .padding(.horizontal, isHighlighted ? .paddingHorizontalButtonMedium : 0)
+            .padding(.vertical, isHighlighted ? .paddingVerticalButtonMedium : 0)
             .background {
-                RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
+                RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                     .foregroundStyle(isHighlighted ? Color.accent : Color.background)
             }
         }
@@ -253,10 +253,10 @@ struct CreateArticleMetadataView: View {
         } label: {
             Text("Edit \(model.articleSearchKeywords.count) Keywords")
                 .foregroundStyle(isHighlighted ? Color.background : Color.accent)
-                .padding(.vertical, isHighlighted ? 12 : 0)
-                .padding(.horizontal, isHighlighted ? 16 : 0)
+                .padding(.horizontal, isHighlighted ? .paddingHorizontalButtonMedium : 0)
+                .padding(.vertical, isHighlighted ? .paddingVerticalButtonMedium : 0)
                 .background {
-                    RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
+                    RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                         .foregroundStyle(isHighlighted ? Color.accent : Color.background)
                 }
         }

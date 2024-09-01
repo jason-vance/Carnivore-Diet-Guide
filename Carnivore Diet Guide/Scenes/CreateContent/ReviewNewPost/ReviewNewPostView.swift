@@ -82,7 +82,7 @@ struct ReviewNewPostView: View {
                     .padding(.horizontal, itemHorizontalPadding)
                     PostView(post: post)
                 }
-                .padding(.bottom, .defaultBarHeight)
+                .padding(.bottom, .barHeight)
             }
             .scrollIndicators(.hidden)
         }
@@ -109,7 +109,7 @@ struct ReviewNewPostView: View {
                     .tint(Color.accentColor)
                     .padding()
                     .background(Color.background)
-                    .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
+                    .clipShape(.rect(cornerRadius: .cornerRadiusMedium, style: .continuous))
             }
         }
     }
@@ -136,7 +136,7 @@ struct ReviewNewPostView: View {
                 LooksGoodButton()
             }
             .padding()
-            .frame(height: .defaultBarHeight)
+            .frame(height: .barHeight)
         }
     }
     
@@ -153,12 +153,12 @@ struct ReviewNewPostView: View {
             .padding(.vertical)
             .frame(maxWidth: .infinity)
             .background {
-                RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
-                    .stroke(style: .init(lineWidth: 2))
+                RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                    .stroke(style: .init(lineWidth: .borderWidthMedium))
                     .foregroundStyle(Color.accent)
             }
             .background {
-                RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
+                RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                     .foregroundStyle(Color.background)
             }
         }
@@ -177,7 +177,7 @@ struct ReviewNewPostView: View {
             .padding(.vertical)
             .frame(maxWidth: .infinity)
             .background {
-                RoundedRectangle(cornerRadius: Corners.radius, style: .continuous)
+                RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                     .foregroundStyle(Color.accent)
             }
         }

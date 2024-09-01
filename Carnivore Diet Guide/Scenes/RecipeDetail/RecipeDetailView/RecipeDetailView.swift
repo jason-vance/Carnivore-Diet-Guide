@@ -131,8 +131,8 @@ struct RecipeDetailView: View {
             .foregroundStyle(Color.text)
             .padding()
             .overlay {
-                RoundedRectangle(cornerRadius: Corners.radius)
-                    .stroke(Color.text, lineWidth: 1)
+                RoundedRectangle(cornerRadius: .cornerRadiusMedium)
+                    .stroke(Color.text, lineWidth: .borderWidthThin)
             }
         }
     }

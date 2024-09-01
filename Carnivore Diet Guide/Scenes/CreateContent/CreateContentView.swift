@@ -11,10 +11,7 @@ import SwinjectAutoregistration
 
 struct CreateContentView: View {
     
-    //TODO: Share these values somewhere
     private let imageSize: CGFloat = 128
-    private let imageCornerRadius: CGFloat = 12
-    private let imageBorderWidth: CGFloat = 2
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
@@ -213,13 +210,13 @@ struct CreateContentView: View {
             .resizable()
             .scaledToFill()
             .frame(width: imageSize, height: imageSize)
-            .clipShape(RoundedRectangle(cornerRadius: imageCornerRadius, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous))
             .opacity(image.url == nil ? 0.8 : 1)
             .shimmering(isActive: image.url == nil)
             .id(image.id)
             .overlay {
-                RoundedRectangle(cornerRadius: imageCornerRadius, style: .continuous)
-                    .stroke(style: .init(lineWidth: imageBorderWidth))
+                RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                    .stroke(style: .init(lineWidth: .borderWidthMedium))
                     .foregroundStyle(Color.accent)
             }
             .overlay(alignment: .bottomTrailing) {
@@ -245,12 +242,12 @@ struct CreateContentView: View {
                 .foregroundStyle(Color.accent)
                 .frame(width: imageSize, height: imageSize)
                 .background {
-                    RoundedRectangle(cornerRadius: imageCornerRadius, style: .continuous)
+                    RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                         .foregroundStyle(Color.background)
                 }
                 .overlay {
-                    RoundedRectangle(cornerRadius: imageCornerRadius, style: .continuous)
-                        .stroke(style: .init(lineWidth: imageBorderWidth))
+                    RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                        .stroke(style: .init(lineWidth: .borderWidthMedium))
                         .foregroundStyle(Color.accent)
                 }
                 .overlay(alignment: .bottomTrailing) {
@@ -263,10 +260,10 @@ struct CreateContentView: View {
     @ViewBuilder private func ImageAccessory(_ name: String) -> some View {
         Image(systemName: name)
             .foregroundStyle(Color.background)
-            .frame(width: imageCornerRadius * 3, height: imageCornerRadius * 2)
+            .frame(width: .cornerRadiusMedium * 3, height: .cornerRadiusMedium * 2)
             .background {
                 UnevenRoundedRectangle(
-                    cornerRadii: .init(topLeading: imageCornerRadius, bottomTrailing: imageCornerRadius),
+                    cornerRadii: .init(topLeading: .cornerRadiusMedium, bottomTrailing: .cornerRadiusMedium),
                     style: .continuous
                 )
                 .foregroundStyle(Color.accent)

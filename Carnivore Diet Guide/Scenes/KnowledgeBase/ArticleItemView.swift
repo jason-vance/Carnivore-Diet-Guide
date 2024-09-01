@@ -19,7 +19,7 @@ struct ArticleItemView: View {
             PublicationDate()
         }
         .background(Color.background)
-        .clipShape(.rect(cornerRadius: Corners.radius, style: .continuous))
+        .clipShape(.rect(cornerRadius: .cornerRadiusMedium, style: .continuous))
         .clipped()
         .shadow(color: Color.text, radius: 4)
     }

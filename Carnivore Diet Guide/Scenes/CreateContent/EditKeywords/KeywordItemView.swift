@@ -19,11 +19,11 @@ struct KeywordItemButton: View {
         } label: {
             HStack(spacing: 0) {
                 Text("\(keyword.text) (\(keyword.score))")
-                    .padding(.vertical, 6)
-                    .padding(.horizontal, 8)
+                    .padding(.horizontal, .paddingHorizontalButtonSmall)
+                    .padding(.vertical, .paddingVerticalButtonSmall)
                 Image(systemName: accessoryImage)
-                    .padding(.vertical, 6)
-                    .padding(.horizontal, 8)
+                    .padding(.horizontal, .paddingHorizontalButtonSmall)
+                    .padding(.vertical, .paddingVerticalButtonSmall)
                     .opacity(0.5)
                     .overlay(alignment: .leading) {
                         Rectangle()
@@ -35,11 +35,11 @@ struct KeywordItemButton: View {
             .font(.footnote)
             .foregroundStyle(Color.text)
             .overlay {
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .stroke(style: .init(lineWidth: 2))
+                RoundedRectangle(cornerRadius: .cornerRadiusSmall, style: .continuous)
+                    .stroke(style: .init(lineWidth: .borderWidthMedium))
                     .foregroundStyle(Color.text)
             }
-            .clipShape(.rect(cornerRadius: 8, style: .continuous))
+            .clipShape(.rect(cornerRadius: .cornerRadiusSmall, style: .continuous))
         }
     }
 }

@@ -61,12 +61,12 @@ struct EditKeywordsView: View {
                 prompt: Text("Keyword").foregroundStyle(Color.text.opacity(0.3))
             )
             .keyboardType(.alphabet)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .frame(height: .defaultBarHeight)
+            .padding(.horizontal, .paddingHorizontalButtonMedium)
+            .padding(.vertical, .paddingVerticalButtonMedium)
+            .frame(height: .barHeight)
             .background {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .stroke(style: .init(lineWidth: 1))
+                RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                    .stroke(style: .init(lineWidth: .borderWidthThin))
                     .foregroundStyle(Color.accent)
             }
             TextField(
@@ -75,12 +75,12 @@ struct EditKeywordsView: View {
                 prompt: Text("Score").foregroundStyle(Color.text.opacity(0.3))
             )
             .keyboardType(.numberPad)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .frame(width: 2 * .defaultBarHeight, height: .defaultBarHeight)
+            .padding(.horizontal, .paddingHorizontalButtonMedium)
+            .padding(.vertical, .paddingVerticalButtonMedium)
+            .frame(width: 2 * .barHeight, height: .barHeight)
             .background {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .stroke(style: .init(lineWidth: 1))
+                RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                    .stroke(style: .init(lineWidth: .borderWidthThin))
                     .foregroundStyle(Color.accent)
             }
             Button {
@@ -93,16 +93,16 @@ struct EditKeywordsView: View {
                 Image(systemName: "plus")
                     .bold()
                     .foregroundStyle(Color.background)
-                    .frame(width: .defaultBarHeight, height: .defaultBarHeight)
+                    .frame(width: .barHeight, height: .barHeight)
                     .background {
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                             .foregroundStyle(newKeyword == nil ? Color.gray : Color.accent)
                     }
             }
             .disabled(newKeyword == nil)
         }
         .foregroundStyle(Color.text)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, .paddingHorizontalButtonMedium)
         .padding(.vertical, 8)
         .overlay(alignment: .bottom) {
             BarDivider()
