@@ -16,8 +16,12 @@ class CreateArticleMetadataViewModel: ObservableObject {
     @Published public var articleCategories: Set<Resource.Category> = []
     @Published public var articleSearchKeywords: Set<SearchKeyword> = []
     
-    public var isFormEmpty: Bool {
-        articleSummary == nil && articleCategories.isEmpty && articleSearchKeywords.isEmpty
+    private var originalSearchKeywords: Set<SearchKeyword> = []
+    
+    public var isFormChanged: Bool {
+        articleSummary != nil 
+        || articleCategories.count > 0
+        || articleSearchKeywords != originalSearchKeywords
     }
     
     public func getContentMetadata(id: UUID) -> ContentMetadata? {
@@ -51,11 +55,12 @@ class CreateArticleMetadataViewModel: ObservableObject {
             keywords.insert(keyword)
         }
         
-        articleSearchKeywords = Set(
+        originalSearchKeywords = Set(
             keywords
                 .sorted { $0.score > $1.score }
                 .prefix(50)
         )
+        articleSearchKeywords = originalSearchKeywords
     }
     
     public func add(category: Resource.Category) {

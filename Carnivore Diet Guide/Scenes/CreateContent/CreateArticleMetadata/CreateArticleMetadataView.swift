@@ -44,10 +44,10 @@ struct CreateArticleMetadataView: View {
     }
     
     private func close() {
-        if model.isFormEmpty {
-            dismiss()
-        } else {
+        if model.isFormChanged {
             showDiscardDialog = true
+        } else {
+            dismiss()
         }
     }
     
@@ -98,7 +98,24 @@ struct CreateArticleMetadataView: View {
             Image(systemName: "chevron.backward")
                 .bold()
         }
-        //TODO: Add discard dialog
+        .confirmationDialog(
+            "Do you want to discard your data?",
+            isPresented: $showDiscardDialog,
+            titleVisibility: .visible
+        ) {
+            DiscardButton()
+            CancelButton()
+        }
+    }
+    
+    @ViewBuilder func DiscardButton() -> some View {
+        Button("Discard", role: .destructive) {
+            dismiss()
+        }
+    }
+    
+    @ViewBuilder func CancelButton() -> some View {
+        Button("Cancel", role: .cancel) { }
     }
     
     @ViewBuilder func NextButton() -> some View {
