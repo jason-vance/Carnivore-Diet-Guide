@@ -12,7 +12,9 @@ import SwiftUI
 @MainActor
 class CreateContentViewModel: ObservableObject {
     
-    //TODO: Maybe change this based on content type (currently articles only use the first image)
+    //TODO: Add minImageCount, change imageCountLimit to maxImageCount
+    //TODO: Maybe change imageCountLimit based on content type (currently articles only use the first image)
+    //  What happens to the excess images if the new type supports less images than the old type (maybe just block the next button)
     private let imageCountLimit: Int = 5
     
     @Published public var contentId: UUID = UUID()

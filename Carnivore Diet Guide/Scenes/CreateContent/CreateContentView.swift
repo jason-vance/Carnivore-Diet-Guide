@@ -82,6 +82,9 @@ struct CreateContentView: View {
             .navigationDestination(for: ContentData.self) { contentData in
                 NextCreationStepView(data: contentData)
             }
+            .navigationDestination(for: NewArticleData.self) { newArticleData in
+                ReviewNewArticleView(newArticleData: newArticleData, dismissAll: { dismiss() })
+            }
         }
         .alert(alertMessage, isPresented: $showAlert) {}
     }

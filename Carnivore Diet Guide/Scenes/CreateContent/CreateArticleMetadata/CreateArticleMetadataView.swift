@@ -93,9 +93,6 @@ struct CreateArticleMetadataView: View {
         .onChange(of: summaryText, initial: false) { _, newSummaryText in
             model.articleSummary = .init(newSummaryText)
         }
-        .navigationDestination(for: NewArticleData.self) { newArticleData in
-            ReviewNewArticleView(newArticleData: newArticleData, dismissAll: dismissAll)
-        }
     }
     
     @ViewBuilder func TopBar() -> some View {

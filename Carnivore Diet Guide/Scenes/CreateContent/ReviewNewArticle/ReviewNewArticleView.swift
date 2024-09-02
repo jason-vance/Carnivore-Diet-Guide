@@ -8,7 +8,6 @@
 import SwiftUI
 import SwinjectAutoregistration
 
-//TODO: Add Roles/Publishers idea to Firebase
 struct ReviewNewArticleView: View {
     
     @Environment(\.dismiss) private var dismiss: DismissAction
