@@ -21,23 +21,20 @@ class FirebaseArticleRepository {
         let doc = FirebaseArticleDoc.from(article)
         try await articlesCollection.document(article.id).setData(from: doc)
     }
-}
-
-extension FirebaseArticleRepository: ArticleFetcher {
     
-    struct Cursor: ArticleCursor {
-        let document: DocumentSnapshot
-    }
-    
-    func fetchArticles(
-        in category: Resource.Category,
+    func fetchAllArticles (
         after cursor: inout (any ArticleCursor)?,
-        limit: Int
+        limit: Int,
+        whereFunc: ((Query) -> Query)? = nil
     ) async throws -> [Article] {
         var query = articlesCollection
-            .whereField(categoriesField, arrayContains: category.id)
             .order(by: publicationDateField, descending: true)
             .limit(to: limit)
+        
+        if let whereFunc = whereFunc {
+            query = whereFunc(query)
+        }
+        
         if let cursor = cursor as? Cursor {
             query = query.start(afterDocument: cursor.document)
         }
@@ -51,5 +48,59 @@ extension FirebaseArticleRepository: ArticleFetcher {
         return try snapshot
             .documents
             .compactMap { try $0.data(as: FirebaseArticleDoc.self).toArticle() }
+    }
+}
+
+extension FirebaseArticleRepository: ArticleFetcher {
+    
+    struct Cursor: ArticleCursor {
+        let document: DocumentSnapshot
+    }
+    
+    private func fetchArticlesIn(
+        contentAgnosticCategory category: Resource.Category,
+        after cursor: inout (any ArticleCursor)?,
+        limit: Int
+    ) async throws -> [Article] {
+        if category == .featured {
+            //TODO: Handle .featured category
+            return []
+        }
+        if category == .trending {
+            //TODO: Handle .trending category
+            return []
+        }
+        if category == .liked {
+            //TODO: Handle .liked category
+            return []
+        }
+
+        return try await fetchAllArticles(after: &cursor, limit: limit)
+    }
+    
+    private func fetchArticlesIn(
+        contentBasedCategory category: Resource.Category,
+        after cursor: inout (any ArticleCursor)?,
+        limit: Int
+    ) async throws -> [Article] {
+        return try await fetchAllArticles(
+            after: &cursor,
+            limit: limit,
+            whereFunc: { query in
+                query.whereField(self.categoriesField, arrayContains: category.id)
+            }
+        )
+    }
+    
+    func fetchArticles(
+        in category: Resource.Category,
+        after cursor: inout (any ArticleCursor)?,
+        limit: Int
+    ) async throws -> [Article] {
+        if category.isContentAgnostic {
+            return try await fetchArticlesIn(contentAgnosticCategory: category, after: &cursor, limit: limit)
+        } else {
+            return try await fetchArticlesIn(contentBasedCategory: category, after: &cursor, limit: limit)
+        }
     }
 }

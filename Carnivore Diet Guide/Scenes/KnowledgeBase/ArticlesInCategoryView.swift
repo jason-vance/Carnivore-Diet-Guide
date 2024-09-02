@@ -10,7 +10,7 @@ import SwinjectAutoregistration
 
 struct ArticlesInCategoryView: View {
     
-    private let fetchArticlesLimit: Int = 10
+    private let fetchArticlesLimit: Int = 8
     
     public var category: Resource.Category
     
