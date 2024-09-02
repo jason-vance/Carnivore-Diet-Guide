@@ -84,8 +84,7 @@ struct ReviewNewArticleView: View {
                         ReviewContentSectionHeader(String(localized: "As seen while reading"))
                     }
                     .padding(.horizontal, .itemHorizontalPadding)
-                    //TODO: Show ArticleView
-//                    ArticleView(article: article)
+                    ArticleView(article: article)
                 }
                 .padding(.bottom, .barHeight)
             }
