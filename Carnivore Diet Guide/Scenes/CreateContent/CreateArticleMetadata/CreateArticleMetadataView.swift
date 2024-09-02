@@ -17,6 +17,7 @@ struct CreateArticleMetadataView: View {
     
     @State public var contentData: ContentData
     @Binding public var navigationPath: NavigationPath
+    public let dismissAll: () -> ()
     
     @State private var summaryText: String = ""
     @State private var showAddCategoryDialog: Bool = false
@@ -66,12 +67,11 @@ struct CreateArticleMetadataView: View {
     }
     
     private func goToNext() {
-        //TODO: Implement CreateArticleMetadataView.goToNext()
-//        guard let postData = model.contentData else {
-//            show(alertMessage: "Could not create ReviewPostData")
-//            return
-//        }
-//        navigationPath.append(postData)
+        guard let articleMetadata = model.getContentMetadata(id: contentData.id) else {
+            show(alertMessage: "Could not create ContentMetadata")
+            return
+        }
+        navigationPath.append(NewArticleData(data: contentData, metadata: articleMetadata))
     }
     
     var body: some View {
@@ -92,6 +92,9 @@ struct CreateArticleMetadataView: View {
         }
         .onChange(of: summaryText, initial: false) { _, newSummaryText in
             model.articleSummary = .init(newSummaryText)
+        }
+        .navigationDestination(for: NewArticleData.self) { newArticleData in
+            ReviewNewArticleView(newArticleData: newArticleData, dismissAll: dismissAll)
         }
     }
     
@@ -268,6 +271,6 @@ struct CreateArticleMetadataView: View {
         CreateArticleMetadataView(
             contentData: .sample,
             navigationPath: .constant(.init())
-        )
+        ) {}
     }
 }

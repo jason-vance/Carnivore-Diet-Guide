@@ -17,10 +17,11 @@ class FirebaseResourceCategoryRepository {
 }
 
 extension FirebaseResourceCategoryRepository: ResourceCategoryProvider {
-    func fetchAllCategories() async throws -> [Resource.Category] {
-        try await categoriesCollection
+    func fetchAllCategories() async throws -> Set<Resource.Category> {
+        let categories = try await categoriesCollection
             .getDocuments()
             .documents
             .compactMap { try $0.data(as: FirebaseResourceCategoryDoc.self).toCategory() }
+        return Set(categories)
     }
 }

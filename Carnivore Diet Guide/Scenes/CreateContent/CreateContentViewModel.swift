@@ -12,6 +12,7 @@ import SwiftUI
 @MainActor
 class CreateContentViewModel: ObservableObject {
     
+    //TODO: Maybe change this based on content type (currently articles only use the first image)
     private let imageCountLimit: Int = 5
     
     @Published public var contentId: UUID = UUID()

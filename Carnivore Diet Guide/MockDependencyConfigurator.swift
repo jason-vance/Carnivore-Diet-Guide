@@ -34,13 +34,14 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(FeedViewContentProvider.self) { DefaultFeedViewContentProvider.instance }
     iocContainer.autoregister(FeedItemRepository.self, initializer: MockFeedItemRepository.init)
     
-    // Knowledge Base
+    //Knowledge Base
     iocContainer.autoregister(ArticleFetcher.self, initializer: MockArticleFetcher.init)
 
-    //Post Creation
+    //Content Creation
     iocContainer.autoregister(PostImageUploader.self, initializer: MockPostImageUploader.init)
     iocContainer.autoregister(PostPoster.self, initializer: { DefaultPostPoster.forPreviewsWithSuccess })
     iocContainer.autoregister(ResourceCategoryProvider.self, initializer: MockResourceCategoryProvider.init)
+    iocContainer.autoregister(ArticlePoster.self, initializer: { DefaultArticlePoster.forPreviewsWithSuccess })
     
     //Post Detail
     iocContainer.autoregister(PostFetcher.self, initializer: { DefaultPostFetcher.forPreviewsWithSuccess })

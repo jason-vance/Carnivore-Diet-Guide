@@ -8,15 +8,15 @@
 import Foundation
 
 protocol ResourceCategoryProvider {
-    func fetchAllCategories() async throws -> [Resource.Category]
+    func fetchAllCategories() async throws -> Set<Resource.Category>
 }
 
 class MockResourceCategoryProvider: ResourceCategoryProvider {
     
-    public var categories: [Resource.Category] = Resource.Category.samples
+    public var categories: Set<Resource.Category> = Resource.Category.samples
     public var error: Error? = nil
     
-    func fetchAllCategories() async throws -> [Resource.Category] {
+    func fetchAllCategories() async throws -> Set<Resource.Category> {
         try await Task.sleep(for: .seconds(1))
         if let error = error {
             throw error

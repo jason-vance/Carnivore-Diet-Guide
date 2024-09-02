@@ -347,6 +347,15 @@
     "Articles, Guides, and more" : {
 
     },
+    "As seen in the Community Feed" : {
+
+    },
+    "As seen in the Knowledge Base" : {
+
+    },
+    "As seen while reading" : {
+
+    },
     "Blog" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1781,6 +1790,9 @@
 
     },
     "Report" : {
+
+    },
+    "Review Your Article" : {
 
     },
     "Review Your Post" : {

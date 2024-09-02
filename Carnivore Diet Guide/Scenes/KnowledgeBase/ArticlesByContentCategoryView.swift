@@ -36,6 +36,6 @@ struct ArticlesByContentCategoryView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        ArticlesByContentCategoryView(category: .samples[0])
+        ArticlesByContentCategoryView(category: .samples.first!)
     }
 }

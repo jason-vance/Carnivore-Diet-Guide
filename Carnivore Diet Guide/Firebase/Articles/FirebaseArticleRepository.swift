@@ -14,6 +14,10 @@ class FirebaseArticleRepository {
     
     private let articlesCollection = Firestore.firestore().collection(ARTICLES)
     
+    func create(article: Article) async throws {
+        let doc = FirebaseArticleDoc.from(article)
+        try await articlesCollection.document(article.id).setData(from: doc)
+    }
 }
 
 extension FirebaseArticleRepository: ArticleFetcher {

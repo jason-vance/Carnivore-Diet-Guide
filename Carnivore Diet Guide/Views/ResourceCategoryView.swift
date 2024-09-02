@@ -43,10 +43,9 @@ struct ResourceCategoryView: View {
 
 #Preview {
     VStack {
-        ResourceCategoryView(.samples[0])
-        ResourceCategoryView(.samples[1])
+        ResourceCategoryView(.samples.first!)
+        ResourceCategoryView(.samples.dropFirst().first!)
             .highlighted()
-        ResourceCategoryView(.samples[2])
 
     }
 }

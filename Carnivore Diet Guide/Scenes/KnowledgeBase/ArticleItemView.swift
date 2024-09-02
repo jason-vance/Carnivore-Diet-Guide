@@ -25,7 +25,7 @@ struct ArticleItemView: View {
     }
     
     @ViewBuilder func TextContent() -> some View {
-        Text(article.summary)
+        Text(article.summary.text)
             .font(.body.weight(.medium).width(.condensed))
             .foregroundStyle(Color.text)
             .lineLimit(5, reservesSpace: true)

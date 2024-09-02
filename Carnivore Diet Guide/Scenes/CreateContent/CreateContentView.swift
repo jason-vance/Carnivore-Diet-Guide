@@ -89,14 +89,18 @@ struct CreateContentView: View {
     @ViewBuilder func NextCreationStepView(data: ContentData) -> some View {
         switch model.contentType {
         case .post:
-            ReviewNewPostView(postData: data) { dismiss() }
+            ReviewNewPostView(
+                postData: data,
+                dismissAll: { dismiss() }
+            )
         case .recipe:
             //TODO: Navigate to the next correct recipe creation step
             Text(data.title)
         case .article:
             CreateArticleMetadataView(
                 contentData: data,
-                navigationPath: $navigationPath
+                navigationPath: $navigationPath,
+                dismissAll: { dismiss() }
             )
         }
     }

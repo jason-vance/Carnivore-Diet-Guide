@@ -45,7 +45,7 @@ extension Resource {
         static let trending: Category = .init("Trending", image: "arrowshape.up.fill", id: UUID().uuidString)!
         static let liked: Category = .init("Liked", image: "heart.fill", id: UUID().uuidString)!
         
-        static let samples: [Resource.Category] = [
+        static let samples: Set<Resource.Category> = [
             .init("Test Category", image: "signature", id: UUID().uuidString)!,
             .init("Exercise", image: "dumbbell.fill", id: UUID().uuidString)!,
             .init("FAQs", image: "questionmark", id: UUID().uuidString)!,

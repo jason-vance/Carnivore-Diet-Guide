@@ -1,20 +1,21 @@
 //
-//  ReviewNewPostView.swift
+//  ReviewNewArticleView.swift
 //  Carnivore Diet Guide
 //
-//  Created by Jason Vance on 8/20/24.
+//  Created by Jason Vance on 9/1/24.
 //
 
 import SwiftUI
 import SwinjectAutoregistration
 
-struct ReviewNewPostView: View {
+//TODO: Add Roles/Publishers idea to Firebase
+struct ReviewNewArticleView: View {
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
-    private let postPoster = iocContainer~>PostPoster.self
+    private let articlePoster = iocContainer~>ArticlePoster.self
     
-    public let postData: ContentData
+    public let newArticleData: NewArticleData
     public let dismissAll: () -> ()
     
     @State private var isPosting: Bool = false
@@ -25,23 +26,26 @@ struct ReviewNewPostView: View {
         FeedItem(
             id: UUID().uuidString,
             publicationDate: .now,
-            type: .post,
-            resourceId: postData.id.uuidString,
-            userId: postData.userId,
-            imageUrls: postData.imageUrls,
-            title: postData.title,
-            summary: postData.markdownContent.markdownToFeedItemSummary()
+            type: .article,
+            resourceId: newArticleData.data.id.uuidString,
+            userId: newArticleData.data.userId,
+            imageUrls: newArticleData.data.imageUrls,
+            title: newArticleData.data.title,
+            summary: newArticleData.metadata.summary.text
         )
     }
     
-    private var post: Post {
-        Post(
-            id: postData.id.uuidString,
-            title: postData.title,
-            imageUrls: postData.imageUrls,
-            author: postData.userId,
-            markdownContent: postData.markdownContent,
-            publicationDate: .now
+    private var article: Article {
+        Article(
+            id: newArticleData.data.id.uuidString,
+            author: newArticleData.data.userId,
+            title: newArticleData.data.title,
+            coverImageUrl: newArticleData.data.imageUrls[0],
+            summary: newArticleData.metadata.summary,
+            markdownContent: newArticleData.data.markdownContent,
+            publicationDate: .now,
+            categories: newArticleData.metadata.categories,
+            keywords: newArticleData.metadata.searchKeywords
         )
     }
     
@@ -53,7 +57,7 @@ struct ReviewNewPostView: View {
         Task {
             do {
                 withAnimation(.snappy) { isPosting = true }
-                try await postPoster.post(post: post, feedItem: feedItem)
+                try await articlePoster.post(article: article, feedItem: feedItem)
                 dismissAll()
             } catch {
                 withAnimation(.snappy) { isPosting = false }
@@ -69,16 +73,19 @@ struct ReviewNewPostView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            ScreenTitleBar(String(localized: "Review Your Post"))
+            ScreenTitleBar(String(localized: "Review Your Article"))
             ScrollView {
                 VStack {
                     VStack {
                         ReviewContentSectionHeader(String(localized: "As seen in the Community Feed"))
                         FeedItemView(feedItem: feedItem)
+                        ReviewContentSectionHeader(String(localized: "As seen in the Knowledge Base"))
+                        KnowledgeBaseArticleViews()
                         ReviewContentSectionHeader(String(localized: "As seen while reading"))
                     }
                     .padding(.horizontal, .itemHorizontalPadding)
-                    PostView(post: post)
+                    //TODO: Show ArticleView
+//                    ArticleView(article: article)
                 }
                 .padding(.bottom, .barHeight)
             }
@@ -109,14 +116,24 @@ struct ReviewNewPostView: View {
             )
         }
     }
+    
+    @ViewBuilder func KnowledgeBaseArticleViews() -> some View {
+        //TODO: When I have other ArticleItemView styles, add them here
+        HStack {
+            ArticleItemView(article: article)
+            ArticleItemView(article: article)
+        }
+    }
 }
 
-#Preview {
+#Preview("Fails") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
         
-        iocContainer.autoregister(PostPoster.self, initializer: { DefaultPostPoster.forPreviewsWithFailure })
+        iocContainer.autoregister(ArticlePoster.self) {
+            DefaultArticlePoster.forPreviewsWithFailure
+        }
     } content: {
-        ReviewNewPostView(postData: ContentData.sample) {}
+        ReviewNewArticleView(newArticleData: .sample) {}
     }
 }
