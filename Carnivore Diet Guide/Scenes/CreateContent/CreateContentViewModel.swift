@@ -12,11 +12,23 @@ import SwiftUI
 @MainActor
 class CreateContentViewModel: ObservableObject {
     
-    //TODO: Add minImageCount, change imageCountLimit to maxImageCount
-    //TODO: Maybe change imageCountLimit based on content type (currently articles only use the first image)
-    //  What happens to the excess images if the new type supports less images than the old type (maybe just block the next button)
-    private let imageCountLimit: Int = 5
-    
+    private var minImageCount: Int {
+        switch contentType {
+        case .post:
+            0
+        case .recipe, .article:
+            1
+        }
+    }
+    private var maxImageCount: Int {
+        switch contentType {
+        case .post:
+            5
+        case .recipe, .article:
+            1
+        }
+    }
+
     @Published public var contentId: UUID = UUID()
     @Published public var contentType: Resource.ResourceType = .post
     @Published public var contentTitle: String = ""
@@ -40,7 +52,7 @@ class CreateContentViewModel: ObservableObject {
         contentTitle.isEmpty && contentText.isEmpty && contentImages.isEmpty
     }
     
-    public var canAddImages: Bool { contentImages.count < imageCountLimit }
+    public var canAddImages: Bool { contentImages.count < maxImageCount }
     
     public var contentData: ContentData? {
         guard let userId = userId else { return nil }
@@ -48,6 +60,8 @@ class CreateContentViewModel: ObservableObject {
         guard !contentTitle.isEmpty else { return nil }
         
         guard !contentText.isEmpty else { return nil }
+        
+        guard (contentImages.count >= minImageCount && contentImages.count <= maxImageCount) else { return nil }
         
         let imageUrls = contentImages.compactMap({ $0.url })
         guard imageUrls.count == contentImages.count else { return nil }
@@ -62,7 +76,7 @@ class CreateContentViewModel: ObservableObject {
     }
     
     public func addToPost(image: UIImage) {
-        guard contentImages.count < imageCountLimit else { return }
+        guard contentImages.count < maxImageCount else { return }
         guard let userId = userId else { return }
 
         let imageData = ContentCreationImageData(image: image)
