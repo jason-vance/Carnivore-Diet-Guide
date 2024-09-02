@@ -17,8 +17,12 @@ class FirebaseArticleRepository {
     private let categoriesField: String = FirebaseArticleDoc.CodingKeys.categories.rawValue
     private let publicationDateField: String = FirebaseArticleDoc.CodingKeys.publicationDate.rawValue
 
-    func create(article: Article) async throws {
-        let doc = FirebaseArticleDoc.from(article)
+    func create(
+        article: Article,
+        categories: Set<Resource.Category>,
+        keywords: Set<SearchKeyword>
+    ) async throws {
+        let doc = FirebaseArticleDoc.from(article: article, categories: categories, keywords: keywords)
         try await articlesCollection.document(article.id).setData(from: doc)
     }
     

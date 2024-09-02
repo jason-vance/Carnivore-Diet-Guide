@@ -42,9 +42,7 @@ struct ReviewNewArticleView: View {
             coverImageUrl: newArticleData.data.imageUrls[0],
             summary: newArticleData.metadata.summary,
             markdownContent: newArticleData.data.markdownContent,
-            publicationDate: .now,
-            categories: newArticleData.metadata.categories,
-            keywords: newArticleData.metadata.searchKeywords
+            publicationDate: .now
         )
     }
     
@@ -56,7 +54,12 @@ struct ReviewNewArticleView: View {
         Task {
             do {
                 withAnimation(.snappy) { isPosting = true }
-                try await articlePoster.post(article: article, feedItem: feedItem)
+                try await articlePoster.post(
+                    article: article,
+                    categories: newArticleData.metadata.categories,
+                    keywords: newArticleData.metadata.searchKeywords,
+                    feedItem: feedItem
+                )
                 dismissAll()
             } catch {
                 withAnimation(.snappy) { isPosting = false }

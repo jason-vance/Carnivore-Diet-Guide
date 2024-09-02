@@ -8,31 +8,41 @@
 import Foundation
 
 protocol ArticlePoster {
-    func post(article: Article, feedItem: FeedItem) async throws
+    func post(
+        article: Article,
+        categories: Set<Resource.Category>,
+        keywords: Set<SearchKeyword>,
+        feedItem: FeedItem
+    ) async throws
 }
 
 class DefaultArticlePoster: ArticlePoster {
     
-    let postAction: (Article, FeedItem) async throws -> ()
+    let postAction: (Article, Set<Resource.Category>, Set<SearchKeyword>, FeedItem) async throws -> ()
     
-    init(postAction: @escaping (Article, FeedItem) async throws -> Void) {
+    init(postAction: @escaping (Article, Set<Resource.Category>, Set<SearchKeyword>, FeedItem) async throws -> Void) {
         self.postAction = postAction
     }
     
-    func post(article: Article, feedItem: FeedItem) async throws {
-        try await postAction(article, feedItem)
+    func post(
+        article: Article,
+        categories: Set<Resource.Category>,
+        keywords: Set<SearchKeyword>,
+        feedItem: FeedItem
+    ) async throws {
+        try await postAction(article, categories, keywords, feedItem)
     }
 }
 
 extension DefaultArticlePoster {
     static var forPreviewsWithSuccess: ArticlePoster {
-        DefaultArticlePoster { article, feedItem in
+        DefaultArticlePoster { article, categories, keywords, feedItem in
             try await Task.sleep(for: .seconds(1))
         }
     }
     
     static var forPreviewsWithFailure: ArticlePoster {
-        DefaultArticlePoster { article, feedItem in
+        DefaultArticlePoster { article, categories, keywords, feedItem in
             try await Task.sleep(for: .seconds(1))
             throw "Test Error"
         }

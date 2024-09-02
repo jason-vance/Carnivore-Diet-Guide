@@ -10,16 +10,6 @@ import FirebaseFirestoreSwift
 
 struct FirebaseArticleDoc: Codable {
     
-    struct Keyword: Codable {
-        var text: String?
-        var score: UInt?
-        
-        enum CodingKeys: String, CodingKey {
-            case text
-            case score
-        }
-    }
-    
     @DocumentID var id: String?
     var author: String?
     var title: String?
@@ -28,7 +18,7 @@ struct FirebaseArticleDoc: Codable {
     var markdownContent: String?
     var publicationDate: Date?
     var categories: [String]?
-    var keywords: Dictionary<String,Keyword>?
+    var keywords: Dictionary<String,UInt>?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -42,10 +32,14 @@ struct FirebaseArticleDoc: Codable {
         case keywords
     }
     
-    static func from(_ article: Article) -> FirebaseArticleDoc {
-        var keywordDict = Dictionary<String,Keyword>()
-        for keyword in article.keywords {
-            keywordDict[keyword.text] = .init(text: keyword.text, score: keyword.score)
+    static func from(
+        article: Article,
+        categories: Set<Resource.Category>,
+        keywords: Set<SearchKeyword>
+    ) -> FirebaseArticleDoc {
+        var keywordDict = Dictionary<String,UInt>()
+        for keyword in keywords {
+            keywordDict[keyword.text] = keyword.score
         }
         
         return .init(
@@ -56,7 +50,7 @@ struct FirebaseArticleDoc: Codable {
             summary: article.summary.text,
             markdownContent: article.markdownContent,
             publicationDate: article.publicationDate,
-            categories: article.categories.map { $0.id },
+            categories: categories.map { $0.id },
             keywords: keywordDict
         )
     }
@@ -71,7 +65,6 @@ struct FirebaseArticleDoc: Codable {
         guard let markdownContent = markdownContent else { return nil }
         guard let publicationDate = publicationDate else { return nil }
 
-        //TODO: Should I remove categories and keywords from Article
         return Article(
             id: id,
             author: author,
@@ -79,9 +72,7 @@ struct FirebaseArticleDoc: Codable {
             coverImageUrl: coverImageUrl,
             summary: summary,
             markdownContent: markdownContent,
-            publicationDate: publicationDate,
-            categories: [],
-            keywords: []
+            publicationDate: publicationDate
         )
     }
 }

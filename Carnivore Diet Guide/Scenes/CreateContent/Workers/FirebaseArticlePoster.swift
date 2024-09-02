@@ -9,12 +9,16 @@ import Foundation
 
 extension DefaultArticlePoster {
     static var forProd: ArticlePoster {
-        DefaultArticlePoster { article, feedItem in
+        DefaultArticlePoster { article, categories, keywords, feedItem in
             let articleRepo = FirebaseArticleRepository()
             let feedItemRepo = FirebaseFeedItemRepository()
             
             do {
-                try await articleRepo.create(article: article)
+                try await articleRepo.create(
+                    article: article,
+                    categories: categories,
+                    keywords: keywords
+                )
             } catch {
                 print("Failed to create Article. \(error.localizedDescription)")
                 throw error
