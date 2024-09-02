@@ -101,7 +101,7 @@ struct KnowledgeBaseView: View {
         
         LazyVGrid(columns: columns) {
             ForEach(searchModel.searchResults) { result in
-                ArticleItemView(article: result)
+                ArticleItemView(result)
             }
         }
         .padding(.horizontal)

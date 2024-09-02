@@ -24,7 +24,7 @@ struct ArticlesByContentCategoryView: View {
         
         LazyVGrid(columns: columns) {
             ForEach(model.articles) { article in
-                ArticleItemView(article: article)
+                ArticleItemView(article)
             }
             //TODO: LoadMoreArticlesView()
         }

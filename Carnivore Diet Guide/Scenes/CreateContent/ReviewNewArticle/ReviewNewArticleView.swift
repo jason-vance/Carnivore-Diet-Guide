@@ -118,10 +118,18 @@ struct ReviewNewArticleView: View {
     }
     
     @ViewBuilder func KnowledgeBaseArticleViews() -> some View {
-        //TODO: When I have other ArticleItemView styles, add them here
-        HStack {
-            ArticleItemView(article: article)
-            ArticleItemView(article: article)
+        VStack {
+            ArticleItemView(article)
+                .articleStyle(.largeVertical)
+            HStack {
+                ArticleItemView(article)
+                    .articleStyle(.vertical)
+                ArticleItemView(article)
+                    .articleStyle(.vertical)
+            }
+            ArticleItemView(article)
+                .articleStyle(.horizontal)
+
         }
     }
 }
