@@ -14,6 +14,9 @@ class FirebaseArticleRepository {
     
     private let articlesCollection = Firestore.firestore().collection(ARTICLES)
     
+    private let categoriesField: String = FirebaseArticleDoc.CodingKeys.categories.rawValue
+    private let publicationDateField: String = FirebaseArticleDoc.CodingKeys.publicationDate.rawValue
+
     func create(article: Article) async throws {
         let doc = FirebaseArticleDoc.from(article)
         try await articlesCollection.document(article.id).setData(from: doc)
@@ -21,12 +24,32 @@ class FirebaseArticleRepository {
 }
 
 extension FirebaseArticleRepository: ArticleFetcher {
+    
+    struct Cursor: ArticleCursor {
+        let document: DocumentSnapshot
+    }
+    
     func fetchArticles(
-        byCategory category: Resource.Category,
+        in category: Resource.Category,
         after cursor: inout (any ArticleCursor)?,
         limit: Int
     ) async throws -> [Article] {
-        //TODO: Implement FirebaseArticleRepository.fetchArticles
-        throw "Not Implemented"
+        var query = articlesCollection
+            .whereField(categoriesField, arrayContains: category.id)
+            .order(by: publicationDateField, descending: true)
+            .limit(to: limit)
+        if let cursor = cursor as? Cursor {
+            query = query.start(afterDocument: cursor.document)
+        }
+        
+        let snapshot = try await query.getDocuments()
+        
+        if let last = snapshot.documents.last {
+            cursor = Cursor(document: last)
+        }
+        
+        return try snapshot
+            .documents
+            .compactMap { try $0.data(as: FirebaseArticleDoc.self).toArticle() }
     }
 }

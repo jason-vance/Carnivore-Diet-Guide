@@ -61,4 +61,27 @@ struct FirebaseArticleDoc: Codable {
         )
     }
     
+    func toArticle() -> Article? {
+        guard let id = id else { return nil }
+        guard let author = author else { return nil }
+        guard let title = title else { return nil }
+        guard let coverImageUrl = URL(string: coverImageUrl ?? "") else { return nil }
+        guard let summaryText = summary else { return nil }
+        guard let summary = Resource.Summary(summaryText) else { return nil }
+        guard let markdownContent = markdownContent else { return nil }
+        guard let publicationDate = publicationDate else { return nil }
+
+        //TODO: Should I remove categories and keywords from Article
+        return Article(
+            id: id,
+            author: author,
+            title: title,
+            coverImageUrl: coverImageUrl,
+            summary: summary,
+            markdownContent: markdownContent,
+            publicationDate: publicationDate,
+            categories: [],
+            keywords: []
+        )
+    }
 }

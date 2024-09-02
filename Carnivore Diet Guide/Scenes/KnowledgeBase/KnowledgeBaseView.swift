@@ -89,7 +89,7 @@ struct KnowledgeBaseView: View {
         if showSearchContent {
             SearchContent()
         } else {
-            NonSearchContent()
+            ArticlesInCategoryView(category: selectedCategory)
         }
     }
     
@@ -105,22 +105,6 @@ struct KnowledgeBaseView: View {
             }
         }
         .padding(.horizontal)
-    }
-    
-    @ViewBuilder func NonSearchContent() -> some View {
-        if selectedCategory.isContentAgnostic {
-            ContentAgnosticCategoryView()
-        } else {
-            ContentCategoryView()
-        }
-    }
-    
-    @ViewBuilder func ContentAgnosticCategoryView() -> some View {
-        //TODO: Implement ContentAgnosticCategoryView
-    }
-    
-    @ViewBuilder func ContentCategoryView() -> some View {
-        //TODO: Implement ContentCategoryView
     }
 }
 

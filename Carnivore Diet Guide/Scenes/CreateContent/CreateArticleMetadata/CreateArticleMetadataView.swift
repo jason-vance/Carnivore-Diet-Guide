@@ -8,6 +8,7 @@
 import SwiftUI
 import SwinjectAutoregistration
 
+//TODO: Add publication date field
 struct CreateArticleMetadataView: View {
     
     @Environment(\.dismiss) private var dismiss: DismissAction
