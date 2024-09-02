@@ -13,6 +13,7 @@ class CreateArticleMetadataViewModel: ObservableObject {
     
     
     @Published public var articleSummary: Resource.Summary? = nil
+    @Published public var articlePublicationDate: Date = .now
     @Published public var articleCategories: Set<Resource.Category> = []
     @Published public var articleSearchKeywords: Set<SearchKeyword> = []
     
@@ -32,6 +33,7 @@ class CreateArticleMetadataViewModel: ObservableObject {
         return .init(
             id: id,
             summary: articleSummary,
+            publicationDate: articlePublicationDate,
             categories: articleCategories,
             searchKeywords: articleSearchKeywords
         )

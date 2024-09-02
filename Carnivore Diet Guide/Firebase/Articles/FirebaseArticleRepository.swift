@@ -32,6 +32,7 @@ class FirebaseArticleRepository {
         whereFunc: ((Query) -> Query)? = nil
     ) async throws -> [Article] {
         var query = articlesCollection
+            .whereField(publicationDateField, isLessThan: Date.now)
             .order(by: publicationDateField, descending: true)
             .limit(to: limit)
         

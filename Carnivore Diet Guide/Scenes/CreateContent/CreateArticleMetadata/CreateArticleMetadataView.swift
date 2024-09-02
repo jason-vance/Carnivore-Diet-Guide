@@ -8,7 +8,6 @@
 import SwiftUI
 import SwinjectAutoregistration
 
-//TODO: Add publication date field
 struct CreateArticleMetadataView: View {
     
     @Environment(\.dismiss) private var dismiss: DismissAction
@@ -21,6 +20,7 @@ struct CreateArticleMetadataView: View {
     public let dismissAll: () -> ()
     
     @State private var summaryText: String = ""
+    @State private var showPublicationDatePicker: Bool = false
     @State private var showAddCategoryDialog: Bool = false
     @State private var showEditKeywordsDialog: Bool = false
     @State private var showDiscardDialog: Bool = false
@@ -80,6 +80,7 @@ struct CreateArticleMetadataView: View {
             TopBar()
             List {
                 SummaryField()
+                PublicationDateField()
                 CategoriesField()
                 SearchKeywordsField()
             }
@@ -162,6 +163,43 @@ struct CreateArticleMetadataView: View {
             .listRowSeparator(.hidden)
         } header: {
             Text("Summary")
+                .foregroundStyle(Color.text)
+        }
+    }
+    
+    @ViewBuilder func PublicationDateField() -> some View {
+        Section {
+            Button {
+                withAnimation(.snappy) {
+                    showPublicationDatePicker.toggle()
+                }
+            } label: {
+                Text(model.articlePublicationDate.toBasicUiString())
+                    .foregroundStyle(Color.accent)
+                    .padding(.horizontal, .paddingHorizontalButtonMedium)
+                    .padding(.vertical, .paddingVerticalButtonMedium)
+                    .background {
+                        RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                            .foregroundStyle(Color.accent.opacity(0.1))
+                    }
+            }
+            .listRowBackground(Color.background)
+            .listRowSeparator(.hidden)
+            if showPublicationDatePicker {
+                DatePicker(
+                    "Publication Date",
+                    selection: $model.articlePublicationDate,
+                    in: .now...,
+                    displayedComponents: [.date]
+                )
+                .datePickerStyle(.graphical)
+                .foregroundStyle(Color.green)
+                .preferredColorScheme(.light)
+                .listRowBackground(Color.background)
+                .listRowSeparator(.hidden)
+            }
+        } header: {
+            Text("Publication Date")
                 .foregroundStyle(Color.text)
         }
     }

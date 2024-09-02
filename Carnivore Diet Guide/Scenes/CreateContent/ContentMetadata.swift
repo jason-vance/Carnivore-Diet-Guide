@@ -11,14 +11,16 @@ struct ContentMetadata: Hashable {
     
     public let id: UUID
     public let summary: Resource.Summary
+    public let publicationDate: Date
     public let categories: Set<Resource.Category>
     public let searchKeywords: Set<SearchKeyword>
     
     public static let sample: ContentMetadata = .init(
         id: UUID(),
         summary: .sample,
-        categories: Set(Resource.Category.samples),
-        searchKeywords: Set(SearchKeyword.samples)
+        publicationDate: .now,
+        categories: Resource.Category.samples,
+        searchKeywords: SearchKeyword.samples
     )
 }
 

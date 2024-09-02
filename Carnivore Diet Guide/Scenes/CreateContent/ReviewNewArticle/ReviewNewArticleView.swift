@@ -24,7 +24,7 @@ struct ReviewNewArticleView: View {
     private var feedItem: FeedItem {
         FeedItem(
             id: UUID().uuidString,
-            publicationDate: .now,
+            publicationDate: newArticleData.metadata.publicationDate,
             type: .article,
             resourceId: newArticleData.data.id.uuidString,
             userId: newArticleData.data.userId,
@@ -42,7 +42,7 @@ struct ReviewNewArticleView: View {
             coverImageUrl: newArticleData.data.imageUrls[0],
             summary: newArticleData.metadata.summary,
             markdownContent: newArticleData.data.markdownContent,
-            publicationDate: .now
+            publicationDate: newArticleData.metadata.publicationDate
         )
     }
     
