@@ -13,6 +13,7 @@ struct SelectCategoryView: View {
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
+    @State public var resourceType: Resource.ResourceType
     public let onSelect: (Resource.Category) -> ()
     
     @State private var categories: Set<Resource.Category> = []
@@ -24,7 +25,7 @@ struct SelectCategoryView: View {
     private func fetchCategories() {
         Task {
             do {
-                let categories = try await categoryProvider.fetchAllCategories()
+                let categories = try await categoryProvider.fetchAllCategories(forType: resourceType)
                 withAnimation(.snappy) {
                     self.categories = Set(categories)
                 }
@@ -95,6 +96,6 @@ struct SelectCategoryView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        SelectCategoryView { selectedCategory in }
+        SelectCategoryView(resourceType: .article) { selectedCategory in }
     }
 }

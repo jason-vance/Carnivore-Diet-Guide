@@ -31,7 +31,7 @@ class KnowledgeBaseViewModel: ObservableObject {
             var categories = Resource.Category.contentAgnosticCategories
             
             do {
-                let contentCategories = try await categoryProvider.fetchAllCategories()
+                let contentCategories = try await categoryProvider.fetchAllCategories(forType: .article)
                     .sorted { $0.name < $1.name }
                 categories.append(contentsOf: contentCategories)
             } catch {

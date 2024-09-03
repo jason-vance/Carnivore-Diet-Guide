@@ -256,7 +256,7 @@ struct CreateArticleMetadataView: View {
         .listRowSeparator(.hidden)
         .listRowBackground(Color.background)
         .sheet(isPresented: $showAddCategoryDialog) {
-            SelectCategoryView { selectedCategory in
+            SelectCategoryView(resourceType: .article) { selectedCategory in
                 withAnimation(.snappy) {
                     model.add(category: selectedCategory)
                 }

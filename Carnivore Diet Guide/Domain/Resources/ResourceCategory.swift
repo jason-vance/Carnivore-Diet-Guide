@@ -13,8 +13,14 @@ extension Resource {
         let id: String
         let name: String
         let image: String?
+        let resourceType: ResourceType?
         
-        init?(_ name: String, image: String? = nil, id: String = UUID().uuidString) {
+        init?(
+            _ name: String,
+            image: String? = nil,
+            id: String = UUID().uuidString,
+            resourceType: ResourceType? = nil
+        ) {
             // Trim whitespace
             let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
             
@@ -33,6 +39,7 @@ extension Resource {
             self.name = trimmedName.capitalized
             self.image = image
             self.id = id
+            self.resourceType = resourceType
         }
         
         var isContentAgnostic: Bool { Self.contentAgnosticCategories.contains(self) }
@@ -46,10 +53,10 @@ extension Resource {
         static let liked: Category = .init("Liked", image: "heart.fill", id: UUID().uuidString)!
         
         static let samples: Set<Resource.Category> = [
-            .init("Test Category", image: "signature", id: UUID().uuidString)!,
-            .init("Exercise", image: "dumbbell.fill", id: UUID().uuidString)!,
-            .init("FAQs", image: "questionmark", id: UUID().uuidString)!,
-            .init("Science", image: "testtube.2", id: UUID().uuidString)!,
+            .init("Test Category", image: "signature", id: UUID().uuidString, resourceType: .article)!,
+            .init("Exercise", image: "dumbbell.fill", id: UUID().uuidString, resourceType: .article)!,
+            .init("FAQs", image: "questionmark", id: UUID().uuidString, resourceType: .article)!,
+            .init("Science", image: "testtube.2", id: UUID().uuidString, resourceType: .article)!,
         ]
     }
 }
