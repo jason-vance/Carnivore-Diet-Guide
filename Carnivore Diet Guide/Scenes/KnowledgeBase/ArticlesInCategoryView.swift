@@ -109,7 +109,7 @@ struct ArticlesInCategoryView: View {
                     category: .samples.first!
                 )
                 .navigationDestination(for: Article.self) { article in
-                    ArticleDetailView(articleId: article.id)
+                    ArticleDetailView(article: article)
                 }
             }
         }

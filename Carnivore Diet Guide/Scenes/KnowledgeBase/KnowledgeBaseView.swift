@@ -54,7 +54,7 @@ struct KnowledgeBaseView: View {
                 }
             }
             .navigationDestination(for: Article.self) { article in
-                ArticleDetailView(articleId: article.id)
+                ArticleDetailView(article: article)
             }
         }
     }

@@ -85,7 +85,7 @@ struct PostsView: View {
             .navigationBarBackButtonHidden()
             .alert(alertMessage, isPresented: $showAlert) {}
             .navigationDestination(for: Post.self) { post in
-                PostDetailView(postId: post.id)
+                PostDetailView(post: post)
             }
         }
         .onReceive(deletedPost) { deletedResource in

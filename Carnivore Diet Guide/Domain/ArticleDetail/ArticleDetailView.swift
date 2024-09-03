@@ -9,21 +9,31 @@ import SwiftUI
 import MarkdownUI
 import SwinjectAutoregistration
 
-//TODO: Allow passing in the article and not just the id
 struct ArticleDetailView: View {
-    
-    public let articleId: String
     
     private let articleFetcher = iocContainer~>ArticleDetailArticleFetcher.self
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
-    @State private var article: Article? = nil
+    @State private var articleId: String
+    @State private var article: Article?
     @State private var isWorking: Bool = false
     
     @State private var showArticleFailedToFetch: Bool = false
     
-    private func fetchArticle(withId postId: String) {
+    init(articleId: String) {
+        self.article = nil
+        self.articleId = articleId
+    }
+    
+    init(article: Article) {
+        self.article = article
+        self.articleId = article.id
+    }
+    
+    private func fetchArticle(withId articleId: String) {
+        guard articleId != article?.id else { return }
+        
         Task {
             do {
                 article = try await articleFetcher.fetchArticle(withId: articleId)
@@ -110,11 +120,19 @@ struct ArticleDetailView: View {
     }
 }
 
-#Preview("Default") {
+#Preview("Default articleId init") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
         ArticleDetailView(articleId: Article.sample.id)
+    }
+}
+
+#Preview("Default article init") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        ArticleDetailView(article: Article.sample)
     }
 }
 

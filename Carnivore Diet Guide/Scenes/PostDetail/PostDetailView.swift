@@ -9,21 +9,31 @@ import SwiftUI
 import MarkdownUI
 import SwinjectAutoregistration
 
-//TODO: Allow passing in the post and not just the id
 struct PostDetailView: View {
-    
-    public let postId: String
     
     private let postFetcher = iocContainer~>PostFetcher.self
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
-    @State private var post: Post? = nil
+    @State private var postId: String
+    @State private var post: Post?
     @State private var isWorking: Bool = false
     
     @State private var showPostFailedToFetch: Bool = false
     
+    init(postId: String) {
+        self.post = nil
+        self.postId = postId
+    }
+    
+    init(post: Post) {
+        self.post = post
+        self.postId = post.id
+    }
+    
     private func fetchPost(withId postId: String) {
+        guard postId != post?.id else { return }
+        
         Task {
             do {
                 post = try await postFetcher.fetchPost(withId: postId)
@@ -110,11 +120,19 @@ struct PostDetailView: View {
     }
 }
 
-#Preview("Default") {
+#Preview("Default postId init") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
         PostDetailView(postId: Post.sample.id)
+    }
+}
+
+#Preview("Default post init") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        PostDetailView(post: Post.sample)
     }
 }
 
