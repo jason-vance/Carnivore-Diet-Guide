@@ -16,6 +16,7 @@ struct KnowledgeBaseView: View {
     private let subduedItemHeight: CGFloat = 72
     private let margin: CGFloat = 16
     
+    @State private var navigationPath = NavigationPath()
     @State private var showSearchContent: Bool = false
 
     @StateObject private var model = KnowledgeBaseViewModel(
@@ -28,7 +29,7 @@ struct KnowledgeBaseView: View {
     @State var selectedCategory: Resource.Category = .featured
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             VStack(spacing: 0) {
                 ScreenTitleBar(String(localized: "Knowledge Base"))
                 ScrollView {
@@ -51,6 +52,9 @@ struct KnowledgeBaseView: View {
                 withAnimation(.snappy) {
                     self.showSearchContent = showSearchContent
                 }
+            }
+            .navigationDestination(for: Article.self) { article in
+                ArticleDetailView(articleId: article.id)
             }
         }
     }
@@ -89,7 +93,10 @@ struct KnowledgeBaseView: View {
         if showSearchContent {
             SearchContent()
         } else {
-            ArticlesInCategoryView(category: selectedCategory)
+            ArticlesInCategoryView(
+                navigationPath: $navigationPath,
+                category: selectedCategory
+            )
         }
     }
     

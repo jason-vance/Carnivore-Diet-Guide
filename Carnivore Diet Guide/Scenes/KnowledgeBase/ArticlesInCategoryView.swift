@@ -12,6 +12,7 @@ struct ArticlesInCategoryView: View {
     
     private let fetchArticlesLimit: Int = 8
     
+    @Binding public var navigationPath: NavigationPath
     public var category: Resource.Category
     
     @State private var articles: [Article] = []
@@ -63,7 +64,11 @@ struct ArticlesInCategoryView: View {
         VStack {
             LazyVGrid(columns: columns) {
                 ForEach(articles) { article in
-                    ArticleItemView(article)
+                    Button {
+                        navigationPath.append(article)
+                    } label: {
+                        ArticleItemView(article)
+                    }
                 }
             }
             LoadMoreArticlesView()
@@ -97,6 +102,16 @@ struct ArticlesInCategoryView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        ArticlesInCategoryView(category: .samples.first!)
+        StatefulPreviewContainer(NavigationPath()) { navPath in
+            NavigationStack(path: navPath) {
+                ArticlesInCategoryView(
+                    navigationPath: navPath,
+                    category: .samples.first!
+                )
+                .navigationDestination(for: Article.self) { article in
+                    ArticleDetailView(articleId: article.id)
+                }
+            }
+        }
     }
 }

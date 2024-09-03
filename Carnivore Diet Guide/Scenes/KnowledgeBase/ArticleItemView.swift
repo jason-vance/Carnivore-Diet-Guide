@@ -101,6 +101,7 @@ struct ArticleItemView: View {
             .font(summaryFont.weight(.medium).width(.condensed))
             .foregroundStyle(Color.text)
             .lineLimit(summaryLineLimit, reservesSpace: true)
+            .multilineTextAlignment(.leading)
             .padding(8)
     }
     

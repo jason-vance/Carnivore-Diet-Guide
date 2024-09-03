@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Article: Identifiable {
+struct Article: Identifiable, Hashable {
     
     let id: String
     let author: String

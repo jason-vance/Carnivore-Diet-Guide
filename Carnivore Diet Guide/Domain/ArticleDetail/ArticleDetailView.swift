@@ -1,35 +1,35 @@
 //
-//  PostDetailView.swift
+//  ArticleDetailView.swift
 //  Carnivore Diet Guide
 //
-//  Created by Jason Vance on 1/6/24.
+//  Created by Jason Vance on 9/3/24.
 //
 
 import SwiftUI
 import MarkdownUI
 import SwinjectAutoregistration
 
-//TODO: Allow passing in the post and not just the id
-struct PostDetailView: View {
+//TODO: Allow passing in the article and not just the id
+struct ArticleDetailView: View {
     
-    public let postId: String
+    public let articleId: String
     
-    private let postFetcher = iocContainer~>PostFetcher.self
+    private let articleFetcher = iocContainer~>ArticleDetailArticleFetcher.self
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
-    @State private var post: Post? = nil
+    @State private var article: Article? = nil
     @State private var isWorking: Bool = false
     
-    @State private var showPostFailedToFetch: Bool = false
+    @State private var showArticleFailedToFetch: Bool = false
     
-    private func fetchPost(withId postId: String) {
+    private func fetchArticle(withId postId: String) {
         Task {
             do {
-                post = try await postFetcher.fetchPost(withId: postId)
+                article = try await articleFetcher.fetchArticle(withId: articleId)
             } catch {
-                print("Post failed to fetch")
-                showPostFailedToFetch = true
+                print("Article failed to fetch")
+                showArticleFailedToFetch = true
             }
         }
     }
@@ -37,9 +37,9 @@ struct PostDetailView: View {
     var body: some View {
         VStack(spacing: 0) {
             NavigationBar()
-            if let post = post, !isWorking {
+            if let article = article, !isWorking {
                 ScrollView {
-                    PostView(post: post)
+                    ArticleView(article: article)
                 }
             } else {
                 LoadingView()
@@ -47,10 +47,10 @@ struct PostDetailView: View {
         }
         .background(Color.background)
         .navigationBarBackButtonHidden()
-        .onChange(of: postId, initial: true) { oldPostId, newPostId in
-            fetchPost(withId: newPostId)
+        .onChange(of: articleId, initial: true) { _, newArticleId in
+            fetchArticle(withId: newArticleId)
         }
-        .alert("The post could not be fetched", isPresented: $showPostFailedToFetch) {
+        .alert("The article could not be fetched", isPresented: $showArticleFailedToFetch) {
             Button("OK", role: .cancel) {
                 dismiss()
             }
@@ -71,8 +71,8 @@ struct PostDetailView: View {
     }
     
     @ViewBuilder func OptionsMenu() -> some View {
-        if let post = post {
-            let resource = Resource(post)
+        if let article = article {
+            let resource = Resource(article)
             
             HStack(spacing: 16) {
                 ExtraOptionsButton(
@@ -114,21 +114,25 @@ struct PostDetailView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        PostDetailView(postId: Post.sample.id)
+        ArticleDetailView(articleId: Article.sample.id)
     }
 }
 
 #Preview("Fails to load") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
-        iocContainer.autoregister(PostFetcher.self, initializer: { DefaultPostFetcher.forPreviewsWithFailure })
+        iocContainer.autoregister(ArticleDetailArticleFetcher.self) {
+            let fetcher = MockArticleDetailArticleFetcher()
+            fetcher.error = "Test failure"
+            return fetcher
+        }
     } content: {
         NavigationStack {
             NavigationLink {
-                PostDetailView(postId: Post.sample.id)
+                ArticleDetailView(articleId: Article.sample.id)
             } label: {
                 HStack {
-                    Text("Post Detail\n(Fails to Load)")
+                    Text("Article Detail\n(Fails to Load)")
                     Image(systemName: "chevron.forward")
                 }
                 .foregroundStyle(Color.background)

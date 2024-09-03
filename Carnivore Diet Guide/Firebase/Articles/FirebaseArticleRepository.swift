@@ -109,3 +109,14 @@ extension FirebaseArticleRepository: ArticleFetcher {
         }
     }
 }
+
+extension FirebaseArticleRepository: ArticleDetailArticleFetcher {
+    
+    func fetchArticle(withId articleId: String) async throws -> Article {
+        let doc = try await articlesCollection.document(articleId).getDocument()
+        guard let article = try doc.data(as: FirebaseArticleDoc.self).toArticle() else {
+            throw "Could convert Firestore doc to Article"
+        }
+        return article
+    }
+}
