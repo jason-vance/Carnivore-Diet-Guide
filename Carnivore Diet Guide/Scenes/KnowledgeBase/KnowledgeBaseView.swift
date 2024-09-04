@@ -74,24 +74,7 @@ struct KnowledgeBaseView: View {
             )
             .padding(.top)
             .padding(.horizontal)
-            SearchCategoryPicker()
-        }
-    }
-    
-    //TODO: Put this into its own file
-    @ViewBuilder func SearchCategoryPicker() -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                ForEach(model.articleCategories) { category in
-                    Button {
-                        withAnimation(.snappy) { selectedCategory = category }
-                    } label: {
-                        ResourceCategoryView(category)
-                            .highlighted(selectedCategory == category)
-                    }
-                }
-            }
-            .padding()
+            ResourceCategoryPicker(selectedCategory: $selectedCategory, resourceType: .article)
         }
     }
     
