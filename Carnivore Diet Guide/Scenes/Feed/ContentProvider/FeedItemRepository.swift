@@ -10,7 +10,7 @@ import Foundation
 protocol FeedItemRepositoryCursor { }
 
 protocol FeedItemRepository {
-    func getFeedItemsNewestToOldest(
+    func getPublishedFeedItemsNewestToOldest(
         after cursor: inout FeedItemRepositoryCursor?,
         limit: Int,
         excludeItemsFrom userIdToExclude: String
@@ -25,7 +25,7 @@ class MockFeedItemRepository: FeedItemRepository {
     
     let totalFeedItems: Int = 22
     
-    func getFeedItemsNewestToOldest(
+    func getPublishedFeedItemsNewestToOldest(
         after cursor: inout FeedItemRepositoryCursor?,
         limit: Int,
         excludeItemsFrom userIdToExclude: String

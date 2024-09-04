@@ -47,7 +47,7 @@ class DefaultFeedViewContentProvider: FeedViewContentProvider {
     }
 
     func fetchMoreFeedItems() async throws {
-        let newFeedItems = try await feedItemRepo.getFeedItemsNewestToOldest(
+        let newFeedItems = try await feedItemRepo.getPublishedFeedItemsNewestToOldest(
             after: &cursor,
             limit: Self.limit,
             excludeItemsFrom: currentUser

@@ -13,6 +13,19 @@ struct SearchKeyword: Identifiable, Hashable {
     let text: String
     let score: UInt
     
+    static func keywordsFrom(string: String) -> Set<SearchKeyword> {
+        var keywords = Set<SearchKeyword>()
+        
+        string.lemmatized()
+            .forEach { lemma in
+                if let keyword = SearchKeyword(lemma) {
+                    keywords.insert(keyword)
+                }
+            }
+        
+        return keywords
+    }
+    
     init?(_ text: String, score: UInt = 1) {
         // Trim whitespace
         let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)

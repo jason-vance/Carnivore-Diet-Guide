@@ -37,7 +37,7 @@ extension FirebaseFeedItemRepository: FeedItemRepository {
         let document: DocumentSnapshot
     }
     
-    func getFeedItemsNewestToOldest(
+    func getPublishedFeedItemsNewestToOldest(
         after cursor: inout FeedItemRepositoryCursor?,
         limit: Int,
         excludeItemsFrom userIdToExclude: String

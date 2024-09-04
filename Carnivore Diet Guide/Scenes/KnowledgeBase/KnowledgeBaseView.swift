@@ -24,6 +24,7 @@ struct KnowledgeBaseView: View {
     )
     
     @StateObject private var searchModel = KnowledgeBaseSearchViewModel(
+        articleSearcher: iocContainer~>KnowledgeBaseArticleSearcher.self
     )
     
     @State var selectedCategory: Resource.Category = .featured
@@ -48,8 +49,12 @@ struct KnowledgeBaseView: View {
             }
             .background(Color.background)
             .alert(model.alertMessage, isPresented: $model.showAlert) {}
+            .alert(searchModel.alertMessage, isPresented: $searchModel.showAlert) {}
             .onChange(of: searchModel.searchPresented, initial: true) { _, showSearchContent in
                 withAnimation(.snappy) {
+                    if !showSearchContent {
+                        searchModel.clearSearchResults()
+                    }
                     self.showSearchContent = showSearchContent
                 }
             }
@@ -73,6 +78,7 @@ struct KnowledgeBaseView: View {
         }
     }
     
+    //TODO: Put this into its own file
     @ViewBuilder func SearchCategoryPicker() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
@@ -90,7 +96,7 @@ struct KnowledgeBaseView: View {
     }
     
     @ViewBuilder func ListContent() -> some View {
-        if showSearchContent {
+        if showSearchContent || searchModel.searchResults != nil {
             SearchContent()
         } else {
             ArticlesInCategoryView(
@@ -106,12 +112,32 @@ struct KnowledgeBaseView: View {
             GridItem.init(.adaptive(minimum: 100, maximum: 300))
         ]
         
-        LazyVGrid(columns: columns) {
-            ForEach(searchModel.searchResults) { result in
-                ArticleItemView(result)
+        VStack {
+            if let searchResults = searchModel.searchResults {
+                if searchResults.isEmpty {
+                    ContentUnavailableView(
+                        "Nothing could be found matching\n\"\(searchModel.searchText)\"",
+                        systemImage: "magnifyingglass"
+                    )
+                    .foregroundStyle(Color.text)
+                } else {
+                    Text("\(searchResults.count) articles found")
+                    LazyVGrid(columns: columns) {
+                        ForEach(searchResults) { result in
+                            ArticleItemView(result)
+                        }
+                    }
+                }
             }
         }
         .padding(.horizontal)
+        .overlay {
+            if searchModel.isSearching {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .tint(Color.accent)
+            }
+        }
     }
 }
 

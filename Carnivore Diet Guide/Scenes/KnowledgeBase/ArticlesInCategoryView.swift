@@ -33,7 +33,7 @@ struct ArticlesInCategoryView: View {
     func fetchMoreArticles() {
         Task {
             do {
-                let newArticles = try await articleFetcher.fetchArticles(
+                let newArticles = try await articleFetcher.fetchPublishedArticles(
                     in: category,
                     after: &articleCursor,
                     limit: fetchArticlesLimit
@@ -56,6 +56,7 @@ struct ArticlesInCategoryView: View {
     }
     
     var body: some View {
+        //TODO: ContentUnavailableView
         let columns = [
             GridItem.init(.adaptive(minimum: 100, maximum: 300)),
             GridItem.init(.adaptive(minimum: 100, maximum: 300))

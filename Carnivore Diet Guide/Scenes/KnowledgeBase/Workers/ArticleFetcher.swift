@@ -10,7 +10,7 @@ import Foundation
 protocol ArticleCursor { }
 
 protocol ArticleFetcher {
-    func fetchArticles(
+    func fetchPublishedArticles(
         in category: Resource.Category,
         after cursor: inout ArticleCursor?,
         limit: Int
@@ -24,7 +24,7 @@ class MockArticleFetcher: ArticleFetcher {
     var articles: [Article] = [ .sample, .sample2 ]
     var error: Error? = nil
     
-    func fetchArticles(
+    func fetchPublishedArticles(
         in category: Resource.Category,
         after cursor: inout ArticleCursor?,
         limit: Int

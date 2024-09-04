@@ -14,8 +14,9 @@ class FirebaseArticleRepository {
     
     private let articlesCollection = Firestore.firestore().collection(ARTICLES)
     
-    private let categoriesField: String = FirebaseArticleDoc.CodingKeys.categories.rawValue
-    private let publicationDateField: String = FirebaseArticleDoc.CodingKeys.publicationDate.rawValue
+    private let categoriesField = FirebaseArticleDoc.CodingKeys.categories.rawValue
+    private let publicationDateField = FirebaseArticleDoc.CodingKeys.publicationDate.rawValue
+    private let keywordsField = FirebaseArticleDoc.CodingKeys.keywords.rawValue
 
     func create(
         article: Article,
@@ -26,7 +27,7 @@ class FirebaseArticleRepository {
         try await articlesCollection.document(article.id).setData(from: doc)
     }
     
-    func fetchAllArticles (
+    func fetchPublishedArticles (
         after cursor: inout (any ArticleCursor)?,
         limit: Int,
         whereFunc: ((Query) -> Query)? = nil
@@ -36,6 +37,7 @@ class FirebaseArticleRepository {
             .order(by: publicationDateField, descending: true)
             .limit(to: limit)
         
+        //TODO: Put this where before everything else for optimization
         if let whereFunc = whereFunc {
             query = whereFunc(query)
         }
@@ -50,9 +52,29 @@ class FirebaseArticleRepository {
             cursor = Cursor(document: last)
         }
         
-        return try snapshot
+        return snapshot
             .documents
-            .compactMap { try $0.data(as: FirebaseArticleDoc.self).toArticle() }
+            .compactMap { try? $0.data(as: FirebaseArticleDoc.self).toArticle() }
+    }
+    
+    func searchArticles(
+        withKeyword keyword: SearchKeyword
+    ) async throws -> [SearchResult<Article>] {
+        let keywordField = keywordsField + ".\(keyword.text)"
+        
+        var query = articlesCollection
+            .whereField(keywordField, isGreaterThan: 0)
+        
+        return try await query
+            .getDocuments()
+            .documents
+            .compactMap {
+                guard let articleDoc = try? $0.data(as: FirebaseArticleDoc.self) else { return nil }
+                guard let score = articleDoc.keywords?[keyword.text] else { return nil }
+                guard let article = articleDoc.toArticle() else { return nil }
+                
+                return SearchResult(item: article, score: score)
+            }
     }
 }
 
@@ -62,7 +84,7 @@ extension FirebaseArticleRepository: ArticleFetcher {
         let document: DocumentSnapshot
     }
     
-    private func fetchArticlesIn(
+    private func fetchPublishedArticlesIn(
         contentAgnosticCategory category: Resource.Category,
         after cursor: inout (any ArticleCursor)?,
         limit: Int
@@ -80,15 +102,15 @@ extension FirebaseArticleRepository: ArticleFetcher {
             return []
         }
 
-        return try await fetchAllArticles(after: &cursor, limit: limit)
+        return try await fetchPublishedArticles(after: &cursor, limit: limit)
     }
     
-    private func fetchArticlesIn(
+    private func fetchPublishedArticlesIn(
         contentBasedCategory category: Resource.Category,
         after cursor: inout (any ArticleCursor)?,
         limit: Int
     ) async throws -> [Article] {
-        return try await fetchAllArticles(
+        return try await fetchPublishedArticles(
             after: &cursor,
             limit: limit,
             whereFunc: { query in
@@ -97,15 +119,15 @@ extension FirebaseArticleRepository: ArticleFetcher {
         )
     }
     
-    func fetchArticles(
+    func fetchPublishedArticles(
         in category: Resource.Category,
         after cursor: inout (any ArticleCursor)?,
         limit: Int
     ) async throws -> [Article] {
         if category.isContentAgnostic {
-            return try await fetchArticlesIn(contentAgnosticCategory: category, after: &cursor, limit: limit)
+            return try await fetchPublishedArticlesIn(contentAgnosticCategory: category, after: &cursor, limit: limit)
         } else {
-            return try await fetchArticlesIn(contentBasedCategory: category, after: &cursor, limit: limit)
+            return try await fetchPublishedArticlesIn(contentBasedCategory: category, after: &cursor, limit: limit)
         }
     }
 }

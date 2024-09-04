@@ -20,6 +20,7 @@ struct SearchBar: View {
     var body: some View {
         HStack {
             TextField(prompt, text: $searchText)
+                .submitLabel(.search)
                 .onSubmit(of: .text) {
                     action()
                 }
