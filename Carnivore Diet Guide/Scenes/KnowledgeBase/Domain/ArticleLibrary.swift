@@ -6,23 +6,31 @@
 //
 
 import Foundation
-import SwinjectAutoregistration
+import Combine
 
 class ArticleLibrary {
     
     private typealias ArticleCache = Cache<String, ArticleCacheEntry>
     private static let cacheName = "ArticlesCache"
     
-    private var articles: [Article] = []
+    private var articlesSubject: CurrentValueSubject<[Article],Never> = .init([])
+    
+    public var publishedArticlesPublisher: AnyPublisher<[Article],Never> {
+        articlesSubject
+            .map { $0.filter { $0.publicationDate < .now } }
+            .eraseToAnyPublisher()
+    }
     
     private let articleFetcher: ArticleFetcher
 
     private let articleCache = Cache.readFromDiskOrDefault(ArticleCache.self, withName: ArticleLibrary.cacheName)
     
-    public static func getInstance() -> ArticleLibrary { instance }
-    public static let instance: ArticleLibrary = {
-        .init(articleFetcher: iocContainer~>ArticleFetcher.self)
-    }()
+    private static var _instance: ArticleLibrary? = nil
+    public static var instance: ArticleLibrary { _instance! }
+    public static func makeInstance(articleFetcher: ArticleFetcher) {
+        assert(_instance == nil)
+        _instance = .init(articleFetcher: articleFetcher)
+    }
     
     private init(
         articleFetcher: ArticleFetcher
@@ -44,11 +52,11 @@ class ArticleLibrary {
     }
     
     private func fetchCachedArticles() {
-        articles = articleCache.values.compactMap { $0.toArticle() }
+        articlesSubject.value = articleCache.values.compactMap { $0.toArticle() }
     }
     
     private func fetchNewerArticles() async throws {
-        guard var newestArticle = (articles.max { $0.publicationDate < $1.publicationDate }) else { return }
+        guard var newestArticle = (articlesSubject.value.max { $0.publicationDate < $1.publicationDate }) else { return }
         
         var canFetchMore = true
         
@@ -62,7 +70,7 @@ class ArticleLibrary {
                 canFetchMore = !fetchedArticles.isEmpty
                 newestArticle = fetchedArticles.last ?? newestArticle
                 
-                articles.append(contentsOf: fetchedArticles)
+                articlesSubject.value.append(contentsOf: fetchedArticles)
                 fetchedArticles.forEach { articleCache[$0.id] = .from($0) }
                 print("ArticleLibrary.fetchNewerArticles found \(fetchedArticles.count) articles")
             } catch {
@@ -72,7 +80,7 @@ class ArticleLibrary {
     }
     
     private func fetchOlderArticles() async throws {
-        var oldestArticle = articles.min { $0.publicationDate < $1.publicationDate }
+        var oldestArticle = articlesSubject.value.min { $0.publicationDate < $1.publicationDate }
         
         var canFetchMore = true
         
@@ -86,7 +94,7 @@ class ArticleLibrary {
                 canFetchMore = !fetchedArticles.isEmpty
                 oldestArticle = fetchedArticles.last ?? oldestArticle
                 
-                articles.append(contentsOf: fetchedArticles)
+                articlesSubject.value.append(contentsOf: fetchedArticles)
                 fetchedArticles.forEach { articleCache[$0.id] = .from($0) }
                 print("ArticleLibrary.fetchOlderArticles found \(fetchedArticles.count) articles")
             } catch {

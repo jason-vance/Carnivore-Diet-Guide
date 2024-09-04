@@ -5,6 +5,7 @@
 //  Created by Jason Vance on 8/28/24.
 //
 
+import Combine
 import SwiftUI
 import SwinjectAutoregistration
 
@@ -16,20 +17,20 @@ struct ArticlesInCategoryView: View {
     public var category: Resource.Category
     
     @State private var filter: Set<SearchKeyword> = []
-    @State private var articles: [Article] = []
-    @State private var articleCursor: ArticleCursor? = nil
-    @State private var canFetchMore: Bool = false
+    @State private var allArticles: [Article] = []
     
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     
-    //TODO: Use the articleLibrary to populate the articles
     private let articleLibrary = iocContainer~>ArticleLibrary.self
+    private var articlePublisher: AnyPublisher<[Article],Never> {
+        articleLibrary.publishedArticlesPublisher
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
     
-    func refresh() {
-        articles = []
-        articleCursor = nil
-        canFetchMore = true
+    private var displayArticles: [Article] {
+        allArticles.sorted { $0.publicationDate > $1.publicationDate }
     }
     
     private func show(alert: String) {
@@ -44,22 +45,18 @@ struct ArticlesInCategoryView: View {
             GridItem.init(.adaptive(minimum: 100, maximum: 300))
         ]
         
-        VStack {
-            LazyVGrid(columns: columns) {
-                ForEach(articles) { article in
-                    Button {
-                        navigationPath.append(article)
-                    } label: {
-                        ArticleItemView(article)
-                    }
+        LazyVGrid(columns: columns) {
+            ForEach(displayArticles) { article in
+                Button {
+                    navigationPath.append(article)
+                } label: {
+                    ArticleItemView(article)
                 }
             }
         }
         .padding(.horizontal)
-        .onChange(of: category, initial: true) { _, newCategory in
-            refresh()
-        }
         .alert(alertMessage, isPresented: $showAlert) {}
+        .onReceive(articlePublisher) { allArticles = $0 }
     }
 }
 
