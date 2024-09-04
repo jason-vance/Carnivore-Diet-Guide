@@ -7,11 +7,15 @@
 
 import Foundation
 
-struct SearchKeyword: Identifiable, Hashable, Codable {
+struct SearchKeyword: Identifiable, Hashable, Codable, Equatable {
 
     var id: String { text }
     let text: String
     let score: UInt
+    
+    public static func ==(_ lhs: SearchKeyword, _ rhs: SearchKeyword) -> Bool {
+        lhs.id == rhs.id
+    }
     
     static func keywordsFrom(string: String) -> Set<SearchKeyword> {
         var keywords = Set<SearchKeyword>()

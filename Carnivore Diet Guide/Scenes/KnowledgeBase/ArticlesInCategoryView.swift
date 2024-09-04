@@ -15,8 +15,8 @@ struct ArticlesInCategoryView: View {
     
     @Binding public var navigationPath: NavigationPath
     public var category: Resource.Category
+    public var keywords: Set<SearchKeyword>
     
-    @State private var filter: Set<SearchKeyword> = []
     @State private var allArticles: [Article] = []
     
     @State private var showAlert: Bool = false
@@ -30,7 +30,22 @@ struct ArticlesInCategoryView: View {
     }
     
     private var displayArticles: [Article] {
-        allArticles.sorted { $0.publicationDate > $1.publicationDate }
+        var articles = allArticles
+            .sorted { $0.publicationDate > $1.publicationDate }
+        
+        if category != .all {
+            articles = articles.filter { $0.categories.contains(category) }
+        }
+        
+        if !keywords.isEmpty {
+            articles = articles
+                .map { ($0, $0.relevanceTo(keywords)) }
+                .filter { $0.1 > 0 }
+                .sorted { $0.1 > $1.1 }
+                .map { $0.0 }
+        }
+        
+        return articles
     }
     
     private func show(alert: String) {
@@ -68,7 +83,8 @@ struct ArticlesInCategoryView: View {
             NavigationStack(path: navPath) {
                 ArticlesInCategoryView(
                     navigationPath: navPath,
-                    category: .samples.first!
+                    category: .samples.first!,
+                    keywords: []
                 )
                 .navigationDestination(for: Article.self) { article in
                     ArticleDetailView(article: article)

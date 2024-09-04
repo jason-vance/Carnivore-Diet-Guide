@@ -61,7 +61,8 @@ struct KnowledgeBaseView: View {
     @ViewBuilder func ListContent() -> some View {
         ArticlesInCategoryView(
             navigationPath: $navigationPath,
-            category: selectedCategory
+            category: selectedCategory,
+            keywords: SearchKeyword.keywordsFrom(string: searchText)
         )
     }
 }

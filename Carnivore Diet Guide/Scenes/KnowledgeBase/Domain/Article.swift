@@ -18,6 +18,12 @@ struct Article: Identifiable, Hashable {
     let publicationDate: Date
     let categories: Set<Resource.Category>
     let keywords: Set<SearchKeyword>
+    
+    func relevanceTo(_ keywords: Set<SearchKeyword>) -> UInt {
+        return self.keywords
+            .filter { keywords.contains($0) }
+            .reduce(0) { $0 + $1.score }
+    }
 }
 
 extension Article {
