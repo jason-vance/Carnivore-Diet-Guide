@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SearchKeyword: Identifiable, Hashable {
+struct SearchKeyword: Identifiable, Hashable, Codable {
 
     var id: String { text }
     let text: String

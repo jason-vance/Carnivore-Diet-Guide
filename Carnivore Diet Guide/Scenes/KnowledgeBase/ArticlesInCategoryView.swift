@@ -15,6 +15,7 @@ struct ArticlesInCategoryView: View {
     @Binding public var navigationPath: NavigationPath
     public var category: Resource.Category
     
+    @State private var filter: Set<SearchKeyword> = []
     @State private var articles: [Article] = []
     @State private var articleCursor: ArticleCursor? = nil
     @State private var canFetchMore: Bool = false
@@ -22,32 +23,13 @@ struct ArticlesInCategoryView: View {
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     
-    private let articleFetcher = iocContainer~>ArticleFetcher.self
+    //TODO: Use the articleLibrary to populate the articles
+    private let articleLibrary = iocContainer~>ArticleLibrary.self
     
     func refresh() {
         articles = []
         articleCursor = nil
         canFetchMore = true
-    }
-    
-    func fetchMoreArticles() {
-        Task {
-            do {
-                let newArticles = try await articleFetcher.fetchPublishedArticles(
-                    in: category,
-                    after: &articleCursor,
-                    limit: fetchArticlesLimit
-                )
-                withAnimation(.snappy) {
-                    canFetchMore = !newArticles.isEmpty
-                }
-                
-                articles.append(contentsOf: newArticles)
-            } catch {
-                print("Failed to fetch articles. \(error.localizedDescription)")
-                show(alert: "Failed to fetch articles. \(error.localizedDescription)")
-            }
-        }
     }
     
     private func show(alert: String) {
@@ -72,30 +54,12 @@ struct ArticlesInCategoryView: View {
                     }
                 }
             }
-            LoadMoreArticlesView()
         }
         .padding(.horizontal)
         .onChange(of: category, initial: true) { _, newCategory in
             refresh()
         }
         .alert(alertMessage, isPresented: $showAlert) {}
-    }
-    
-    @ViewBuilder func LoadMoreArticlesView() -> some View {
-        if canFetchMore {
-            HStack {
-                Spacer()
-                ProgressView()
-                    .progressViewStyle(.circular)
-                    .tint(Color.accent)
-                    .padding(.vertical, 64)
-                Spacer()
-            }
-            .onAppear { fetchMoreArticles() }
-            .listRowBackground(Color.background)
-            .listRowSeparator(.hidden)
-            .id(UUID())
-        }
     }
 }
 

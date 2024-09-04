@@ -58,8 +58,6 @@ struct ReviewNewArticleView: View {
                 withAnimation(.snappy) { isPosting = true }
                 try await articlePoster.post(
                     article: article,
-                    categories: newArticleData.metadata.categories,
-                    keywords: newArticleData.metadata.searchKeywords,
                     feedItem: feedItem
                 )
                 dismissAll()

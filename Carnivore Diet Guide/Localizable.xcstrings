@@ -81,9 +81,6 @@
     "%lld" : {
 
     },
-    "%lld articles found" : {
-
-    },
     "%lld days ago" : {
       "localizations" : {
         "en" : {
@@ -1445,9 +1442,6 @@
 
     },
     "Next" : {
-
-    },
-    "Nothing could be found matching\n\"%@\"" : {
 
     },
     "Nutritional Info" : {

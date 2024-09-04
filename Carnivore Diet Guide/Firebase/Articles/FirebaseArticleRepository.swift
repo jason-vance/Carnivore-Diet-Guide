@@ -25,52 +25,55 @@ class FirebaseArticleRepository {
         return Dictionary(uniqueKeysWithValues: set.map{ ($0.id, $0) })
     }
 
+    
     func create(
-        article: Article,
-        categories: Set<Resource.Category>,
-        keywords: Set<SearchKeyword>
+        article: Article
     ) async throws {
-        let doc = FirebaseArticleDoc.from(article: article, categories: categories, keywords: keywords)
+        let doc = FirebaseArticleDoc.from(article: article)
         try await articlesCollection.document(article.id).setData(from: doc)
     }
     
-    func fetchPublishedArticles (
-        after cursor: inout (any ArticleCursor)?,
-        limit: Int,
-        whereFunc: ((Query) -> Query)? = nil
-    ) async throws -> [Article] {
-        var query = articlesCollection
-            .whereField(publicationDateField, isLessThan: Date.now)
-            .order(by: publicationDateField, descending: true)
-            .limit(to: limit)
-        
-        //TODO: Put this where before everything else for optimization
-        if let whereFunc = whereFunc {
-            query = whereFunc(query)
-        }
-        
-        if let cursor = cursor as? Cursor {
-            query = query.start(afterDocument: cursor.document)
-        }
-        
-        let snapshot = try await query.getDocuments()
-        
-        if let last = snapshot.documents.last {
-            cursor = Cursor(document: last)
-        }
-        
-        let categories = try await getCategoryDict()
-        return snapshot
-            .documents
-            .compactMap { try? $0.data(as: FirebaseArticleDoc.self).toArticle(categoryDict: categories) }
-    }
+    
+//    private func fetchArticlesNewestToOldest(
+//        after cursor: inout (any ArticleCursor)?,
+//        limit: Int
+//    ) async throws -> [Article] {
+//        var query = articlesCollection
+//            .order(by: publicationDateField, descending: true)
+//            .limit(to: limit)
+//        
+//        return try await fetchArticles(withQuery: query, after: &cursor)
+//    }
+//    
+//    
+//    private func fetchArticles(
+//        withQuery query: Query,
+//        after cursor: inout (any ArticleCursor)?
+//    ) async throws -> [Article] {
+//        var query = query
+//        if let cursor = cursor as? Cursor {
+//            query = query.start(afterDocument: cursor.document)
+//        }
+//        
+//        let snapshot = try await query.getDocuments()
+//        
+//        if let last = snapshot.documents.last {
+//            cursor = Cursor(document: last)
+//        }
+//        
+//        let categories = try await getCategoryDict()
+//        return snapshot
+//            .documents
+//            .compactMap { try? $0.data(as: FirebaseArticleDoc.self).toArticle(categoryDict: categories) }
+//    }
+    
     
     func searchArticles(
         withKeyword keyword: SearchKeyword
     ) async throws -> [SearchResult<Article>] {
         let keywordField = keywordsField + ".\(keyword.text)"
         
-        var query = articlesCollection
+        let query = articlesCollection
             .whereField(keywordField, isGreaterThan: 0)
         
         let categories = try await getCategoryDict()
@@ -88,57 +91,81 @@ class FirebaseArticleRepository {
 }
 
 extension FirebaseArticleRepository: ArticleFetcher {
-    
-    struct Cursor: ArticleCursor {
-        let document: DocumentSnapshot
+    func fetchArticlesNewestToOldest(newerThan article: Article, limit: Int) async throws -> [Article] {
+        //TODO: Implement FirebaseArticleRepository.fetchArticlesNewestToOldest
+        throw "Not Implemented"
     }
     
-    private func fetchPublishedArticlesIn(
-        contentAgnosticCategory category: Resource.Category,
-        after cursor: inout (any ArticleCursor)?,
-        limit: Int
-    ) async throws -> [Article] {
-        if category == .featured {
-            //TODO: Handle .featured category
-            return []
-        }
-        if category == .trending {
-            //TODO: Handle .trending category
-            return []
-        }
-        if category == .liked {
-            //TODO: Handle .liked category
-            return []
-        }
-
-        return try await fetchPublishedArticles(after: &cursor, limit: limit)
+    func fetchArticlesNewestToOldest(olderThan article: Article, limit: Int) async throws -> [Article] {
+        //TODO: Implement FirebaseArticleRepository.fetchArticlesNewestToOldest
+        throw "Not Implemented"
     }
     
-    private func fetchPublishedArticlesIn(
-        contentBasedCategory category: Resource.Category,
-        after cursor: inout (any ArticleCursor)?,
-        limit: Int
-    ) async throws -> [Article] {
-        return try await fetchPublishedArticles(
-            after: &cursor,
-            limit: limit,
-            whereFunc: { query in
-                query.whereField(self.categoriesField, arrayContains: category.id)
-            }
-        )
+    func fetchFeaturedArticles() async throws -> [String] {
+        //TODO: Implement FirebaseArticleRepository.fetchFeaturedArticles
+        throw "Not Implemented"
     }
     
-    func fetchPublishedArticles(
-        in category: Resource.Category,
-        after cursor: inout (any ArticleCursor)?,
-        limit: Int
-    ) async throws -> [Article] {
-        if category.isContentAgnostic {
-            return try await fetchPublishedArticlesIn(contentAgnosticCategory: category, after: &cursor, limit: limit)
-        } else {
-            return try await fetchPublishedArticlesIn(contentBasedCategory: category, after: &cursor, limit: limit)
-        }
+    func fetchTrendingArticles() async throws -> [String] {
+        //TODO: Implement FirebaseArticleRepository.fetchTrendingArticles
+        throw "Not Implemented"
     }
+    
+    func fetchLikedArticles() async throws -> [String] {
+        //TODO: Implement FirebaseArticleRepository.fetchLikedArticles
+        throw "Not Implemented"
+    }
+    
+    
+//    struct Cursor: ArticleCursor {
+//        let document: DocumentSnapshot
+//    }
+//    
+//    private func fetchArticlesIn(
+//        contentAgnosticCategory category: Resource.Category,
+//        after cursor: inout (any ArticleCursor)?,
+//        limit: Int
+//    ) async throws -> [Article] {
+//        if category == .featured {
+//            //TODO: Handle .featured category
+//            return []
+//        }
+//        if category == .trending {
+//            //TODO: Handle .trending category
+//            return []
+//        }
+//        if category == .liked {
+//            //TODO: Handle .liked category
+//            return []
+//        }
+//
+//        return try await fetchAllArticles(after: &cursor, limit: limit)
+//    }
+//    
+//    private func fetchArticlesIn(
+//        contentBasedCategory category: Resource.Category,
+//        after cursor: inout (any ArticleCursor)?,
+//        limit: Int
+//    ) async throws -> [Article] {
+//        var query = articlesCollection
+//            .whereField(self.categoriesField, arrayContains: category.id)
+//            .order(by: publicationDateField, descending: true)
+//            .limit(to: limit)
+//        
+//        return try await fetchArticles(withQuery: query, after: &cursor)
+//    }
+//    
+//    public func fetchArticles(
+//        in category: Resource.Category,
+//        after cursor: inout (any ArticleCursor)?,
+//        limit: Int
+//    ) async throws -> [Article] {
+//        if category.isContentAgnostic {
+//            return try await fetchArticlesIn(contentAgnosticCategory: category, after: &cursor, limit: limit)
+//        } else {
+//            return try await fetchArticlesIn(contentBasedCategory: category, after: &cursor, limit: limit)
+//        }
+//    }
 }
 
 extension FirebaseArticleRepository: ArticleDetailArticleFetcher {

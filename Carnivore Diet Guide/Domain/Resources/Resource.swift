@@ -9,7 +9,7 @@ import Foundation
 
 struct Resource: Equatable {
     
-    enum ResourceType: String {
+    enum ResourceType: String, Codable {
         case post
         case recipe
         case article

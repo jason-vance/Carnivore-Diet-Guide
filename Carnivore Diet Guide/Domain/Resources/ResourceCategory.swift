@@ -8,7 +8,7 @@
 import Foundation
 
 extension Resource {
-    struct Category: Identifiable, Hashable {
+    struct Category: Identifiable, Hashable, Codable {
         
         let id: String
         let name: String

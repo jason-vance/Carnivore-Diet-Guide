@@ -10,23 +10,31 @@ import Foundation
 protocol ArticleCursor { }
 
 protocol ArticleFetcher {
-    func fetchPublishedArticles(
-        in category: Resource.Category,
-        after cursor: inout ArticleCursor?,
+    func fetchArticlesNewestToOldest(
+        newerThan article: Article,
         limit: Int
     ) async throws -> [Article]
+    
+    func fetchArticlesNewestToOldest(
+        olderThan article: Article,
+        limit: Int
+    ) async throws -> [Article]
+    
+    //TODO: Change this to return a FeaturedArticle (with properties like featureCalloutText, etc)
+    func fetchFeaturedArticles() async throws -> [String]
+    
+    func fetchTrendingArticles() async throws -> [String]
+    
+    func fetchLikedArticles() async throws -> [String]
 }
 
 class MockArticleFetcher: ArticleFetcher {
     
-    struct MockCursor: ArticleCursor {}
-    
     var articles: [Article] = [ .sample, .sample2 ]
     var error: Error? = nil
     
-    func fetchPublishedArticles(
-        in category: Resource.Category,
-        after cursor: inout ArticleCursor?,
+    func fetchArticlesNewestToOldest(
+        newerThan article: Article,
         limit: Int
     ) async throws -> [Article] {
         try await Task.sleep(for: .seconds(1))
@@ -35,9 +43,49 @@ class MockArticleFetcher: ArticleFetcher {
             throw error
         }
         
-        guard cursor == nil else { return [] }
-        
-        cursor = MockCursor()
         return articles
+    }
+    
+    func fetchArticlesNewestToOldest(
+        olderThan article: Article,
+        limit: Int
+    ) async throws -> [Article] {
+        try await Task.sleep(for: .seconds(1))
+        
+        if let error = error {
+            throw error
+        }
+        
+        return articles
+    }
+    
+    func fetchFeaturedArticles() async throws -> [String] {
+        try await Task.sleep(for: .seconds(1))
+        
+        if let error = error {
+            throw error
+        }
+        
+        return articles.map { $0.id }
+    }
+    
+    func fetchTrendingArticles() async throws -> [String] {
+        try await Task.sleep(for: .seconds(1))
+        
+        if let error = error {
+            throw error
+        }
+        
+        return articles.map { $0.id }
+    }
+    
+    func fetchLikedArticles() async throws -> [String] {
+        try await Task.sleep(for: .seconds(1))
+        
+        if let error = error {
+            throw error
+        }
+        
+        return articles.map { $0.id }
     }
 }

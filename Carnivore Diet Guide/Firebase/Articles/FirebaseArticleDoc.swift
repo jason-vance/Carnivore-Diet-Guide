@@ -33,12 +33,10 @@ struct FirebaseArticleDoc: Codable {
     }
     
     static func from(
-        article: Article,
-        categories: Set<Resource.Category>,
-        keywords: Set<SearchKeyword>
+        article: Article
     ) -> FirebaseArticleDoc {
         var keywordDict = Dictionary<String,UInt>()
-        for keyword in keywords {
+        for keyword in article.keywords {
             keywordDict[keyword.text] = keyword.score
         }
         
@@ -50,7 +48,7 @@ struct FirebaseArticleDoc: Codable {
             summary: article.summary.text,
             markdownContent: article.markdownContent,
             publicationDate: article.publicationDate,
-            categories: categories.map { $0.id },
+            categories: article.categories.map { $0.id },
             keywords: keywordDict
         )
     }

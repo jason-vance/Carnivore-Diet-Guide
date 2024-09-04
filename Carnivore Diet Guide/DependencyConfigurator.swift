@@ -45,7 +45,7 @@ fileprivate func setup(iocContainer: Container) {
     
     //Knowledge Base
     iocContainer.autoregister(ArticleFetcher.self, initializer: FirebaseArticleRepository.init)
-    iocContainer.autoregister(KnowledgeBaseArticleSearcher.self, initializer: FirebaseKnowledgeBaseArticleSearcher.init)
+    iocContainer.autoregister(ArticleLibrary.self, initializer: ArticleLibrary.getInstance)
 
     //Content Creation
     iocContainer.autoregister(PostImageUploader.self, initializer: FirebasePostImageStorage.init)
