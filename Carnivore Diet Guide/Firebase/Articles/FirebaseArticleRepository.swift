@@ -17,6 +17,13 @@ class FirebaseArticleRepository {
     private let categoriesField = FirebaseArticleDoc.CodingKeys.categories.rawValue
     private let publicationDateField = FirebaseArticleDoc.CodingKeys.publicationDate.rawValue
     private let keywordsField = FirebaseArticleDoc.CodingKeys.keywords.rawValue
+    
+    private func getCategoryDict() async throws -> Dictionary<String,Resource.Category> {
+        let categoryRepo = FirebaseResourceCategoryRepository()
+        let set = try await categoryRepo.fetchAllCategories(forType: .article)
+        
+        return Dictionary(uniqueKeysWithValues: set.map{ ($0.id, $0) })
+    }
 
     func create(
         article: Article,
@@ -52,9 +59,10 @@ class FirebaseArticleRepository {
             cursor = Cursor(document: last)
         }
         
+        let categories = try await getCategoryDict()
         return snapshot
             .documents
-            .compactMap { try? $0.data(as: FirebaseArticleDoc.self).toArticle() }
+            .compactMap { try? $0.data(as: FirebaseArticleDoc.self).toArticle(categoryDict: categories) }
     }
     
     func searchArticles(
@@ -65,13 +73,14 @@ class FirebaseArticleRepository {
         var query = articlesCollection
             .whereField(keywordField, isGreaterThan: 0)
         
+        let categories = try await getCategoryDict()
         return try await query
             .getDocuments()
             .documents
             .compactMap {
                 guard let articleDoc = try? $0.data(as: FirebaseArticleDoc.self) else { return nil }
                 guard let score = articleDoc.keywords?[keyword.text] else { return nil }
-                guard let article = articleDoc.toArticle() else { return nil }
+                guard let article = articleDoc.toArticle(categoryDict: categories) else { return nil }
                 
                 return SearchResult(item: article, score: score)
             }
@@ -136,7 +145,8 @@ extension FirebaseArticleRepository: ArticleDetailArticleFetcher {
     
     func fetchArticle(withId articleId: String) async throws -> Article {
         let doc = try await articlesCollection.document(articleId).getDocument()
-        guard let article = try doc.data(as: FirebaseArticleDoc.self).toArticle() else {
+        let categories = try await getCategoryDict()
+        guard let article = try doc.data(as: FirebaseArticleDoc.self).toArticle(categoryDict: categories) else {
             throw "Could convert Firestore doc to Article"
         }
         return article

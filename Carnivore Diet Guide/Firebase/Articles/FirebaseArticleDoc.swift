@@ -55,7 +55,7 @@ struct FirebaseArticleDoc: Codable {
         )
     }
     
-    func toArticle() -> Article? {
+    func toArticle(categoryDict: Dictionary<String,Resource.Category>) -> Article? {
         guard let id = id else { return nil }
         guard let author = author else { return nil }
         guard let title = title else { return nil }
@@ -64,6 +64,8 @@ struct FirebaseArticleDoc: Codable {
         guard let summary = Resource.Summary(summaryText) else { return nil }
         guard let markdownContent = markdownContent else { return nil }
         guard let publicationDate = publicationDate else { return nil }
+        guard let categories = (categories?.compactMap { categoryId in categoryDict[categoryId] }) else { return nil }
+        guard let keywords = (keywords?.compactMap { entry in SearchKeyword(entry.key, score: entry.value) }) else { return nil }
 
         return Article(
             id: id,
@@ -72,7 +74,9 @@ struct FirebaseArticleDoc: Codable {
             coverImageUrl: coverImageUrl,
             summary: summary,
             markdownContent: markdownContent,
-            publicationDate: publicationDate
+            publicationDate: publicationDate,
+            categories: Set(categories),
+            keywords: Set(keywords)
         )
     }
 }

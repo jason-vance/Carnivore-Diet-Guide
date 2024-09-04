@@ -42,7 +42,9 @@ struct ReviewNewArticleView: View {
             coverImageUrl: newArticleData.data.imageUrls[0],
             summary: newArticleData.metadata.summary,
             markdownContent: newArticleData.data.markdownContent,
-            publicationDate: newArticleData.metadata.publicationDate
+            publicationDate: newArticleData.metadata.publicationDate,
+            categories: newArticleData.metadata.categories,
+            keywords: newArticleData.metadata.searchKeywords
         )
     }
     
