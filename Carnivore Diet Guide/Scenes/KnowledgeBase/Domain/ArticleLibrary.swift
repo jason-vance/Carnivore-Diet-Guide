@@ -48,22 +48,23 @@ class ArticleLibrary {
     }
     
     private func fetchNewerArticles() async throws {
-        guard var newestArticle = (articles.max { $0.publicationDate > $1.publicationDate }) else { return }
+        guard var newestArticle = (articles.max { $0.publicationDate < $1.publicationDate }) else { return }
         
         var canFetchMore = true
         
         while canFetchMore {
             do {
-                let fetchedArticles = try await articleFetcher.fetchArticlesNewestToOldest(
+                let fetchedArticles = try await articleFetcher.fetchArticlesOldestFirst(
                     newerThan: newestArticle,
                     limit: 20
                 )
                 
                 canFetchMore = !fetchedArticles.isEmpty
-                newestArticle = fetchedArticles.first ?? newestArticle
+                newestArticle = fetchedArticles.last ?? newestArticle
                 
                 articles.append(contentsOf: fetchedArticles)
                 fetchedArticles.forEach { articleCache[$0.id] = .from($0) }
+                print("ArticleLibrary.fetchNewerArticles found \(fetchedArticles.count) articles")
             } catch {
                 print("ArticleLibrary.fetchNewerArticles failed. \(error.localizedDescription)")
             }
@@ -71,13 +72,13 @@ class ArticleLibrary {
     }
     
     private func fetchOlderArticles() async throws {
-        guard var oldestArticle = (articles.min { $0.publicationDate < $1.publicationDate }) else { return }
+        var oldestArticle = articles.min { $0.publicationDate < $1.publicationDate }
         
         var canFetchMore = true
         
         while canFetchMore {
             do {
-                let fetchedArticles = try await articleFetcher.fetchArticlesNewestToOldest(
+                let fetchedArticles = try await articleFetcher.fetchArticlesNewestFirst(
                     olderThan: oldestArticle,
                     limit: 20
                 )
@@ -87,6 +88,7 @@ class ArticleLibrary {
                 
                 articles.append(contentsOf: fetchedArticles)
                 fetchedArticles.forEach { articleCache[$0.id] = .from($0) }
+                print("ArticleLibrary.fetchOlderArticles found \(fetchedArticles.count) articles")
             } catch {
                 print("ArticleLibrary.fetchOlderArticles failed. \(error.localizedDescription)")
             }

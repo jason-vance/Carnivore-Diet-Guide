@@ -34,40 +34,6 @@ class FirebaseArticleRepository {
     }
     
     
-//    private func fetchArticlesNewestToOldest(
-//        after cursor: inout (any ArticleCursor)?,
-//        limit: Int
-//    ) async throws -> [Article] {
-//        var query = articlesCollection
-//            .order(by: publicationDateField, descending: true)
-//            .limit(to: limit)
-//        
-//        return try await fetchArticles(withQuery: query, after: &cursor)
-//    }
-//    
-//    
-//    private func fetchArticles(
-//        withQuery query: Query,
-//        after cursor: inout (any ArticleCursor)?
-//    ) async throws -> [Article] {
-//        var query = query
-//        if let cursor = cursor as? Cursor {
-//            query = query.start(afterDocument: cursor.document)
-//        }
-//        
-//        let snapshot = try await query.getDocuments()
-//        
-//        if let last = snapshot.documents.last {
-//            cursor = Cursor(document: last)
-//        }
-//        
-//        let categories = try await getCategoryDict()
-//        return snapshot
-//            .documents
-//            .compactMap { try? $0.data(as: FirebaseArticleDoc.self).toArticle(categoryDict: categories) }
-//    }
-    
-    
     func searchArticles(
         withKeyword keyword: SearchKeyword
     ) async throws -> [SearchResult<Article>] {
@@ -91,14 +57,44 @@ class FirebaseArticleRepository {
 }
 
 extension FirebaseArticleRepository: ArticleFetcher {
-    func fetchArticlesNewestToOldest(newerThan article: Article, limit: Int) async throws -> [Article] {
-        //TODO: Implement FirebaseArticleRepository.fetchArticlesNewestToOldest
-        throw "Not Implemented"
+    
+    private func getCursor(for article: Article?) async throws -> DocumentSnapshot? {
+        if let article = article {
+            return try await articlesCollection.document(article.id).getDocument()
+        }
+        return nil
     }
     
-    func fetchArticlesNewestToOldest(olderThan article: Article, limit: Int) async throws -> [Article] {
-        //TODO: Implement FirebaseArticleRepository.fetchArticlesNewestToOldest
-        throw "Not Implemented"
+    func fetchArticlesOldestFirst(newerThan article: Article, limit: Int) async throws -> [Article] {
+        var query = articlesCollection
+            .order(by: publicationDateField, descending: false)
+            .limit(to: limit)
+        
+        if let cursor = try await getCursor(for: article) {
+            query = query.start(afterDocument: cursor)
+        }
+        
+        let categories = try await getCategoryDict()
+        return try await query
+            .getDocuments()
+            .documents
+            .compactMap { try? $0.data(as: FirebaseArticleDoc.self).toArticle(categoryDict: categories) }
+    }
+    
+    func fetchArticlesNewestFirst(olderThan article: Article?, limit: Int) async throws -> [Article] {
+        var query = articlesCollection
+            .order(by: publicationDateField, descending: true)
+            .limit(to: limit)
+        
+        if let cursor = try await getCursor(for: article) {
+            query = query.start(afterDocument: cursor)
+        }
+        
+        let categories = try await getCategoryDict()
+        return try await query
+            .getDocuments()
+            .documents
+            .compactMap { try? $0.data(as: FirebaseArticleDoc.self).toArticle(categoryDict: categories) }
     }
     
     func fetchFeaturedArticles() async throws -> [String] {

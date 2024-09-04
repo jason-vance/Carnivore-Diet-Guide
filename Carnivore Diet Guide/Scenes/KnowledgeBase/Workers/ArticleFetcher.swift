@@ -10,13 +10,13 @@ import Foundation
 protocol ArticleCursor { }
 
 protocol ArticleFetcher {
-    func fetchArticlesNewestToOldest(
+    func fetchArticlesOldestFirst(
         newerThan article: Article,
         limit: Int
     ) async throws -> [Article]
     
-    func fetchArticlesNewestToOldest(
-        olderThan article: Article,
+    func fetchArticlesNewestFirst(
+        olderThan article: Article?,
         limit: Int
     ) async throws -> [Article]
     
@@ -33,7 +33,7 @@ class MockArticleFetcher: ArticleFetcher {
     var articles: [Article] = [ .sample, .sample2 ]
     var error: Error? = nil
     
-    func fetchArticlesNewestToOldest(
+    func fetchArticlesOldestFirst(
         newerThan article: Article,
         limit: Int
     ) async throws -> [Article] {
@@ -46,8 +46,8 @@ class MockArticleFetcher: ArticleFetcher {
         return articles
     }
     
-    func fetchArticlesNewestToOldest(
-        olderThan article: Article,
+    func fetchArticlesNewestFirst(
+        olderThan article: Article?,
         limit: Int
     ) async throws -> [Article] {
         try await Task.sleep(for: .seconds(1))
