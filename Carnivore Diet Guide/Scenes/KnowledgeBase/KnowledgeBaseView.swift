@@ -17,11 +17,7 @@ struct KnowledgeBaseView: View {
     private let margin: CGFloat = 16
     
     @State private var navigationPath = NavigationPath()
-    @State private var showSearchContent: Bool = false
-
-    @StateObject private var model = KnowledgeBaseViewModel(
-        categoryProvider: iocContainer~>ResourceCategoryProvider.self
-    )
+    @State private var searchPresented: Bool = false
     
     @StateObject private var searchModel = KnowledgeBaseSearchViewModel(
         articleSearcher: iocContainer~>KnowledgeBaseArticleSearcher.self
@@ -32,30 +28,21 @@ struct KnowledgeBaseView: View {
     var body: some View {
         NavigationStack(path: $navigationPath) {
             VStack(spacing: 0) {
-                ScreenTitleBar(String(localized: "Knowledge Base"))
+                TopBar()
                 ScrollView {
                     VStack {
                         SearchArea()
                         ListContent()
                     }
                 }
-                .overlay {
-                    if model.isWorking {
-                        ProgressView()
-                            .progressViewStyle(.circular)
-                            .tint(Color.accent)
-                    }
-                }
             }
             .background(Color.background)
-            .alert(model.alertMessage, isPresented: $model.showAlert) {}
             .alert(searchModel.alertMessage, isPresented: $searchModel.showAlert) {}
-            .onChange(of: searchModel.searchPresented, initial: true) { _, showSearchContent in
+            .onChange(of: searchPresented, initial: true) { _, newSearchPresented in
                 withAnimation(.snappy) {
-                    if !showSearchContent {
+                    if !newSearchPresented {
                         searchModel.clearSearchResults()
                     }
-                    self.showSearchContent = showSearchContent
                 }
             }
             .navigationDestination(for: Article.self) { article in
@@ -64,12 +51,16 @@ struct KnowledgeBaseView: View {
         }
     }
     
+    @ViewBuilder func TopBar() -> some View {
+        ScreenTitleBar("Knowledge Base")
+    }
+    
     @ViewBuilder func SearchArea() -> some View {
         VStack(spacing: 0) {
             SearchBar(
                 prompt: String(localized: "Articles, Guides, and more"),
                 searchText: $searchModel.searchText,
-                searchPresented: $searchModel.searchPresented,
+                searchPresented: $searchPresented,
                 action: { searchModel.doSearchIn(category: selectedCategory) }
             )
             .padding(.top)
@@ -79,7 +70,7 @@ struct KnowledgeBaseView: View {
     }
     
     @ViewBuilder func ListContent() -> some View {
-        if showSearchContent || searchModel.searchResults != nil {
+        if searchModel.isSearching || searchModel.searchResults != nil {
             SearchContent()
         } else {
             ArticlesInCategoryView(
@@ -111,16 +102,14 @@ struct KnowledgeBaseView: View {
                         }
                     }
                 }
-            }
-        }
-        .padding(.horizontal)
-        .overlay {
-            if searchModel.isSearching {
+            } else if searchModel.isSearching {
                 ProgressView()
                     .progressViewStyle(.circular)
                     .tint(Color.accent)
+                    .padding(.vertical, 64)
             }
         }
+        .padding(.horizontal)
     }
 }
 

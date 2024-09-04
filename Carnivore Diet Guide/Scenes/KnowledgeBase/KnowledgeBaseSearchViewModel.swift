@@ -11,7 +11,6 @@ import Foundation
 class KnowledgeBaseSearchViewModel: ObservableObject {
     
     @Published var searchText: String = ""
-    @Published var searchPresented: Bool = false
     @Published var isSearching: Bool = false
     
     @Published public var showAlert: Bool = false
