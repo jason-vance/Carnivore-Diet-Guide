@@ -31,6 +31,15 @@ struct ScreenTitleBar<PrimaryContent:View,LeadingContent:View,TrailingContent:Vi
     }
     
     init(
+        _ text: String,
+        trailingContent: @escaping () -> TrailingContent
+    ) where PrimaryContent == Text, LeadingContent == Text {
+        self.primaryContent = { Text(text) }
+        self.leadingContent = nil
+        self.trailingContent = trailingContent
+    }
+    
+    init(
         primaryContent: @escaping () -> PrimaryContent,
         leadingContent: @escaping () -> LeadingContent,
         trailingContent: @escaping () -> TrailingContent
@@ -67,8 +76,8 @@ struct ScreenTitleBar<PrimaryContent:View,LeadingContent:View,TrailingContent:Vi
     ScreenTitleBar("Screen Title Bar")
 }
 
-#Preview("LeftBarContent") {
-    ScreenTitleBar("Screen Title Bar") {
+#Preview("LeadingContent") {
+    ScreenTitleBar("Screen Title Bar", leadingContent: {
         Button {
             
         } label: {
@@ -76,7 +85,19 @@ struct ScreenTitleBar<PrimaryContent:View,LeadingContent:View,TrailingContent:Vi
                 .font(.title.bold())
                 .foregroundStyle(Color.accent)
         }
-    }
+    })
+}
+
+#Preview("TrailingContent") {
+    ScreenTitleBar("Screen Title Bar", trailingContent: {
+        Button {
+            
+        } label: {
+            Image(systemName: "magnifyingglass")
+                .font(.title.bold())
+                .foregroundStyle(Color.accent)
+        }
+    })
 }
 
 #Preview("ComplexContent") {
