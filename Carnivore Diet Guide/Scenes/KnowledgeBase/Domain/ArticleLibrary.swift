@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-//TODO: Re-fetch article every now and then in ArticleDetailView
+//TODO: Re-fetch article data every now and then
 //TODO: Remove articles that fail to load in ArticleDetailView
 class ArticleLibrary {
     

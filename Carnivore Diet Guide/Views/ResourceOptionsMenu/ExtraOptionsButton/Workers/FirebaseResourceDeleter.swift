@@ -27,21 +27,33 @@ class FirebaseResourceDeleter: ResourceDeleter {
         
         switch resource.type {
         case .article:
-            try await deleteArticle(forResource: resource)
+            try await deleteArticle(for: resource)
         case .post:
-            try await deletePost(forResource: resource)
+            try await deletePost(for: resource)
         case .recipe:
-            try await deleteRecipe(withId: resource.id)
+            try await deleteRecipe(for: resource)
         }
-        deleteResourceActivities(for: resource)
+        deleteImagesUnsafely(for: resource)
+        deleteResourceActivitiesUnsafely(for: resource)
         
         deletedResourceSubject.send(resource)
     }
     
-    private func deleteResourceActivities(for resource: Resource) {
+    private func deleteResourceActivitiesUnsafely(for resource: Resource) {
         Task {
             let repo = FirebaseResourceActivityRepository()
             try? await repo.deleteActivites(for: resource)
+        }
+    }
+    
+    private func deleteImagesUnsafely(for resource: Resource) {
+        Task {
+            do {
+                let storage = FirebasePostImageStorage()
+                try await storage.deleteImages(forPost: resource.id, byUser: resource.authorUserId)
+            } catch {
+                print("Failed to delete \(resource.type) images. \(error.localizedDescription)")
+            }
         }
     }
     
@@ -50,42 +62,18 @@ class FirebaseResourceDeleter: ResourceDeleter {
         try await repo.deleteFeedItem(forResource: resource)
     }
     
-    private func deleteArticle(forResource resource: Resource) async throws {
-        let articleId = resource.id
-        let userId = resource.authorUserId
-        
+    private func deleteArticle(for resource: Resource) async throws {
         let repo = FirebaseArticleRepository()
-        try await repo.deleteArticle(withId: articleId)
-        
-        Task {
-            do {
-                let storage = FirebasePostImageStorage()
-                try await storage.deleteImages(forPost: articleId, byUser: userId)
-            } catch {
-                print("Failed to delete Article images. \(error.localizedDescription)")
-            }
-        }
+        try await repo.deleteArticle(withId: resource.id)
     }
     
-    private func deletePost(forResource resource: Resource) async throws {
-        let postId = resource.id
-        let userId = resource.authorUserId
-        
+    private func deletePost(for resource: Resource) async throws {
         let repo = FirebasePostRepository()
-        try await repo.deletePost(withId: postId)
-        
-        Task {
-            do {
-                let storage = FirebasePostImageStorage()
-                try await storage.deleteImages(forPost: postId, byUser: userId)
-            } catch {
-                print("Failed to delete Post images. \(error.localizedDescription)")
-            }
-        }
+        try await repo.deletePost(withId: resource.id)
     }
     
-    private func deleteRecipe(withId recipeId: String) async throws {
+    private func deleteRecipe(for resource: Resource) async throws {
         let repo = FirebaseRecipeRepository()
-        try await repo.deleteRecipe(withId: recipeId)
+        try await repo.deleteRecipe(withId: resource.id)
     }
 }
