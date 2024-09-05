@@ -54,7 +54,21 @@ struct ArticlesInCategoryView: View {
     }
     
     var body: some View {
-        //TODO: ContentUnavailableView
+        Container()
+            .padding(.horizontal)
+            .alert(alertMessage, isPresented: $showAlert) {}
+            .onReceive(articlePublisher) { allArticles = $0 }
+    }
+    
+    @ViewBuilder func Container() -> some View {
+        if displayArticles.isEmpty {
+            EmptyArticlesView()
+        } else {
+            ArticleGrid()
+        }
+    }
+    
+    @ViewBuilder func ArticleGrid() -> some View {
         let columns = [
             GridItem.init(.adaptive(minimum: 100, maximum: 300)),
             GridItem.init(.adaptive(minimum: 100, maximum: 300))
@@ -69,9 +83,14 @@ struct ArticlesInCategoryView: View {
                 }
             }
         }
-        .padding(.horizontal)
-        .alert(alertMessage, isPresented: $showAlert) {}
-        .onReceive(articlePublisher) { allArticles = $0 }
+    }
+    
+    @ViewBuilder func EmptyArticlesView() -> some View {
+        ContentUnavailableView(
+            "Nothing to see here.\nTry changing your search criteria.",
+            systemImage: "magnifyingglass"
+        )
+        .foregroundStyle(Color.text)
     }
 }
 
