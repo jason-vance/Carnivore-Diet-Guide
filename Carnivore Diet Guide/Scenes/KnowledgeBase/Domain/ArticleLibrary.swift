@@ -8,6 +8,8 @@
 import Foundation
 import Combine
 
+//TODO: Re-fetch article every now and then in ArticleDetailView
+//TODO: Remove articles that fail to load in ArticleDetailView
 class ArticleLibrary {
     
     private typealias ArticleCache = Cache<String, ArticleCacheEntry>
@@ -22,22 +24,51 @@ class ArticleLibrary {
     }
     
     private let articleFetcher: ArticleFetcher
+    private let resourceDeleter: ResourceDeleter
+    
+    private var articleDeletedSub: AnyCancellable? = nil
 
     private let articleCache = Cache.readFromDiskOrDefault(ArticleCache.self, withName: ArticleLibrary.cacheName)
     
     private static var _instance: ArticleLibrary? = nil
     public static var instance: ArticleLibrary { _instance! }
-    public static func makeInstance(articleFetcher: ArticleFetcher) {
+    public static func makeInstance(
+        articleFetcher: ArticleFetcher,
+        resourceDeleter: ResourceDeleter
+    ) {
         assert(_instance == nil)
-        _instance = .init(articleFetcher: articleFetcher)
+        _instance = .init(
+            articleFetcher: articleFetcher,
+            resourceDeleter: resourceDeleter
+        )
+    }
+    
+    private var newestPublishedArticle: Article? {
+        articlesSubject.value
+            .filter { $0.publicationDate < .now }
+            .max { $0.publicationDate < $1.publicationDate }
     }
     
     private init(
-        articleFetcher: ArticleFetcher
+        articleFetcher: ArticleFetcher,
+        resourceDeleter: ResourceDeleter
     ) {
         self.articleFetcher = articleFetcher
+        self.resourceDeleter = resourceDeleter
         
         fetchArticles()
+        listenForDeletedArticles()
+    }
+    
+    private func listenForDeletedArticles() {
+        articleDeletedSub = resourceDeleter.deletedResourcePublisher
+            .filter { $0.type == .article }
+            .sink(receiveValue: onArticleDeleted(resource:))
+    }
+    
+    private func onArticleDeleted(resource: Resource) {
+        articlesSubject.value
+            .removeAll { $0.id == resource.id }
     }
     
     private func fetchArticles() {
@@ -56,7 +87,8 @@ class ArticleLibrary {
     }
     
     private func fetchNewerArticles() async throws {
-        guard var newestArticle = (articlesSubject.value.max { $0.publicationDate < $1.publicationDate }) else { return }
+        guard var newestArticle = newestPublishedArticle else { return }
+        print(newestArticle.publicationDate)
         
         var canFetchMore = true
         

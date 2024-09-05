@@ -51,7 +51,20 @@ class FirebaseResourceDeleter: ResourceDeleter {
     }
     
     private func deleteArticle(forResource resource: Resource) async throws {
-        //TODO: Implement FirebaseResourceDeleter.deleteArticle(forResource: Resource)
+        let articleId = resource.id
+        let userId = resource.authorUserId
+        
+        let repo = FirebaseArticleRepository()
+        try await repo.deleteArticle(withId: articleId)
+        
+        Task {
+            do {
+                let storage = FirebasePostImageStorage()
+                try await storage.deleteImages(forPost: articleId, byUser: userId)
+            } catch {
+                print("Failed to delete Article images. \(error.localizedDescription)")
+            }
+        }
     }
     
     private func deletePost(forResource resource: Resource) async throws {
@@ -66,7 +79,7 @@ class FirebaseResourceDeleter: ResourceDeleter {
                 let storage = FirebasePostImageStorage()
                 try await storage.deleteImages(forPost: postId, byUser: userId)
             } catch {
-                print("Failed to delete images. \(error.localizedDescription)")
+                print("Failed to delete Post images. \(error.localizedDescription)")
             }
         }
     }

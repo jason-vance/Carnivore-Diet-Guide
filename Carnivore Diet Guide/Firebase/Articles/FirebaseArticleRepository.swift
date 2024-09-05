@@ -34,6 +34,11 @@ class FirebaseArticleRepository {
     }
     
     
+    func deleteArticle(withId articleId: String) async throws {
+        try await articlesCollection.document(articleId).delete()
+    }
+    
+    
     func searchArticles(
         withKeyword keyword: SearchKeyword
     ) async throws -> [SearchResult<Article>] {
