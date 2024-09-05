@@ -11,6 +11,6 @@ protocol ResourceViewActivityTracker {
     func resource(_ resource: Resource, wasViewedByUser userId: String) async throws
 }
 
-class MockRecipeViewActivityTracker: ResourceViewActivityTracker {
+class MockResourceViewActivityTracker: ResourceViewActivityTracker {
     func resource(_ resource: Resource, wasViewedByUser userId: String) async throws { }
 }

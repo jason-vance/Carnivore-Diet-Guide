@@ -40,14 +40,19 @@ class FirestoreFavoritersRepository {
             throw "User is not currently signed in"
         }
         
-        let doc = FirestoreFavoriterDoc(
-            userId: userId,
-            date: .now
-        )
-        
+        let doc = FirestoreFavoriterDoc(userId: userId, date: .now)
         try await favoritersCollection(forResource: resource)
             .document(userId)
             .setData(from: doc)
+        
+        addFavoritedActivity(resource: resource, userId: userId)
+    }
+    
+    private func addFavoritedActivity(resource: Resource, userId: String) {
+        Task {
+            let repo = FirebaseResourceActivityRepository()
+            try? await repo.resource(resource, wasFavoritedByUser: userId)
+        }
     }
 
     func unmarkAsFavorite(resource: Resource) async throws {
@@ -58,6 +63,15 @@ class FirestoreFavoritersRepository {
         try await favoritersCollection(forResource: resource)
             .document(userId)
             .delete()
+        
+        removeFavoritedActivity(resource: resource, userId: userId)
+    }
+    
+    private func removeFavoritedActivity(resource: Resource, userId: String) {
+        Task {
+            let repo = FirebaseResourceActivityRepository()
+            try? await repo.resource(resource, wasUnfavoritedByUser: userId)
+        }
     }
     
     func listenToFavoriteCountOf(

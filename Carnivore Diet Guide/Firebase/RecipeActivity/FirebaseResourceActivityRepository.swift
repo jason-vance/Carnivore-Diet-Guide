@@ -30,6 +30,19 @@ class FirebaseResourceActivityRepository {
         
         try await activitiesCollection.addDocument(from: doc)
     }
+    
+    func deleteActivites(for resource: Resource) async throws {
+        let resourceType = resource.type.rawValue
+        
+        let docs = try await activitiesCollection
+            .whereField(FirestoreResourceActivityDoc.CodingKeys.resourceId.rawValue, isEqualTo: resource.id)
+            .whereField(FirestoreResourceActivityDoc.CodingKeys.resourceType.rawValue, isEqualTo: resourceType)
+            .getDocuments()
+        
+        for doc in docs.documents {
+            try await doc.reference.delete()
+        }
+    }
 }
 
 extension FirebaseResourceActivityRepository: ResourceFavoriteActivityTracker {
@@ -100,6 +113,12 @@ extension FirebaseResourceActivityRepository: PopularResourceIdFetcher {
 extension FirebaseResourceActivityRepository: ResourceCommentActivityTracker {
     func resource(_ resource: Resource, wasCommentedOnByUser userId: String) async throws {
         try await addActivity(.comment, forResource: resource.id, ofType: resource.type, byUser: userId)
+    }
+}
+
+extension FirebaseResourceActivityRepository: ResourceCreatedActivityTracker {
+    func resource(_ resource: Resource, wasCreatedByUser userId: String) async throws {
+        try await addActivity(.creation, forResource: resource.id, ofType: resource.type, byUser: userId)
     }
 }
  

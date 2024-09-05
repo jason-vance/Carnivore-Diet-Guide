@@ -33,8 +33,16 @@ class FirebaseResourceDeleter: ResourceDeleter {
         case .recipe:
             try await deleteRecipe(withId: resource.id)
         }
+        deleteResourceActivities(for: resource)
         
         deletedResourceSubject.send(resource)
+    }
+    
+    private func deleteResourceActivities(for resource: Resource) {
+        Task {
+            let repo = FirebaseResourceActivityRepository()
+            try? await repo.deleteActivites(for: resource)
+        }
     }
     
     private func deleteFeedItem(for resource: Resource) async throws {

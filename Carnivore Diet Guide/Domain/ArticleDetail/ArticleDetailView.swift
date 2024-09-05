@@ -12,6 +12,8 @@ import SwinjectAutoregistration
 struct ArticleDetailView: View {
     
     private let articleFetcher = iocContainer~>ArticleDetailArticleFetcher.self
+    private let activityTracker = iocContainer~>ResourceViewActivityTracker.self
+    private let userIdProvider = iocContainer~>CurrentUserIdProvider.self
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
@@ -43,6 +45,16 @@ struct ArticleDetailView: View {
             }
         }
     }
+    
+    private func markAsViewed() {
+        guard let article = article else { return }
+        guard let userId = userIdProvider.currentUserId else { return }
+        guard article.author != userId else { return }
+        
+        Task {
+            try? await activityTracker.resource(.init(article), wasViewedByUser: userId)
+        }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -50,6 +62,7 @@ struct ArticleDetailView: View {
             if let article = article, !isWorking {
                 ScrollView {
                     ArticleView(article: article)
+                        .onAppear { markAsViewed() }
                 }
             } else {
                 LoadingView()

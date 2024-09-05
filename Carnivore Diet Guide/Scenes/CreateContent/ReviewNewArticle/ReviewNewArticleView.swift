@@ -13,6 +13,8 @@ struct ReviewNewArticleView: View {
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     private let articlePoster = iocContainer~>ArticlePoster.self
+    private let activityTracker = iocContainer~>ResourceCreatedActivityTracker.self
+    private let userIdProvider = iocContainer~>CurrentUserIdProvider.self
     
     public let newArticleData: NewArticleData
     public let dismissAll: () -> ()
@@ -52,14 +54,19 @@ struct ReviewNewArticleView: View {
         dismiss()
     }
     
+    private func addCreatedActivity() {
+        guard let userId = userIdProvider.currentUserId else { return }
+        Task {
+            try? await activityTracker.resource(.init(article), wasCreatedByUser: userId)
+        }
+    }
+    
     private func postAndDismiss() {
         Task {
             do {
                 withAnimation(.snappy) { isPosting = true }
-                try await articlePoster.post(
-                    article: article,
-                    feedItem: feedItem
-                )
+                try await articlePoster.post(article: article, feedItem: feedItem)
+                addCreatedActivity()
                 dismissAll()
             } catch {
                 withAnimation(.snappy) { isPosting = false }

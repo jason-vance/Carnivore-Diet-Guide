@@ -11,6 +11,6 @@ protocol ResourceCommentActivityTracker {
     func resource(_ resource: Resource, wasCommentedOnByUser userId: String) async throws
 }
 
-class MockRecipeCommentActivityTracker: ResourceCommentActivityTracker {
+class MockResourceCommentActivityTracker: ResourceCommentActivityTracker {
     func resource(_ resource: Resource, wasCommentedOnByUser userId: String) async throws { }
 }

@@ -259,6 +259,8 @@
 		56B88A722B70DC9800C4C0DB /* CurrentUserIdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A712B70DC9800C4C0DB /* CurrentUserIdProvider.swift */; };
 		56B88A742B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A732B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift */; };
 		56B88A772B70DCFD00C4C0DB /* UserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A762B70DCFD00C4C0DB /* UserDataProvider.swift */; };
+		56D4709F2C8A3CCF00F48A64 /* ResourceCreatedActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D4709E2C8A3CCF00F48A64 /* ResourceCreatedActivityTracker.swift */; };
+		56D470A02C8A3CCF00F48A64 /* ResourceCreatedActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D4709E2C8A3CCF00F48A64 /* ResourceCreatedActivityTracker.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* PostDetailView.swift */; };
 		56E305072B4A982E0098079A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* Post.swift */; };
@@ -528,6 +530,7 @@
 		56B88A712B70DC9800C4C0DB /* CurrentUserIdProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserIdProvider.swift; sourceTree = "<group>"; };
 		56B88A732B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreUserDataProvider.swift; sourceTree = "<group>"; };
 		56B88A762B70DCFD00C4C0DB /* UserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataProvider.swift; sourceTree = "<group>"; };
+		56D4709E2C8A3CCF00F48A64 /* ResourceCreatedActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCreatedActivityTracker.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -1532,6 +1535,7 @@
 				563BC6C52B744812008F3C50 /* ResourceFavoriteActivityTracker.swift */,
 				563BC6FD2B7AF4E8008F3C50 /* ResourceViewActivityTracker.swift */,
 				563BC7272B7D914D008F3C50 /* ResourceCommentActivityTracker.swift */,
+				56D4709E2C8A3CCF00F48A64 /* ResourceCreatedActivityTracker.swift */,
 				563BC7102B7B6DEB008F3C50 /* PopularResourceIdFetcher.swift */,
 				56F2138E2B7426A6009DB057 /* RecipeFavoritersRepo.swift */,
 				563BC7042B7AF93C008F3C50 /* RecipeCommentsRepo.swift */,
@@ -1901,6 +1905,7 @@
 				568F72DF2C7E9FE4005D16C6 /* UserProfileStatLabel.swift in Sources */,
 				56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */,
 				568F735A2C827D00005D16C6 /* SelectCategoryView.swift in Sources */,
+				56D4709F2C8A3CCF00F48A64 /* ResourceCreatedActivityTracker.swift in Sources */,
 				56025D202B6B006600F31A07 /* FirebaseRecipeRepository.swift in Sources */,
 				565CFEB02C87A14100CBEEAC /* ArticleDetailArticleFetcher.swift in Sources */,
 				565CFEAA2C87991A00CBEEAC /* ArticleDetailView.swift in Sources */,
@@ -1969,6 +1974,7 @@
 				563BC70E2B7B65D1008F3C50 /* PopularResourcesTests.swift in Sources */,
 				568F73422C824767005D16C6 /* CreateArticleMetadataViewModel.swift in Sources */,
 				5622EAD42C753CBB00FE9C36 /* RecipesViewModel.swift in Sources */,
+				56D470A02C8A3CCF00F48A64 /* ResourceCreatedActivityTracker.swift in Sources */,
 				568F728F2C793731005D16C6 /* FeedItem.swift in Sources */,
 				568F73522C82567E005D16C6 /* ContentMetadata.swift in Sources */,
 				568F72B92C7C2A0F005D16C6 /* Recipe.swift in Sources */,

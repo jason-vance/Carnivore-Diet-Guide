@@ -90,7 +90,6 @@ extension FirebaseCommentRepository: CommentSender {
             text: text,
             date: .now
         )
-        
         try await commentsCollection(forResource: resource).addDocument(from: doc)
     }
 }
