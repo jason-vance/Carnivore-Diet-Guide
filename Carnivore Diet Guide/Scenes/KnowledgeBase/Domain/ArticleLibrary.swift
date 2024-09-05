@@ -15,11 +15,14 @@ class ArticleLibrary {
     private typealias ArticleCache = Cache<String, ArticleCacheEntry>
     private static let cacheName = "ArticlesCache"
     
-    private var articlesSubject: CurrentValueSubject<[Article],Never> = .init([])
+    private var articlesSubject: CurrentValueSubject<Dictionary<String, Article>,Never> = .init([:])
     
     public var publishedArticlesPublisher: AnyPublisher<[Article],Never> {
         articlesSubject
-            .map { $0.filter { $0.publicationDate < .now } }
+            .map {
+                $0.filter { $0.value.publicationDate < .now }
+                    .map { $0.value }
+            }
             .eraseToAnyPublisher()
     }
     
@@ -45,8 +48,16 @@ class ArticleLibrary {
     
     private var newestPublishedArticle: Article? {
         articlesSubject.value
-            .filter { $0.publicationDate < .now }
+            .filter { $0.value.publicationDate < .now }
+            .map { $0.value }
             .max { $0.publicationDate < $1.publicationDate }
+    }
+    
+    private var oldestPublishedArticle: Article? {
+        articlesSubject.value
+            .filter { $0.value.publicationDate < .now }
+            .map { $0.value }
+            .min { $0.publicationDate < $1.publicationDate }
     }
     
     private init(
@@ -67,8 +78,14 @@ class ArticleLibrary {
     }
     
     private func onArticleDeleted(resource: Resource) {
-        articlesSubject.value
-            .removeAll { $0.id == resource.id }
+        articlesSubject.value[resource.id] = nil
+    }
+    
+    private func addToLibrary(articles: [Article]) {
+        articles.forEach {
+            articlesSubject.value[$0.id] = $0
+            articleCache[$0.id] = .from($0)
+        }
     }
     
     private func fetchArticles() {
@@ -83,15 +100,14 @@ class ArticleLibrary {
     }
     
     private func fetchCachedArticles() {
-        articlesSubject.value = articleCache.values.compactMap { $0.toArticle() }
+        let articles = articleCache.values.compactMap { $0.toArticle() }
+        articlesSubject.value = Dictionary(uniqueKeysWithValues: articles.map{ ($0.id, $0) })
     }
     
     private func fetchNewerArticles() async throws {
-        guard var newestArticle = newestPublishedArticle else { return }
-        print(newestArticle.publicationDate)
+        var newestArticle = newestPublishedArticle
         
         var canFetchMore = true
-        
         while canFetchMore {
             do {
                 let fetchedArticles = try await articleFetcher.fetchArticlesOldestFirst(
@@ -102,8 +118,7 @@ class ArticleLibrary {
                 canFetchMore = !fetchedArticles.isEmpty
                 newestArticle = fetchedArticles.last ?? newestArticle
                 
-                articlesSubject.value.append(contentsOf: fetchedArticles)
-                fetchedArticles.forEach { articleCache[$0.id] = .from($0) }
+                addToLibrary(articles: fetchedArticles)
                 print("ArticleLibrary.fetchNewerArticles found \(fetchedArticles.count) articles")
             } catch {
                 print("ArticleLibrary.fetchNewerArticles failed. \(error.localizedDescription)")
@@ -112,10 +127,9 @@ class ArticleLibrary {
     }
     
     private func fetchOlderArticles() async throws {
-        var oldestArticle = articlesSubject.value.min { $0.publicationDate < $1.publicationDate }
+        var oldestArticle = oldestPublishedArticle
         
         var canFetchMore = true
-        
         while canFetchMore {
             do {
                 let fetchedArticles = try await articleFetcher.fetchArticlesNewestFirst(
@@ -126,8 +140,7 @@ class ArticleLibrary {
                 canFetchMore = !fetchedArticles.isEmpty
                 oldestArticle = fetchedArticles.last ?? oldestArticle
                 
-                articlesSubject.value.append(contentsOf: fetchedArticles)
-                fetchedArticles.forEach { articleCache[$0.id] = .from($0) }
+                addToLibrary(articles: fetchedArticles)
                 print("ArticleLibrary.fetchOlderArticles found \(fetchedArticles.count) articles")
             } catch {
                 print("ArticleLibrary.fetchOlderArticles failed. \(error.localizedDescription)")

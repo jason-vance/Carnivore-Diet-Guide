@@ -11,7 +11,7 @@ protocol ArticleCursor { }
 
 protocol ArticleFetcher {
     func fetchArticlesOldestFirst(
-        newerThan article: Article,
+        newerThan article: Article?,
         limit: Int
     ) async throws -> [Article]
     
@@ -34,7 +34,7 @@ class MockArticleFetcher: ArticleFetcher {
     var error: Error? = nil
     
     func fetchArticlesOldestFirst(
-        newerThan article: Article,
+        newerThan article: Article?,
         limit: Int
     ) async throws -> [Article] {
         try await Task.sleep(for: .seconds(1))

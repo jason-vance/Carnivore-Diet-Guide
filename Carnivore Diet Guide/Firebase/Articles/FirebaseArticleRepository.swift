@@ -63,14 +63,17 @@ class FirebaseArticleRepository {
 
 extension FirebaseArticleRepository: ArticleFetcher {
     
+    //TODO: If article has been deleted on Firebase, then cursor will be nil, then all articles will be fetched
+    // I should probably retry in the ArticleLibrary with the next best article
     private func getCursor(for article: Article?) async throws -> DocumentSnapshot? {
         if let article = article {
-            return try await articlesCollection.document(article.id).getDocument()
+            let doc = try await articlesCollection.document(article.id).getDocument()
+            if doc.exists { return doc }
         }
         return nil
     }
     
-    func fetchArticlesOldestFirst(newerThan article: Article, limit: Int) async throws -> [Article] {
+    func fetchArticlesOldestFirst(newerThan article: Article?, limit: Int) async throws -> [Article] {
         var query = articlesCollection
             .order(by: publicationDateField, descending: false)
             .limit(to: limit)
