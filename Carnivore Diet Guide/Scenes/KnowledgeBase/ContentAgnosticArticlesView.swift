@@ -20,21 +20,36 @@ struct ContentAgnosticArticlesView: View {
     public var category: Resource.Category
     public var keywords: Set<SearchKeyword>
     
-    @State private var articleIds: [String] = []
+    @State private var allArticles: [Article] = []
     
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     
     private let articleFetcher = iocContainer~>ArticleCollectionFetcher.self
+    private let articleLibrary = iocContainer~>ArticleLibrary.self
+    
+    private var displayArticles: [Article] {
+        var articles = allArticles
+        
+        if !keywords.isEmpty {
+            articles = articles.filter { $0.relevanceTo(keywords) > 0 }
+        }
+        
+        return articles
+    }
     
     private func fetchArticles() {
         Task {
             do {
+                var articleIds: [String] = []
+                
                 if category == .liked {
                     articleIds = try await articleFetcher.fetchLikedArticles()
                 } else if category == .trending {
                     articleIds = try await articleFetcher.fetchTrendingArticles()
                 }
+                
+                allArticles = articleIds.compactMap { articleLibrary.getArticle(byId: $0) }
             } catch {
                 show(alert: "Error fetching articles. \(error.localizedDescription)")
             }
@@ -54,7 +69,7 @@ struct ContentAgnosticArticlesView: View {
     }
     
     @ViewBuilder func Container() -> some View {
-        if articleIds.isEmpty {
+        if displayArticles.isEmpty {
             EmptyArticlesView()
         } else {
             ArticleGrid()
@@ -68,8 +83,8 @@ struct ContentAgnosticArticlesView: View {
         ]
         
         LazyVGrid(columns: columns) {
-            ForEach(articleIds, id: \.self) { articleId in
-                LazyArticleItemView(articleId: articleId)
+            ForEach(displayArticles) { article in
+                ArticleItemView(article)
             }
         }
     }
