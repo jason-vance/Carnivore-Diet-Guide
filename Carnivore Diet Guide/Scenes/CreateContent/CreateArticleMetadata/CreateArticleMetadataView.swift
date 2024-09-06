@@ -186,10 +186,12 @@ struct CreateArticleMetadataView: View {
             .listRowBackground(Color.background)
             .listRowSeparator(.hidden)
             if showPublicationDatePicker {
+                let tomorrow = Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: 1, to: .now)!)
+                
                 DatePicker(
                     "Publication Date",
                     selection: $model.articlePublicationDate,
-                    in: .now...,
+                    in: tomorrow...,
                     displayedComponents: [.date]
                 )
                 .datePickerStyle(.graphical)

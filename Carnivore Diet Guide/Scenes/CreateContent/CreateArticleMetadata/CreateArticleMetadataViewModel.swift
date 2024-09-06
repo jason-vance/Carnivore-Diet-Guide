@@ -11,9 +11,8 @@ import SwiftUI
 @MainActor
 class CreateArticleMetadataViewModel: ObservableObject {
     
-    
     @Published public var articleSummary: Resource.Summary? = nil
-    @Published public var articlePublicationDate: Date = .now
+    @Published public var articlePublicationDate: Date = Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: 1, to: .now)!)
     @Published public var articleCategories: Set<Resource.Category> = []
     @Published public var articleSearchKeywords: Set<SearchKeyword> = []
     
