@@ -45,21 +45,21 @@ struct HomeMenuBar: View {
     
     @ViewBuilder func KnowledgeMenuItem() -> some View {
         let image = selectedTab == .knowledge ? "house.fill" : "house"
-        MenuItem(.knowledge, text: "Home", image: { MenuItemImage(image) }) {
+        MenuItem(.knowledge, text: String(localized: "Home"), image: { MenuItemImage(image) }) {
             selectedTab = .knowledge
         }
     }
     
     @ViewBuilder func FeedMenuItem() -> some View {
         let image = selectedTab == .feed ? "person.3.fill" : "person.3"
-        MenuItem(.feed, text: "Community", image: { MenuItemImage(image) }) {
+        MenuItem(.feed, text: String(localized: "Community"), image: { MenuItemImage(image) }) {
             selectedTab = .feed
         }
     }
     
     @ViewBuilder func CreatePostMenuItem() -> some View {
         let image = selectedTab == .createPost ? "plus.circle.fill" : "plus.circle"
-        MenuItem(.createPost, text: "Create", image: { MenuItemImage(image) }) {
+        MenuItem(.createPost, text: String(localized: "Create"), image: { MenuItemImage(image) }) {
             showCreatePost = true
         }
         .fullScreenCover(isPresented: $showCreatePost) { CreateContentView() }
@@ -67,13 +67,13 @@ struct HomeMenuBar: View {
     
     @ViewBuilder func RecipesMenuItem() -> some View {
         let image = selectedTab == .recipes ? "frying.pan.fill" : "frying.pan"
-        MenuItem(.recipes, text: "Recipes", image: { MenuItemImage(image) }) {
+        MenuItem(.recipes, text: String(localized: "Recipes"), image: { MenuItemImage(image) }) {
             selectedTab = .recipes
         }
     }
     
     @ViewBuilder func ProfileMenuItem() -> some View {
-        MenuItem(.profile, text: "Profile", image: ProfileImage) {
+        MenuItem(.profile, text: String(localized: "Profile"), image: ProfileImage) {
             selectedTab = .profile
         }
     }
