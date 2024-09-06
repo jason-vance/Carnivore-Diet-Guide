@@ -20,6 +20,7 @@ struct ContentAgnosticArticlesView: View {
     public var category: Resource.Category
     public var keywords: Set<SearchKeyword>
     
+    @State private var isWorking: Bool = false
     @State private var allArticles: [Article] = []
     @State private var timeFrame: TimeFrame = .past7Days
     
@@ -40,6 +41,9 @@ struct ContentAgnosticArticlesView: View {
     }
     
     private func fetchArticles() {
+        isWorking = true
+        allArticles = []
+        
         Task {
             do {
                 var articleIds: [String] = []
@@ -54,6 +58,7 @@ struct ContentAgnosticArticlesView: View {
             } catch {
                 show(alert: "Error fetching articles. \(error.localizedDescription)")
             }
+            isWorking = false
         }
     }
     
@@ -71,7 +76,7 @@ struct ContentAgnosticArticlesView: View {
     }
     
     @ViewBuilder func Container() -> some View {
-        if displayArticles.isEmpty {
+        if displayArticles.isEmpty && !isWorking {
             EmptyArticlesView()
         } else {
             ArticleGrid()
@@ -86,12 +91,19 @@ struct ContentAgnosticArticlesView: View {
         
         VStack(spacing: 24) {
             TimeFramePicker(timeFrame: $timeFrame)
-            LazyVGrid(columns: columns) {
-                ForEach(displayArticles) { article in
-                    Button {
-                        navigationPath.append(article)
-                    } label: {
-                        ArticleItemView(article)
+            if isWorking {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .tint(Color.accent)
+                    .padding(.vertical, 64)
+            } else {
+                LazyVGrid(columns: columns) {
+                    ForEach(displayArticles) { article in
+                        Button {
+                            navigationPath.append(article)
+                        } label: {
+                            ArticleItemView(article)
+                        }
                     }
                 }
             }
