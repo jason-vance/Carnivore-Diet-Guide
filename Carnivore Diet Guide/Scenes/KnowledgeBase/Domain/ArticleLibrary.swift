@@ -95,7 +95,10 @@ class ArticleLibrary {
     private func removeArticleMatching(resource: Resource) {
         let article = articlesSubject.value[resource.id]
         articlesSubject.value[resource.id] = nil
+        articleCache[resource.id] = nil
         removedArticleSubject.send(article)
+        
+        try? articleCache.saveToDisk(withName: Self.cacheName)
     }
     
     private func addToLibrary(articles: [Article]) {
@@ -103,6 +106,8 @@ class ArticleLibrary {
             articlesSubject.value[$0.id] = $0
             articleCache[$0.id] = .from($0)
         }
+        
+        try? articleCache.saveToDisk(withName: Self.cacheName)
     }
     
     private func fetchArticles() {
@@ -111,8 +116,6 @@ class ArticleLibrary {
         Task {
             try? await fetchNewerArticles()
             try? await fetchOlderArticles()
-            
-            try? articleCache.saveToDisk(withName: ArticleLibrary.cacheName)
         }
     }
     
@@ -121,6 +124,7 @@ class ArticleLibrary {
         articlesSubject.value = Dictionary(uniqueKeysWithValues: articles.map{ ($0.id, $0) })
     }
     
+    //TODO: Add a rule to Firebase that new articles have to be published after .now
     private func fetchNewerArticles() async throws {
         var newestArticle = newestPublishedArticle
         
@@ -180,7 +184,6 @@ class ArticleLibrary {
             } catch {
                 print("Error updating article data for \(article.id). \(error.localizedDescription)")
             }
-            //TODO: Save the cache somewhere
         }
     }
 }
