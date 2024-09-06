@@ -64,6 +64,22 @@ class FirebaseResourceActivityRepository {
             .sorted { $0.value > $1.value }
             .map { $0.key }
     }
+    
+    func fetchTrendingResourceIds(ofType resourceType: Resource.ResourceType, after date: Date) async throws -> [String] {
+        try await activitiesCollection
+            .whereField(resourceTypeField, isEqualTo: resourceType.rawValue)
+            .whereField(dateField, isGreaterThan: date)
+            .getDocuments()
+            .documents
+            .reduce(Dictionary<String,Int>()) { dict, document in
+                guard let resourceId = try? document.data(as: FirestoreResourceActivityDoc.self).resourceId else { return dict }
+                var dict = dict
+                dict[resourceId] = dict[resourceId, default: 0] + 1
+                return dict
+            }
+            .sorted { $0.value > $1.value }
+            .map { $0.key }
+    }
 }
 
 extension FirebaseResourceActivityRepository: ResourceFavoriteActivityTracker {

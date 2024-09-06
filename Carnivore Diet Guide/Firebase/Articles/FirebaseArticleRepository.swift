@@ -110,11 +110,20 @@ extension FirebaseArticleRepository: ArticleCollectionFetcher {
         throw "Not Implemented"
     }
     
+    //TODO: Add a timeframe parameter to fetchTrendingArticles
     func fetchTrendingArticles() async throws -> [String] {
-        //TODO: Implement FirebaseArticleRepository.fetchTrendingArticles
-        throw "Not Implemented"
+        let oneWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: .now)!
+        
+        let repo = FirebaseResourceActivityRepository()
+        let articleIds = try await repo.fetchTrendingResourceIds(
+            ofType: .article,
+            after: oneWeekAgo
+        )
+        
+        return articleIds
     }
     
+    //TODO: Add a timeframe parameter to fetchLikedArticles
     func fetchLikedArticles() async throws -> [String] {
         let oneWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: .now)!
         

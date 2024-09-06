@@ -11,9 +11,9 @@ import SwinjectAutoregistration
 struct ContentAgnosticArticlesView: View {
     
     static func canHandle(category: Resource.Category) -> Bool {
-        return category == .liked
-        //TODO: Add .trending
         //TODO: Add .featured
+        let asdf: [Resource.Category] = [ .liked, .trending/*, .featured*/ ]
+        return asdf.contains(category)
     }
     
     @Binding public var navigationPath: NavigationPath
@@ -32,6 +32,8 @@ struct ContentAgnosticArticlesView: View {
             do {
                 if category == .liked {
                     articleIds = try await articleFetcher.fetchLikedArticles()
+                } else if category == .trending {
+                    articleIds = try await articleFetcher.fetchTrendingArticles()
                 }
             } catch {
                 show(alert: "Error fetching articles. \(error.localizedDescription)")
@@ -48,7 +50,7 @@ struct ContentAgnosticArticlesView: View {
         Container()
             .padding(.horizontal)
             .alert(alertMessage, isPresented: $showAlert) {}
-            .onAppear { fetchArticles() }
+            .onChange(of: category, initial: true) { _, newCategory in fetchArticles() }
     }
     
     @ViewBuilder func Container() -> some View {
