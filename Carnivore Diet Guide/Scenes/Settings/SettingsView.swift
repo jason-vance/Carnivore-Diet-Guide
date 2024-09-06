@@ -15,6 +15,7 @@ struct SettingsView: View {
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
+    @State private var showResetArticleCacheDialog: Bool = false
     @State private var showDeleteAccountDialog: Bool = false
     @State private var showConfirmDeleteAccountSheet: Bool = false
     
@@ -53,6 +54,9 @@ struct SettingsView: View {
             TitleBar()
             List {
                 Section {
+                    ResetArticleCacheButton()
+                }
+                Section {
                     DeleteAccountButton()
                 }
                 AppVersionRow()
@@ -70,9 +74,9 @@ struct SettingsView: View {
             ConfirmDeleteAccountButton()
             CancelDeleteAccountButton()
         }
-        .sheet(isPresented: $showConfirmDeleteAccountSheet, content: {
+        .sheet(isPresented: $showConfirmDeleteAccountSheet) {
             ConfirmDeleteAccountSheet()
-        })
+        }
     }
     
     @ViewBuilder func TitleBar() -> some View {
@@ -139,6 +143,29 @@ struct SettingsView: View {
             Text("Cancel")
         }
         .frame(height: 48)
+    }
+    
+    @ViewBuilder func ResetArticleCacheButton() -> some View {
+        Button {
+            showResetArticleCacheDialog = true
+        } label: {
+            ProfileControlLabel(
+                String(localized: "Reset Article Cache"),
+                icon: "memorychip",
+                showNavigationAccessories: false
+            )
+        }
+        .listRowBackground(Color.background)
+        .confirmationDialog(
+            "Are you sure you want to reset the article cache?",
+            isPresented: $showResetArticleCacheDialog,
+            titleVisibility: .visible
+        ) {
+            Button("Yes", role: .destructive) {
+                let resetter = iocContainer~>ArticleCacheResetter.self
+                resetter.resetArticleCache()
+            }
+        }
     }
     
     @ViewBuilder func DeleteAccountButton() -> some View {

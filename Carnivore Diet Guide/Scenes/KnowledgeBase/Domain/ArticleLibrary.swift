@@ -92,6 +92,13 @@ class ArticleLibrary {
             .sink(receiveValue: removeArticleMatching(resource:))
     }
     
+    public func resetArticleCache() {
+        articleCache.removeAll()
+        try? articleCache.saveToDisk(withName: Self.cacheName)
+        
+        fetchArticles()
+    }
+    
     private func removeArticleMatching(resource: Resource) {
         let article = articlesSubject.value[resource.id]
         articlesSubject.value[resource.id] = nil
@@ -124,7 +131,6 @@ class ArticleLibrary {
         articlesSubject.value = Dictionary(uniqueKeysWithValues: articles.map{ ($0.id, $0) })
     }
     
-    //TODO: Add a rule to Firebase that new articles have to be published after .now
     private func fetchNewerArticles() async throws {
         var newestArticle = newestPublishedArticle
         
@@ -187,3 +193,5 @@ class ArticleLibrary {
         }
     }
 }
+
+extension ArticleLibrary: ArticleCacheResetter {}

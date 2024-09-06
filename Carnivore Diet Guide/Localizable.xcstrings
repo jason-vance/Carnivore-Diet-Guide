@@ -338,6 +338,9 @@
     "Are you sure you want to logout?" : {
 
     },
+    "Are you sure you want to reset the article cache?" : {
+
+    },
     "Article" : {
 
     },
@@ -1798,6 +1801,9 @@
     "Report" : {
 
     },
+    "Reset Article Cache" : {
+
+    },
     "Review Your Article" : {
 
     },
@@ -2190,6 +2196,9 @@
       }
     },
     "Write an Article" : {
+
+    },
+    "Yes" : {
 
     },
     "Yields: %lld servings" : {

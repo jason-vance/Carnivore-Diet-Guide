@@ -78,6 +78,7 @@ func setupMockIocContainer(_ iocContainer: Container) {
     
     //Settings
     iocContainer.autoregister(UserAccountDeleter.self, initializer: MockUserAccountDeleter.init)
+    iocContainer.autoregister(ArticleCacheResetter.self, initializer: { ArticleLibrary.instance })
     
     //Comment Section
     iocContainer.autoregister(CommentProvider.self, initializer: MockCommentProvider.init)
