@@ -41,7 +41,7 @@ struct KnowledgeBaseView: View {
     }
     
     @ViewBuilder func TopBar() -> some View {
-        ScreenTitleBar("Knowledge Base")
+        ScreenTitleBar(Bundle.main.bundleName ?? String(localized: "Home"))
     }
     
     @ViewBuilder func SearchArea() -> some View {

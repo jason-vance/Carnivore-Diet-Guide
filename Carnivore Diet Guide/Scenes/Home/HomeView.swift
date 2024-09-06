@@ -13,7 +13,7 @@ struct HomeView: View {
     private let defaultPadding: CGFloat = 8
 
     @StateObject private var model = HomeViewModel()
-    @State private var selectedTab: HomeMenuBar.HomeMenuTab = .feed
+    @State private var selectedTab: HomeMenuBar.HomeMenuTab = .knowledge
     
     private var currentUserId: String {
         (iocContainer~>CurrentUserIdProvider.self).currentUserId!
@@ -22,10 +22,10 @@ struct HomeView: View {
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
-                FeedView()
-                    .opacity(selectedTab == .feed ? 1.0 : 0.0)
                 KnowledgeBaseView()
                     .opacity(selectedTab == .knowledge ? 1.0 : 0.0)
+                FeedView()
+                    .opacity(selectedTab == .feed ? 1.0 : 0.0)
                 RecipesView()
                     .opacity(selectedTab == .recipes ? 1.0 : 0.0)
                 UserProfileView(userId: currentUserId)

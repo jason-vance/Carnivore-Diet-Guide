@@ -1165,7 +1165,6 @@
       "comment" : "Difficulty level is 'Hard'"
     },
     "Home" : {
-      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

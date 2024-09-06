@@ -26,9 +26,9 @@ struct HomeMenuBar: View {
     
     var body: some View {
         HStack {
-            FeedMenuItem()
-            Spacer()
             KnowledgeMenuItem()
+            Spacer()
+            FeedMenuItem()
             Spacer()
             CreatePostMenuItem()
             Spacer()
@@ -41,20 +41,19 @@ struct HomeMenuBar: View {
         .frame(height: Self.height)
         .background(Color.background)
         .overlay(alignment: .top) { BarDivider() }
-
-    }
-    
-    @ViewBuilder func FeedMenuItem() -> some View {
-        let image = selectedTab == .feed ? "house.fill" : "house"
-        MenuItem(.feed, text: "Home", image: { MenuItemImage(image) }) {
-            selectedTab = .feed
-        }
     }
     
     @ViewBuilder func KnowledgeMenuItem() -> some View {
-        let image = selectedTab == .knowledge ? "books.vertical.fill" : "books.vertical"
-        MenuItem(.knowledge, text: "Knowledge", image: { MenuItemImage(image) }) {
+        let image = selectedTab == .knowledge ? "house.fill" : "house"
+        MenuItem(.knowledge, text: "Home", image: { MenuItemImage(image) }) {
             selectedTab = .knowledge
+        }
+    }
+    
+    @ViewBuilder func FeedMenuItem() -> some View {
+        let image = selectedTab == .feed ? "person.3.fill" : "person.3"
+        MenuItem(.feed, text: "Community", image: { MenuItemImage(image) }) {
+            selectedTab = .feed
         }
     }
     
