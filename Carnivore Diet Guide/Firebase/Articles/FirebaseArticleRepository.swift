@@ -116,8 +116,15 @@ extension FirebaseArticleRepository: ArticleCollectionFetcher {
     }
     
     func fetchLikedArticles() async throws -> [String] {
-        //TODO: Implement FirebaseArticleRepository.fetchLikedArticles
-        throw "Not Implemented"
+        let oneWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: .now)!
+        
+        let repo = FirebaseResourceActivityRepository()
+        let articleIds = try await repo.fetchLikedResourceIds(
+            ofType: .article,
+            after: oneWeekAgo
+        )
+        
+        return articleIds
     }
 }
 

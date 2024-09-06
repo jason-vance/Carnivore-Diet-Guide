@@ -59,11 +59,19 @@ struct KnowledgeBaseView: View {
     }
     
     @ViewBuilder func ListContent() -> some View {
-        ArticlesInCategoryView(
-            navigationPath: $navigationPath,
-            category: selectedCategory,
-            keywords: SearchKeyword.keywordsFrom(string: searchText)
-        )
+        if ContentAgnosticArticlesView.canHandle(category: selectedCategory) {
+            ContentAgnosticArticlesView(
+                navigationPath: $navigationPath,
+                category: selectedCategory,
+                keywords: SearchKeyword.keywordsFrom(string: searchText)
+            )
+        } else {
+            ArticlesInCategoryView(
+                navigationPath: $navigationPath,
+                category: selectedCategory,
+                keywords: SearchKeyword.keywordsFrom(string: searchText)
+            )
+        }
     }
 }
 

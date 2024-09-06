@@ -14,6 +14,10 @@ class FirebaseResourceActivityRepository {
 
     let activitiesCollection = Firestore.firestore().collection(RESOURCE_ACTIVITIES)
     
+    let dateField = FirestoreResourceActivityDoc.CodingKeys.date.rawValue
+    let resourceTypeField = FirestoreResourceActivityDoc.CodingKeys.resourceType.rawValue
+    let activityTypeField = FirestoreResourceActivityDoc.CodingKeys.activityType.rawValue
+
     func addActivity(
         _ type: FirestoreResourceActivityDoc.ActivityType,
         forResource resourceId: String,
@@ -42,6 +46,23 @@ class FirebaseResourceActivityRepository {
         for doc in docs.documents {
             try await doc.reference.delete()
         }
+    }
+    
+    func fetchLikedResourceIds(ofType resourceType: Resource.ResourceType, after date: Date) async throws -> [String] {
+        try await activitiesCollection
+            .whereField(activityTypeField, isEqualTo: FirestoreResourceActivityDoc.ActivityType.favorite.rawValue)
+            .whereField(resourceTypeField, isEqualTo: resourceType.rawValue)
+            .whereField(dateField, isGreaterThan: date)
+            .getDocuments()
+            .documents
+            .reduce(Dictionary<String,Int>()) { dict, document in
+                guard let resourceId = try? document.data(as: FirestoreResourceActivityDoc.self).resourceId else { return dict }
+                var dict = dict
+                dict[resourceId] = dict[resourceId, default: 0] + 1
+                return dict
+            }
+            .sorted { $0.value > $1.value }
+            .map { $0.key }
     }
 }
 
