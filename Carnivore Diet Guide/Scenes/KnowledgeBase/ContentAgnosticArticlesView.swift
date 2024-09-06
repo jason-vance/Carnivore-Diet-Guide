@@ -88,8 +88,11 @@ struct ContentAgnosticArticlesView: View {
             TimeFramePicker(timeFrame: $timeFrame)
             LazyVGrid(columns: columns) {
                 ForEach(displayArticles) { article in
-                    //TODO: Navigate to ArticleDetailView
-                    ArticleItemView(article)
+                    Button {
+                        navigationPath.append(article)
+                    } label: {
+                        ArticleItemView(article)
+                    }
                 }
             }
         }
