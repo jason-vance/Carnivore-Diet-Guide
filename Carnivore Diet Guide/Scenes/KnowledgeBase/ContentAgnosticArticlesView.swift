@@ -21,6 +21,7 @@ struct ContentAgnosticArticlesView: View {
     public var keywords: Set<SearchKeyword>
     
     @State private var allArticles: [Article] = []
+    @State private var timeFrame: TimeFrame = .past7Days
     
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
@@ -44,9 +45,9 @@ struct ContentAgnosticArticlesView: View {
                 var articleIds: [String] = []
                 
                 if category == .liked {
-                    articleIds = try await articleFetcher.fetchLikedArticles()
+                    articleIds = try await articleFetcher.fetchLikedArticles(in: timeFrame)
                 } else if category == .trending {
-                    articleIds = try await articleFetcher.fetchTrendingArticles()
+                    articleIds = try await articleFetcher.fetchTrendingArticles(in: timeFrame)
                 }
                 
                 allArticles = articleIds.compactMap { articleLibrary.getArticle(byId: $0) }
@@ -65,7 +66,8 @@ struct ContentAgnosticArticlesView: View {
         Container()
             .padding(.horizontal)
             .alert(alertMessage, isPresented: $showAlert) {}
-            .onChange(of: category, initial: true) { _, newCategory in fetchArticles() }
+            .onChange(of: category, initial: true) { _, _ in fetchArticles() }
+            .onChange(of: timeFrame, initial: false) { _, _ in fetchArticles() }
     }
     
     @ViewBuilder func Container() -> some View {
@@ -82,9 +84,13 @@ struct ContentAgnosticArticlesView: View {
             GridItem.init(.adaptive(minimum: 100, maximum: 300))
         ]
         
-        LazyVGrid(columns: columns) {
-            ForEach(displayArticles) { article in
-                ArticleItemView(article)
+        VStack(spacing: 24) {
+            TimeFramePicker(timeFrame: $timeFrame)
+            LazyVGrid(columns: columns) {
+                ForEach(displayArticles) { article in
+                    //TODO: Navigate to ArticleDetailView
+                    ArticleItemView(article)
+                }
             }
         }
     }

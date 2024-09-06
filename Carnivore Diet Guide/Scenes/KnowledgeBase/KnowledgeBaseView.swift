@@ -27,7 +27,7 @@ struct KnowledgeBaseView: View {
             VStack(spacing: 0) {
                 TopBar()
                 ScrollView {
-                    VStack {
+                    VStack(spacing: 0) {
                         SearchArea()
                         ListContent()
                     }
@@ -71,6 +71,7 @@ struct KnowledgeBaseView: View {
                 category: selectedCategory,
                 keywords: SearchKeyword.keywordsFrom(string: searchText)
             )
+            .padding(.top, 8)
         }
     }
 }
