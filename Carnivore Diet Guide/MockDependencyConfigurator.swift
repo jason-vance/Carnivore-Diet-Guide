@@ -37,10 +37,14 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(FeedViewContentProvider.self) { DefaultFeedViewContentProvider.instance }
     iocContainer.autoregister(FeedItemRepository.self, initializer: MockFeedItemRepository.init)
     
+    //Article Detail
+    iocContainer.autoregister(IndividualArticleFetcher.self, initializer: MockIndividualArticleFetcher.init)
+    
     //Knowledge Base
-    iocContainer.autoregister(ArticleFetcher.self, initializer: MockArticleFetcher.init)
+    iocContainer.autoregister(ArticleCollectionFetcher.self, initializer: MockArticleCollectionFetcher.init)
     ArticleLibrary.makeInstance(
-        articleFetcher: iocContainer~>ArticleFetcher.self,
+        articleCollectionFetcher: iocContainer~>ArticleCollectionFetcher.self,
+        individualArticleFetcher: iocContainer~>IndividualArticleFetcher.self,
         resourceDeleter: iocContainer~>ResourceDeleter.self
     )
     iocContainer.autoregister(ArticleLibrary.self, initializer: { ArticleLibrary.instance })
@@ -50,9 +54,6 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(PostPoster.self, initializer: { DefaultPostPoster.forPreviewsWithSuccess })
     iocContainer.autoregister(ResourceCategoryProvider.self, initializer: MockResourceCategoryProvider.init)
     iocContainer.autoregister(ArticlePoster.self, initializer: { DefaultArticlePoster.forPreviewsWithSuccess })
-    
-    //Article Detail
-    iocContainer.autoregister(ArticleDetailArticleFetcher.self, initializer: MockArticleDetailArticleFetcher.init)
     
     //Post Detail
     iocContainer.autoregister(PostFetcher.self, initializer: { DefaultPostFetcher.forPreviewsWithSuccess })

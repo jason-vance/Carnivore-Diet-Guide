@@ -1,5 +1,5 @@
 //
-//  ArticleDetailArticleFetcher.swift
+//  IndividualArticleFetcher.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 9/3/24.
@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol ArticleDetailArticleFetcher {
+protocol IndividualArticleFetcher {
     func fetchArticle(withId articleId: String) async throws -> Article
 }
 
-class MockArticleDetailArticleFetcher: ArticleDetailArticleFetcher {
+class MockIndividualArticleFetcher: IndividualArticleFetcher {
     
     public var article: Article = .sample
     public var error: Error? = nil

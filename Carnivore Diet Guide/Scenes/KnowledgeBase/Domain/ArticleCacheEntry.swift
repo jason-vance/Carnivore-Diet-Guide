@@ -8,6 +8,16 @@
 import Foundation
 
 struct ArticleCacheEntry: Codable {
+    
+    private static var randomRefreshAfterDate: Date {
+        let minLifetimeDays = 5
+        let maxLifetimeDays = 9
+        let days = Int.random(in: minLifetimeDays...maxLifetimeDays)
+        return Calendar.current.date(byAdding: .day, value: days, to: .now)!
+    }
+    
+    let refreshAfterDate: Date?
+    
     let id: String?
     let author: String?
     let title: String?
@@ -22,6 +32,7 @@ struct ArticleCacheEntry: Codable {
         _ article: Article
     ) -> ArticleCacheEntry {
         return .init(
+            refreshAfterDate: Self.randomRefreshAfterDate,
             id: article.id,
             author: article.author,
             title: article.title,

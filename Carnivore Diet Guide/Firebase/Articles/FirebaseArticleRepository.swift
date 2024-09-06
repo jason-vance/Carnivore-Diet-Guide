@@ -61,7 +61,7 @@ class FirebaseArticleRepository {
     }
 }
 
-extension FirebaseArticleRepository: ArticleFetcher {
+extension FirebaseArticleRepository: ArticleCollectionFetcher {
     
     //TODO: If article has been deleted on Firebase, then cursor will be nil, then all articles will be fetched
     // I should probably retry in the ArticleLibrary with the next best article
@@ -121,11 +121,14 @@ extension FirebaseArticleRepository: ArticleFetcher {
     }
 }
 
-extension FirebaseArticleRepository: ArticleDetailArticleFetcher {
+extension FirebaseArticleRepository: IndividualArticleFetcher {
     
     func fetchArticle(withId articleId: String) async throws -> Article {
         let doc = try await articlesCollection.document(articleId).getDocument()
+        guard doc.exists else { throw Resource.Errors.doesNotExist }
+        
         let categories = try await getCategoryDict()
+        
         guard let article = try doc.data(as: FirebaseArticleDoc.self).toArticle(categoryDict: categories) else {
             throw "Could convert Firestore doc to Article"
         }

@@ -8,14 +8,14 @@
 import Foundation
 import Combine
 
-//TODO: Re-fetch article data every now and then
-//TODO: Remove articles that fail to load in ArticleDetailView
+//TODO: Add ability to reset article cache
 class ArticleLibrary {
     
     private typealias ArticleCache = Cache<String, ArticleCacheEntry>
     private static let cacheName = "ArticlesCache"
     
     private var articlesSubject: CurrentValueSubject<Dictionary<String, Article>,Never> = .init([:])
+    private var removedArticleSubject: CurrentValueSubject<Article?, Never> = .init(nil)
     
     public var publishedArticlesPublisher: AnyPublisher<[Article],Never> {
         articlesSubject
@@ -26,7 +26,14 @@ class ArticleLibrary {
             .eraseToAnyPublisher()
     }
     
-    private let articleFetcher: ArticleFetcher
+    public var removedArticlePublisher: AnyPublisher<Article,Never> {
+        removedArticleSubject
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
+    }
+    
+    private let articleCollectionFetcher: ArticleCollectionFetcher
+    private let individualArticleFetcher: IndividualArticleFetcher
     private let resourceDeleter: ResourceDeleter
     
     private var articleDeletedSub: AnyCancellable? = nil
@@ -36,12 +43,14 @@ class ArticleLibrary {
     private static var _instance: ArticleLibrary? = nil
     public static var instance: ArticleLibrary { _instance! }
     public static func makeInstance(
-        articleFetcher: ArticleFetcher,
+        articleCollectionFetcher: ArticleCollectionFetcher,
+        individualArticleFetcher: IndividualArticleFetcher,
         resourceDeleter: ResourceDeleter
     ) {
         assert(_instance == nil)
         _instance = .init(
-            articleFetcher: articleFetcher,
+            articleCollectionFetcher: articleCollectionFetcher,
+            individualArticleFetcher: individualArticleFetcher,
             resourceDeleter: resourceDeleter
         )
     }
@@ -61,24 +70,32 @@ class ArticleLibrary {
     }
     
     private init(
-        articleFetcher: ArticleFetcher,
+        articleCollectionFetcher: ArticleCollectionFetcher,
+        individualArticleFetcher: IndividualArticleFetcher,
         resourceDeleter: ResourceDeleter
     ) {
-        self.articleFetcher = articleFetcher
+        self.articleCollectionFetcher = articleCollectionFetcher
+        self.individualArticleFetcher = individualArticleFetcher
         self.resourceDeleter = resourceDeleter
         
         fetchArticles()
         listenForDeletedArticles()
     }
     
+    public func getArticle(byId articleId: String) -> Article? {
+        return articlesSubject.value[articleId]
+    }
+    
     private func listenForDeletedArticles() {
         articleDeletedSub = resourceDeleter.deletedResourcePublisher
             .filter { $0.type == .article }
-            .sink(receiveValue: onArticleDeleted(resource:))
+            .sink(receiveValue: removeArticleMatching(resource:))
     }
     
-    private func onArticleDeleted(resource: Resource) {
+    private func removeArticleMatching(resource: Resource) {
+        let article = articlesSubject.value[resource.id]
         articlesSubject.value[resource.id] = nil
+        removedArticleSubject.send(article)
     }
     
     private func addToLibrary(articles: [Article]) {
@@ -110,7 +127,7 @@ class ArticleLibrary {
         var canFetchMore = true
         while canFetchMore {
             do {
-                let fetchedArticles = try await articleFetcher.fetchArticlesOldestFirst(
+                let fetchedArticles = try await articleCollectionFetcher.fetchArticlesOldestFirst(
                     newerThan: newestArticle,
                     limit: 20
                 )
@@ -132,7 +149,7 @@ class ArticleLibrary {
         var canFetchMore = true
         while canFetchMore {
             do {
-                let fetchedArticles = try await articleFetcher.fetchArticlesNewestFirst(
+                let fetchedArticles = try await articleCollectionFetcher.fetchArticlesNewestFirst(
                     olderThan: oldestArticle,
                     limit: 20
                 )
@@ -145,6 +162,25 @@ class ArticleLibrary {
             } catch {
                 print("ArticleLibrary.fetchOlderArticles failed. \(error.localizedDescription)")
             }
+        }
+    }
+    
+    func updateArticleDataIfNecessary(_ article: Article) {
+        Task {
+            do {
+                guard let cacheEntry = articleCache[article.id] else { return }
+                guard (cacheEntry.refreshAfterDate ?? .now) <= .now else { return }
+
+                let article = try await individualArticleFetcher.fetchArticle(withId: article.id)
+
+                addToLibrary(articles: [article])
+            } catch Resource.Errors.doesNotExist {
+                print("Article \(article.id) no longer exists remotely, removing")
+                removeArticleMatching(resource: .init(article))
+            } catch {
+                print("Error updating article data for \(article.id). \(error.localizedDescription)")
+            }
+            //TODO: Save the cache somewhere
         }
     }
 }

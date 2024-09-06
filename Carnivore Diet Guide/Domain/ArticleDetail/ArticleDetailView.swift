@@ -5,13 +5,14 @@
 //  Created by Jason Vance on 9/3/24.
 //
 
-import SwiftUI
+import Combine
 import MarkdownUI
+import SwiftUI
 import SwinjectAutoregistration
 
 struct ArticleDetailView: View {
     
-    private let articleFetcher = iocContainer~>ArticleDetailArticleFetcher.self
+    private let articleLibrary = iocContainer~>ArticleLibrary.self
     private let activityTracker = iocContainer~>ResourceViewActivityTracker.self
     private let userIdProvider = iocContainer~>CurrentUserIdProvider.self
     
@@ -22,7 +23,8 @@ struct ArticleDetailView: View {
     @State private var isWorking: Bool = false
     
     @State private var showArticleFailedToFetch: Bool = false
-    
+    @State private var showArticleNoLongerAvailable: Bool = false
+
     init(articleId: String) {
         self.article = nil
         self.articleId = articleId
@@ -33,19 +35,24 @@ struct ArticleDetailView: View {
         self.articleId = article.id
     }
     
+    private var thisArticleWasRemoved: AnyPublisher<Article, Never> {
+        articleLibrary.removedArticlePublisher
+            .receive(on: RunLoop.main)
+            .filter { $0.id == articleId }
+            .eraseToAnyPublisher()
+    }
+    
     private func fetchArticle(withId articleId: String) {
         guard articleId != article?.id else { return }
         
-        Task {
-            do {
-                article = try await articleFetcher.fetchArticle(withId: articleId)
-            } catch {
-                print("Article failed to fetch")
-                showArticleFailedToFetch = true
-            }
+        if let article = articleLibrary.getArticle(byId: articleId) {
+            self.article = article
+        } else {
+            print("Article failed to fetch")
+            showArticleFailedToFetch = true
         }
     }
-    
+
     private func markAsViewed() {
         guard let article = article else { return }
         guard let userId = userIdProvider.currentUserId else { return }
@@ -55,6 +62,11 @@ struct ArticleDetailView: View {
             try? await activityTracker.resource(.init(article), wasViewedByUser: userId)
         }
     }
+    
+    private func updateArticleDataIfNecessary() {
+        guard let article = article else { return }
+        articleLibrary.updateArticleDataIfNecessary(article)
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -63,6 +75,11 @@ struct ArticleDetailView: View {
                 ScrollView {
                     ArticleView(article: article)
                         .onAppear { markAsViewed() }
+                        .onAppear { updateArticleDataIfNecessary() }
+                        .onReceive(thisArticleWasRemoved) { _ in
+                            isWorking = true
+                            showArticleNoLongerAvailable = true
+                        }
                 }
             } else {
                 LoadingView()
@@ -74,9 +91,16 @@ struct ArticleDetailView: View {
             fetchArticle(withId: newArticleId)
         }
         .alert("The article could not be fetched", isPresented: $showArticleFailedToFetch) {
-            Button("OK", role: .cancel) {
-                dismiss()
-            }
+            AlertOkDismissButton()
+        }
+        .alert("This article is no longer available", isPresented: $showArticleNoLongerAvailable) {
+            AlertOkDismissButton()
+        }
+    }
+    
+    @ViewBuilder func AlertOkDismissButton() -> some View {
+        Button("OK", role: .cancel) {
+            dismiss()
         }
     }
     
@@ -152,8 +176,8 @@ struct ArticleDetailView: View {
 #Preview("Fails to load") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
-        iocContainer.autoregister(ArticleDetailArticleFetcher.self) {
-            let fetcher = MockArticleDetailArticleFetcher()
+        iocContainer.autoregister(IndividualArticleFetcher.self) {
+            let fetcher = MockIndividualArticleFetcher()
             fetcher.error = "Test failure"
             return fetcher
         }

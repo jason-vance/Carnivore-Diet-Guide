@@ -46,10 +46,14 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(FeedViewContentProvider.self) { DefaultFeedViewContentProvider.instance }
     iocContainer.autoregister(FeedItemRepository.self, initializer: FirebaseFeedItemRepository.init)
     
+    //Article Detail
+    iocContainer.autoregister(IndividualArticleFetcher.self, initializer: FirebaseArticleRepository.init)
+    
     //Knowledge Base
-    iocContainer.autoregister(ArticleFetcher.self, initializer: FirebaseArticleRepository.init)
+    iocContainer.autoregister(ArticleCollectionFetcher.self, initializer: FirebaseArticleRepository.init)
     ArticleLibrary.makeInstance(
-        articleFetcher: iocContainer~>ArticleFetcher.self,
+        articleCollectionFetcher: iocContainer~>ArticleCollectionFetcher.self,
+        individualArticleFetcher: iocContainer~>IndividualArticleFetcher.self,
         resourceDeleter: iocContainer~>ResourceDeleter.self
     )
     iocContainer.autoregister(ArticleLibrary.self, initializer: { ArticleLibrary.instance })
@@ -59,9 +63,6 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(PostPoster.self, initializer: { DefaultPostPoster.forProd })
     iocContainer.autoregister(ResourceCategoryProvider.self, initializer: FirebaseResourceCategoryRepository.init)
     iocContainer.autoregister(ArticlePoster.self, initializer: { DefaultArticlePoster.forProd })
-    
-    //Article Detail
-    iocContainer.autoregister(ArticleDetailArticleFetcher.self, initializer: FirebaseArticleRepository.init)
 
     //Post Detail
     iocContainer.autoregister(PostFetcher.self, initializer: { DefaultPostFetcher.forProd })

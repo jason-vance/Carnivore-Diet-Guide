@@ -1,5 +1,5 @@
 //
-//  ArticleFetcher.swift
+//  ArticleCollectionFetcher.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 8/28/24.
@@ -9,7 +9,7 @@ import Foundation
 
 protocol ArticleCursor { }
 
-protocol ArticleFetcher {
+protocol ArticleCollectionFetcher {
     func fetchArticlesOldestFirst(
         newerThan article: Article?,
         limit: Int
@@ -28,7 +28,7 @@ protocol ArticleFetcher {
     func fetchLikedArticles() async throws -> [String]
 }
 
-class MockArticleFetcher: ArticleFetcher {
+class MockArticleCollectionFetcher: ArticleCollectionFetcher {
     
     var articles: [Article] = [ .sample, .sample2 ]
     var error: Error? = nil

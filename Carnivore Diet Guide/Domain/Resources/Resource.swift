@@ -72,3 +72,9 @@ extension Resource {
         )
     }
 }
+
+extension Resource {
+    enum Errors: Error {
+        case doesNotExist
+    }
+}
