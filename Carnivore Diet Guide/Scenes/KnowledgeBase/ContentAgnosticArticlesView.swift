@@ -11,8 +11,7 @@ import SwinjectAutoregistration
 struct ContentAgnosticArticlesView: View {
     
     static func canHandle(category: Resource.Category) -> Bool {
-        //TODO: Add .featured
-        let asdf: [Resource.Category] = [ .liked, .trending/*, .featured*/ ]
+        let asdf: [Resource.Category] = [ .liked, .trending ]
         return asdf.contains(category)
     }
     

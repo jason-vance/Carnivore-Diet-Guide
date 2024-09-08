@@ -783,6 +783,9 @@
         }
       }
     },
+    "Couldn't fetch featured content.\n\nMake sure you're connected to the internet and try again." : {
+
+    },
     "Create" : {
 
     },

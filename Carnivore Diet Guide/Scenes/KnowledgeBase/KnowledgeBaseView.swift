@@ -26,12 +26,13 @@ struct KnowledgeBaseView: View {
         NavigationStack(path: $navigationPath) {
             VStack(spacing: 0) {
                 TopBar()
-                ScrollView {
+                ScrollView() {
                     VStack(spacing: 0) {
                         SearchArea()
                         ListContent()
                     }
                 }
+                .scrollIndicators(.hidden)
             }
             .background(Color.background)
             .navigationDestination(for: Article.self) { article in
@@ -59,7 +60,9 @@ struct KnowledgeBaseView: View {
     }
     
     @ViewBuilder func ListContent() -> some View {
-        if ContentAgnosticArticlesView.canHandle(category: selectedCategory) {
+        if selectedCategory == .featured {
+            FeaturedArticlesView(navigationPath: $navigationPath)
+        } else if ContentAgnosticArticlesView.canHandle(category: selectedCategory) {
             ContentAgnosticArticlesView(
                 navigationPath: $navigationPath,
                 category: selectedCategory,
