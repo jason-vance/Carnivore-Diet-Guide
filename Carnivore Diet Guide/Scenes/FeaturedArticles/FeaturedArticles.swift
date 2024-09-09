@@ -29,12 +29,17 @@ extension FeaturedArticles {
     struct Section: Identifiable {
         let id: UUID
         let layout: Layout
-        let title: String
-        let description: String?
+        let title: FeaturedSectionTitle
+        let description: FeaturedSectionDescription?
         let content: [Item]
         
-        init?(id: UUID, layout: Layout, title: String, description: String?, content: [Item]) {
-            
+        init?(
+            id: UUID,
+            layout: Layout,
+            title: FeaturedSectionTitle,
+            description: FeaturedSectionDescription?,
+            content: [Item]
+        ) {
             guard Self.content(content, matches: layout) else { return nil }
             
             self.id = id
@@ -45,6 +50,8 @@ extension FeaturedArticles {
         }
         
         static func content(_ content: [Item], matches layout: Layout) -> Bool {
+            guard !content.isEmpty else { return false }
+            
             switch layout {
             case .collage:
                 return content.filter { $0.prominence == .secondary }.count % 2 == 0
@@ -54,29 +61,35 @@ extension FeaturedArticles {
         static let sampleCollage: Section = .init(
             id: UUID(),
             layout: .collage,
-            title: "For You",
-            description: "Recommendations based on topics you read",
+            title: .init("For You")!,
+            description: .init("Recommendations based on topics you read"),
             content: [.samplePrimary, .sampleSecondary, .sampleSecondary2, .sampleTertiary]
         )!
     }
 }
 
 extension FeaturedArticles.Section {
-    enum Layout {
+    enum Layout: CaseIterable {
         case collage
+        
+        var displayName: String {
+            switch self {
+            case .collage: String(localized: "Collage")
+            }
+        }
     }
 }
 
 extension FeaturedArticles.Section {
     struct Item: Identifiable {
         let id: UUID
-        let item: Article
+        let article: Article
         let prominence: Prominence
         
-        static let samplePrimary: Item = .init(id: UUID(), item: .sample, prominence: .primary)
-        static let sampleSecondary: Item = .init(id: UUID(), item: .sample, prominence: .secondary)
-        static let sampleSecondary2: Item = .init(id: UUID(), item: .sample2, prominence: .secondary)
-        static let sampleTertiary: Item = .init(id: UUID(), item: .sample, prominence: .tertiary)
+        static let samplePrimary: Item = .init(id: UUID(), article: .sample, prominence: .primary)
+        static let sampleSecondary: Item = .init(id: UUID(), article: .sample, prominence: .secondary)
+        static let sampleSecondary2: Item = .init(id: UUID(), article: .sample2, prominence: .secondary)
+        static let sampleTertiary: Item = .init(id: UUID(), article: .sample, prominence: .tertiary)
     }
 }
 

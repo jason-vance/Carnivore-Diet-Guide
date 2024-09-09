@@ -332,6 +332,12 @@
     "24 Hours" : {
 
     },
+    "Add Article" : {
+
+    },
+    "Add Article View" : {
+
+    },
     "Add Section" : {
 
     },
@@ -718,6 +724,9 @@
     "Category" : {
 
     },
+    "Collage" : {
+
+    },
     "Community" : {
 
     },
@@ -817,6 +826,9 @@
 
     },
     "Delete Account" : {
+
+    },
+    "Description" : {
 
     },
     "Diet Guide" : {
@@ -1120,7 +1132,7 @@
         }
       }
     },
-    "FeaturedArticleSectionCreatorView" : {
+    "Featured Section" : {
 
     },
     "g" : {
@@ -1458,6 +1470,9 @@
         }
       }
     },
+    "Layout" : {
+
+    },
     "Library" : {
       "comment" : "Photo Library"
     },
@@ -1629,6 +1644,9 @@
 
     },
     "Posts by %@" : {
+
+    },
+    "Primary Articles (%lld):" : {
 
     },
     "Profile" : {
@@ -1863,6 +1881,9 @@
     "Search Keywords" : {
 
     },
+    "Secondary Articles (%lld):" : {
+
+    },
     "Serves %lld" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1941,6 +1962,9 @@
 
     },
     "Tap to turn\non and off" : {
+
+    },
+    "Tertiary Articles (%lld):" : {
 
     },
     "The article could not be fetched" : {

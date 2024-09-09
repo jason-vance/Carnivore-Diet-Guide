@@ -32,6 +32,7 @@ struct FeaturedArticlesCreatorView: View {
                 PublicationDateField()
                 SectionsField()
             }
+            //TODO: I think I want to make all listStyles .grouped
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
         }
@@ -97,7 +98,7 @@ struct FeaturedArticlesCreatorView: View {
         Section {
             ForEach(sections) { section in
                 //TODO: FeaturedArticleSectionRow(section)
-                Text(section.title)
+                Text(section.title.title)
             }
             AddSectionButton()
         } header: {
@@ -120,11 +121,9 @@ struct FeaturedArticlesCreatorView: View {
         .listRowBackground(Color.background)
         .listRowSeparator(.hidden)
         .fullScreenCover(isPresented: $showNewSectionCreator) {
-            //TODO: FeaturedArticleSectionCreatorView
-//            FeaturedArticleSectionCreatorView() { newSection in
-//                sections.append(newSection)
-//            }
-            Text("FeaturedArticleSectionCreatorView")
+            FeaturedArticleSectionCreatorView() { newSection in
+                sections.append(newSection)
+            }
         }
     }
 }

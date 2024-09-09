@@ -80,23 +80,23 @@ struct FeaturedArticlesView: View {
         LazyVStack {
             SectionHeader(section)
             ForEach(primary) { content in
-                ArticleItemViewButton(content.item, style: .largeVertical)
+                ArticleItemViewButton(content.article, style: .largeVertical)
             }
             LazyVGrid(columns: columns) {
                 ForEach(secondary) { content in
-                    ArticleItemViewButton(content.item, style: .vertical)
+                    ArticleItemViewButton(content.article, style: .vertical)
                 }
             }
             ForEach(tertiary) { content in
-                ArticleItemViewButton(content.item, style: .horizontal)
+                ArticleItemViewButton(content.article, style: .horizontal)
             }
         }
     }
     
     @ViewBuilder func SectionHeader(_ section: FeaturedArticles.Section) -> some View {
-        SectionTitle(section.title)
+        SectionTitle(section.title.title)
         if let description = section.description {
-            SectionDescription(description)
+            SectionDescription(description.description)
         }
     }
     
