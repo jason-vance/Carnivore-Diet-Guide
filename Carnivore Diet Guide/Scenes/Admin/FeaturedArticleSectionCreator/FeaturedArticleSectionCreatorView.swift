@@ -158,6 +158,9 @@ struct FeaturedArticleSectionCreatorView: View {
                     .listRowBackground(Color.background)
                     .listRowSeparator(.hidden)
             }
+            //TODO: Add ability to remove articles from all sections
+//            .onDelete(perform: { indexSet in
+//            })
             AddPrimaryArticleButton()
         } header: {
             Text("Primary Articles (\(primary.count)):")
@@ -203,10 +206,9 @@ struct FeaturedArticleSectionCreatorView: View {
             showAddPrimaryArticle = true
         }
         .fullScreenCover(isPresented: $showAddPrimaryArticle) {
-            //TODO: ArticleSelectorView
-//            ArticleSelectorView { article in
-//                items.append(.init(id: UUID(), article: article, prominence: .primary))
-//            }
+            ArticleSelectorView { article in
+                items.append(.init(id: UUID(), article: article, prominence: .primary))
+            }
         }
     }
     
@@ -215,10 +217,9 @@ struct FeaturedArticleSectionCreatorView: View {
             showAddSecondaryArticle = true
         }
         .fullScreenCover(isPresented: $showAddSecondaryArticle) {
-            //TODO: ArticleSelectorView
-//            ArticleSelectorView { article in
-//                items.append(.init(id: UUID(), article: article, prominence: .secondary))
-//            }
+            ArticleSelectorView { article in
+                items.append(.init(id: UUID(), article: article, prominence: .secondary))
+            }
         }
     }
     
@@ -227,10 +228,9 @@ struct FeaturedArticleSectionCreatorView: View {
             showAddTertiaryArticle = true
         }
         .fullScreenCover(isPresented: $showAddTertiaryArticle) {
-            //TODO: ArticleSelectorView
-//            ArticleSelectorView { article in
-//                items.append(.init(id: UUID(), article: article, prominence: .tertiary))
-//            }
+            ArticleSelectorView { article in
+                items.append(.init(id: UUID(), article: article, prominence: .tertiary))
+            }
         }
     }
     
