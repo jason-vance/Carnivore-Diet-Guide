@@ -14,7 +14,7 @@ struct FeaturedArticlesView: View {
     
     @State private var isWorking: Bool = false
     //TODO: Fetch real FeaturedContent
-    @State private var content: FeaturedContent? = .sample
+    @State private var content: FeaturedArticles? = .sample
     
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
@@ -44,7 +44,7 @@ struct FeaturedArticlesView: View {
         }
     }
     
-    @ViewBuilder func ArticleList(_ content: FeaturedContent) -> some View {
+    @ViewBuilder func ArticleList(_ content: FeaturedArticles) -> some View {
         LazyVStack(spacing: 24) {
             ForEach(content.sections) { section in
                 FeaturedContentSectionCollage(section)
@@ -60,14 +60,14 @@ struct FeaturedArticlesView: View {
         .foregroundStyle(Color.text)
     }
     
-    @ViewBuilder func FeaturedContentSection(_ section: FeaturedContent.Section) -> some View {
+    @ViewBuilder func FeaturedContentSection(_ section: FeaturedArticles.Section) -> some View {
         switch section.layout {
         case .collage:
             FeaturedContentSectionCollage(section)
         }
     }
     
-    @ViewBuilder func FeaturedContentSectionCollage(_ section: FeaturedContent.Section) -> some View {
+    @ViewBuilder func FeaturedContentSectionCollage(_ section: FeaturedArticles.Section) -> some View {
         let columns = [
             GridItem.init(.adaptive(minimum: 100, maximum: 300)),
             GridItem.init(.adaptive(minimum: 100, maximum: 300))
@@ -93,7 +93,7 @@ struct FeaturedArticlesView: View {
         }
     }
     
-    @ViewBuilder func SectionHeader(_ section: FeaturedContent.Section) -> some View {
+    @ViewBuilder func SectionHeader(_ section: FeaturedArticles.Section) -> some View {
         SectionTitle(section.title)
         if let description = section.description {
             SectionDescription(description)

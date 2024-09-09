@@ -61,7 +61,7 @@ struct AdminView: View {
         }
         .listRowBackground(Color.background)
         .fullScreenCover(isPresented: $showFeaturedArticlesCreator) {
-            Text("FeaturedArticlesCreatorView")
+            FeaturedArticlesCreatorView()
         }
     }
 }

@@ -269,12 +269,13 @@
 		56D470AF2C8BA1C500F48A64 /* TimeFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470AE2C8BA1C500F48A64 /* TimeFrame.swift */; };
 		56D470B02C8BA1C500F48A64 /* TimeFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470AE2C8BA1C500F48A64 /* TimeFrame.swift */; };
 		56D470B32C8BB24500F48A64 /* FeaturedArticlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470B22C8BB24500F48A64 /* FeaturedArticlesView.swift */; };
-		56D470B52C8D8C1800F48A64 /* FeaturedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470B42C8D8C1800F48A64 /* FeaturedContent.swift */; };
-		56D470B62C8D8C1800F48A64 /* FeaturedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470B42C8D8C1800F48A64 /* FeaturedContent.swift */; };
+		56D470B52C8D8C1800F48A64 /* FeaturedArticles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470B42C8D8C1800F48A64 /* FeaturedArticles.swift */; };
+		56D470B62C8D8C1800F48A64 /* FeaturedArticles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470B42C8D8C1800F48A64 /* FeaturedArticles.swift */; };
 		56D470B92C8EDBDD00F48A64 /* AdminView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470B82C8EDBDD00F48A64 /* AdminView.swift */; };
 		56D470BB2C8EDE8F00F48A64 /* IsAdminChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470BA2C8EDE8F00F48A64 /* IsAdminChecker.swift */; };
 		56D470BC2C8EDE8F00F48A64 /* IsAdminChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470BA2C8EDE8F00F48A64 /* IsAdminChecker.swift */; };
 		56D470BF2C8EDF5E00F48A64 /* FirebaseIsAdminChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470BE2C8EDF5E00F48A64 /* FirebaseIsAdminChecker.swift */; };
+		56D470C22C8F827C00F48A64 /* FeaturedArticlesCreatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470C12C8F827C00F48A64 /* FeaturedArticlesCreatorView.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* PostDetailView.swift */; };
 		56E305072B4A982E0098079A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* Post.swift */; };
@@ -551,10 +552,11 @@
 		56D470AC2C8B90D800F48A64 /* TimeFramePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFramePicker.swift; sourceTree = "<group>"; };
 		56D470AE2C8BA1C500F48A64 /* TimeFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFrame.swift; sourceTree = "<group>"; };
 		56D470B22C8BB24500F48A64 /* FeaturedArticlesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedArticlesView.swift; sourceTree = "<group>"; };
-		56D470B42C8D8C1800F48A64 /* FeaturedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedContent.swift; sourceTree = "<group>"; };
+		56D470B42C8D8C1800F48A64 /* FeaturedArticles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedArticles.swift; sourceTree = "<group>"; };
 		56D470B82C8EDBDD00F48A64 /* AdminView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminView.swift; sourceTree = "<group>"; };
 		56D470BA2C8EDE8F00F48A64 /* IsAdminChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsAdminChecker.swift; sourceTree = "<group>"; };
 		56D470BE2C8EDF5E00F48A64 /* FirebaseIsAdminChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseIsAdminChecker.swift; sourceTree = "<group>"; };
+		56D470C12C8F827C00F48A64 /* FeaturedArticlesCreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedArticlesCreatorView.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -1526,7 +1528,7 @@
 			isa = PBXGroup;
 			children = (
 				56D470B22C8BB24500F48A64 /* FeaturedArticlesView.swift */,
-				56D470B42C8D8C1800F48A64 /* FeaturedContent.swift */,
+				56D470B42C8D8C1800F48A64 /* FeaturedArticles.swift */,
 			);
 			path = FeaturedArticles;
 			sourceTree = "<group>";
@@ -1534,6 +1536,7 @@
 		56D470B72C8EDBC300F48A64 /* Admin */ = {
 			isa = PBXGroup;
 			children = (
+				56D470C02C8F827000F48A64 /* FeaturedArticlesCreator */,
 				56D470B82C8EDBDD00F48A64 /* AdminView.swift */,
 			);
 			path = Admin;
@@ -1546,6 +1549,14 @@
 				56D470BE2C8EDF5E00F48A64 /* FirebaseIsAdminChecker.swift */,
 			);
 			path = IsAdminChecker;
+			sourceTree = "<group>";
+		};
+		56D470C02C8F827000F48A64 /* FeaturedArticlesCreator */ = {
+			isa = PBXGroup;
+			children = (
+				56D470C12C8F827C00F48A64 /* FeaturedArticlesCreatorView.swift */,
+			);
+			path = FeaturedArticlesCreator;
 			sourceTree = "<group>";
 		};
 		56E305032B4A55BD0098079A /* PostDetail */ = {
@@ -1847,7 +1858,7 @@
 				568F734C2C8250EA005D16C6 /* ResourceSummary.swift in Sources */,
 				568F72952C794022005D16C6 /* FirebasePostFetcher.swift in Sources */,
 				56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */,
-				56D470B52C8D8C1800F48A64 /* FeaturedContent.swift in Sources */,
+				56D470B52C8D8C1800F48A64 /* FeaturedArticles.swift in Sources */,
 				5677542E2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift in Sources */,
 				56D470BB2C8EDE8F00F48A64 /* IsAdminChecker.swift in Sources */,
 				56F2139B2B743A74009DB057 /* RecipeFavoriteCountProvider.swift in Sources */,
@@ -1987,6 +1998,7 @@
 				563BC73B2B7F51E3008F3C50 /* ByLineView.swift in Sources */,
 				56F2138C2B742652009DB057 /* FavoriteRecipeRepo.swift in Sources */,
 				568F73742C8479FB005D16C6 /* NewArticleData.swift in Sources */,
+				56D470C22C8F827C00F48A64 /* FeaturedArticlesCreatorView.swift in Sources */,
 				5622EAC02C7483C500FE9C36 /* HomeMenuBar.swift in Sources */,
 				568F72A52C795361005D16C6 /* ResourceFavoriter.swift in Sources */,
 				568F72842C7719FE005D16C6 /* PostView.swift in Sources */,
@@ -2032,7 +2044,7 @@
 				565CFEC62C88FC6E00CBEEAC /* CacheTests.swift in Sources */,
 				568F727A2C76961B005D16C6 /* PostImageUploader.swift in Sources */,
 				568F734F2C82516C005D16C6 /* ResourceSummaryTests.swift in Sources */,
-				56D470B62C8D8C1800F48A64 /* FeaturedContent.swift in Sources */,
+				56D470B62C8D8C1800F48A64 /* FeaturedArticles.swift in Sources */,
 				56D470BC2C8EDE8F00F48A64 /* IsAdminChecker.swift in Sources */,
 				5622EAB92C70AC1600FE9C36 /* ResourceCommentActivityTracker.swift in Sources */,
 				563BC71C2B7CB6D8008F3C50 /* CookTimeFormatterTests.swift in Sources */,
