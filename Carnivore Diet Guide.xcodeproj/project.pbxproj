@@ -271,6 +271,10 @@
 		56D470B32C8BB24500F48A64 /* FeaturedArticlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470B22C8BB24500F48A64 /* FeaturedArticlesView.swift */; };
 		56D470B52C8D8C1800F48A64 /* FeaturedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470B42C8D8C1800F48A64 /* FeaturedContent.swift */; };
 		56D470B62C8D8C1800F48A64 /* FeaturedContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470B42C8D8C1800F48A64 /* FeaturedContent.swift */; };
+		56D470B92C8EDBDD00F48A64 /* AdminView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470B82C8EDBDD00F48A64 /* AdminView.swift */; };
+		56D470BB2C8EDE8F00F48A64 /* IsAdminChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470BA2C8EDE8F00F48A64 /* IsAdminChecker.swift */; };
+		56D470BC2C8EDE8F00F48A64 /* IsAdminChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470BA2C8EDE8F00F48A64 /* IsAdminChecker.swift */; };
+		56D470BF2C8EDF5E00F48A64 /* FirebaseIsAdminChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56D470BE2C8EDF5E00F48A64 /* FirebaseIsAdminChecker.swift */; };
 		56E305022B4952800098079A /* BasicNutritionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305012B4952800098079A /* BasicNutritionInfo.swift */; };
 		56E305052B4A55E00098079A /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305042B4A55E00098079A /* PostDetailView.swift */; };
 		56E305072B4A982E0098079A /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305062B4A982E0098079A /* Post.swift */; };
@@ -548,6 +552,9 @@
 		56D470AE2C8BA1C500F48A64 /* TimeFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFrame.swift; sourceTree = "<group>"; };
 		56D470B22C8BB24500F48A64 /* FeaturedArticlesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedArticlesView.swift; sourceTree = "<group>"; };
 		56D470B42C8D8C1800F48A64 /* FeaturedContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedContent.swift; sourceTree = "<group>"; };
+		56D470B82C8EDBDD00F48A64 /* AdminView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminView.swift; sourceTree = "<group>"; };
+		56D470BA2C8EDE8F00F48A64 /* IsAdminChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsAdminChecker.swift; sourceTree = "<group>"; };
+		56D470BE2C8EDF5E00F48A64 /* FirebaseIsAdminChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseIsAdminChecker.swift; sourceTree = "<group>"; };
 		56E305012B4952800098079A /* BasicNutritionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfo.swift; sourceTree = "<group>"; };
 		56E305042B4A55E00098079A /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		56E305062B4A982E0098079A /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -692,6 +699,7 @@
 		562E03E22B4507C500859F81 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				56D470B72C8EDBC300F48A64 /* Admin */,
 				56D470B12C8BB21D00F48A64 /* FeaturedArticles */,
 				568F73822C854FAD005D16C6 /* ArticleDetail */,
 				568F73292C815CF1005D16C6 /* CreateContent */,
@@ -1016,6 +1024,7 @@
 		5677542A2B70E5500094EB8C /* Users */ = {
 			isa = PBXGroup;
 			children = (
+				56D470BD2C8EDF4800F48A64 /* IsAdminChecker */,
 				56B88A762B70DCFD00C4C0DB /* UserDataProvider.swift */,
 				56B88A712B70DC9800C4C0DB /* CurrentUserIdProvider.swift */,
 				5677542B2B70E55C0094EB8C /* CurrentUserDataProvider.swift */,
@@ -1522,6 +1531,23 @@
 			path = FeaturedArticles;
 			sourceTree = "<group>";
 		};
+		56D470B72C8EDBC300F48A64 /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				56D470B82C8EDBDD00F48A64 /* AdminView.swift */,
+			);
+			path = Admin;
+			sourceTree = "<group>";
+		};
+		56D470BD2C8EDF4800F48A64 /* IsAdminChecker */ = {
+			isa = PBXGroup;
+			children = (
+				56D470BA2C8EDE8F00F48A64 /* IsAdminChecker.swift */,
+				56D470BE2C8EDF5E00F48A64 /* FirebaseIsAdminChecker.swift */,
+			);
+			path = IsAdminChecker;
+			sourceTree = "<group>";
+		};
 		56E305032B4A55BD0098079A /* PostDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -1823,6 +1849,7 @@
 				56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */,
 				56D470B52C8D8C1800F48A64 /* FeaturedContent.swift in Sources */,
 				5677542E2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift in Sources */,
+				56D470BB2C8EDE8F00F48A64 /* IsAdminChecker.swift in Sources */,
 				56F2139B2B743A74009DB057 /* RecipeFavoriteCountProvider.swift in Sources */,
 				568F726C2C75B5F1005D16C6 /* ReviewNewPostView.swift in Sources */,
 				563BC7302B7E0785008F3C50 /* HomeView.swift in Sources */,
@@ -1886,6 +1913,7 @@
 				56025D292B6B8CD000F31A07 /* UI.swift in Sources */,
 				56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */,
 				56B88A092B6C4E6E00C4C0DB /* BundleExtensions.swift in Sources */,
+				56D470BF2C8EDF5E00F48A64 /* FirebaseIsAdminChecker.swift in Sources */,
 				56B88A442B6CF14000C4C0DB /* FormFieldErrorView.swift in Sources */,
 				565CFEC32C88FC4F00CBEEAC /* Cache.swift in Sources */,
 				56B88A392B6CED5600C4C0DB /* StatefulPreviewContainer.swift in Sources */,
@@ -1967,6 +1995,7 @@
 				56B88A162B6C5AA400C4C0DB /* ContentAuthenticationProvider.swift in Sources */,
 				56B88A622B6F346F00C4C0DB /* FirestorePostDoc.swift in Sources */,
 				563BC7222B7D6804008F3C50 /* FirebaseReportRepository.swift in Sources */,
+				56D470B92C8EDBDD00F48A64 /* AdminView.swift in Sources */,
 				56E305052B4A55E00098079A /* PostDetailView.swift in Sources */,
 				5622EAC22C75231B00FE9C36 /* ScreenTitleBar.swift in Sources */,
 				565CFEBE2C88583500CBEEAC /* ResourceCategoryPicker.swift in Sources */,
@@ -2004,6 +2033,7 @@
 				568F727A2C76961B005D16C6 /* PostImageUploader.swift in Sources */,
 				568F734F2C82516C005D16C6 /* ResourceSummaryTests.swift in Sources */,
 				56D470B62C8D8C1800F48A64 /* FeaturedContent.swift in Sources */,
+				56D470BC2C8EDE8F00F48A64 /* IsAdminChecker.swift in Sources */,
 				5622EAB92C70AC1600FE9C36 /* ResourceCommentActivityTracker.swift in Sources */,
 				563BC71C2B7CB6D8008F3C50 /* CookTimeFormatterTests.swift in Sources */,
 				568F72EB2C7EAC78005D16C6 /* PostsFetcher.swift in Sources */,

@@ -15,7 +15,8 @@ struct UserProfileView: View {
     
     @StateObject private var model = UserProfileViewModel(
         userDataProvider: iocContainer~>UserDataProvider.self,
-        signOutService: iocContainer~>UserProfileSignOutService.self
+        signOutService: iocContainer~>UserProfileSignOutService.self,
+        isAdminChecker: iocContainer~>IsAdminChecker.self
     )
     
     @State private var navigationPath = NavigationPath()
@@ -23,6 +24,7 @@ struct UserProfileView: View {
     @State private var showPosts: Bool = false
     @State private var showEditProfile: Bool = false
     @State private var showSettings: Bool = false
+    @State private var showAdmin: Bool = false
     @State private var showLogoutDialog: Bool = false
     
     @State private var showError: Bool = false
@@ -51,6 +53,9 @@ struct UserProfileView: View {
                         ProfileStatsView()
                         EditProfileButton()
                         SettingsButton()
+                        if model.isAdmin {
+                            AdminButton()
+                        }
                     }
                     .padding(.bottom, 32)
                     LogoutButton()
@@ -138,6 +143,21 @@ struct UserProfileView: View {
                 icon: "gearshape.fill",
                 showNavigationAccessories: true
             )
+        }
+    }
+    
+    @ViewBuilder func AdminButton() -> some View {
+        Button {
+            showAdmin = true
+        } label: {
+            ProfileControlLabel(
+                String(localized: "Admin"),
+                icon: "lock.shield.fill",
+                showNavigationAccessories: true
+            )
+        }
+        .fullScreenCover(isPresented: $showAdmin) {
+            AdminView()
         }
     }
     

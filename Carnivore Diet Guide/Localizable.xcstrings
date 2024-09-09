@@ -332,6 +332,9 @@
     "24 Hours" : {
 
     },
+    "Admin" : {
+
+    },
     "Albums" : {
       "comment" : "Photo Albums"
     },
@@ -795,6 +798,9 @@
     "Create Article" : {
 
     },
+    "Create Content" : {
+
+    },
     "Create Post" : {
 
     },
@@ -975,6 +981,9 @@
         }
       }
     },
+    "Featured Articles" : {
+
+    },
     "Featured Blog Post" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1104,6 +1113,9 @@
           }
         }
       }
+    },
+    "FeaturedArticlesCreatorView" : {
+
     },
     "g" : {
       "comment" : "grams",

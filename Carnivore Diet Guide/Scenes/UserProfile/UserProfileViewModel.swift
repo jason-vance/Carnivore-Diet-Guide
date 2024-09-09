@@ -12,20 +12,24 @@ import Combine
 class UserProfileViewModel: ObservableObject {
     
     @Published public var userData: UserData = .empty
+    @Published public var isAdmin: Bool = false
     public var fullName: String? { userData.fullName?.value }
     public var profileImageUrl: URL? { userData.profileImageUrl }
 
     private let userDataProvider: UserDataProvider
     private let signOutService: UserProfileSignOutService
+    private let isAdminChecker: IsAdminChecker
     
     private var subs: Set<AnyCancellable> = []
     
     init(
         userDataProvider: UserDataProvider,
-        signOutService: UserProfileSignOutService
+        signOutService: UserProfileSignOutService,
+        isAdminChecker: IsAdminChecker
     ) {
         self.userDataProvider = userDataProvider
         self.signOutService = signOutService
+        self.isAdminChecker = isAdminChecker
     }
     
     public func listenForUserData(userId: String) {
@@ -34,6 +38,15 @@ class UserProfileViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .sink(receiveValue: receive(userData:))
             .store(in: &subs)
+        
+        checkIsAdmin(userId: userId)
+    }
+    
+    func checkIsAdmin(userId: String) {
+        Task {
+            guard let isAdmin = try? await isAdminChecker.isAdmin(userId: userId) else { return }
+            self.isAdmin = isAdmin
+        }
     }
     
     private func receive(userData: UserData) {
