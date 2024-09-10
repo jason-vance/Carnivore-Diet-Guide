@@ -37,4 +37,30 @@ extension UIImage {
 
         return resizedImage
     }
+    
+    func scaledToFill(aspectRatio: CGFloat) -> UIImage? {
+        let originalSize = size
+        let originalAspectRatio = originalSize.width / originalSize.height
+        
+        var cropRect: CGRect
+        
+        if originalAspectRatio > aspectRatio {
+            // Image is wider than the target aspect ratio, crop the width
+            let newWidth = originalSize.height * aspectRatio
+            let xOffset = (originalSize.width - newWidth) / 2
+            cropRect = CGRect(x: xOffset, y: 0, width: newWidth, height: originalSize.height)
+        } else {
+            // Image is taller than the target aspect ratio, crop the height
+            let newHeight = originalSize.width / aspectRatio
+            let yOffset = (originalSize.height - newHeight) / 2
+            cropRect = CGRect(x: 0, y: yOffset, width: originalSize.width, height: newHeight)
+        }
+        
+        // Crop the image using the calculated crop rect
+        if let cgImage = cgImage?.cropping(to: cropRect) {
+            return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
+        }
+        
+        return nil
+    }
 }

@@ -10,6 +10,22 @@ import Kingfisher
 
 struct ResourceImageView: View {
     
+    private class ResourceImageModifier: ImageModifier {
+        
+        let aspectRatio: CGFloat
+        
+        init(aspectRatio: CGFloat) {
+            self.aspectRatio = aspectRatio
+        }
+        
+        func modify(_ image: KFCrossPlatformImage) -> KFCrossPlatformImage {
+            guard let image = image.scaledToFill(aspectRatio: aspectRatio) else {
+                return image
+            }
+            return image
+        }
+    }
+    
     public let url: URL?
     private var __aspectRatio: CGFloat
     
@@ -28,34 +44,28 @@ struct ResourceImageView: View {
     }
     
     var body: some View {
-        GeometryReader { proxy in
-            let imageWidth = proxy.size.width
-            
-            KFImage(url)
-                .resizable()
-                .cacheOriginalImage()
-                .diskCacheExpiration(.days(7))
-                .placeholder { PlaceholderView(imageWidth: imageWidth) }
-                .scaledToFill()
-                .frame(width: imageWidth, height: imageWidth / aspectRatio)
-                .clipShape(Rectangle())
-        }
-        .aspectRatio(aspectRatio, contentMode: .fill)
-        .onChange(of: __aspectRatio, initial: true) { _, newAspectRatio in
-            self.aspectRatio = newAspectRatio
-        }
+        KFImage(url)
+            .resizable()
+            .cacheOriginalImage()
+            .diskCacheExpiration(.days(7))
+            .imageModifier(ResourceImageModifier(aspectRatio: aspectRatio))
+            .placeholder { PlaceholderView() }
+            .aspectRatio(aspectRatio, contentMode: .fill)
+            .onChange(of: __aspectRatio, initial: true) { _, newAspectRatio in
+                self.aspectRatio = newAspectRatio
+            }
     }
     
-    @ViewBuilder func PlaceholderView(imageWidth: CGFloat) -> some View {
+    @ViewBuilder func PlaceholderView() -> some View {
         ZStack {
             Rectangle()
                 .fill(Color.text.opacity(0.8))
             Image(systemName: "photo")
-                .font(.system(size: imageWidth / 2))
                 .foregroundStyle(Color.background)
         }
     }
 }
+
 
 #Preview {
     ResourceImageView(url: FeedItem.samplePost.imageUrls[0])
