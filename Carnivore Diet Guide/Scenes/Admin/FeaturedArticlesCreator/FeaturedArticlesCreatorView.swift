@@ -97,14 +97,66 @@ struct FeaturedArticlesCreatorView: View {
     @ViewBuilder func SectionsField() -> some View {
         Section {
             ForEach(sections) { section in
-                //TODO: FeaturedArticleSectionRow(section)
-                Text(section.title.title)
+                FeaturedArticlesSectionRow(section)
             }
+            .onDelete { sections.remove(atOffsets: $0) }
             AddSectionButton()
         } header: {
             Text("Featured Content Sections")
                 .foregroundStyle(Color.text)
         }
+    }
+    
+    @ViewBuilder func FeaturedArticlesSectionRow(_ section: FeaturedArticles.Section) -> some View {
+        VStack(alignment:.leading) {
+            HStack {
+                Text(section.title.title)
+                    .font(.title.weight(.heavy))
+                Spacer()
+            }
+            if let description = section.description {
+                Text(description.description)
+                    .font(.subheadline)
+            }
+            Text("Layout: \(section.layout.displayName)")
+                .font(.caption2)
+            
+            if !section.primaryContent.isEmpty {
+                Text("Primary Content (\(section.primaryContent.count))")
+                    .font(.headline)
+                ForEach(section.primaryContent) { item in
+                    Text(item.article.title)
+                        .lineLimit(1)
+                        .font(.subheadline)
+                }
+            }
+            if !section.secondaryContent.isEmpty {
+                Text("Secondary Content (\(section.secondaryContent.count))")
+                    .font(.headline)
+                ForEach(section.secondaryContent) { item in
+                    Text(item.article.title)
+                        .lineLimit(1)
+                        .font(.subheadline)
+                }
+            }
+            if !section.tertiaryContent.isEmpty {
+                Text("Tertiary Content (\(section.tertiaryContent.count))")
+                    .font(.headline)
+                ForEach(section.tertiaryContent) { item in
+                    Text(item.article.title)
+                        .lineLimit(1)
+                        .font(.subheadline)
+                }
+            }
+        }
+        .foregroundStyle(Color.text)
+        .padding()
+        .background(Color.background)
+        .clipShape(.rect(cornerRadius: .cornerRadiusMedium, style: .continuous))
+        .clipped()
+        .shadow(color: Color.text, radius: 4)
+        .listRowBackground(Color.background)
+        .listRowSeparator(.hidden)
     }
     
     @ViewBuilder func AddSectionButton() -> some View {

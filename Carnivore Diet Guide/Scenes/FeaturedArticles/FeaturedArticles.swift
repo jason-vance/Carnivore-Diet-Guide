@@ -33,6 +33,10 @@ extension FeaturedArticles {
         let description: FeaturedSectionDescription?
         let content: [Item]
         
+        var primaryContent: [Item] { content.filter { $0.prominence == .primary } }
+        var secondaryContent: [Item] { content.filter { $0.prominence == .secondary } }
+        var tertiaryContent: [Item] { content.filter { $0.prominence == .tertiary } }
+
         init?(
             id: UUID,
             layout: Layout,

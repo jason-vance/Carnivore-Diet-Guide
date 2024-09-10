@@ -1470,6 +1470,9 @@
     "Layout" : {
 
     },
+    "Layout: %@" : {
+
+    },
     "Library" : {
       "comment" : "Photo Library"
     },
@@ -1644,6 +1647,9 @@
 
     },
     "Primary Articles (%lld):" : {
+
+    },
+    "Primary Content (%lld)" : {
 
     },
     "Profile" : {
@@ -1881,6 +1887,9 @@
     "Secondary Articles (%lld):" : {
 
     },
+    "Secondary Content (%lld)" : {
+
+    },
     "Serves %lld" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1962,6 +1971,9 @@
 
     },
     "Tertiary Articles (%lld):" : {
+
+    },
+    "Tertiary Content (%lld)" : {
 
     },
     "The article could not be fetched" : {
