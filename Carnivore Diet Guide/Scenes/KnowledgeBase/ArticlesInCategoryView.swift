@@ -15,9 +15,10 @@ struct ArticlesInCategoryView: View {
     
     @Binding public var navigationPath: NavigationPath
     public var category: Resource.Category
-    public var keywords: Set<SearchKeyword>
     
     @State private var allArticles: [Article] = []
+    @State private var searchText: String = ""
+    @State private var searchPresented: Bool = false
     
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
@@ -37,6 +38,7 @@ struct ArticlesInCategoryView: View {
             articles = articles.filter { $0.categories.contains(category) }
         }
         
+        let keywords = SearchKeyword.keywordsFrom(string: searchText)
         if !keywords.isEmpty {
             articles = articles
                 .map { ($0, $0.relevanceTo(keywords)) }
@@ -54,10 +56,18 @@ struct ArticlesInCategoryView: View {
     }
     
     var body: some View {
-        Container()
-            .padding(.horizontal)
-            .alert(alertMessage, isPresented: $showAlert) {}
-            .onReceive(articlePublisher) { allArticles = $0 }
+        VStack(spacing: 24) {
+            SearchBar(
+                prompt: String(localized: "Articles, Guides, and more"),
+                searchText: $searchText,
+                searchPresented: $searchPresented,
+                action: { }
+            )
+            Container()
+        }
+        .padding(.horizontal)
+        .alert(alertMessage, isPresented: $showAlert) {}
+        .onReceive(articlePublisher) { allArticles = $0 }
     }
     
     @ViewBuilder func Container() -> some View {
@@ -102,8 +112,7 @@ struct ArticlesInCategoryView: View {
             NavigationStack(path: navPath) {
                 ArticlesInCategoryView(
                     navigationPath: navPath,
-                    category: .samples.first!,
-                    keywords: []
+                    category: .samples.first!
                 )
                 .navigationDestination(for: Article.self) { article in
                     ArticleDetailView(article: article)

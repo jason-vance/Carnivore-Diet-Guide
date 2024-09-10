@@ -17,8 +17,6 @@ struct KnowledgeBaseView: View {
     private let margin: CGFloat = 16
     
     @State private var navigationPath = NavigationPath()
-    @State private var searchText: String = ""
-    @State private var searchPresented: Bool = false
 
     @State var selectedCategory: Resource.Category = .featured
     
@@ -28,7 +26,7 @@ struct KnowledgeBaseView: View {
                 TopBar()
                 ScrollView() {
                     VStack(spacing: 0) {
-                        SearchArea()
+                        CategoryPicker()
                         ListContent()
                     }
                 }
@@ -45,16 +43,8 @@ struct KnowledgeBaseView: View {
         ScreenTitleBar(Bundle.main.bundleName ?? String(localized: "Home"))
     }
     
-    @ViewBuilder func SearchArea() -> some View {
+    @ViewBuilder func CategoryPicker() -> some View {
         VStack(spacing: 0) {
-            SearchBar(
-                prompt: String(localized: "Articles, Guides, and more"),
-                searchText: $searchText,
-                searchPresented: $searchPresented,
-                action: { }
-            )
-            .padding(.top)
-            .padding(.horizontal)
             ResourceCategoryPicker(selectedCategory: $selectedCategory, resourceType: .article)
         }
     }
@@ -65,16 +55,13 @@ struct KnowledgeBaseView: View {
         } else if ContentAgnosticArticlesView.canHandle(category: selectedCategory) {
             ContentAgnosticArticlesView(
                 navigationPath: $navigationPath,
-                category: selectedCategory,
-                keywords: SearchKeyword.keywordsFrom(string: searchText)
+                category: selectedCategory
             )
         } else {
             ArticlesInCategoryView(
                 navigationPath: $navigationPath,
-                category: selectedCategory,
-                keywords: SearchKeyword.keywordsFrom(string: searchText)
+                category: selectedCategory
             )
-            .padding(.top, 8)
         }
     }
 }

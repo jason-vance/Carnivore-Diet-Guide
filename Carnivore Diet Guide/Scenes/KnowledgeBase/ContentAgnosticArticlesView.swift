@@ -17,10 +17,9 @@ struct ContentAgnosticArticlesView: View {
     
     @Binding public var navigationPath: NavigationPath
     public var category: Resource.Category
-    public var keywords: Set<SearchKeyword>
     
     @State private var isWorking: Bool = false
-    @State private var allArticles: [Article] = []
+    @State private var articles: [Article] = []
     @State private var timeFrame: TimeFrame = .past7Days
     
     @State private var showAlert: Bool = false
@@ -29,19 +28,9 @@ struct ContentAgnosticArticlesView: View {
     private let articleFetcher = iocContainer~>ArticleCollectionFetcher.self
     private let articleLibrary = iocContainer~>ArticleLibrary.self
     
-    private var displayArticles: [Article] {
-        var articles = allArticles
-        
-        if !keywords.isEmpty {
-            articles = articles.filter { $0.relevanceTo(keywords) > 0 }
-        }
-        
-        return articles
-    }
-    
     private func fetchArticles() {
         isWorking = true
-        allArticles = []
+        articles = []
         
         Task {
             do {
@@ -53,7 +42,7 @@ struct ContentAgnosticArticlesView: View {
                     articleIds = try await articleFetcher.fetchTrendingArticles(in: timeFrame)
                 }
                 
-                allArticles = articleIds.compactMap { articleLibrary.getArticle(byId: $0) }
+                articles = articleIds.compactMap { articleLibrary.getArticle(byId: $0) }
             } catch {
                 show(alert: "Error fetching articles. \(error.localizedDescription)")
             }
@@ -75,10 +64,13 @@ struct ContentAgnosticArticlesView: View {
     }
     
     @ViewBuilder func Container() -> some View {
-        if displayArticles.isEmpty && !isWorking {
-            EmptyArticlesView()
-        } else {
-            ArticleGrid()
+        VStack(spacing: 24) {
+            TimeFramePicker(timeFrame: $timeFrame)
+            if articles.isEmpty && !isWorking {
+                EmptyArticlesView()
+            } else {
+                ArticleGrid()
+            }
         }
     }
     
@@ -88,21 +80,18 @@ struct ContentAgnosticArticlesView: View {
             GridItem.init(.adaptive(minimum: 100, maximum: 300))
         ]
         
-        VStack(spacing: 24) {
-            TimeFramePicker(timeFrame: $timeFrame)
-            if isWorking {
-                ProgressView()
-                    .progressViewStyle(.circular)
-                    .tint(Color.accent)
-                    .padding(.vertical, 64)
-            } else {
-                LazyVGrid(columns: columns) {
-                    ForEach(displayArticles) { article in
-                        Button {
-                            navigationPath.append(article)
-                        } label: {
-                            ArticleItemView(article)
-                        }
+        if isWorking {
+            ProgressView()
+                .progressViewStyle(.circular)
+                .tint(Color.accent)
+                .padding(.vertical, 64)
+        } else {
+            LazyVGrid(columns: columns) {
+                ForEach(articles) { article in
+                    Button {
+                        navigationPath.append(article)
+                    } label: {
+                        ArticleItemView(article)
                     }
                 }
             }
@@ -124,8 +113,7 @@ struct ContentAgnosticArticlesView: View {
     } content: {
         ContentAgnosticArticlesView(
             navigationPath: .constant(.init()),
-            category: .liked,
-            keywords: []
+            category: .liked
         )
     }
 }
