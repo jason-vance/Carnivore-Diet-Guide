@@ -63,8 +63,6 @@ class FirebaseArticleRepository {
 
 extension FirebaseArticleRepository: ArticleCollectionFetcher {
     
-    //TODO: If article has been deleted on Firebase, then cursor will be nil, then all articles will be fetched
-    // I should probably retry in the ArticleLibrary with the next best article
     private func getCursor(for article: Article?) async throws -> DocumentSnapshot? {
         if let article = article {
             let doc = try await articlesCollection.document(article.id).getDocument()
@@ -103,11 +101,6 @@ extension FirebaseArticleRepository: ArticleCollectionFetcher {
             .getDocuments()
             .documents
             .compactMap { try? $0.data(as: FirebaseArticleDoc.self).toArticle(categoryDict: categories) }
-    }
-    
-    func fetchFeaturedArticles() async throws -> [String] {
-        //TODO: Implement FirebaseArticleRepository.fetchFeaturedArticles
-        throw "Not Implemented"
     }
     
     func fetchTrendingArticles(in timeFrame: TimeFrame) async throws -> [String] {

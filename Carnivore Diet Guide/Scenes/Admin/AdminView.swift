@@ -27,7 +27,7 @@ struct AdminView: View {
             List {
                 CreateContentSection()
             }
-            .listStyle(.plain)
+            .listStyle(.grouped)
             .scrollContentBackground(.hidden)
         }
         .background(Color.background)

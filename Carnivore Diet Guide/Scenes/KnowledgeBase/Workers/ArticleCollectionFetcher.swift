@@ -20,9 +20,6 @@ protocol ArticleCollectionFetcher {
         limit: Int
     ) async throws -> [Article]
     
-    //TODO: Change this to return a FeaturedArticle (with properties like featureCalloutText, etc)
-    func fetchFeaturedArticles() async throws -> [String]
-    
     func fetchTrendingArticles(in timeFrame: TimeFrame) async throws -> [String]
     
     func fetchLikedArticles(in timeFrame: TimeFrame) async throws -> [String]
@@ -57,16 +54,6 @@ class MockArticleCollectionFetcher: ArticleCollectionFetcher {
         }
         
         return articles
-    }
-    
-    func fetchFeaturedArticles() async throws -> [String] {
-        try await Task.sleep(for: .seconds(1))
-        
-        if let error = error {
-            throw error
-        }
-        
-        return articles.map { $0.id }
     }
     
     func fetchTrendingArticles(in timeFrame: TimeFrame) async throws -> [String] {

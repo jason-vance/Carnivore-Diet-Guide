@@ -79,7 +79,8 @@ struct PostsView: View {
                     }
                     LoadNextFeedItemsView()
                 }
-                .listStyle(.plain)
+                .listStyle(.grouped)
+                .scrollContentBackground(.hidden)
             }
             .background(Color.background)
             .navigationBarBackButtonHidden()

@@ -61,7 +61,7 @@ struct SettingsView: View {
                 }
                 AppVersionRow()
             }
-            .listStyle(.plain)
+            .listStyle(.grouped)
             .scrollContentBackground(.hidden)
         }
         .background(Color.background)

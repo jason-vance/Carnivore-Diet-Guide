@@ -68,7 +68,8 @@ struct CreateContentView: View {
                     PostTitleField()
                     PostTextField()
                 }
-                .listStyle(.plain)
+                .listStyle(.grouped)
+                .scrollContentBackground(.hidden)
             }
             .background(Color.background)
             .confirmationDialog(

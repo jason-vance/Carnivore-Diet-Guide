@@ -8,7 +8,6 @@
 import SwiftUI
 import SwinjectAutoregistration
 
-//TODO: Make refreshable
 struct FeaturedArticlesView: View {
     
     @Binding public var navigationPath: NavigationPath

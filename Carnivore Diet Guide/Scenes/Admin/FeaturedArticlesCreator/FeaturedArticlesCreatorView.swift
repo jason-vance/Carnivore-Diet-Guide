@@ -59,8 +59,7 @@ struct FeaturedArticlesCreatorView: View {
                 PublicationDateField()
                 SectionsField()
             }
-            //TODO: I think I want to make all listStyles .grouped
-            .listStyle(.plain)
+            .listStyle(.grouped)
             .scrollContentBackground(.hidden)
         }
         .background(Color.background)
