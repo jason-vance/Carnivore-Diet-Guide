@@ -48,6 +48,7 @@ func setupMockIocContainer(_ iocContainer: Container) {
         resourceDeleter: iocContainer~>ResourceDeleter.self
     )
     iocContainer.autoregister(ArticleLibrary.self, initializer: { ArticleLibrary.instance })
+    iocContainer.autoregister(FeaturedArticlesFetcher.self, initializer: MockFeaturedArticlesFetcher.init)
 
     //Content Creation
     iocContainer.autoregister(PostImageUploader.self, initializer: MockPostImageUploader.init)

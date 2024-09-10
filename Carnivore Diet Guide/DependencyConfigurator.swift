@@ -57,6 +57,7 @@ fileprivate func setup(iocContainer: Container) {
         resourceDeleter: iocContainer~>ResourceDeleter.self
     )
     iocContainer.autoregister(ArticleLibrary.self, initializer: { ArticleLibrary.instance })
+    iocContainer.autoregister(FeaturedArticlesFetcher.self, initializer: FirebaseFeaturedArticlesRepository.init)
 
     //Content Creation
     iocContainer.autoregister(PostImageUploader.self, initializer: FirebasePostImageStorage.init)

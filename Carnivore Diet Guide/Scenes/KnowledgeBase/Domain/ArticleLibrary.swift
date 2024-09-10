@@ -68,6 +68,7 @@ class ArticleLibrary {
             .min { $0.publicationDate < $1.publicationDate }
     }
     
+    //TODO: listen for log in event, as users have to be logged in to read Articles on Firebase
     private init(
         articleCollectionFetcher: ArticleCollectionFetcher,
         individualArticleFetcher: IndividualArticleFetcher,

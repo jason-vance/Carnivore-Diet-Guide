@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 //TODO: Make refreshable
 struct FeaturedArticlesView: View {
@@ -13,15 +14,32 @@ struct FeaturedArticlesView: View {
     @Binding public var navigationPath: NavigationPath
     
     @State private var isWorking: Bool = false
-    //TODO: Fetch real FeaturedContent
-    @State private var content: FeaturedArticles? = .sample
+    @State private var content: FeaturedArticles? = nil
     
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     
+    private let featuredArticlesFetcher = iocContainer~>FeaturedArticlesFetcher.self
+    
     private func show(alert: String) {
         showAlert = true
         alertMessage = alert
+    }
+    
+    private func fetchFeaturedArticles() {
+        guard content == nil else { return }
+        
+        isWorking = true
+        
+        Task {
+            do {
+                content = try await featuredArticlesFetcher.fetchFeaturedArticles()
+            } catch {
+                show(alert: "Failed to fetch featured articles. \(error.localizedDescription)")
+            }
+            
+            isWorking = false
+        }
     }
     
     var body: some View {
@@ -29,6 +47,7 @@ struct FeaturedArticlesView: View {
             .padding(.horizontal)
             .padding(.bottom)
             .alert(alertMessage, isPresented: $showAlert) {}
+            .onAppear { fetchFeaturedArticles() }
     }
     
     @ViewBuilder func Container() -> some View {
