@@ -73,7 +73,7 @@ extension FeaturedArticles {
 }
 
 extension FeaturedArticles.Section {
-    enum Layout: CaseIterable {
+    enum Layout: String, CaseIterable {
         case collage
         
         var displayName: String {
@@ -98,7 +98,7 @@ extension FeaturedArticles.Section {
 }
 
 extension FeaturedArticles.Section.Item {
-    enum Prominence {
+    enum Prominence: String {
         case primary
         case secondary
         case tertiary

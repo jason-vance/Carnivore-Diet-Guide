@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct FeaturedArticlesCreatorView: View {
     
@@ -14,15 +15,41 @@ struct FeaturedArticlesCreatorView: View {
     @State private var publicationDate: Date = Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: 1, to: .now)!)
     @State private var sections: [FeaturedArticles.Section] = []
     
+    @State private var isWorking: Bool = false
     @State private var showPublicationDatePicker: Bool = false
     @State private var showNewSectionCreator: Bool = false
     
-    @State private var showError: Bool = false
-    @State private var errorMessage: String = ""
+    @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
     
-    private func show(errorMessage: String) {
-        showError = true
-        self.errorMessage = errorMessage
+    private let featuredArticlesPoster = iocContainer~>FeaturedArticlesPoster.self
+    
+    private func show(alert: String) {
+        showAlert = true
+        alertMessage = alert
+    }
+    
+    private var featuredArticles: FeaturedArticles? {
+        .init(
+            sections: sections,
+            publicationDate: publicationDate
+        )
+    }
+    
+    private func saveAndDismiss() {
+        guard let featuredArticles = featuredArticles else { return }
+        
+        isWorking = true
+        
+        Task {
+            do {
+                try await featuredArticlesPoster.post(featuredArticles: featuredArticles)
+                dismiss()
+            } catch {
+                show(alert: "Failed to save this FeaturedContent: \(error.localizedDescription)")
+                isWorking = false
+            }
+        }
     }
     
     var body: some View {
@@ -37,13 +64,14 @@ struct FeaturedArticlesCreatorView: View {
             .scrollContentBackground(.hidden)
         }
         .background(Color.background)
-        .alert(errorMessage, isPresented: $showError) {}
+        .alert(alertMessage, isPresented: $showAlert) {}
     }
     
     @ViewBuilder func TitleBar() -> some View {
         ScreenTitleBar(
-            String(localized: "Featured Articles"),
-            leadingContent: BackButton
+            primaryContent: { Text("Featured Articles") },
+            leadingContent: BackButton,
+            trailingContent: SaveAndDismissButton
         )
     }
     
@@ -53,6 +81,10 @@ struct FeaturedArticlesCreatorView: View {
         } label: {
             ResourceMenuButtonLabel(sfSymbol: "xmark")
         }
+    }
+    
+    @ViewBuilder func SaveAndDismissButton() -> some View {
+        NextButton { saveAndDismiss() }
     }
     
     @ViewBuilder func PublicationDateField() -> some View {
