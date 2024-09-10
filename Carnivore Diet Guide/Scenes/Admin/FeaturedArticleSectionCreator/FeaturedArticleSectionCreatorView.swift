@@ -41,6 +41,11 @@ struct FeaturedArticleSectionCreatorView: View {
         dismiss()
     }
     
+    private func remove(items: [FeaturedArticles.Section.Item]) {
+        let ids = items.map { $0.id }
+        self.items.removeAll { ids.contains($0.id) }
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             TitleBar()
@@ -153,14 +158,9 @@ struct FeaturedArticleSectionCreatorView: View {
         
         Section {
             ForEach(primary) { item in
-                ArticleItemView(item.article)
-                    .articleStyle(.vertical)
-                    .listRowBackground(Color.background)
-                    .listRowSeparator(.hidden)
+                SectionItemView(item)
             }
-            //TODO: Add ability to remove articles from all sections
-//            .onDelete(perform: { indexSet in
-//            })
+            .onDelete { indexSet in remove(items: indexSet.map { primary[$0] }) }
             AddPrimaryArticleButton()
         } header: {
             Text("Primary Articles (\(primary.count)):")
@@ -172,16 +172,10 @@ struct FeaturedArticleSectionCreatorView: View {
                 GridItem.init(.adaptive(minimum: 100, maximum: 300))
             ]
             
-            if !secondary.isEmpty {
-                LazyVGrid(columns: columns) {
-                    ForEach(secondary) { item in
-                        ArticleItemView(item.article)
-                            .articleStyle(.vertical)
-                    }
-                }
-                .listRowBackground(Color.background)
-                .listRowSeparator(.hidden)
+            ForEach(secondary) { item in
+                SectionItemView(item)
             }
+            .onDelete { indexSet in remove(items: indexSet.map { secondary[$0] }) }
             AddSecondaryArticleButton()
         } header: {
             Text("Secondary Articles (\(secondary.count)):")
@@ -189,16 +183,23 @@ struct FeaturedArticleSectionCreatorView: View {
         }
         Section {
             ForEach(tertiary) { item in
-                ArticleItemView(item.article)
-                    .articleStyle(.horizontal)
-                    .listRowBackground(Color.background)
-                    .listRowSeparator(.hidden)
+                SectionItemView(item)
             }
+            .onDelete { indexSet in remove(items: indexSet.map { tertiary[$0] }) }
             AddTertiaryArticleButton()
         } header: {
             Text("Tertiary Articles (\(tertiary.count)):")
                 .foregroundStyle(Color.text)
         }
+    }
+    
+    @ViewBuilder func SectionItemView(
+        _ item: FeaturedArticles.Section.Item
+    ) -> some View {
+        ArticleItemView(item.article)
+            .articleStyle(.horizontal)
+            .listRowBackground(Color.background)
+            .listRowSeparator(.hidden)
     }
     
     @ViewBuilder func AddPrimaryArticleButton() -> some View {
