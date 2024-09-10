@@ -213,6 +213,11 @@
 		568F737F2C854462005D16C6 /* ReviewContentSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F737E2C854462005D16C6 /* ReviewContentSectionHeader.swift */; };
 		568F73812C854512005D16C6 /* ReviewContentBottomControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F73802C854512005D16C6 /* ReviewContentBottomControls.swift */; };
 		568F73842C854FBC005D16C6 /* ArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F73832C854FBC005D16C6 /* ArticleView.swift */; };
+		569A9A8F2C90DEC70021F5EC /* ContentAuthenticationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A152B6C5AA400C4C0DB /* ContentAuthenticationProvider.swift */; };
+		569A9A902C90DECE0021F5EC /* UserAuthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A0F2B6C50AE00C4C0DB /* UserAuthState.swift */; };
+		569A9A932C90E01B0021F5EC /* IsPublisherChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9A922C90E01B0021F5EC /* IsPublisherChecker.swift */; };
+		569A9A942C90E01B0021F5EC /* IsPublisherChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9A922C90E01B0021F5EC /* IsPublisherChecker.swift */; };
+		569A9A962C90E08F0021F5EC /* FirebaseIsPublisherChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9A952C90E08F0021F5EC /* FirebaseIsPublisherChecker.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -514,6 +519,8 @@
 		568F737E2C854462005D16C6 /* ReviewContentSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewContentSectionHeader.swift; sourceTree = "<group>"; };
 		568F73802C854512005D16C6 /* ReviewContentBottomControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewContentBottomControls.swift; sourceTree = "<group>"; };
 		568F73832C854FBC005D16C6 /* ArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleView.swift; sourceTree = "<group>"; };
+		569A9A922C90E01B0021F5EC /* IsPublisherChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsPublisherChecker.swift; sourceTree = "<group>"; };
+		569A9A952C90E08F0021F5EC /* FirebaseIsPublisherChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseIsPublisherChecker.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -1052,6 +1059,7 @@
 		5677542A2B70E5500094EB8C /* Users */ = {
 			isa = PBXGroup;
 			children = (
+				569A9A912C90E00B0021F5EC /* IsPublisherChecker */,
 				56D470BD2C8EDF4800F48A64 /* IsAdminChecker */,
 				56B88A762B70DCFD00C4C0DB /* UserDataProvider.swift */,
 				56B88A712B70DC9800C4C0DB /* CurrentUserIdProvider.swift */,
@@ -1354,6 +1362,15 @@
 				568F73832C854FBC005D16C6 /* ArticleView.swift */,
 			);
 			path = ArticleDetail;
+			sourceTree = "<group>";
+		};
+		569A9A912C90E00B0021F5EC /* IsPublisherChecker */ = {
+			isa = PBXGroup;
+			children = (
+				569A9A922C90E01B0021F5EC /* IsPublisherChecker.swift */,
+				569A9A952C90E08F0021F5EC /* FirebaseIsPublisherChecker.swift */,
+			);
+			path = IsPublisherChecker;
 			sourceTree = "<group>";
 		};
 		56A6D0D02B835145003B27E5 /* FeedItems */ = {
@@ -1924,6 +1941,7 @@
 				56F2139D2B743B37009DB057 /* DefaultRecipeFavoriteCountProvider.swift in Sources */,
 				568F73642C82CB44005D16C6 /* FirebaseResourceCategoryRepository.swift in Sources */,
 				56B88A5C2B6F311A00C4C0DB /* FirestoreUserDoc.swift in Sources */,
+				569A9A962C90E08F0021F5EC /* FirebaseIsPublisherChecker.swift in Sources */,
 				568F73812C854512005D16C6 /* ReviewContentBottomControls.swift in Sources */,
 				568F72792C76961B005D16C6 /* PostImageUploader.swift in Sources */,
 				563BC7152B7C4C63008F3C50 /* CommentDeleter.swift in Sources */,
@@ -1938,6 +1956,7 @@
 				563BC7362B7F506A008F3C50 /* FeedItemView.swift in Sources */,
 				5677542C2B70E55C0094EB8C /* CurrentUserDataProvider.swift in Sources */,
 				568F734C2C8250EA005D16C6 /* ResourceSummary.swift in Sources */,
+				569A9A932C90E01B0021F5EC /* IsPublisherChecker.swift in Sources */,
 				568F72952C794022005D16C6 /* FirebasePostFetcher.swift in Sources */,
 				56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */,
 				56D470B52C8D8C1800F48A64 /* FeaturedArticles.swift in Sources */,
@@ -2116,6 +2135,7 @@
 				568F730B2C800C66005D16C6 /* ResourceTag.swift in Sources */,
 				5622EAB02C70A8B800FE9C36 /* CurrentUserIdProvider.swift in Sources */,
 				565CFEB12C87A14100CBEEAC /* IndividualArticleFetcher.swift in Sources */,
+				569A9A902C90DECE0021F5EC /* UserAuthState.swift in Sources */,
 				568F72E32C7EA376005D16C6 /* PostCountProvider.swift in Sources */,
 				5622EAB42C70A95D00FE9C36 /* UI.swift in Sources */,
 				563BC70F2B7B65D9008F3C50 /* PopularResources.swift in Sources */,
@@ -2133,6 +2153,7 @@
 				56D470DF2C902BE300F48A64 /* FeaturedArticlesFetcher.swift in Sources */,
 				568F734A2C824EC7005D16C6 /* SearchKeywordTests.swift in Sources */,
 				568F734D2C8250EA005D16C6 /* ResourceSummary.swift in Sources */,
+				569A9A8F2C90DEC70021F5EC /* ContentAuthenticationProvider.swift in Sources */,
 				565CFEC62C88FC6E00CBEEAC /* CacheTests.swift in Sources */,
 				568F727A2C76961B005D16C6 /* PostImageUploader.swift in Sources */,
 				568F734F2C82516C005D16C6 /* ResourceSummaryTests.swift in Sources */,
@@ -2153,6 +2174,7 @@
 				568F72882C781EAE005D16C6 /* StringExtensionsTests.swift in Sources */,
 				568F728C2C787FC2005D16C6 /* PostPoster.swift in Sources */,
 				568F73572C825FE8005D16C6 /* ResourceCategoryTests.swift in Sources */,
+				569A9A942C90E01B0021F5EC /* IsPublisherChecker.swift in Sources */,
 				565CFEBC2C87D46000CBEEAC /* SearchResult.swift in Sources */,
 				563BC70E2B7B65D1008F3C50 /* PopularResourcesTests.swift in Sources */,
 				56D470B02C8BA1C500F48A64 /* TimeFrame.swift in Sources */,

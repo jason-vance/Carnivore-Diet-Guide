@@ -29,22 +29,12 @@ class CreateContentViewModel: ObservableObject {
         }
     }
 
+    @Published public var isPublisher: Bool = false
     @Published public var contentId: UUID = UUID()
     @Published public var contentType: Resource.ResourceType = .post
     @Published public var contentTitle: String = ""
     @Published public var contentImages: [ContentCreationImageData] = []
     @Published public var contentText: String = ""
-    
-    private let userIdProvider: CurrentUserIdProvider
-    private let imageUploader: PostImageUploader
-    
-    init(
-        userIdProvider: CurrentUserIdProvider,
-        imageUploader: PostImageUploader
-    ) {
-        self.userIdProvider = userIdProvider
-        self.imageUploader = imageUploader
-    }
     
     private var userId: String? { userIdProvider.currentUserId }
     
@@ -73,6 +63,32 @@ class CreateContentViewModel: ObservableObject {
             markdownContent: contentText,
             imageUrls: imageUrls
         )
+    }
+    
+    private let userIdProvider: CurrentUserIdProvider
+    private let imageUploader: PostImageUploader
+    private let isPublisherChecker: IsPublisherChecker
+    
+    init(
+        userIdProvider: CurrentUserIdProvider,
+        imageUploader: PostImageUploader,
+        isPublisherChecker: IsPublisherChecker
+    ) {
+        self.userIdProvider = userIdProvider
+        self.imageUploader = imageUploader
+        self.isPublisherChecker = isPublisherChecker
+        
+        checkIsPublisher()
+    }
+    
+    private func checkIsPublisher() {
+        Task {
+            guard let userId = userId else { return }
+            guard let isPublisher = try? await isPublisherChecker.isPublisher(userId: userId) else { return }
+            withAnimation(.snappy) {
+                self.isPublisher = isPublisher
+            }
+        }
     }
     
     public func addToPost(image: UIImage) {

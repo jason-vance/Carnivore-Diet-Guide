@@ -17,7 +17,8 @@ struct CreateContentView: View {
     
     @StateObject private var model = CreateContentViewModel(
         userIdProvider: iocContainer~>CurrentUserIdProvider.self,
-        imageUploader: iocContainer~>PostImageUploader.self
+        imageUploader: iocContainer~>PostImageUploader.self,
+        isPublisherChecker: iocContainer~>IsPublisherChecker.self
     )
 
     @State private var navigationPath = NavigationPath()
@@ -131,7 +132,6 @@ struct CreateContentView: View {
     }
     
     @ViewBuilder func TitleMenu() -> some View {
-        //TODO: Disable this for everyone except me
         Menu {
             Button {
                 model.contentType = .article
@@ -164,8 +164,10 @@ struct CreateContentView: View {
             HStack {
                 Text(screenTitle)
                 ResourceMenuButtonLabel(sfSymbol: "chevron.down")
+                    .opacity(model.isPublisher ? 1 : 0)
             }
         }
+        .disabled(!model.isPublisher)
     }
     
     @ViewBuilder func CloseButton() -> some View {
