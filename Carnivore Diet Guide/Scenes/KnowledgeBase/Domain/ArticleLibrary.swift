@@ -15,6 +15,7 @@ class ArticleLibrary {
     
     private var articlesSubject: CurrentValueSubject<Dictionary<String, Article>,Never> = .init([:])
     private var removedArticleSubject: CurrentValueSubject<Article?, Never> = .init(nil)
+    private var isLoggedIn: Bool = false
     
     public var publishedArticlesPublisher: AnyPublisher<[Article],Never> {
         articlesSubject
@@ -31,10 +32,12 @@ class ArticleLibrary {
             .eraseToAnyPublisher()
     }
     
+    private let authProvider: ContentAuthenticationProvider
     private let articleCollectionFetcher: ArticleCollectionFetcher
     private let individualArticleFetcher: IndividualArticleFetcher
     private let resourceDeleter: ResourceDeleter
     
+    private var userStateSub: AnyCancellable? = nil
     private var articleDeletedSub: AnyCancellable? = nil
 
     private let articleCache = Cache.readFromDiskOrDefault(ArticleCache.self, withName: ArticleLibrary.cacheName)
@@ -42,12 +45,14 @@ class ArticleLibrary {
     private static var _instance: ArticleLibrary? = nil
     public static var instance: ArticleLibrary { _instance! }
     public static func makeInstance(
+        authProvider: ContentAuthenticationProvider,
         articleCollectionFetcher: ArticleCollectionFetcher,
         individualArticleFetcher: IndividualArticleFetcher,
         resourceDeleter: ResourceDeleter
     ) {
         assert(_instance == nil)
         _instance = .init(
+            authProvider: authProvider,
             articleCollectionFetcher: articleCollectionFetcher,
             individualArticleFetcher: individualArticleFetcher,
             resourceDeleter: resourceDeleter
@@ -68,22 +73,33 @@ class ArticleLibrary {
             .min { $0.publicationDate < $1.publicationDate }
     }
     
-    //TODO: listen for log in event, as users have to be logged in to read Articles on Firebase
     private init(
+        authProvider: ContentAuthenticationProvider,
         articleCollectionFetcher: ArticleCollectionFetcher,
         individualArticleFetcher: IndividualArticleFetcher,
         resourceDeleter: ResourceDeleter
     ) {
+        self.authProvider = authProvider
         self.articleCollectionFetcher = articleCollectionFetcher
         self.individualArticleFetcher = individualArticleFetcher
         self.resourceDeleter = resourceDeleter
         
-        fetchArticles()
+        listenToUserAuthState()
         listenForDeletedArticles()
+    }
+    
+    private func onUpdate(authState: UserAuthState) {
+        isLoggedIn = (authState == .loggedIn)
+        fetchArticles()
     }
     
     public func getArticle(byId articleId: String) -> Article? {
         return articlesSubject.value[articleId]
+    }
+    
+    private func listenToUserAuthState() {
+        userStateSub = authProvider.userAuthStatePublisher
+            .sink(receiveValue: onUpdate(authState:))
     }
     
     private func listenForDeletedArticles() {
@@ -121,6 +137,7 @@ class ArticleLibrary {
         fetchCachedArticles()
         
         Task {
+            guard isLoggedIn else { return }
             try? await fetchNewerArticles()
             try? await fetchOlderArticles()
         }

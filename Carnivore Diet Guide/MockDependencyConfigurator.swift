@@ -43,6 +43,7 @@ func setupMockIocContainer(_ iocContainer: Container) {
     //Knowledge Base
     iocContainer.autoregister(ArticleCollectionFetcher.self, initializer: MockArticleCollectionFetcher.init)
     ArticleLibrary.makeInstance(
+        authProvider: iocContainer~>ContentAuthenticationProvider.self,
         articleCollectionFetcher: iocContainer~>ArticleCollectionFetcher.self,
         individualArticleFetcher: iocContainer~>IndividualArticleFetcher.self,
         resourceDeleter: iocContainer~>ResourceDeleter.self
