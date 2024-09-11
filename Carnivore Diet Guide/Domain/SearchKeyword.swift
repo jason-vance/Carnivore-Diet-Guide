@@ -13,19 +13,23 @@ struct SearchKeyword: Identifiable, Hashable, Codable, Equatable {
     let text: String
     let score: UInt
     
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(text)
+    }
+    
     public static func ==(_ lhs: SearchKeyword, _ rhs: SearchKeyword) -> Bool {
         lhs.id == rhs.id
     }
     
     static func keywordsFrom(string: String) -> Set<SearchKeyword> {
-        var dict = Dictionary<String, UInt>()
+        var dict = Dictionary<String.Lemma, UInt>()
         string
             .lemmatized()
             .forEach { dict[$0] = dict[$0, default: 0] + 1 }
         
         var keywords = Set<SearchKeyword>()
-        dict.forEach { key, value in
-            guard let keyword = SearchKeyword(key, score: value) else {
+        dict.forEach { lemma, score in
+            guard let keyword = SearchKeyword(lemma.text, score: score) else {
                 return
             }
             keywords.insert(keyword)

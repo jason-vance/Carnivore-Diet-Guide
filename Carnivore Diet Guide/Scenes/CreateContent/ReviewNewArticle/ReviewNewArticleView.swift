@@ -45,8 +45,7 @@ struct ReviewNewArticleView: View {
             summary: newArticleData.metadata.summary,
             markdownContent: newArticleData.data.markdownContent,
             publicationDate: newArticleData.metadata.publicationDate,
-            categories: newArticleData.metadata.categories,
-            keywords: newArticleData.metadata.searchKeywords
+            categories: newArticleData.metadata.categories
         )
     }
     

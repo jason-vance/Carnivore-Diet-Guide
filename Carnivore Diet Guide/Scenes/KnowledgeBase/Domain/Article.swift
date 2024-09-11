@@ -19,8 +19,31 @@ struct Article: Identifiable, Hashable {
     let categories: Set<Resource.Category>
     let keywords: Set<SearchKeyword>
     
+    init(
+        id: String,
+        author: String,
+        title: String,
+        coverImageUrl: URL,
+        summary: Resource.Summary,
+        markdownContent: String,
+        publicationDate: Date,
+        categories: Set<Resource.Category>
+    ) {
+        self.id = id
+        self.author = author
+        self.title = title
+        self.coverImageUrl = coverImageUrl
+        self.summary = summary
+        self.markdownContent = markdownContent
+        self.publicationDate = publicationDate
+        self.categories = categories
+        
+        let string = "\(title)\n\(summary.text)\n\(markdownContent.stripMarkdown())"
+        self.keywords = SearchKeyword.keywordsFrom(string: string)
+    }
+    
     func relevanceTo(_ keywords: Set<SearchKeyword>) -> UInt {
-        return self.keywords
+        self.keywords
             .filter { keywords.contains($0) }
             .reduce(0) { $0 + $1.score }
     }
@@ -35,8 +58,7 @@ extension Article {
         summary: .init("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")!,
         markdownContent: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         publicationDate: .now,
-        categories: Resource.Category.samples,
-        keywords: SearchKeyword.samples
+        categories: Resource.Category.samples
     )
     static let sample2: Article = .init(
         id: UUID().uuidString,
@@ -46,7 +68,6 @@ extension Article {
         summary: .init("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")!,
         markdownContent: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         publicationDate: .now,
-        categories: Resource.Category.samples,
-        keywords: SearchKeyword.samples
+        categories: Resource.Category.samples
     )
 }

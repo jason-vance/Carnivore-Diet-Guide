@@ -16,7 +16,6 @@ class FirebaseArticleRepository {
     
     private let categoriesField = FirebaseArticleDoc.CodingKeys.categories.rawValue
     private let publicationDateField = FirebaseArticleDoc.CodingKeys.publicationDate.rawValue
-    private let keywordsField = FirebaseArticleDoc.CodingKeys.keywords.rawValue
     
     private func getCategoryDict() async throws -> Dictionary<String,Resource.Category> {
         let categoryRepo = FirebaseResourceCategoryRepository()
@@ -36,28 +35,6 @@ class FirebaseArticleRepository {
     
     func deleteArticle(withId articleId: String) async throws {
         try await articlesCollection.document(articleId).delete()
-    }
-    
-    
-    func searchArticles(
-        withKeyword keyword: SearchKeyword
-    ) async throws -> [SearchResult<Article>] {
-        let keywordField = keywordsField + ".\(keyword.text)"
-        
-        let query = articlesCollection
-            .whereField(keywordField, isGreaterThan: 0)
-        
-        let categories = try await getCategoryDict()
-        return try await query
-            .getDocuments()
-            .documents
-            .compactMap {
-                guard let articleDoc = try? $0.data(as: FirebaseArticleDoc.self) else { return nil }
-                guard let score = articleDoc.keywords?[keyword.text] else { return nil }
-                guard let article = articleDoc.toArticle(categoryDict: categories) else { return nil }
-                
-                return SearchResult(item: article, score: score)
-            }
     }
 }
 

@@ -18,7 +18,6 @@ struct FirebaseArticleDoc: Codable {
     var markdownContent: String?
     var publicationDate: Date?
     var categories: [String]?
-    var keywords: Dictionary<String,UInt>?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -29,17 +28,11 @@ struct FirebaseArticleDoc: Codable {
         case markdownContent
         case publicationDate
         case categories
-        case keywords
     }
     
     static func from(
         article: Article
     ) -> FirebaseArticleDoc {
-        var keywordDict = Dictionary<String,UInt>()
-        for keyword in article.keywords {
-            keywordDict[keyword.text] = keyword.score
-        }
-        
         return .init(
             id: article.id,
             author: article.author,
@@ -48,8 +41,7 @@ struct FirebaseArticleDoc: Codable {
             summary: article.summary.text,
             markdownContent: article.markdownContent,
             publicationDate: article.publicationDate,
-            categories: article.categories.map { $0.id },
-            keywords: keywordDict
+            categories: article.categories.map { $0.id }
         )
     }
     
@@ -63,7 +55,6 @@ struct FirebaseArticleDoc: Codable {
         guard let markdownContent = markdownContent else { return nil }
         guard let publicationDate = publicationDate else { return nil }
         guard let categories = (categories?.compactMap { categoryId in categoryDict[categoryId] }) else { return nil }
-        guard let keywords = (keywords?.compactMap { entry in SearchKeyword(entry.key, score: entry.value) }) else { return nil }
 
         return Article(
             id: id,
@@ -73,8 +64,7 @@ struct FirebaseArticleDoc: Codable {
             summary: summary,
             markdownContent: markdownContent,
             publicationDate: publicationDate,
-            categories: Set(categories),
-            keywords: Set(keywords)
+            categories: Set(categories)
         )
     }
 }

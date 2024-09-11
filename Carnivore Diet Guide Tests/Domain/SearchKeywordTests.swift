@@ -45,5 +45,29 @@ final class SearchKeywordTests: XCTestCase {
         let trimmedKeyword = SearchKeyword("   Swift  ")
         XCTAssertEqual(trimmedKeyword?.text, "swift")
     }
+    
+    func testFromString() {
+        let swiftKeyword = SearchKeyword("swift")!
+        let codeKeyword = SearchKeyword("code")!
+        
+        // Checks correct score
+        var keywords = SearchKeyword.keywordsFrom(string: "swift swift swift")
+        XCTAssertEqual(3, keywords.first!.score)
+        
+        keywords = SearchKeyword.keywordsFrom(string: "swift swift swift code")
+        XCTAssert(keywords.contains(swiftKeyword))
+        XCTAssert(keywords.contains(codeKeyword))
+    }
+    
+    func testFromStringLongString() {
+        // Checks correct score
+        var keywords = SearchKeyword.keywordsFrom(string: """
+                                                  Carnivore Carnivore
+                                                  Carnivore Carnivore Carnivore Carnivore
+                                                  Carnivore Carnivore Carnivore Carnivore Carnivore
+        """
+        )
+        XCTAssertEqual(11, keywords.first!.score)
+    }
 
 }

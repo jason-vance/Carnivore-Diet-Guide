@@ -222,6 +222,7 @@
 		569A9AA12C9228C40021F5EC /* TermsOfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9A9F2C9228C40021F5EC /* TermsOfService.swift */; };
 		569A9AA32C9228EA0021F5EC /* PrivacyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9AA22C9228EA0021F5EC /* PrivacyPolicy.swift */; };
 		569A9AA42C9228EA0021F5EC /* PrivacyPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9AA22C9228EA0021F5EC /* PrivacyPolicy.swift */; };
+		569A9AA62C923DF00021F5EC /* ArticleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9AA52C923DF00021F5EC /* ArticleTests.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -527,6 +528,7 @@
 		569A9A952C90E08F0021F5EC /* FirebaseIsPublisherChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseIsPublisherChecker.swift; sourceTree = "<group>"; };
 		569A9A9F2C9228C40021F5EC /* TermsOfService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfService.swift; sourceTree = "<group>"; };
 		569A9AA22C9228EA0021F5EC /* PrivacyPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicy.swift; sourceTree = "<group>"; };
+		569A9AA52C923DF00021F5EC /* ArticleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleTests.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -944,6 +946,7 @@
 				568F73492C824EC7005D16C6 /* SearchKeywordTests.swift */,
 				568F734E2C82516C005D16C6 /* ResourceSummaryTests.swift */,
 				568F73562C825FE8005D16C6 /* ResourceCategoryTests.swift */,
+				569A9AA52C923DF00021F5EC /* ArticleTests.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -2172,6 +2175,7 @@
 				5622EAB92C70AC1600FE9C36 /* ResourceCommentActivityTracker.swift in Sources */,
 				563BC71C2B7CB6D8008F3C50 /* CookTimeFormatterTests.swift in Sources */,
 				568F72EB2C7EAC78005D16C6 /* PostsFetcher.swift in Sources */,
+				569A9AA62C923DF00021F5EC /* ArticleTests.swift in Sources */,
 				5622EAAC2C70A71400FE9C36 /* Comment.swift in Sources */,
 				5622EADB2C755F9200FE9C36 /* UserDataProvider.swift in Sources */,
 				5622EAB12C70A8C100FE9C36 /* CommentProvider.swift in Sources */,

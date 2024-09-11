@@ -26,7 +26,6 @@ struct ArticleCacheEntry: Codable {
     let markdownContent: String?
     let publicationDate: Date?
     let categories: Set<Resource.Category>?
-    let keywords: Set<SearchKeyword>?
     
     static func from(
         _ article: Article
@@ -40,8 +39,7 @@ struct ArticleCacheEntry: Codable {
             summary: article.summary.text,
             markdownContent: article.markdownContent,
             publicationDate: article.publicationDate,
-            categories: article.categories,
-            keywords: article.keywords
+            categories: article.categories
         )
     }
     
@@ -55,7 +53,6 @@ struct ArticleCacheEntry: Codable {
         guard let markdownContent = markdownContent else { return nil }
         guard let publicationDate = publicationDate else { return nil }
         guard let categories = categories else { return nil }
-        guard let keywords = keywords else { return nil }
         
         return Article(
             id: id,
@@ -65,8 +62,7 @@ struct ArticleCacheEntry: Codable {
             summary: summary,
             markdownContent: markdownContent,
             publicationDate: publicationDate,
-            categories: categories,
-            keywords: keywords
+            categories: categories
         )
     }
 }
