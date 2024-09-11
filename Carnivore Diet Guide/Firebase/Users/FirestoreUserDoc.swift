@@ -13,6 +13,8 @@ struct FirestoreUserDoc: Codable {
     @DocumentID var id: String?
     var fullName: String?
     var profileImageUrl: URL?
+    var termsOfServiceAcceptance: Date?
+    var privacyPolicyAcceptance: Date?
     var favoriteArticles: [String]?
     var favoritePosts: [String]?
     var favoriteRecipes: [String]?
@@ -21,6 +23,8 @@ struct FirestoreUserDoc: Codable {
         case id
         case fullName
         case profileImageUrl
+        case termsOfServiceAcceptance
+        case privacyPolicyAcceptance
         case favoriteArticles
         case favoritePosts
         case favoriteRecipes
@@ -30,22 +34,24 @@ struct FirestoreUserDoc: Codable {
         FirestoreUserDoc(
             id: userData.id,
             fullName: userData.fullName?.value,
-            profileImageUrl: userData.profileImageUrl
+            profileImageUrl: userData.profileImageUrl,
+            termsOfServiceAcceptance: userData.termsOfServiceAcceptance,
+            privacyPolicyAcceptance: userData.privacyPolicyAcceptance
         )
     }
     
     func toUserData() -> UserData? {
         guard let id = id else { return nil }
-        
         guard let fullName = fullName else { return nil }
         guard let fullName = PersonName(fullName) else { return nil }
-        
         guard let profileImageUrl = profileImageUrl else { return nil }
 
         return .init(
             id: id,
             fullName: fullName,
-            profileImageUrl: profileImageUrl
+            profileImageUrl: profileImageUrl,
+            termsOfServiceAcceptance: termsOfServiceAcceptance,
+            privacyPolicyAcceptance: privacyPolicyAcceptance
         )
     }
 }

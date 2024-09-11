@@ -74,7 +74,7 @@ struct UserProfileView: View {
             CancelLogoutButton()
         }
         .sheet(isPresented: $showEditProfile) {
-            EditUserProfileView(userId: userId)
+            EditUserProfileView(userId: userId, mode: .editProfile)
         }
         .onChange(of: userId, initial: true) {
             model.listenForUserData(userId: userId)

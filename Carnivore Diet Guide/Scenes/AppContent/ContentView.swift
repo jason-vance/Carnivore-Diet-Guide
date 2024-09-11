@@ -43,7 +43,11 @@ struct ContentView: View {
     }
     
     @ViewBuilder func LoggedInView() -> some View {
-        HomeView()
+        if isOnboardingRequired {
+            EditUserProfileView(userId: currentUserId, mode: .createProfile)
+        } else {
+            HomeView()
+        }
     }
 }
 

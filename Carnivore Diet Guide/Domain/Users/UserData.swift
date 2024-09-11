@@ -11,9 +11,14 @@ struct UserData {
     var id: String
     var fullName: PersonName?
     var profileImageUrl: URL?
+    var termsOfServiceAcceptance: Date?
+    var privacyPolicyAcceptance: Date?
     
     var isFullyOnboarded: Bool {
-        fullName != nil && profileImageUrl != nil
+        fullName != nil &&
+        profileImageUrl != nil &&
+        termsOfServiceAcceptance != nil &&
+        privacyPolicyAcceptance != nil
     }
 }
 

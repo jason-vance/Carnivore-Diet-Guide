@@ -32,6 +32,12 @@ class FirebaseUserRepository {
         var dict: [AnyHashable : Any] = [:]
         dict[FirestoreUserDoc.CodingKeys.fullName.rawValue] = userData.fullName?.value
         dict[FirestoreUserDoc.CodingKeys.profileImageUrl.rawValue] = userData.profileImageUrl?.absoluteString
+        if let termsOfServiceAcceptance = userData.termsOfServiceAcceptance {
+            dict[FirestoreUserDoc.CodingKeys.termsOfServiceAcceptance.rawValue] = termsOfServiceAcceptance
+        }
+        if let privacyPolicyAcceptance = userData.privacyPolicyAcceptance {
+            dict[FirestoreUserDoc.CodingKeys.privacyPolicyAcceptance.rawValue] = privacyPolicyAcceptance
+        }
 
         try await usersCollection.document(userData.id).updateData(dict)
     }
