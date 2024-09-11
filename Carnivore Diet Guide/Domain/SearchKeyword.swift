@@ -18,14 +18,18 @@ struct SearchKeyword: Identifiable, Hashable, Codable, Equatable {
     }
     
     static func keywordsFrom(string: String) -> Set<SearchKeyword> {
-        var keywords = Set<SearchKeyword>()
+        var dict = Dictionary<String, UInt>()
+        string
+            .lemmatized()
+            .forEach { dict[$0] = dict[$0, default: 0] + 1 }
         
-        string.lemmatized()
-            .forEach { lemma in
-                if let keyword = SearchKeyword(lemma) {
-                    keywords.insert(keyword)
-                }
+        var keywords = Set<SearchKeyword>()
+        dict.forEach { key, value in
+            guard let keyword = SearchKeyword(key, score: value) else {
+                return
             }
+            keywords.insert(keyword)
+        }
         
         return keywords
     }

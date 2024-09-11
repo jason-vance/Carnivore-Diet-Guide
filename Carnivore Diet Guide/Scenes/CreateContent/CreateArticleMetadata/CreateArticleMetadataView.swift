@@ -90,7 +90,7 @@ struct CreateArticleMetadataView: View {
         .navigationBarBackButtonHidden()
         .background(Color.background)
         .onChange(of: contentData, initial: true) { _, newData in
-            model.set(markdownContent: newData.markdownContent)
+            model.set(title: newData.title, markdownContent: newData.markdownContent)
         }
         .onChange(of: summaryText, initial: false) { _, newSummaryText in
             model.articleSummary = .init(newSummaryText)
@@ -295,9 +295,10 @@ struct CreateArticleMetadataView: View {
         .listRowBackground(Color.background)
         .listRowSeparator(.hidden)
         .sheet(isPresented: $showEditKeywordsDialog) {
-            EditKeywordsView(keywords: $model.articleSearchKeywords)
+            EditKeywordsView(keywords: model.articleSearchKeywords)
                 .padding(.top)
                 .presentationBackground(Color.background)
+                .presentationDragIndicator(.visible)
         }
     }
 }

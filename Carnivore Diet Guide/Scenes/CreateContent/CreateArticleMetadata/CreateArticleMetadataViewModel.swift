@@ -11,17 +11,20 @@ import SwiftUI
 @MainActor
 class CreateArticleMetadataViewModel: ObservableObject {
     
+    @Published public var articleTitle: String = ""
+    @Published public var articleContent: String = ""
     @Published public var articleSummary: Resource.Summary? = nil
     @Published public var articlePublicationDate: Date = Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: 1, to: .now)!)
     @Published public var articleCategories: Set<Resource.Category> = []
-    @Published public var articleSearchKeywords: Set<SearchKeyword> = []
     
-    private var originalSearchKeywords: Set<SearchKeyword> = []
+    public var articleSearchKeywords: Set<SearchKeyword> {
+        let keywordText = "\(articleTitle)\n\(articleContent)\n\(articleSummary?.text ?? "")"
+        return SearchKeyword.keywordsFrom(string: keywordText)
+    }
     
     public var isFormChanged: Bool {
         articleSummary != nil 
         || articleCategories.count > 0
-        || articleSearchKeywords != originalSearchKeywords
     }
     
     public func getContentMetadata(id: UUID) -> ContentMetadata? {
@@ -38,30 +41,9 @@ class CreateArticleMetadataViewModel: ObservableObject {
         )
     }
     
-    public func set(markdownContent: String) {
-        var dict = Dictionary<String, UInt>()
-        
-        markdownContent
-            .stripMarkdown()
-            .lemmatized()
-            .forEach { token in
-                dict[token] = dict[token, default: 0] + 1
-            }
-        
-        var keywords = Set<SearchKeyword>()
-        dict.forEach { key, value in
-            guard let keyword = SearchKeyword(key, score: value) else {
-                return
-            }
-            keywords.insert(keyword)
-        }
-        
-        originalSearchKeywords = Set(
-            keywords
-                .sorted { $0.score > $1.score }
-                .prefix(50)
-        )
-        articleSearchKeywords = originalSearchKeywords
+    public func set(title: String, markdownContent: String) {
+        self.articleTitle = title
+        self.articleContent = markdownContent.stripMarkdown()
     }
     
     public func add(category: Resource.Category) {

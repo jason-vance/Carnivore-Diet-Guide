@@ -1396,9 +1396,6 @@
         }
       }
     },
-    "Keyword" : {
-
-    },
     "Knowledge" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1486,9 +1483,6 @@
 
     },
     "Name must contain at least three letters" : {
-
-    },
-    "New Keyword" : {
 
     },
     "Next" : {
@@ -1854,9 +1848,6 @@
         }
       }
     },
-    "Relevance Score" : {
-
-    },
     "Report" : {
 
     },
@@ -1870,9 +1861,6 @@
 
     },
     "Save" : {
-
-    },
-    "Score" : {
 
     },
     "Search for a category" : {
