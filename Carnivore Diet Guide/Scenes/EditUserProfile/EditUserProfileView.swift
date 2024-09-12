@@ -33,6 +33,7 @@ struct EditUserProfileView: View {
     @State private var profileImage: UIImage = .init()
     @State private var profileImageUrl: URL? = nil
     @State private var fullName: PersonName? = nil
+    @State private var username: Username? = nil
     @State private var termsOfServiceAcceptance: Date? = nil
     @State private var privacyPolicyAcceptance: Date? = nil
     @State private var initializationState: InitializationState = .notInitialized
@@ -50,6 +51,7 @@ struct EditUserProfileView: View {
                 
                 profileImageUrl = userData.profileImageUrl
                 fullName = userData.fullName
+                //TODO: Populate ToS and PP so that saving is not disabled
                 
                 initializationState = .initialized
             } catch {
@@ -125,6 +127,7 @@ struct EditUserProfileView: View {
                         )
                         .padding(.bottom, 16)
                         ProfileFormNameField($fullName)
+                        ProfileFormUsernameField($username)
                         if mode == .createProfile {
                             VStack(spacing: 0) {
                                 TermsOfServiceField()
@@ -136,11 +139,6 @@ struct EditUserProfileView: View {
                             .padding(.top, 16)
                     }
                     .padding()
-                }
-                .overlay(alignment: .top) {
-                    Rectangle()
-                        .foregroundStyle(LinearGradient(colors: [.background, .clear], startPoint: .top, endPoint: .bottom))
-                        .frame(height: 16)
                 }
             }
         }

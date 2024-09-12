@@ -351,6 +351,9 @@
         }
       }
     },
+    "3-32 characters. No spaces. At least 1 letter." : {
+
+    },
     "4 Weeks" : {
 
     },
@@ -2215,6 +2218,12 @@
 
     },
     "User Profile" : {
+
+    },
+    "Username" : {
+
+    },
+    "Username is valid and available" : {
 
     },
     "View All" : {
