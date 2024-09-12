@@ -12,7 +12,8 @@ struct ByLineView: View {
     private let profileImageSize: CGFloat = 32
     private let profileImagePadding: CGFloat = 2
     
-    @State var userId: String
+    let userId: String
+    
     @StateObject private var model = ByLineViewModel()
     
     var body: some View {

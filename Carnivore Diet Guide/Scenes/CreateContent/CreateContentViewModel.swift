@@ -29,14 +29,14 @@ class CreateContentViewModel: ObservableObject {
         }
     }
 
+    @Published public var author: String
+    @Published public var isAdmin: Bool = false
     @Published public var isPublisher: Bool = false
     @Published public var contentId: UUID = UUID()
     @Published public var contentType: Resource.ResourceType = .post
     @Published public var contentTitle: String = ""
     @Published public var contentImages: [ContentCreationImageData] = []
     @Published public var contentText: String = ""
-    
-    private var userId: String? { userIdProvider.currentUserId }
     
     public var isFormEmpty: Bool {
         contentTitle.isEmpty && contentText.isEmpty && contentImages.isEmpty
@@ -45,8 +45,6 @@ class CreateContentViewModel: ObservableObject {
     public var canAddImages: Bool { contentImages.count < maxImageCount }
     
     public var contentData: ContentData? {
-        guard let userId = userId else { return nil }
-        
         guard !contentTitle.isEmpty else { return nil }
         
         guard !contentText.isEmpty else { return nil }
@@ -58,7 +56,7 @@ class CreateContentViewModel: ObservableObject {
         
         return ContentData(
             id: contentId,
-            userId: userId,
+            userId: author,
             title: contentTitle,
             markdownContent: contentText,
             imageUrls: imageUrls
@@ -68,23 +66,37 @@ class CreateContentViewModel: ObservableObject {
     private let userIdProvider: CurrentUserIdProvider
     private let imageUploader: PostImageUploader
     private let isPublisherChecker: IsPublisherChecker
-    
+    private let isAdminChecker: IsAdminChecker
+
     init(
         userIdProvider: CurrentUserIdProvider,
         imageUploader: PostImageUploader,
-        isPublisherChecker: IsPublisherChecker
+        isPublisherChecker: IsPublisherChecker,
+        isAdminChecker: IsAdminChecker
     ) {
         self.userIdProvider = userIdProvider
         self.imageUploader = imageUploader
         self.isPublisherChecker = isPublisherChecker
+        self.isAdminChecker = isAdminChecker
+
+        self.author = userIdProvider.currentUserId!
         
+        checkIsAdmin()
         checkIsPublisher()
+    }
+    
+    private func checkIsAdmin() {
+        Task {
+            guard let isAdmin = try? await isAdminChecker.isAdmin(userId: author) else { return }
+            withAnimation(.snappy) {
+                self.isAdmin = isAdmin
+            }
+        }
     }
     
     private func checkIsPublisher() {
         Task {
-            guard let userId = userId else { return }
-            guard let isPublisher = try? await isPublisherChecker.isPublisher(userId: userId) else { return }
+            guard let isPublisher = try? await isPublisherChecker.isPublisher(userId: author) else { return }
             withAnimation(.snappy) {
                 self.isPublisher = isPublisher
             }
@@ -93,7 +105,6 @@ class CreateContentViewModel: ObservableObject {
     
     public func addToPost(image: UIImage) {
         guard contentImages.count < maxImageCount else { return }
-        guard let userId = userId else { return }
 
         let imageData = ContentCreationImageData(image: image)
 
@@ -107,7 +118,7 @@ class CreateContentViewModel: ObservableObject {
                     image: imageData.image,
                     withId: imageData.id,
                     forPost: contentId.uuidString,
-                    byUser: userId
+                    byUser: author
                 )
                 
                 guard let index = contentImages.firstIndex(where: { $0.id == imageData.id }) else { return }
@@ -125,7 +136,6 @@ class CreateContentViewModel: ObservableObject {
     }
     
     public func removeFromPost(image: ContentCreationImageData) {
-        guard let userId = userId else { return }
         guard let index = contentImages.firstIndex(where: { $0.id == image.id }) else { return }
         
         withAnimation(.snappy) {
@@ -137,7 +147,7 @@ class CreateContentViewModel: ObservableObject {
                 try await imageUploader.delete(
                     image: image.id,
                     forPost: contentId.uuidString,
-                    byUser: userId
+                    byUser: author
                 )
             } catch {
                 print("Image failed to delete: \(error.localizedDescription)")
@@ -149,11 +159,9 @@ class CreateContentViewModel: ObservableObject {
     }
     
     public func deleteImagesUnsafely() {
-        guard let userId = userId else { return }
-        
         contentImages.forEach { image in
             guard let _ = image.url else { return }
-            Task { try? await imageUploader.delete(image: image.id, forPost: contentId.uuidString, byUser: userId) }
+            Task { try? await imageUploader.delete(image: image.id, forPost: contentId.uuidString, byUser: author) }
         }
     }
 }

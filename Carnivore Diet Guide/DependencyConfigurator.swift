@@ -23,7 +23,7 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(FirebaseUserRepository.self, initializer: FirebaseUserRepository.init)
     iocContainer.autoregister(UserFetcher.self, initializer: FirebaseUserRepository.init)
     iocContainer.autoregister(RecipeRepository.self, initializer: FirebaseRecipeRepository.init)
-    iocContainer.autoregister(IsPublisherChecker.self, initializer: FirebaseIsPublisherChecker.init)
+    iocContainer.autoregister(IsPublisherChecker.self, initializer: FirebasePublishersRepository.init)
     iocContainer.autoregister(DailyUserEngagementService.self, initializer: { DailyUserEngagementService.instance })
     iocContainer.autoregister(NotificationService.self, initializer: NotificationService.init)
 
@@ -68,6 +68,7 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(PostPoster.self, initializer: { DefaultPostPoster.forProd })
     iocContainer.autoregister(ResourceCategoryProvider.self, initializer: FirebaseResourceCategoryRepository.init)
     iocContainer.autoregister(ArticlePoster.self, initializer: { DefaultArticlePoster.forProd })
+    iocContainer.autoregister(PublishersFetcher.self, initializer: FirebasePublishersRepository.init)
 
     //Post Detail
     iocContainer.autoregister(PostFetcher.self, initializer: { DefaultPostFetcher.forProd })
@@ -84,7 +85,7 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(UserProfileSignOutService.self) { FirebaseAuthenticationProvider.instance }
     iocContainer.autoregister(UserDataProvider.self, initializer: FirestoreUserDataProvider.init)
     iocContainer.autoregister(PostCountProvider.self, initializer: FirebasePostRepository.init)
-    iocContainer.autoregister(IsAdminChecker.self, initializer: FirebaseIsAdminChecker.init)
+    iocContainer.autoregister(IsAdminChecker.self, initializer: FirebaseAdminRepository.init)
 
     //Posts
     iocContainer.autoregister(PostsFetcher.self, initializer: FirebasePostRepository.init)

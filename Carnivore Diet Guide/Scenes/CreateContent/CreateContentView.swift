@@ -18,11 +18,13 @@ struct CreateContentView: View {
     @StateObject private var model = CreateContentViewModel(
         userIdProvider: iocContainer~>CurrentUserIdProvider.self,
         imageUploader: iocContainer~>PostImageUploader.self,
-        isPublisherChecker: iocContainer~>IsPublisherChecker.self
+        isPublisherChecker: iocContainer~>IsPublisherChecker.self,
+        isAdminChecker: iocContainer~>IsAdminChecker.self
     )
 
     @State private var navigationPath = NavigationPath()
     @State private var showImagePicker: Bool = false
+    @State private var showAuthorPicker: Bool = false
     @State private var showDiscardDialog: Bool = false
     
     @State private var showAlert: Bool = false
@@ -66,6 +68,9 @@ struct CreateContentView: View {
                 TopBar()
                 List {
                     ImageCarouselField()
+                    if model.isAdmin {
+                        AuthorField()
+                    }
                     PostTitleField()
                     PostTextField()
                 }
@@ -269,6 +274,21 @@ struct CreateContentView: View {
                 )
                 .foregroundStyle(Color.accent)
             }
+    }
+    
+    @ViewBuilder func AuthorField() -> some View {
+        Button {
+            showAuthorPicker = true
+        } label: {
+            ByLineView(userId: model.author)
+        }
+        .listRowBackground(Color.background)
+        .listRowSeparator(.hidden)
+        .sheet(isPresented: $showAuthorPicker) {
+            SelectAuthorView { author in
+                model.author = author
+            }
+        }
     }
     
     @ViewBuilder func PostTitleField() -> some View {
