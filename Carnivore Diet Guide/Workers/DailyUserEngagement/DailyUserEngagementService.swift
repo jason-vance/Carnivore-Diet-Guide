@@ -127,6 +127,7 @@ class DailyUserEngagementService {
             identifier: notificationId,
             title: String(localized: "\(newArticles.count) New Article Available"),
             body: String(localized: "Come see what's new!"),
+            badgeValue: newArticles.count == 0 ? 1 : newArticles.count,
             trigger: .init(timeInterval: 1, repeats: false)
         ))
     }

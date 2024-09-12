@@ -14,8 +14,11 @@ class NotificationService {
         let identifier: String
         let title: String
         let body: String
+        let badgeValue: Int?
         let trigger: UNTimeIntervalNotificationTrigger
     }
+    
+    private var notificationCenter: UNUserNotificationCenter { UNUserNotificationCenter.current() }
     
     func requestPermissions() {
         send(notification: nil)
@@ -24,7 +27,7 @@ class NotificationService {
     func send(notification: Notification?) {
         Task {
             do {
-                if try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge]) {
+                if try await notificationCenter.requestAuthorization(options: [.alert, .badge]) {
                     if let notification = notification {
                         add(notification: notification)
                     }
@@ -47,7 +50,20 @@ class NotificationService {
             let request = UNNotificationRequest(identifier: notification.identifier, content: content, trigger: notification.trigger)
             
             do {
-                try await UNUserNotificationCenter.current().add(request)
+                try await notificationCenter.add(request)
+                if let badgeValue = notification.badgeValue {
+                    try await notificationCenter.setBadgeCount(badgeValue)
+                }
+            } catch {
+                print("Error sending notification: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func resetBadgeValue() {
+        Task {
+            do {
+                try await notificationCenter.setBadgeCount(0)
             } catch {
                 print("Error sending notification: \(error.localizedDescription)")
             }
