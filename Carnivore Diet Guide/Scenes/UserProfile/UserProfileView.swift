@@ -45,7 +45,7 @@ struct UserProfileView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            ScreenTitleBar(model.fullName ?? String(localized: "User Profile"))
+            ScreenTitleBar(model.screenTitle)
             ScrollView {
                 VStack {
                     ProfileImage()

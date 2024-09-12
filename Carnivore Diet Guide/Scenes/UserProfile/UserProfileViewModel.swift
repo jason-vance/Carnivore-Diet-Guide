@@ -13,7 +13,7 @@ class UserProfileViewModel: ObservableObject {
     
     @Published public var userData: UserData = .empty
     @Published public var isAdmin: Bool = false
-    public var fullName: String? { userData.fullName?.value }
+    public var screenTitle: String { userData.username?.value ?? String(localized: "User Profile") }
     public var profileImageUrl: URL? { userData.profileImageUrl }
 
     private let userDataProvider: UserDataProvider
