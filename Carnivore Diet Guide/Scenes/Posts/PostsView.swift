@@ -16,16 +16,28 @@ struct PostsView: View {
     public let userData: UserData
     
     private let resourceDeleter = iocContainer~>ResourceDeleter.self
-    private let postsFetcher = iocContainer~>PostsFetcher.self
-    private let fetchLimit: Int = 10
-    @State private var fetchCursor: PostsFetcherCursor? = nil
-    @State private var canFetchMorePosts: Bool = true
+    private let postsFetcher = iocContainer~>CurrentUsersPostsFetcher.self
     
     @State private var posts: [Post] = []
+    @State private var canFetchMore: Bool = true
     @State private var navigationPath = NavigationPath()
 
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
+    
+    private var postsPublisher: AnyPublisher<[Post], Never> {
+        postsFetcher
+            .postsPublisher
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
+    
+    private var canFetchMorePublisher: AnyPublisher<Bool, Never> {
+        postsFetcher
+            .canFetchMorePublisher
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
     
     private var deletedPost: AnyPublisher<Resource, Never> {
         resourceDeleter
@@ -40,28 +52,6 @@ struct PostsView: View {
             return String(localized: "Posts by \(fullName)")
         }
         return String(localized: "Posts")
-    }
-    
-    private func fetchMorePosts() {
-        Task {
-            do {
-                let newPosts = try await postsFetcher.fetchPosts(
-                    byUser: userData.id,
-                    after: &fetchCursor,
-                    limit: fetchLimit
-                )
-                
-                if newPosts.isEmpty {
-                    withAnimation(.snappy) {
-                        canFetchMorePosts = false
-                    }
-                }
-                
-                posts.append(contentsOf: newPosts)
-            } catch {
-                show(alert: String(localized: "Failed to get posts. \(error.localizedDescription)"))
-            }
-        }
     }
     
     private func show(alert: String) {
@@ -92,6 +82,14 @@ struct PostsView: View {
         .onReceive(deletedPost) { deletedResource in
             self.posts.removeAll { $0.id == deletedResource.id }
         }
+        .onReceive(canFetchMorePublisher) { canFetchMore in
+            withAnimation(.snappy) {
+                self.canFetchMore = canFetchMore
+            }
+        }
+        .onReceive(postsPublisher) { posts in
+            self.posts = posts
+        }
     }
     
     @ViewBuilder func PostRow(_ post: Post) -> some View {
@@ -119,7 +117,7 @@ struct PostsView: View {
     }
     
     @ViewBuilder func LoadNextFeedItemsView() -> some View {
-        if canFetchMorePosts {
+        if canFetchMore {
             HStack {
                 Spacer()
                 ProgressView()
@@ -128,7 +126,7 @@ struct PostsView: View {
                     .padding(.vertical, 64)
                 Spacer()
             }
-            .onAppear { fetchMorePosts() }
+            .onAppear { postsFetcher.fetchMorePosts() }
             .listRowBackground(Color.background)
             .listRowSeparator(.hidden)
         }

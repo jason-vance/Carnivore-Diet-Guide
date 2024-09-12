@@ -88,6 +88,7 @@ fileprivate func setup(iocContainer: Container) {
 
     //Posts
     iocContainer.autoregister(PostsFetcher.self, initializer: FirebasePostRepository.init)
+    iocContainer.autoregister(CurrentUsersPostsFetcher.self, initializer: { DefaultCurrentUsersPostsFetcher.instance })
 
     //Edit User Profile
     iocContainer.autoregister(CurrentUserDataProvider.self, initializer: FirebaseCurrentUserDataProvider.init)
