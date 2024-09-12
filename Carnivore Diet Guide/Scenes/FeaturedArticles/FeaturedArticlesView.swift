@@ -43,7 +43,6 @@ struct FeaturedArticlesView: View {
     
     var body: some View {
         Container()
-            .padding(.horizontal)
             .padding(.bottom)
             .alert(alertMessage, isPresented: $showAlert) {}
             .onAppear { fetchFeaturedArticles() }
@@ -65,7 +64,9 @@ struct FeaturedArticlesView: View {
     @ViewBuilder func ArticleList(_ content: FeaturedArticles) -> some View {
         LazyVStack(spacing: 24) {
             ForEach(content.sections) { section in
-                FeaturedContentSectionCollage(section)
+                AdRow()
+                FeaturedContentSection(section)
+                    .padding(.horizontal)
             }
         }
     }

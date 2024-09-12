@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import GoogleMobileAds
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(
@@ -15,8 +16,14 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     ) -> Bool {
         UNUserNotificationCenter.current().delegate = self
         FirebaseApp.configure()
+        setupAdMob()
         DailyUserEngagementService.registerLaunchHandler()
         return true
+    }
+    
+    private func setupAdMob() {
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [ "0a0dbc6a509e6ab553770ec5d465ccb9" ]
     }
     
     func userNotificationCenter(
