@@ -59,18 +59,19 @@ struct EditUserProfileView: View {
     }
     
     private var isSaveDisabled: Bool {
-        (profileImage == .init() && profileImageUrl == nil) || 
+        (profileImage == .init() && profileImageUrl == nil) ||
         username == nil ||
-        //TODO: Don't check these in edit mode
-        termsOfServiceAcceptance == nil ||
-        privacyPolicyAcceptance == nil
+        (termsOfServiceAcceptance == nil && mode == .createProfile) ||
+        (privacyPolicyAcceptance == nil && mode == .createProfile)
     }
     
     private func saveProfileData() async -> TaskStatus {
         do {
             guard let username = username else { return .failed("Username is invalid") }
-            guard let termsOfServiceAcceptance = termsOfServiceAcceptance else { return .failed("Please agree to the Terms of Service") }
-            guard let privacyPolicyAcceptance = privacyPolicyAcceptance else { return .failed("Please accept the Privacy Policy") }
+            if mode == .createProfile {
+                guard termsOfServiceAcceptance != nil else { return .failed("Please agree to the Terms of Service") }
+                guard privacyPolicyAcceptance != nil else { return .failed("Please accept the Privacy Policy") }
+            }
 
             var userData = UserData(
                 id: userId,
