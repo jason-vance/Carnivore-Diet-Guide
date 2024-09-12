@@ -32,7 +32,6 @@ struct EditUserProfileView: View {
     
     @State private var profileImage: UIImage = .init()
     @State private var profileImageUrl: URL? = nil
-    @State private var fullName: PersonName? = nil
     @State private var username: Username? = nil
     @State private var termsOfServiceAcceptance: Date? = nil
     @State private var privacyPolicyAcceptance: Date? = nil
@@ -50,8 +49,7 @@ struct EditUserProfileView: View {
                 let userData = try await userDataProvider.fetchCurrentUserData()
                 
                 profileImageUrl = userData.profileImageUrl
-                fullName = userData.fullName
-                //TODO: Populate ToS and PP so that saving is not disabled
+                username = userData.username
                 
                 initializationState = .initialized
             } catch {
@@ -62,20 +60,21 @@ struct EditUserProfileView: View {
     
     private var isSaveDisabled: Bool {
         (profileImage == .init() && profileImageUrl == nil) || 
-        fullName == nil ||
+        username == nil ||
+        //TODO: Don't check these in edit mode
         termsOfServiceAcceptance == nil ||
         privacyPolicyAcceptance == nil
     }
     
     private func saveProfileData() async -> TaskStatus {
         do {
-            guard let fullName = fullName else { return .failed("Name is invalid") }
+            guard let username = username else { return .failed("Username is invalid") }
             guard let termsOfServiceAcceptance = termsOfServiceAcceptance else { return .failed("Please agree to the Terms of Service") }
             guard let privacyPolicyAcceptance = privacyPolicyAcceptance else { return .failed("Please accept the Privacy Policy") }
 
             var userData = UserData(
                 id: userId,
-                fullName: fullName,
+                username: username,
                 termsOfServiceAcceptance: termsOfServiceAcceptance,
                 privacyPolicyAcceptance: privacyPolicyAcceptance
             )
@@ -126,7 +125,6 @@ struct EditUserProfileView: View {
                             profileImageUrl: profileImageUrl
                         )
                         .padding(.bottom, 16)
-                        ProfileFormNameField($fullName)
                         ProfileFormUsernameField($username)
                         if mode == .createProfile {
                             VStack(spacing: 0) {
