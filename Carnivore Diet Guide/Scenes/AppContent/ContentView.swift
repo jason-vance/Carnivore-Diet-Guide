@@ -12,10 +12,20 @@ struct ContentView: View {
     
     private let authProvider = iocContainer~>ContentAuthenticationProvider.self
     private let onboardingStateProvider = iocContainer~>UserOnboardingStateProvider.self
-    
+    private let dailyEngagement = iocContainer~>DailyUserEngagementService.self
+    private let notificationService = iocContainer~>NotificationService.self
+
     @State private var isOnboardingRequired: Bool = false
     @State private var currentUserId: String = ""
     @State private var userAuthState: UserAuthState = .working
+    
+    private func setupDailyEngagement() {
+        dailyEngagement.scheduleDailyEngagementReminders()
+    }
+    
+    private func requestNotificationsPermission() {
+        notificationService.requestPermissions()
+    }
     
     var body: some View {
         Group {
@@ -47,6 +57,8 @@ struct ContentView: View {
             EditUserProfileView(userId: currentUserId, mode: .createProfile)
         } else {
             HomeView()
+                .onAppear { requestNotificationsPermission() }
+                .onAppear { setupDailyEngagement() }
         }
     }
 }

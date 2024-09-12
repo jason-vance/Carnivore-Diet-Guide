@@ -24,7 +24,9 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(UserFetcher.self, initializer: FirebaseUserRepository.init)
     iocContainer.autoregister(RecipeRepository.self, initializer: FirebaseRecipeRepository.init)
     iocContainer.autoregister(IsPublisherChecker.self, initializer: FirebaseIsPublisherChecker.init)
-    
+    iocContainer.autoregister(DailyUserEngagementService.self, initializer: { DailyUserEngagementService.instance })
+    iocContainer.autoregister(NotificationService.self, initializer: NotificationService.init)
+
     //Resources
     iocContainer.autoregister(ResourceFavoriter.self, initializer: { ResourceFavoriter.forProd })
     iocContainer.autoregister(FavoriteCountProvider.self, initializer: FirebaseFavoriteCountProvider.init)

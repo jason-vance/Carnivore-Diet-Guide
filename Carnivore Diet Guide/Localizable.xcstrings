@@ -212,6 +212,34 @@
         }
       }
     },
+    "%lld New Article Available" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "needs_review",
+                  "value" : "%lld New Article Available"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld New Articles Available"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "New Content Available"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -722,6 +750,9 @@
 
     },
     "Collage" : {
+
+    },
+    "Come see what's new!" : {
 
     },
     "Community" : {
