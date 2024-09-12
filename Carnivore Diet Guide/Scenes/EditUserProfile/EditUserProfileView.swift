@@ -125,7 +125,7 @@ struct EditUserProfileView: View {
                             profileImageUrl: profileImageUrl
                         )
                         .padding(.bottom, 16)
-                        ProfileFormUsernameField($username)
+                        ProfileFormUsernameField(username: $username, userId: userId)
                         if mode == .createProfile {
                             VStack(spacing: 0) {
                                 TermsOfServiceField()

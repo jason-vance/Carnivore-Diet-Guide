@@ -15,6 +15,8 @@ class FirebaseUserRepository {
     
     let usersCollection = Firestore.firestore().collection(USERS)
     
+    let usernameField = FirestoreUserDoc.CodingKeys.username.rawValue
+    
     func createOrUpdateUserDocument(with userData: UserData) async throws {
         if try await usersCollection.document(userData.id).getDocument().exists {
             try await updateUserDocument(with: userData)
@@ -206,5 +208,17 @@ extension FirebaseUserRepository: UserFetcher {
         guard let userData = userData else { throw "Could not transform FirestoreUserDoc to UserData" }
         
         return userData
+    }
+}
+
+extension FirebaseUserRepository: UsernameAvailabilityChecker {
+    func isAvailable(username: Username, forUser userId: String) async throws -> Bool {
+        try await usersCollection
+            .whereField(usernameField, isEqualTo: username.value)
+            .getDocuments()
+            .documents
+            .compactMap { try? $0.data(as: FirestoreUserDoc.self) }
+            .filter { $0.id != userId }
+            .count == 0
     }
 }

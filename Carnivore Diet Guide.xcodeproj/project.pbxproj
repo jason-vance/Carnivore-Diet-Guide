@@ -235,6 +235,8 @@
 		569A9AC32C9391390021F5EC /* Username.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9AC12C9391390021F5EC /* Username.swift */; };
 		569A9AC52C9391640021F5EC /* UsernameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9AC42C9391640021F5EC /* UsernameTests.swift */; };
 		569A9AC72C9396420021F5EC /* ProfileFormUsernameField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9AC62C9396420021F5EC /* ProfileFormUsernameField.swift */; };
+		569A9AC92C939D460021F5EC /* UsernameAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9AC82C939D460021F5EC /* UsernameAvailabilityChecker.swift */; };
+		569A9ACA2C939D460021F5EC /* UsernameAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9AC82C939D460021F5EC /* UsernameAvailabilityChecker.swift */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
 		56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */; };
 		56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */; };
@@ -549,6 +551,7 @@
 		569A9AC12C9391390021F5EC /* Username.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Username.swift; sourceTree = "<group>"; };
 		569A9AC42C9391640021F5EC /* UsernameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameTests.swift; sourceTree = "<group>"; };
 		569A9AC62C9396420021F5EC /* ProfileFormUsernameField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFormUsernameField.swift; sourceTree = "<group>"; };
+		569A9AC82C939D460021F5EC /* UsernameAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameAvailabilityChecker.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
 		56A6D0CE2B80AF07003B27E5 /* FeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItemRepository.swift; sourceTree = "<group>"; };
@@ -1584,6 +1587,7 @@
 			children = (
 				56B88A632B6F896000C4C0DB /* ProfileImageUploader.swift */,
 				56B88A6B2B70D51D00C4C0DB /* UserDataSaver.swift */,
+				569A9AC82C939D460021F5EC /* UsernameAvailabilityChecker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -2121,6 +2125,7 @@
 				56D470A62C8AF56C00F48A64 /* ArticleCacheResetter.swift in Sources */,
 				56B88A192B6C5FE400C4C0DB /* FirebaseAuthentication.swift in Sources */,
 				563BC6C82B7449E7008F3C50 /* FirebaseResourceActivityRepository.swift in Sources */,
+				569A9AC92C939D460021F5EC /* UsernameAvailabilityChecker.swift in Sources */,
 				56B88A742B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift in Sources */,
 				568F72CA2C7D1C20005D16C6 /* ExtraOptionsButton.swift in Sources */,
 				568F728B2C787FC2005D16C6 /* PostPoster.swift in Sources */,
@@ -2259,6 +2264,7 @@
 				568F73552C825A61005D16C6 /* ResourceCategory.swift in Sources */,
 				568F72932C793C17005D16C6 /* PostFetcher.swift in Sources */,
 				56D470CF2C8F95FC00F48A64 /* FeaturedSectionDescription.swift in Sources */,
+				569A9ACA2C939D460021F5EC /* UsernameAvailabilityChecker.swift in Sources */,
 				565CFEC42C88FC4F00CBEEAC /* Cache.swift in Sources */,
 				569A9AC32C9391390021F5EC /* Username.swift in Sources */,
 				568F72882C781EAE005D16C6 /* StringExtensionsTests.swift in Sources */,

@@ -83,7 +83,8 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(CurrentUserDataProvider.self, initializer: MockCurrentUserDataProvider.init)
     iocContainer.autoregister(ProfileImageUploader.self, initializer: MockProfileImageUploader.init)
     iocContainer.autoregister(UserDataSaver.self, initializer: MockUserDataSaver.init)
-    
+    iocContainer.autoregister(UsernameAvailabilityChecker.self, initializer: MockUsernameAvailabilityChecker.init)
+
     //Settings
     iocContainer.autoregister(UserAccountDeleter.self, initializer: MockUserAccountDeleter.init)
     iocContainer.autoregister(ArticleCacheResetter.self, initializer: { ArticleLibrary.instance })

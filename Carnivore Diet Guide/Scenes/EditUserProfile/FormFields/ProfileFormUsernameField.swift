@@ -9,14 +9,32 @@ import SwiftUI
 
 struct ProfileFormUsernameField: View {
     
-    private var username: Binding<Username?>
-    private var isUsernameValid: Bool { username.wrappedValue != nil }
+    @Binding var username: Username?
+    let userId: String
 
-    @State private var usernameStr: String
+    @State private var usernameStr: String = ""
+    @State private var isAvailable: Bool = false
+    @State private var isCheckingAvailability: Bool = false
     
-    init(_ username: Binding<Username?>) {
-        self.username = username
-        self.usernameStr = username.wrappedValue?.value ?? ""
+    private var isUsernameValidAndAvailable: Bool { username != nil && isAvailable }
+    
+    private func checkAvailability() {
+        guard let username = username else { return }
+        isAvailable = false
+        isCheckingAvailability = true
+        
+        Task {
+            do {
+                guard let checker = iocContainer.resolve(UsernameAvailabilityChecker.self) else {
+                    return
+                }
+                
+                isAvailable = try await checker.isAvailable(username: username, forUser: userId)
+            } catch {
+                print("Failed to check username availability. \(error.localizedDescription)")
+            }
+            isCheckingAvailability = false
+        }
     }
     
     var body: some View {
@@ -29,21 +47,25 @@ struct ProfileFormUsernameField: View {
             }
         )
         .onChange(of: usernameStr) { _, newValue in
-            guard username.wrappedValue?.value != newValue else { return }
-            username.wrappedValue = Username(newValue)
+            guard username?.value != newValue else { return }
+            username = Username(newValue)
+            
+            checkAvailability()
         }
-        .onChange(of: username.wrappedValue) { _, newValue in
+        .onChange(of: username) { _, newValue in
             guard let value = newValue else { return }
             guard usernameStr != value.value else { return }
             usernameStr = value.value
             
-            //TODO: Check availability
+            checkAvailability()
         }
     }
     
     @ViewBuilder func UsernameErrorView() -> some View {
-        if isUsernameValid {
+        if isUsernameValidAndAvailable {
             ValidAvailableUsernameIndicator()
+        } else if isCheckingAvailability {
+            CheckingAvailabiltyIndicator()
         } else {
             InvalidUsernameIndicator()
         }
@@ -57,6 +79,14 @@ struct ProfileFormUsernameField: View {
         )
     }
     
+    @ViewBuilder func CheckingAvailabiltyIndicator() -> some View {
+        FormFieldErrorView(
+            icon: "questionmark.circle.fill",
+            text: String(localized: "Checking..."),
+            color: .text.opacity(0.8)
+        )
+    }
+    
     @ViewBuilder func InvalidUsernameIndicator() -> some View {
         FormFieldErrorView(
             icon: "exclamationmark.octagon.fill",
@@ -67,13 +97,21 @@ struct ProfileFormUsernameField: View {
 }
 
 #Preview("Pre-filled Username") {
-    StatefulPreviewContainer(Username("json")) { username in
-        ProfileFormUsernameField(username)
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        StatefulPreviewContainer(Username("json")) { username in
+            ProfileFormUsernameField(username: username, userId: "userId")
+        }
     }
 }
 
 #Preview("Nil Username") {
-    StatefulPreviewContainer(nil) { username in
-        ProfileFormUsernameField(username)
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        StatefulPreviewContainer(nil) { username in
+            ProfileFormUsernameField(username: username, userId: "userId")
+        }
     }
 }
