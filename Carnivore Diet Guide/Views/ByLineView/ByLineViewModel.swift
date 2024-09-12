@@ -19,7 +19,7 @@ class ByLineViewModel: ObservableObject {
     private static let unknownAuthorName = String(localized: "Unknown Author")
     
     @Published var initializationState: InitializationState = .uninitialized
-    @Published var authorFullName: String = unknownAuthorName
+    @Published var authorDisplayName: String = unknownAuthorName
     @Published var authorProfilePicUrl: URL?
     
     private let userFetcher = iocContainer~>UserFetcher.self
@@ -33,14 +33,16 @@ class ByLineViewModel: ObservableObject {
     }
     
     private func fetchAuthor(userId: String) async {
-        authorFullName = Self.unknownAuthorName
+        authorDisplayName = Self.unknownAuthorName
         
         guard let userData = try? await userFetcher.fetchUser(userId: userId) else { return }
         
         authorProfilePicUrl = userData.profileImageUrl
         
         if let userFullName = userData.fullName?.value {
-            authorFullName = String(localized: .init(userFullName))
+            authorDisplayName = String(localized: .init(userFullName))
+        } else if let username = userData.username?.value {
+            authorDisplayName = username
         }
     }
 }

@@ -63,9 +63,9 @@ class UsernameTests: XCTestCase {
     }
     
     func testTheCarnivoreDietGuide() {
-        let mixedCaseUsername = Username("theCarnivoreDietGuide")
+        let mixedCaseUsername = Username("theCarnivoreDietGuideTeam")
         XCTAssertNotNil(mixedCaseUsername)
-        XCTAssertEqual(mixedCaseUsername?.value, "theCarnivoreDietGuide")
+        XCTAssertEqual(mixedCaseUsername?.value, "theCarnivoreDietGuideTeam")
     }
 
     func testUsernameEmpty() {

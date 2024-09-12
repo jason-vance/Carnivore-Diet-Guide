@@ -23,7 +23,7 @@ struct ByLineView: View {
                 size: profileImageSize,
                 padding: profileImagePadding
             )
-            Text(model.authorFullName)
+            Text(model.authorDisplayName)
                 .font(.system(size: 16, weight: .bold))
                 .opacity(0.8)
             Spacer()
