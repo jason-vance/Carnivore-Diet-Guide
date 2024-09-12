@@ -105,17 +105,21 @@ class DailyUserEngagementService {
         
         let lastCheckIn = lastCheckIn
         
-        var newestArticles: [Article] = []
-        let sub = articleLibrary.publishedArticlesPublisher
-            .sink { publishedArticles in
-                newestArticles = publishedArticles
-                    .filter { $0.publicationDate > lastCheckIn }
-            }
+        let newArticles = await withCheckedContinuation { continuation in
+            var cancellable: AnyCancellable?
+            cancellable = articleLibrary.publishedArticlesPublisher
+                .first()
+                .sink { articles in
+                    let newArticles = articles.filter { $0.publicationDate > lastCheckIn }
+                    continuation.resume(returning: newArticles)
+                    cancellable?.cancel()
+                }
+        }
         
         try await Task.sleep(for: .seconds(1))
         
         self.lastCheckIn = .now
-        return newestArticles
+        return newArticles
     }
     
     private func sendNotification(_ newArticles: [Article]) {

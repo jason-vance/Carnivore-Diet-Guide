@@ -165,7 +165,7 @@ struct EditUserProfileView: View {
     }
     
     @ViewBuilder func TermsOfServiceField() -> some View {
-        var message: AttributedString = {
+        let message: AttributedString = {
             var text = AttributedString("I agree to the Terms of Service.")
             text.foregroundColor = Color.text
             guard let range = text.range(of: "Terms of Service") else { return text }
@@ -200,7 +200,7 @@ struct EditUserProfileView: View {
     }
     
     @ViewBuilder func PrivacyPolicyField() -> some View {
-        var message: AttributedString = {
+        let message: AttributedString = {
             var text = AttributedString("I accept the Privacy Policy.")
             text.foregroundColor = Color.text
             guard let range = text.range(of: "Privacy Policy") else { return text }

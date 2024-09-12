@@ -167,11 +167,6 @@ struct FeaturedArticleSectionCreatorView: View {
                 .foregroundStyle(Color.text)
         }
         Section {
-            let columns = [
-                GridItem.init(.adaptive(minimum: 100, maximum: 300)),
-                GridItem.init(.adaptive(minimum: 100, maximum: 300))
-            ]
-            
             ForEach(secondary) { item in
                 SectionItemView(item)
             }
