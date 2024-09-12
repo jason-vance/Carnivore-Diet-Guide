@@ -15,7 +15,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     ) -> Bool {
         UNUserNotificationCenter.current().delegate = self
         FirebaseApp.configure()
-        _ = iocContainer
+        DailyUserEngagementService.registerLaunchHandler()
         return true
     }
     

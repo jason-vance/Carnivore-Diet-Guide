@@ -35,10 +35,11 @@ class DailyUserEngagementService {
         .init()
     }()
     
-    private init() {
-        // Register the background task
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: taskId, using: nil) { task in
-            self.handleFetchContentTask(task: task as! BGProcessingTask)
+    private init() { }
+    
+    static func registerLaunchHandler() {
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: instance.taskId, using: nil) { task in
+            instance.handleFetchContentTask(task: task as! BGProcessingTask)
         }
     }
     
