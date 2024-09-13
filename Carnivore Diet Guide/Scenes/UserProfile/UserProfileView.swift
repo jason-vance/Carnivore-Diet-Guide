@@ -15,6 +15,7 @@ struct UserProfileView: View {
     let userId: String
     
     @StateObject private var model = UserProfileViewModel(
+        currentUserIdProvider: iocContainer~>CurrentUserIdProvider.self,
         userDataProvider: iocContainer~>UserDataProvider.self,
         isAdminChecker: iocContainer~>IsAdminChecker.self
     )
@@ -47,18 +48,11 @@ struct UserProfileView: View {
             TopBar()
             ScrollView {
                 VStack {
-                    PicPostsAndOtherStats()
-                    HStack {
-                        EditProfileButton()
-                        if model.isAdmin {
-                            AdminButton()
-                        }
-                        Spacer()
-                    }
-                    .padding(.horizontal)
                     if showAds { AdRow() }
+                    PicPostsAndOtherStats()
+                    ProfileControls()
                 }
-                .padding(.vertical)
+                .padding(.bottom)
             }
         }
         .background(Color.background)
@@ -76,6 +70,17 @@ struct UserProfileView: View {
         )
     }
     
+    @ViewBuilder func SettingsButton() -> some View {
+        Button {
+            showSettings = true
+        } label: {
+            ResourceMenuButtonLabel(sfSymbol: "gearshape.fill")
+        }
+        .fullScreenCover(isPresented: $showSettings) {
+            SettingsView()
+        }
+    }
+    
     @ViewBuilder func PicPostsAndOtherStats() -> some View {
         VStack {
             HStack {
@@ -89,6 +94,35 @@ struct UserProfileView: View {
                     Spacer()
                 }
             }
+        }
+        .padding(.horizontal)
+    }
+    
+    @ViewBuilder func ProfileControls() -> some View {
+        if let isMe = model.isMe {
+            if isMe {
+                ControlsForMyProfile()
+            } else {
+                ControlsForOthersProfile()
+            }
+        }
+    }
+    
+    @ViewBuilder func ControlsForMyProfile() -> some View {
+        HStack {
+            EditProfileButton()
+            if model.isAdmin {
+                AdminButton()
+            }
+            Spacer()
+        }
+        .padding(.horizontal)
+    }
+    
+    @ViewBuilder func ControlsForOthersProfile() -> some View {
+        HStack {
+            //TODO: FollowButton()
+            Spacer()
         }
         .padding(.horizontal)
     }
@@ -146,17 +180,6 @@ struct UserProfileView: View {
         }
         .sheet(isPresented: $showEditProfile) {
             EditUserProfileView(userId: userId, mode: .editProfile)
-        }
-    }
-    
-    @ViewBuilder func SettingsButton() -> some View {
-        Button {
-            showSettings = true
-        } label: {
-            ResourceMenuButtonLabel(sfSymbol: "gearshape.fill")
-        }
-        .fullScreenCover(isPresented: $showSettings) {
-            SettingsView()
         }
     }
     
