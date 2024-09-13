@@ -8,15 +8,20 @@
 import Foundation
 
 protocol UserDataSaver {
-    func save(userData: UserData) async throws
+    func saveOnboarding(userData: UserData) async throws
+    func save(userBio: UserBio?, toUser userId: String) async throws
 }
 
 class MockUserDataSaver: UserDataSaver {
     
     var willThrow = false
     
-    func save(userData: UserData) async throws {
+    func saveOnboarding(userData: UserData) async throws {
         try? await Task.sleep(for: .seconds(1))
         if willThrow { throw "MockUserDataSaver.willThrow = \(willThrow)" }
+    }
+    
+    func save(userBio: UserBio?, toUser userId: String) async throws {
+        
     }
 }

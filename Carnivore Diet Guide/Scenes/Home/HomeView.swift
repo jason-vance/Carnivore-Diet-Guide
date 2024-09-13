@@ -32,6 +32,7 @@ struct HomeView: View {
                     .opacity(selectedTab == .profile ? 1.0 : 0.0)
             }
             HomeMenuBar(selectedTab: $selectedTab, profileImageUrl: $model.userProfileImageUrl)
+            //TODO: .ignoreSafeArea(.keyboard)?
         }
         .alert(model.alertMessage, isPresented: $model.showAlert) {}
     }

@@ -85,7 +85,7 @@ struct EditUserProfileView: View {
                 userData.profileImageUrl = url
             }
 
-            try await userDataSaver.save(userData: userData)
+            try await userDataSaver.saveOnboarding(userData: userData)
             return .success
         } catch {
             return .failed("Unable to save profile data: \(error.localizedDescription)")

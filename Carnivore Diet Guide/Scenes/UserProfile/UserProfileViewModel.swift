@@ -19,6 +19,7 @@ class UserProfileViewModel: ObservableObject {
 
     private let currentUserIdProvider: CurrentUserIdProvider
     private let userDataProvider: UserDataProvider
+    private let userDataSaver: UserDataSaver
     private let isAdminChecker: IsAdminChecker
     
     private var subs: Set<AnyCancellable> = []
@@ -26,10 +27,12 @@ class UserProfileViewModel: ObservableObject {
     init(
         currentUserIdProvider: CurrentUserIdProvider,
         userDataProvider: UserDataProvider,
+        userDataSaver: UserDataSaver,
         isAdminChecker: IsAdminChecker
     ) {
         self.currentUserIdProvider = currentUserIdProvider
         self.userDataProvider = userDataProvider
+        self.userDataSaver = userDataSaver
         self.isAdminChecker = isAdminChecker
         
         checkIsAdmin()
@@ -55,5 +58,11 @@ class UserProfileViewModel: ObservableObject {
     
     private func receive(userData: UserData) {
         self.userData = userData
+    }
+    
+    func save(userBio: String) {
+        Task {
+            try await userDataSaver.save(userBio: UserBio(userBio), toUser: userData.id)
+        }
     }
 }

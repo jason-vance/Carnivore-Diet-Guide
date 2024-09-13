@@ -12,15 +12,24 @@ import Kingfisher
 
 struct UserProfileView: View {
     
+    private enum Field: Hashable {
+        case bio
+    }
+    
     let userId: String
     
     @StateObject private var model = UserProfileViewModel(
         currentUserIdProvider: iocContainer~>CurrentUserIdProvider.self,
         userDataProvider: iocContainer~>UserDataProvider.self,
+        userDataSaver: iocContainer~>UserDataSaver.self,
         isAdminChecker: iocContainer~>IsAdminChecker.self
     )
     
     @State private var navigationPath = NavigationPath()
+    
+    @State private var userBio: String = ""
+    
+    @FocusState private var focusedField: Field?
     
     @State private var showPosts: Bool = false
     @State private var showEditProfile: Bool = false
@@ -51,6 +60,8 @@ struct UserProfileView: View {
                     if showAds { AdRow() }
                     PicPostsAndOtherStats()
                     ProfileControls()
+                        .padding(.bottom)
+                    BioField()
                 }
                 .padding(.bottom)
             }
@@ -60,6 +71,9 @@ struct UserProfileView: View {
         .onReceive(showAdsPublisher) { showAds = $0 }
         .onChange(of: userId, initial: true) { _, newUserId in
             model.listenForUserData(userId: newUserId)
+        }
+        .onChange(of: model.userData.bio?.value, initial: true) { _, newBio in
+            userBio = newBio ?? ""
         }
     }
     
@@ -197,16 +211,64 @@ struct UserProfileView: View {
         }
     }
     
-    @ViewBuilder func ProfileButton(
-        _ title: String,
-        icon: String,
-        action: @escaping () -> ()
-    ) -> some View {
-        Button {
-            action()
-        } label: {
-            ProfileControlLabel(title, icon: icon, showNavigationAccessories: false)
+    @ViewBuilder func BioField() -> some View {
+        if let isMe = model.isMe, isMe {
+            BioFieldForMe()
+        } else if let bio = model.userData.bio {
+            BioFieldForOthers(bio)
         }
+    }
+    
+    @ViewBuilder func BioFieldForMe() -> some View {
+        PropertyField(name: String(localized: "Bio")) {
+            VStack(spacing: 0) {
+                TextField(
+                    "Tell us about yourself",
+                    text: $userBio,
+                    prompt: Text("Tell us about yourself").foregroundStyle(Color.text.opacity(0.3)),
+                    axis: .vertical
+                )
+                .textInputAutocapitalization(.sentences)
+                .submitLabel(.done)
+                .focused($focusedField, equals: Field.bio)
+                .onReceive(userBio.publisher.last()) {
+                    if ($0 as Character).asciiValue == 10 { // ASCII 10 = newline
+                        focusedField = nil // unfocus TextEditor to dismiss keyboard
+                        model.save(userBio: userBio)
+                    }
+                }
+                HStack {
+                    Spacer()
+                    Text("\(userBio.count)/\(UserBio.maxLength)")
+                        .font(.caption2)
+                        .foregroundStyle(userBio.count > UserBio.maxLength ? Color.accentColor : Color.text)
+                        .opacity(userBio.count > UserBio.maxLength ? 1 : focusedField == .bio ? 0.5 : 0)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder func BioFieldForOthers(_ bio: UserBio) -> some View {
+        PropertyField(name: String(localized: "Bio")) {
+            HStack {
+                Text(bio.value)
+                Spacer()
+            }
+        }
+    }
+    
+    @ViewBuilder func PropertyField<Content:View>(name: String, content: () -> Content) -> some View {
+        VStack(spacing: 0) {
+            HStack {
+                Text(name)
+                    .font(.footnote.bold())
+                Spacer()
+            }
+            content()
+        }
+        .foregroundStyle(Color.text)
+        .font(.body)
+        .padding(.horizontal)
     }
 }
 

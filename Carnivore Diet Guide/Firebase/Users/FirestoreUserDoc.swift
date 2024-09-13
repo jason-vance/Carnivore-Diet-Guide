@@ -19,6 +19,7 @@ struct FirestoreUserDoc: Codable {
     var favoriteArticles: [String]?
     var favoritePosts: [String]?
     var favoriteRecipes: [String]?
+    var bio: String?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -30,6 +31,7 @@ struct FirestoreUserDoc: Codable {
         case favoriteArticles
         case favoritePosts
         case favoriteRecipes
+        case bio
     }
     
     static func from(_ userData: UserData) -> FirestoreUserDoc {
@@ -54,7 +56,8 @@ struct FirestoreUserDoc: Codable {
             username: username,
             profileImageUrl: profileImageUrl,
             termsOfServiceAcceptance: termsOfServiceAcceptance,
-            privacyPolicyAcceptance: privacyPolicyAcceptance
+            privacyPolicyAcceptance: privacyPolicyAcceptance,
+            bio: UserBio(bio)
         )
     }
 }

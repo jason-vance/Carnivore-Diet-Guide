@@ -139,8 +139,14 @@ class FirebaseUserRepository {
 }
 
 extension FirebaseUserRepository: UserDataSaver {
-    func save(userData: UserData) async throws {
+    func saveOnboarding(userData: UserData) async throws {
         try await createOrUpdateUserDocument(with: userData)
+    }
+    
+    func save(userBio: UserBio?, toUser userId: String) async throws {
+        var dict: [AnyHashable : Any] = [:]
+        dict[FirestoreUserDoc.CodingKeys.bio.rawValue] = userBio?.value
+        try await usersCollection.document(userId).updateData(dict)
     }
 }
 

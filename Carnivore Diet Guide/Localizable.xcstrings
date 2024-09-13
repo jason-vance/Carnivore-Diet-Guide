@@ -305,6 +305,16 @@
         }
       }
     },
+    "%lld/%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld"
+          }
+        }
+      }
+    },
     "%lldhrs" : {
       "comment" : "Abbreviation for hours",
       "localizations" : {
@@ -409,6 +419,9 @@
 
     },
     "As seen while reading" : {
+
+    },
+    "Bio" : {
 
     },
     "Blog" : {
@@ -1993,6 +2006,9 @@
 
     },
     "Tap to turn\non and off" : {
+
+    },
+    "Tell us about yourself" : {
 
     },
     "Tertiary Articles (%lld):" : {
