@@ -5,6 +5,7 @@
 //  Created by Jason Vance on 1/6/24.
 //
 
+import Combine
 import SwiftUI
 import MarkdownUI
 import SwinjectAutoregistration
@@ -22,6 +23,14 @@ struct PostDetailView: View {
     @State private var isWorking: Bool = false
     
     @State private var showPostFailedToFetch: Bool = false
+    
+    @State private var showAds: Bool = false
+    private var showAdsPublisher: AnyPublisher<Bool,Never> {
+        (iocContainer~>AdProvider.self)
+            .showAdsPublisher
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
     
     init(postId: String) {
         self.post = nil
@@ -61,8 +70,11 @@ struct PostDetailView: View {
             NavigationBar()
             if let post = post, !isWorking {
                 ScrollView {
-                    PostView(post: post)
-                        .onAppear { markAsViewed() }
+                    VStack(spacing: 0) {
+                        if showAds { AdRow() }
+                        PostView(post: post)
+                            .onAppear { markAsViewed() }
+                    }
                 }
             } else {
                 LoadingView()
@@ -73,6 +85,7 @@ struct PostDetailView: View {
         .onChange(of: postId, initial: true) { oldPostId, newPostId in
             fetchPost(withId: newPostId)
         }
+        .onReceive(showAdsPublisher) { showAds = $0 }
         .alert("The post could not be fetched", isPresented: $showPostFailedToFetch) {
             Button("OK", role: .cancel) {
                 dismiss()

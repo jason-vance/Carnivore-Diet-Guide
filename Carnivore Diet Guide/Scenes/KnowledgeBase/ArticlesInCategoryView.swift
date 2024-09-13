@@ -30,6 +30,14 @@ struct ArticlesInCategoryView: View {
             .eraseToAnyPublisher()
     }
     
+    @State private var showAds: Bool = false
+    private var showAdsPublisher: AnyPublisher<Bool,Never> {
+        (iocContainer~>AdProvider.self)
+            .showAdsPublisher
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
+    
     private var displayArticles: [Article] {
         var articles = allArticles
             .sorted { $0.publicationDate > $1.publicationDate }
@@ -56,18 +64,21 @@ struct ArticlesInCategoryView: View {
     }
     
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 16) {
             SearchBar(
                 prompt: String(localized: "Articles, Guides, and more"),
                 searchText: $searchText,
                 searchPresented: $searchPresented,
                 action: { }
             )
+            .padding(.horizontal)
+            if showAds { AdRow() }
             Container()
+                .padding(.horizontal)
         }
-        .padding(.horizontal)
         .alert(alertMessage, isPresented: $showAlert) {}
         .onReceive(articlePublisher) { allArticles = $0 }
+        .onReceive(showAdsPublisher) { showAds = $0 }
     }
     
     @ViewBuilder func Container() -> some View {

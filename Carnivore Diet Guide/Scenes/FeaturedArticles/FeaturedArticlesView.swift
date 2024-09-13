@@ -20,11 +20,11 @@ struct FeaturedArticlesView: View {
     @State private var alertMessage: String = ""
     
     private let featuredArticlesFetcher = iocContainer~>FeaturedArticlesFetcher.self
-    private let adProvider = iocContainer~>AdProvider.self
     
     @State private var showAds: Bool = false
     private var showAdsPublisher: AnyPublisher<Bool,Never> {
-        adProvider.showAdsPublisher
+        (iocContainer~>AdProvider.self)
+            .showAdsPublisher
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
@@ -72,7 +72,7 @@ struct FeaturedArticlesView: View {
     }
     
     @ViewBuilder func ArticleList(_ content: FeaturedArticles) -> some View {
-        LazyVStack(spacing: 24) {
+        LazyVStack(spacing: 16) {
             ForEach(content.sections) { section in
                 if showAds { AdRow() }
                 FeaturedContentSection(section)

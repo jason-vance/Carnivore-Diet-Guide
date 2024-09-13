@@ -5,6 +5,7 @@
 //  Created by Jason Vance on 2/1/24.
 //
 
+import Combine
 import SwiftUI
 import SwinjectAutoregistration
 import Kingfisher
@@ -30,6 +31,14 @@ struct UserProfileView: View {
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
+    @State private var showAds: Bool = false
+    private var showAdsPublisher: AnyPublisher<Bool,Never> {
+        (iocContainer~>AdProvider.self)
+            .showAdsPublisher
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
+    
     private func confirmedLogout() {
         do {
             try model.signOut()
@@ -49,6 +58,7 @@ struct UserProfileView: View {
             ScrollView {
                 VStack {
                     ProfileImage()
+                    if showAds { AdRow() }
                     VStack {
                         ProfileStatsView()
                         EditProfileButton()
@@ -56,15 +66,18 @@ struct UserProfileView: View {
                         if model.isAdmin {
                             AdminButton()
                         }
+                        LogoutButton()
+                            .padding(.top)
                     }
+                    .padding(.horizontal)
                     .padding(.bottom, 32)
-                    LogoutButton()
                 }
-                .padding()
+                .padding(.vertical)
             }
         }
         .background(Color.background)
         .alert(errorMessage, isPresented: $showError) {}
+        .onReceive(showAdsPublisher) { showAds = $0 }
         .confirmationDialog(
             "Are you sure you want to logout?",
             isPresented: $showLogoutDialog,

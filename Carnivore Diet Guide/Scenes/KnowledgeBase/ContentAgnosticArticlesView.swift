@@ -5,6 +5,7 @@
 //  Created by Jason Vance on 9/5/24.
 //
 
+import Combine
 import SwiftUI
 import SwinjectAutoregistration
 
@@ -27,6 +28,14 @@ struct ContentAgnosticArticlesView: View {
     
     private let articleFetcher = iocContainer~>ArticleCollectionFetcher.self
     private let articleLibrary = iocContainer~>ArticleLibrary.self
+    
+    @State private var showAds: Bool = false
+    private var showAdsPublisher: AnyPublisher<Bool,Never> {
+        (iocContainer~>AdProvider.self)
+            .showAdsPublisher
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
     
     private func fetchArticles() {
         isWorking = true
@@ -57,15 +66,21 @@ struct ContentAgnosticArticlesView: View {
     
     var body: some View {
         Container()
-            .padding(.horizontal)
             .alert(alertMessage, isPresented: $showAlert) {}
             .onChange(of: category, initial: true) { _, _ in fetchArticles() }
             .onChange(of: timeFrame, initial: false) { _, _ in fetchArticles() }
+            .onReceive(showAdsPublisher) { showAds = $0 }
     }
     
     @ViewBuilder func Container() -> some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 0) {
             TimeFramePicker(timeFrame: $timeFrame)
+                .padding(.horizontal)
+            if showAds {
+                AdRow()
+                    .padding(.top, 16)
+                    .padding(.bottom, 24)
+            }
             if articles.isEmpty && !isWorking {
                 EmptyArticlesView()
             } else {
@@ -95,6 +110,7 @@ struct ContentAgnosticArticlesView: View {
                     }
                 }
             }
+            .padding(.horizontal)
         }
     }
     

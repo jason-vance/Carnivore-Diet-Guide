@@ -24,6 +24,14 @@ struct ArticleDetailView: View {
     
     @State private var showArticleFailedToFetch: Bool = false
     @State private var showArticleNoLongerAvailable: Bool = false
+    
+    @State private var showAds: Bool = false
+    private var showAdsPublisher: AnyPublisher<Bool,Never> {
+        (iocContainer~>AdProvider.self)
+            .showAdsPublisher
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
 
     init(articleId: String) {
         self.article = nil
@@ -73,13 +81,16 @@ struct ArticleDetailView: View {
             NavigationBar()
             if let article = article, !isWorking {
                 ScrollView {
-                    ArticleView(article: article)
-                        .onAppear { markAsViewed() }
-                        .onAppear { updateArticleDataIfNecessary() }
-                        .onReceive(thisArticleWasRemoved) { _ in
-                            isWorking = true
-                            showArticleNoLongerAvailable = true
-                        }
+                    VStack(spacing: 0) {
+                        if showAds { AdRow() }
+                        ArticleView(article: article)
+                            .onAppear { markAsViewed() }
+                            .onAppear { updateArticleDataIfNecessary() }
+                            .onReceive(thisArticleWasRemoved) { _ in
+                                isWorking = true
+                                showArticleNoLongerAvailable = true
+                            }
+                    }
                 }
             } else {
                 LoadingView()
@@ -90,6 +101,7 @@ struct ArticleDetailView: View {
         .onChange(of: articleId, initial: true) { _, newArticleId in
             fetchArticle(withId: newArticleId)
         }
+        .onReceive(showAdsPublisher) { showAds = $0 }
         .alert("The article could not be fetched", isPresented: $showArticleFailedToFetch) {
             AlertOkDismissButton()
         }

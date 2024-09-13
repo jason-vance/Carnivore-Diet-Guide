@@ -5,6 +5,7 @@
 //  Created by Jason Vance on 2/20/24.
 //
 
+import Combine
 import SwiftUI
 import SwinjectAutoregistration
 
@@ -17,24 +18,33 @@ struct FeedView: View {
         feedItemProvider: iocContainer~>FeedViewContentProvider.self
     )
     
+    @State private var showAds: Bool = false
+    private var showAdsPublisher: AnyPublisher<Bool,Never> {
+        (iocContainer~>AdProvider.self)
+            .showAdsPublisher
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 ScreenTitleBar(String(localized: "Community Feed"))
                 ScrollView {
                     Feed()
-                        .padding(.vertical)
                 }
             }
             .scrollIndicators(.hidden)
             .background(Color.background)
             .refreshable { model.refreshNewsFeed() }
             .onAppear { UIRefreshControl.appearance().tintColor = .accent }
+            .onReceive(showAdsPublisher) { showAds = $0 }
         }
     }
     
     @ViewBuilder func Feed() -> some View {
         LazyVStack {
+            if showAds { AdRow() }
             ForEach(model.feedItems) { feedItem in
                 NavigationLink {
                     FeedItemDetailView(feedItem)
@@ -45,6 +55,7 @@ struct FeedView: View {
             }
             LoadNextFeedItemsView()
         }
+        .padding(showAds ? .bottom : .vertical)
         .overlay(alignment: .bottom) {
             if !model.canFetchMoreFeedItems {
                 Image(systemName: "flag.checkered.2.crossed")

@@ -61,7 +61,7 @@ final class SearchKeywordTests: XCTestCase {
     
     func testFromStringLongString() {
         // Checks correct score
-        var keywords = SearchKeyword.keywordsFrom(string: """
+        let keywords = SearchKeyword.keywordsFrom(string: """
                                                   Carnivore Carnivore
                                                   Carnivore Carnivore Carnivore Carnivore
                                                   Carnivore Carnivore Carnivore Carnivore Carnivore
