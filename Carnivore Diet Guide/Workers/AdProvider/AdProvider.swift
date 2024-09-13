@@ -9,7 +9,7 @@ import Foundation
 
 class AdProvider {
     
-    @Published private var showAds: Bool = true
+    @Published public private(set) var showAds: Bool = true
     var showAdsPublisher: Published<Bool>.Publisher { $showAds }
     
     public static let instance: AdProvider = {

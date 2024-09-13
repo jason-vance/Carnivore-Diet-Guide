@@ -5,6 +5,7 @@
 //  Created by Jason Vance on 9/6/24.
 //
 
+import Combine
 import SwiftUI
 import SwinjectAutoregistration
 
@@ -19,6 +20,14 @@ struct FeaturedArticlesView: View {
     @State private var alertMessage: String = ""
     
     private let featuredArticlesFetcher = iocContainer~>FeaturedArticlesFetcher.self
+    private let adProvider = iocContainer~>AdProvider.self
+    
+    @State private var showAds: Bool = false
+    private var showAdsPublisher: AnyPublisher<Bool,Never> {
+        adProvider.showAdsPublisher
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
     
     private func show(alert: String) {
         showAlert = true
@@ -46,6 +55,7 @@ struct FeaturedArticlesView: View {
             .padding(.bottom)
             .alert(alertMessage, isPresented: $showAlert) {}
             .onAppear { fetchFeaturedArticles() }
+            .onReceive(showAdsPublisher) { showAds = $0 }
     }
     
     @ViewBuilder func Container() -> some View {
@@ -64,7 +74,7 @@ struct FeaturedArticlesView: View {
     @ViewBuilder func ArticleList(_ content: FeaturedArticles) -> some View {
         LazyVStack(spacing: 24) {
             ForEach(content.sections) { section in
-                AdRow()
+                if showAds { AdRow() }
                 FeaturedContentSection(section)
                     .padding(.horizontal)
             }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct AdminView: View {
     
@@ -15,6 +16,8 @@ struct AdminView: View {
     
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
+    
+    private let adProvider = iocContainer~>AdProvider.self
     
     private func show(errorMessage: String) {
         showError = true
@@ -26,6 +29,7 @@ struct AdminView: View {
             TitleBar()
             List {
                 CreateContentSection()
+                SettingsSection()
             }
             .listStyle(.grouped)
             .scrollContentBackground(.hidden)
@@ -50,8 +54,11 @@ struct AdminView: View {
     }
     
     @ViewBuilder func CreateContentSection() -> some View {
-        Section("Create Content") {
+        Section {
             FeaturedArticlesButton()
+        } header: {
+            Text("Create Content")
+                .foregroundStyle(Color.text)
         }
     }
     
@@ -63,6 +70,24 @@ struct AdminView: View {
         .fullScreenCover(isPresented: $showFeaturedArticlesCreator) {
             FeaturedArticlesCreatorView()
         }
+    }
+    
+    @ViewBuilder func SettingsSection() -> some View {
+        Section {
+            ShowAdsToggle()
+        } header: {
+            Text("Settings")
+                .foregroundStyle(Color.text)
+        }
+    }
+    
+    @ViewBuilder func ShowAdsToggle() -> some View {
+        Toggle("Show Ads", isOn: .init(
+            get: { adProvider.showAds },
+            set: { adProvider.disableAds(!$0) }
+        ))
+        .foregroundStyle(Color.text)
+        .listRowBackground(Color.background)
     }
 }
 
