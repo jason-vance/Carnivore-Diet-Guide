@@ -11,12 +11,15 @@ import Kingfisher
 struct ProfileImageView: View {
     
     var profileImageUrl: URL?
-    var size: CGFloat
+    var size: CGFloat?
     var padding: CGFloat
     
-    var imageSize: CGFloat { size - (2 * padding) }
+    var imageSize: CGFloat? {
+        guard let size = size else { return nil }
+        return size - (2 * padding)
+    }
     
-    init(_ url: URL?, size: CGFloat = 200, padding: CGFloat = 4) {
+    init(_ url: URL?, size: CGFloat? = 200, padding: CGFloat = 4) {
         self.profileImageUrl = url
         self.size = size
         self.padding = padding

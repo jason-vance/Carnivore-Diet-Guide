@@ -11,11 +11,13 @@ import _AuthenticationServices_SwiftUI
 
 struct SettingsView: View {
     
+    private let signOutService = iocContainer~>UserProfileSignOutService.self
     private let accountDeleter = iocContainer~>UserAccountDeleter.self
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     @State private var showResetArticleCacheDialog: Bool = false
+    @State private var showLogoutDialog: Bool = false
     @State private var showDeleteAccountDialog: Bool = false
     @State private var showConfirmDeleteAccountSheet: Bool = false
     
@@ -25,6 +27,14 @@ struct SettingsView: View {
     private func show(errorMessage: String) {
         showError = true
         self.errorMessage = errorMessage
+    }
+    
+    private func confirmedLogout() {
+        do {
+            try signOutService.signOut()
+        } catch {
+            show(errorMessage: "Unable to logout: \(error.localizedDescription)")
+        }
     }
     
     private func confirmDeleteAccount() {
@@ -57,6 +67,7 @@ struct SettingsView: View {
                     ResetArticleCacheButton()
                 }
                 Section {
+                    LogoutButton()
                     DeleteAccountButton()
                 }
                 AppVersionRow()
@@ -66,17 +77,6 @@ struct SettingsView: View {
         }
         .background(Color.background)
         .alert(errorMessage, isPresented: $showError) {}
-        .confirmationDialog(
-            "Are you sure you want to delete your account?",
-            isPresented: $showDeleteAccountDialog,
-            titleVisibility: .visible
-        ) {
-            ConfirmDeleteAccountButton()
-            CancelDeleteAccountButton()
-        }
-        .sheet(isPresented: $showConfirmDeleteAccountSheet) {
-            ConfirmDeleteAccountSheet()
-        }
     }
     
     @ViewBuilder func TitleBar() -> some View {
@@ -168,6 +168,43 @@ struct SettingsView: View {
         }
     }
     
+    @ViewBuilder func LogoutButton() -> some View {
+        Button {
+            showLogoutDialog = true
+        } label: {
+            ProfileControlLabel(
+                String(localized: "Logout"),
+                icon: "iphone.and.arrow.forward",
+                showNavigationAccessories: false
+            )
+        }
+        .listRowBackground(Color.background)
+        .confirmationDialog(
+            "Are you sure you want to logout?",
+            isPresented: $showLogoutDialog,
+            titleVisibility: .visible
+        ) {
+            ConfirmLogoutButton()
+            CancelLogoutButton()
+        }
+    }
+    
+    @ViewBuilder func ConfirmLogoutButton() -> some View {
+        Button(role: .destructive) {
+            confirmedLogout()
+        } label: {
+            Text("Logout")
+        }
+    }
+    
+    @ViewBuilder func CancelLogoutButton() -> some View {
+        Button(role: .cancel) {
+        } label: {
+            Text("Cancel")
+        }
+        
+    }
+    
     @ViewBuilder func DeleteAccountButton() -> some View {
         Button {
             showDeleteAccountDialog = true
@@ -179,6 +216,17 @@ struct SettingsView: View {
             )
         }
         .listRowBackground(Color.background)
+        .confirmationDialog(
+            "Are you sure you want to delete your account?",
+            isPresented: $showDeleteAccountDialog,
+            titleVisibility: .visible
+        ) {
+            ConfirmDeleteAccountButton()
+            CancelDeleteAccountButton()
+        }
+        .sheet(isPresented: $showConfirmDeleteAccountSheet) {
+            ConfirmDeleteAccountSheet()
+        }
     }
 }
 

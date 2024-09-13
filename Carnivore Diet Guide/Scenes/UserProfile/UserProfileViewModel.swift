@@ -17,18 +17,15 @@ class UserProfileViewModel: ObservableObject {
     public var profileImageUrl: URL? { userData.profileImageUrl }
 
     private let userDataProvider: UserDataProvider
-    private let signOutService: UserProfileSignOutService
     private let isAdminChecker: IsAdminChecker
     
     private var subs: Set<AnyCancellable> = []
     
     init(
         userDataProvider: UserDataProvider,
-        signOutService: UserProfileSignOutService,
         isAdminChecker: IsAdminChecker
     ) {
         self.userDataProvider = userDataProvider
-        self.signOutService = signOutService
         self.isAdminChecker = isAdminChecker
     }
     
@@ -51,9 +48,5 @@ class UserProfileViewModel: ObservableObject {
     
     private func receive(userData: UserData) {
         self.userData = userData
-    }
-    
-    public func signOut() throws {
-        try signOutService.signOut()
     }
 }

@@ -16,7 +16,6 @@ struct UserProfileView: View {
     
     @StateObject private var model = UserProfileViewModel(
         userDataProvider: iocContainer~>UserDataProvider.self,
-        signOutService: iocContainer~>UserProfileSignOutService.self,
         isAdminChecker: iocContainer~>IsAdminChecker.self
     )
     
@@ -26,7 +25,6 @@ struct UserProfileView: View {
     @State private var showEditProfile: Bool = false
     @State private var showSettings: Bool = false
     @State private var showAdmin: Bool = false
-    @State private var showLogoutDialog: Bool = false
     
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
@@ -39,14 +37,6 @@ struct UserProfileView: View {
             .eraseToAnyPublisher()
     }
     
-    private func confirmedLogout() {
-        do {
-            try model.signOut()
-        } catch {
-            show(errorMessage: "Unable to logout: \(error.localizedDescription)")
-        }
-    }
-    
     private func show(errorMessage: String) {
         showError = true
         self.errorMessage = errorMessage
@@ -54,23 +44,19 @@ struct UserProfileView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            ScreenTitleBar(model.screenTitle)
+            TopBar()
             ScrollView {
                 VStack {
-                    ProfileImage()
-                    if showAds { AdRow() }
-                    VStack {
-                        ProfileStatsView()
+                    PicPostsAndOtherStats()
+                    HStack {
                         EditProfileButton()
-                        SettingsButton()
                         if model.isAdmin {
                             AdminButton()
                         }
-                        LogoutButton()
-                            .padding(.top)
+                        Spacer()
                     }
                     .padding(.horizontal)
-                    .padding(.bottom, 32)
+                    if showAds { AdRow() }
                 }
                 .padding(.vertical)
             }
@@ -78,53 +64,48 @@ struct UserProfileView: View {
         .background(Color.background)
         .alert(errorMessage, isPresented: $showError) {}
         .onReceive(showAdsPublisher) { showAds = $0 }
-        .confirmationDialog(
-            "Are you sure you want to logout?",
-            isPresented: $showLogoutDialog,
-            titleVisibility: .visible
-        ) {
-            ConfirmLogoutButton()
-            CancelLogoutButton()
-        }
-        .sheet(isPresented: $showEditProfile) {
-            EditUserProfileView(userId: userId, mode: .editProfile)
-        }
-        .onChange(of: userId, initial: true) {
-            model.listenForUserData(userId: userId)
-        }
-        .fullScreenCover(isPresented: $showPosts) {
-            PostsView(userData: model.userData)
-        }
-        .fullScreenCover(isPresented: $showSettings) {
-            SettingsView()
+        .onChange(of: userId, initial: true) { _, newUserId in
+            model.listenForUserData(userId: newUserId)
         }
     }
     
-    @ViewBuilder func ConfirmLogoutButton() -> some View {
-        Button(role: .destructive) {
-            confirmedLogout()
-        } label: {
-            Text("Logout")
-        }
+    @ViewBuilder func TopBar() -> some View {
+        ScreenTitleBar(
+            model.screenTitle,
+            trailingContent: SettingsButton
+        )
     }
     
-    @ViewBuilder func CancelLogoutButton() -> some View {
-        Button(role: .cancel) {
-        } label: {
-            Text("Cancel")
+    @ViewBuilder func PicPostsAndOtherStats() -> some View {
+        VStack {
+            HStack {
+                ProfileImage()
+                PostCountButton()
+                Spacer()
+            }
+            if let fullName = model.userData.fullName {
+                HStack {
+                    UserFullName(fullName)
+                    Spacer()
+                }
+            }
         }
-        
+        .padding(.horizontal)
+    }
+    
+    @ViewBuilder func UserFullName(_ name: PersonName) -> some View {
+        Text(name.value)
+            .foregroundStyle(Color.text)
+            .font(.callout.bold())
     }
     
     @ViewBuilder func ProfileImage() -> some View {
-        ProfileImageView(model.profileImageUrl)
-    }
-    
-    @ViewBuilder func ProfileStatsView() -> some View {
-        HStack {
-            PostCountButton()
-        }
-        .padding()
+        ProfileImageView(
+            model.profileImageUrl,
+            size: nil,
+            padding: .borderWidthMedium
+        )
+        .containerRelativeFrame(.horizontal, count: 4, spacing: 0)
     }
     
     @ViewBuilder func PostCountButton() -> some View {
@@ -133,17 +114,38 @@ struct UserProfileView: View {
         } label: {
             PostCountStatView(userId: userId)
         }
+        .containerRelativeFrame(.horizontal, count: 4, spacing: 0)
+        .fullScreenCover(isPresented: $showPosts) {
+            PostsView(userData: model.userData)
+        }
+    }
+    
+    @ViewBuilder func UserProfileButtonLabel(text: String, imageName: String) -> some View {
+        HStack {
+            Image(systemName: imageName)
+            Text(text)
+        }
+        .font(.footnote.bold())
+        .foregroundStyle(Color.accent)
+        .padding(.horizontal, .paddingHorizontalButtonMedium)
+        .padding(.vertical, .paddingVerticalButtonSmall)
+        .background {
+            RoundedRectangle(cornerRadius: .cornerRadiusSmall, style: .continuous)
+                .foregroundStyle(Color.accent.opacity(0.1))
+        }
     }
     
     @ViewBuilder func EditProfileButton() -> some View {
         Button {
             showEditProfile = true
         } label: {
-            ProfileControlLabel(
-                String(localized: "Edit Profile"),
-                icon: "person.fill",
-                showNavigationAccessories: true
+            UserProfileButtonLabel(
+                text: String(localized: "Edit Profile"),
+                imageName: "person.fill"
             )
+        }
+        .sheet(isPresented: $showEditProfile) {
+            EditUserProfileView(userId: userId, mode: .editProfile)
         }
     }
     
@@ -151,11 +153,10 @@ struct UserProfileView: View {
         Button {
             showSettings = true
         } label: {
-            ProfileControlLabel(
-                String(localized: "Settings"),
-                icon: "gearshape.fill",
-                showNavigationAccessories: true
-            )
+            ResourceMenuButtonLabel(sfSymbol: "gearshape.fill")
+        }
+        .fullScreenCover(isPresented: $showSettings) {
+            SettingsView()
         }
     }
     
@@ -163,23 +164,13 @@ struct UserProfileView: View {
         Button {
             showAdmin = true
         } label: {
-            ProfileControlLabel(
-                String(localized: "Admin"),
-                icon: "lock.shield.fill",
-                showNavigationAccessories: true
+            UserProfileButtonLabel(
+                text: String(localized: "Admin"),
+                imageName: "lock.shield.fill"
             )
         }
         .fullScreenCover(isPresented: $showAdmin) {
             AdminView()
-        }
-    }
-    
-    @ViewBuilder func LogoutButton() -> some View {
-        ProfileButton(
-            String(localized: "Logout"),
-            icon: "iphone.and.arrow.forward"
-        ) {
-            showLogoutDialog = true
         }
     }
     
