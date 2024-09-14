@@ -229,12 +229,18 @@ struct UserProfileView: View {
                     axis: .vertical
                 )
                 .textInputAutocapitalization(.sentences)
-                .submitLabel(.done)
                 .focused($focusedField, equals: Field.bio)
-                .onReceive(userBio.publisher.last()) {
-                    if ($0 as Character).asciiValue == 10 { // ASCII 10 = newline
-                        focusedField = nil // unfocus TextEditor to dismiss keyboard
-                        model.save(userBio: userBio)
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        Spacer()
+                        Button {
+                            focusedField = nil
+                            model.save(userBio: userBio)
+                        } label: {
+                            Text("Done")
+                                .foregroundStyle(Color.accent)
+                                .bold()
+                        }
                     }
                 }
                 HStack {

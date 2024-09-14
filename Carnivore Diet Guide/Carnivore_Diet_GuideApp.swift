@@ -18,6 +18,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         FirebaseApp.configure()
         setupAdMob()
         DailyUserEngagementService.registerLaunchHandler()
+        setupToolbars()
         return true
     }
     
@@ -32,6 +33,14 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         completionHandler(.banner)
+    }
+    
+    fileprivate func setupToolbars() {
+        let appearance = UIToolbarAppearance()
+        appearance.backgroundColor = UIColor(Color.background)
+        appearance.shadowColor = UIColor(Color.text)
+        
+        UIToolbar.appearance().standardAppearance = appearance
     }
 }
 
