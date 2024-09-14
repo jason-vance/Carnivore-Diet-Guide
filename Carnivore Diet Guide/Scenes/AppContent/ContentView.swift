@@ -27,10 +27,6 @@ struct ContentView: View {
         notificationService.requestPermissions()
     }
     
-    private func resetAppBadgeValue() {
-        notificationService.resetBadgeValue()
-    }
-    
     var body: some View {
         Group {
             if userAuthState == .loggedIn {
@@ -62,7 +58,6 @@ struct ContentView: View {
         } else {
             HomeView()
                 .onAppear { requestNotificationsPermission() }
-                .onAppear { resetAppBadgeValue() }
                 .onAppear { setupDailyEngagement() }
         }
     }

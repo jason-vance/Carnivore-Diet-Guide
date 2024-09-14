@@ -20,6 +20,7 @@ struct FeaturedArticlesView: View {
     @State private var alertMessage: String = ""
     
     private let featuredArticlesFetcher = iocContainer~>FeaturedArticlesFetcher.self
+    private let notificationService = iocContainer~>NotificationService.self
     
     @State private var showAds: Bool = false
     private var showAdsPublisher: AnyPublisher<Bool,Never> {
@@ -27,6 +28,10 @@ struct FeaturedArticlesView: View {
             .showAdsPublisher
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
+    }
+    
+    private func resetAppBadgeValue() {
+        notificationService.resetAppBadgeValue()
     }
     
     private func show(alert: String) {
@@ -55,6 +60,7 @@ struct FeaturedArticlesView: View {
             .padding(.bottom)
             .alert(alertMessage, isPresented: $showAlert) {}
             .onAppear { fetchFeaturedArticles() }
+            .onAppear { resetAppBadgeValue() }
             .onReceive(showAdsPublisher) { showAds = $0 }
     }
     

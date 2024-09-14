@@ -60,7 +60,7 @@ class NotificationService {
         }
     }
     
-    func resetBadgeValue() {
+    func resetAppBadgeValue() {
         Task {
             do {
                 try await notificationCenter.setBadgeCount(0)
