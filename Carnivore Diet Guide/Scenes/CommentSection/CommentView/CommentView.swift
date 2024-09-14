@@ -57,7 +57,7 @@ struct CommentView: View {
             )
             .redacted(reason: model.isLoading ? [.placeholder] : [] )
             VStack {
-                Text(model.userFullName)
+                Text(model.username)
                     .font(.system(size: 12, weight: .bold))
                     .foregroundStyle(Color.text)
                     .frame(maxWidth: .infinity, alignment: .leading)

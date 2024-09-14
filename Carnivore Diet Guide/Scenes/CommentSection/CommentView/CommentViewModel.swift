@@ -14,7 +14,7 @@ class CommentViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var commentIsMine: Bool = false
     @Published var userImageUrl: URL?
-    @Published var userFullName: String = ""
+    @Published var username: String = ""
     @Published var commentText: String = ""
     @Published var dateString: String = ""
     
@@ -46,7 +46,7 @@ class CommentViewModel: ObservableObject {
             do {
                 let userData = try await userFetcher.fetchUser(userId: userId)
                 userImageUrl = userData.profileImageUrl
-                userFullName = userData.fullName?.value ?? "Unknown User"
+                username = userData.username?.value ?? "Unknown User"
             }
             isLoading = false
         }
