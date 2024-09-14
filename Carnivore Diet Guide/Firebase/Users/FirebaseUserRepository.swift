@@ -145,7 +145,19 @@ extension FirebaseUserRepository: UserDataSaver {
     
     func save(userBio: UserBio?, toUser userId: String) async throws {
         var dict: [AnyHashable : Any] = [:]
-        dict[FirestoreUserDoc.CodingKeys.bio.rawValue] = userBio?.value
+        dict[FirestoreUserDoc.CodingKeys.bio.rawValue] = userBio?.value ?? FieldValue.delete()
+        try await usersCollection.document(userId).updateData(dict)
+    }
+    
+    func save(whyCarnivore: WhyCarnivore?, toUser userId: String) async throws {
+        var dict: [AnyHashable : Any] = [:]
+        dict[FirestoreUserDoc.CodingKeys.whyCarnivore.rawValue] = whyCarnivore?.value ?? FieldValue.delete()
+        try await usersCollection.document(userId).updateData(dict)
+    }
+    
+    func save(carnivoreSince: CarnivoreSince?, toUser userId: String) async throws {
+        var dict: [AnyHashable : Any] = [:]
+        dict[FirestoreUserDoc.CodingKeys.carnivoreSince.rawValue] = carnivoreSince?.date ?? FieldValue.delete()
         try await usersCollection.document(userId).updateData(dict)
     }
 }

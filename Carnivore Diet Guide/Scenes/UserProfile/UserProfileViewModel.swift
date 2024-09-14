@@ -65,4 +65,18 @@ class UserProfileViewModel: ObservableObject {
             try await userDataSaver.save(userBio: UserBio(userBio), toUser: userData.id)
         }
     }
+    
+    func save(whyCarnivore: String) {
+        Task {
+            try await userDataSaver.save(whyCarnivore: WhyCarnivore(whyCarnivore), toUser: userData.id)
+        }
+    }
+    
+    func save(carnivoreSince: Date?) {
+        Task {
+            print("save(carnivoreSince: \(carnivoreSince)")
+            let carnivoreSince = carnivoreSince == nil ? nil : CarnivoreSince(carnivoreSince!)
+            try await userDataSaver.save(carnivoreSince: carnivoreSince, toUser: userData.id)
+        }
+    }
 }

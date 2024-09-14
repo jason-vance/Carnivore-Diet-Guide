@@ -385,6 +385,9 @@
     "Albums" : {
       "comment" : "Photo Albums"
     },
+    "Allergies, Skin Conditions, Weight Loss, etc..." : {
+
+    },
     "App Version" : {
 
     },
@@ -759,6 +762,9 @@
         }
       }
     },
+    "Carnivore Since" : {
+
+    },
     "Categories" : {
 
     },
@@ -766,6 +772,9 @@
 
     },
     "Checking..." : {
+
+    },
+    "Clear" : {
 
     },
     "Collage" : {
@@ -2315,6 +2324,12 @@
           }
         }
       }
+    },
+    "When did you start The Carnivore Diet?" : {
+
+    },
+    "Why I'm Carnivore" : {
+
     },
     "Write an Article" : {
 

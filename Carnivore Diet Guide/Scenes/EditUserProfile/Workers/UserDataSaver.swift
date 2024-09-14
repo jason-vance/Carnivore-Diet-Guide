@@ -10,6 +10,8 @@ import Foundation
 protocol UserDataSaver {
     func saveOnboarding(userData: UserData) async throws
     func save(userBio: UserBio?, toUser userId: String) async throws
+    func save(whyCarnivore: WhyCarnivore?, toUser userId: String) async throws
+    func save(carnivoreSince: CarnivoreSince?, toUser userId: String) async throws
 }
 
 class MockUserDataSaver: UserDataSaver {
@@ -22,6 +24,14 @@ class MockUserDataSaver: UserDataSaver {
     }
     
     func save(userBio: UserBio?, toUser userId: String) async throws {
+        
+    }
+    
+    func save(whyCarnivore: WhyCarnivore?, toUser userId: String) async throws {
+        
+    }
+    
+    func save(carnivoreSince: CarnivoreSince?, toUser userId: String) async throws {
         
     }
 }

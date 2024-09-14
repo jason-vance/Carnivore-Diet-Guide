@@ -111,6 +111,10 @@
 		567D1D7C2C942F5000AC990A /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567D1D7A2C942F5000AC990A /* ArrayExtensions.swift */; };
 		567D1D7E2C94E5FB00AC990A /* UserBio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567D1D7D2C94E5FB00AC990A /* UserBio.swift */; };
 		567D1D7F2C94E5FB00AC990A /* UserBio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567D1D7D2C94E5FB00AC990A /* UserBio.swift */; };
+		567D1D812C95869600AC990A /* WhyCarnivore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567D1D802C95869600AC990A /* WhyCarnivore.swift */; };
+		567D1D822C95869600AC990A /* WhyCarnivore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567D1D802C95869600AC990A /* WhyCarnivore.swift */; };
+		567D1D842C958E2B00AC990A /* CarnivoreSince.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567D1D832C958E2B00AC990A /* CarnivoreSince.swift */; };
+		567D1D852C958E2B00AC990A /* CarnivoreSince.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567D1D832C958E2B00AC990A /* CarnivoreSince.swift */; };
 		568F726C2C75B5F1005D16C6 /* ReviewNewPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F726B2C75B5F1005D16C6 /* ReviewNewPostView.swift */; };
 		568F726E2C767A4F005D16C6 /* ContentCreationImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F726D2C767A4F005D16C6 /* ContentCreationImageData.swift */; };
 		568F72712C767ADF005D16C6 /* ContentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F72702C767ADF005D16C6 /* ContentData.swift */; };
@@ -468,6 +472,8 @@
 		567D1D782C93B27B00AC990A /* AdRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdRow.swift; sourceTree = "<group>"; };
 		567D1D7A2C942F5000AC990A /* ArrayExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 		567D1D7D2C94E5FB00AC990A /* UserBio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBio.swift; sourceTree = "<group>"; };
+		567D1D802C95869600AC990A /* WhyCarnivore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhyCarnivore.swift; sourceTree = "<group>"; };
+		567D1D832C958E2B00AC990A /* CarnivoreSince.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarnivoreSince.swift; sourceTree = "<group>"; };
 		568F726B2C75B5F1005D16C6 /* ReviewNewPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewNewPostView.swift; sourceTree = "<group>"; };
 		568F726D2C767A4F005D16C6 /* ContentCreationImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCreationImageData.swift; sourceTree = "<group>"; };
 		568F72702C767ADF005D16C6 /* ContentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentData.swift; sourceTree = "<group>"; };
@@ -1593,6 +1599,8 @@
 				56B88A2C2B6CE9EF00C4C0DB /* UserData.swift */,
 				569A9AC12C9391390021F5EC /* Username.swift */,
 				567D1D7D2C94E5FB00AC990A /* UserBio.swift */,
+				567D1D802C95869600AC990A /* WhyCarnivore.swift */,
+				567D1D832C958E2B00AC990A /* CarnivoreSince.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -2060,6 +2068,7 @@
 				56F213882B737159009DB057 /* RecipeFavoriter.swift in Sources */,
 				568F72C62C7D0C40005D16C6 /* FirebaseCommentCountProvider.swift in Sources */,
 				568F73472C824D98005D16C6 /* SearchKeyword.swift in Sources */,
+				567D1D812C95869600AC990A /* WhyCarnivore.swift in Sources */,
 				569A9AC72C9396420021F5EC /* ProfileFormUsernameField.swift in Sources */,
 				567754352B717B420094EB8C /* ProfileControlLabel.swift in Sources */,
 				568F728E2C793213005D16C6 /* FirebasePostPoster.swift in Sources */,
@@ -2178,6 +2187,7 @@
 				56B88A122B6C541F00C4C0DB /* SignInViewModel.swift in Sources */,
 				563BC7012B7AF866008F3C50 /* RecipeCommentCountProvider.swift in Sources */,
 				56B88A1F2B6CE4F100C4C0DB /* UserProfileSignOutService.swift in Sources */,
+				567D1D842C958E2B00AC990A /* CarnivoreSince.swift in Sources */,
 				567D1D7B2C942F5000AC990A /* ArrayExtensions.swift in Sources */,
 				563BC6F62B78BDFA008F3C50 /* DateExtensions.swift in Sources */,
 				5676A1362B477933009C1DA6 /* Recipe.swift in Sources */,
@@ -2320,11 +2330,13 @@
 				568F73422C824767005D16C6 /* CreateArticleMetadataViewModel.swift in Sources */,
 				5622EAD42C753CBB00FE9C36 /* RecipesViewModel.swift in Sources */,
 				56D470A02C8A3CCF00F48A64 /* ResourceCreatedActivityTracker.swift in Sources */,
+				567D1D822C95869600AC990A /* WhyCarnivore.swift in Sources */,
 				568F728F2C793731005D16C6 /* FeedItem.swift in Sources */,
 				568F73522C82567E005D16C6 /* ContentMetadata.swift in Sources */,
 				569A9AC52C9391640021F5EC /* UsernameTests.swift in Sources */,
 				569A9AA42C9228EA0021F5EC /* PrivacyPolicy.swift in Sources */,
 				568F72B92C7C2A0F005D16C6 /* Recipe.swift in Sources */,
+				567D1D852C958E2B00AC990A /* CarnivoreSince.swift in Sources */,
 				565CFEC12C88EB3100CBEEAC /* ArticleLibrary.swift in Sources */,
 				568F73082C8009CB005D16C6 /* Article.swift in Sources */,
 				565CFEC92C88FFBC00CBEEAC /* ArticleCache.swift in Sources */,

@@ -14,6 +14,7 @@ struct UserProfileView: View {
     
     private enum Field: Hashable {
         case bio
+        case whyCarnivore
     }
     
     let userId: String
@@ -28,6 +29,9 @@ struct UserProfileView: View {
     @State private var navigationPath = NavigationPath()
     
     @State private var userBio: String = ""
+    @State private var whyCarnivore: String = ""
+    @State private var carnivoreSince: Date = .now
+    @State private var showCarnivoreSinceDatePicker: Bool = false
     
     @FocusState private var focusedField: Field?
     
@@ -53,18 +57,36 @@ struct UserProfileView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            TopBar()
-            ScrollView {
-                VStack {
-                    if showAds { AdRow() }
-                    PicPostsAndOtherStats()
-                    ProfileControls()
-                        .padding(.bottom)
-                    BioField()
+        NavigationStack {
+            VStack(spacing: 0) {
+                TopBar()
+                ScrollView {
+                    VStack {
+                        if showAds { AdRow() }
+                        PicPostsAndOtherStats()
+                        ProfileControls()
+                            .padding(.bottom)
+                        BioField()
+                        WhyCarnivoreField()
+                        CarnivoreSinceField()
+                    }
+                    .padding(.bottom)
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            Spacer()
+                            Button {
+                                focusedField = nil
+                                model.save(whyCarnivore: whyCarnivore)
+                            } label: {
+                                Text("Done")
+                                    .foregroundStyle(Color.accent)
+                                    .bold()
+                            }
+                        }
+                    }
                 }
-                .padding(.bottom)
             }
+            .background(Color.background)
         }
         .background(Color.background)
         .alert(errorMessage, isPresented: $showError) {}
@@ -74,6 +96,9 @@ struct UserProfileView: View {
         }
         .onChange(of: model.userData.bio?.value, initial: true) { _, newBio in
             userBio = newBio ?? ""
+        }
+        .onChange(of: model.userData.whyCarnivore?.value, initial: true) { _, newWhy in
+            whyCarnivore = newWhy ?? ""
         }
     }
     
@@ -230,19 +255,6 @@ struct UserProfileView: View {
                 )
                 .textInputAutocapitalization(.sentences)
                 .focused($focusedField, equals: Field.bio)
-                .toolbar {
-                    ToolbarItemGroup(placement: .keyboard) {
-                        Spacer()
-                        Button {
-                            focusedField = nil
-                            model.save(userBio: userBio)
-                        } label: {
-                            Text("Done")
-                                .foregroundStyle(Color.accent)
-                                .bold()
-                        }
-                    }
-                }
                 HStack {
                     Spacer()
                     Text("\(userBio.count)/\(UserBio.maxLength)")
@@ -258,6 +270,109 @@ struct UserProfileView: View {
         PropertyField(name: String(localized: "Bio")) {
             HStack {
                 Text(bio.value)
+                Spacer()
+            }
+        }
+    }
+    
+    @ViewBuilder func WhyCarnivoreField() -> some View {
+        if let isMe = model.isMe, isMe {
+            CarnivoreFieldForMe()
+        } else if let whyCarnivore = model.userData.whyCarnivore {
+            CarnivoreFieldForOthers(whyCarnivore)
+        }
+    }
+    
+    @ViewBuilder func CarnivoreFieldForMe() -> some View {
+        PropertyField(name: String(localized: "Why I'm Carnivore")) {
+            VStack(spacing: 0) {
+                TextField(
+                    "Allergies, Skin Conditions, Weight Loss, etc...",
+                    text: $whyCarnivore,
+                    prompt: Text("Allergies, Skin Conditions, Weight Loss, etc...").foregroundStyle(Color.text.opacity(0.3)),
+                    axis: .vertical
+                )
+                .textInputAutocapitalization(.sentences)
+                .focused($focusedField, equals: Field.whyCarnivore)
+                HStack {
+                    Spacer()
+                    Text("\(whyCarnivore.count)/\(WhyCarnivore.maxLength)")
+                        .font(.caption2)
+                        .foregroundStyle(whyCarnivore.count > WhyCarnivore.maxLength ? Color.accentColor : Color.text)
+                        .opacity(whyCarnivore.count > WhyCarnivore.maxLength ? 1 : focusedField == .whyCarnivore ? 0.5 : 0)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder func CarnivoreFieldForOthers(_ whyCarnivore: WhyCarnivore) -> some View {
+        PropertyField(name: String(localized: "Why I'm Carnivore")) {
+            HStack {
+                Text(whyCarnivore.value)
+                Spacer()
+            }
+        }
+    }
+    
+    @ViewBuilder func CarnivoreSinceField() -> some View {
+        if let isMe = model.isMe, isMe {
+            CarnivoreSinceFieldForMe()
+        } else if let carnivoreSince = model.userData.carnivoreSince {
+            CarnivoreSinceFieldForOthers(carnivoreSince)
+        }
+    }
+    
+    @ViewBuilder func CarnivoreSinceFieldForMe() -> some View {
+        PropertyField(name: String(localized: "When did you start The Carnivore Diet?")) {
+            VStack(spacing: 0) {
+                HStack {
+                    Button {
+                        withAnimation(.snappy) { showCarnivoreSinceDatePicker.toggle() }
+                    } label: {
+                        Text(model.userData.carnivoreSince?.value ?? "N/A")
+                            .foregroundStyle(Color.accent)
+                            .bold()
+                            .padding(.horizontal, .paddingHorizontalButtonMedium)
+                            .padding(.vertical, .paddingVerticalButtonSmall)
+                            .background {
+                                RoundedRectangle(cornerRadius: .cornerRadiusSmall, style: .continuous)
+                                    .foregroundStyle(Color.accent.opacity(0.1))
+                            }
+                    }
+                    Spacer()
+                    Button {
+                        model.save(carnivoreSince: nil)
+                        withAnimation(.snappy) { showCarnivoreSinceDatePicker = false }
+                    } label: {
+                        Text("Clear")
+                            .bold()
+                            .foregroundStyle(Color.accent)
+                            .padding(.horizontal, .paddingHorizontalButtonMedium)
+                            .padding(.vertical, .paddingVerticalButtonSmall)
+                    }
+                    .opacity(showCarnivoreSinceDatePicker ? 1 : 0)
+                }
+                if showCarnivoreSinceDatePicker {
+                    DatePicker(
+                        "Carnivore Since",
+                        selection: $carnivoreSince,
+                        in: Date.distantPast...Date.now,
+                        displayedComponents: [.date]
+                    )
+                    .datePickerStyle(.graphical)
+                    .onChange(of: carnivoreSince, initial: true) { _, newDate in
+                        model.save(carnivoreSince: newDate)
+                    }
+                    .preferredColorScheme(.light)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder func CarnivoreSinceFieldForOthers(_ carnivoreSince: CarnivoreSince) -> some View {
+        PropertyField(name: String(localized: "Carnivore Since")) {
+            HStack {
+                Text(carnivoreSince.value)
                 Spacer()
             }
         }
