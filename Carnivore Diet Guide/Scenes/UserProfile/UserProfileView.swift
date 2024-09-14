@@ -100,6 +100,9 @@ struct UserProfileView: View {
         .onChange(of: model.userData.whyCarnivore?.value, initial: true) { _, newWhy in
             whyCarnivore = newWhy ?? ""
         }
+        .onChange(of: model.userData.carnivoreSince?.date, initial: true) { _, newDate in
+            carnivoreSince = newDate ?? .now
+        }
     }
     
     @ViewBuilder func TopBar() -> some View {
@@ -160,7 +163,6 @@ struct UserProfileView: View {
     
     @ViewBuilder func ControlsForOthersProfile() -> some View {
         HStack {
-            //TODO: FollowButton()
             Spacer()
         }
         .padding(.horizontal)
@@ -213,8 +215,8 @@ struct UserProfileView: View {
             showEditProfile = true
         } label: {
             UserProfileButtonLabel(
-                text: String(localized: "Edit Profile"),
-                imageName: "person.fill"
+                text: String(localized: "Edit Name & Pic"),
+                imageName: "person.text.rectangle.fill"
             )
         }
         .sheet(isPresented: $showEditProfile) {
@@ -272,6 +274,7 @@ struct UserProfileView: View {
                 Text(bio.value)
                 Spacer()
             }
+            .padding(.bottom)
         }
     }
     
@@ -311,6 +314,7 @@ struct UserProfileView: View {
                 Text(whyCarnivore.value)
                 Spacer()
             }
+            .padding(.bottom)
         }
     }
     
@@ -330,8 +334,8 @@ struct UserProfileView: View {
                         withAnimation(.snappy) { showCarnivoreSinceDatePicker.toggle() }
                     } label: {
                         Text(model.userData.carnivoreSince?.value ?? "N/A")
+                            .font(.footnote.bold())
                             .foregroundStyle(Color.accent)
-                            .bold()
                             .padding(.horizontal, .paddingHorizontalButtonMedium)
                             .padding(.vertical, .paddingVerticalButtonSmall)
                             .background {
@@ -345,7 +349,7 @@ struct UserProfileView: View {
                         withAnimation(.snappy) { showCarnivoreSinceDatePicker = false }
                     } label: {
                         Text("Clear")
-                            .bold()
+                            .font(.footnote.bold())
                             .foregroundStyle(Color.accent)
                             .padding(.horizontal, .paddingHorizontalButtonMedium)
                             .padding(.vertical, .paddingVerticalButtonSmall)
@@ -370,11 +374,12 @@ struct UserProfileView: View {
     }
     
     @ViewBuilder func CarnivoreSinceFieldForOthers(_ carnivoreSince: CarnivoreSince) -> some View {
-        PropertyField(name: String(localized: "Carnivore Since")) {
+        PropertyField(name: String(localized: "I Started The Carnivore Diet")) {
             HStack {
                 Text(carnivoreSince.value)
                 Spacer()
             }
+            .padding(.bottom)
         }
     }
     

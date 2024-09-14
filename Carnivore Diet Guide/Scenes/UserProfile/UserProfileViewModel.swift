@@ -74,7 +74,6 @@ class UserProfileViewModel: ObservableObject {
     
     func save(carnivoreSince: Date?) {
         Task {
-            print("save(carnivoreSince: \(carnivoreSince)")
             let carnivoreSince = carnivoreSince == nil ? nil : CarnivoreSince(carnivoreSince!)
             try await userDataSaver.save(carnivoreSince: carnivoreSince, toUser: userData.id)
         }

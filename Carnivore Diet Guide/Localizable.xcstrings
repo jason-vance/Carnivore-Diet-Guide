@@ -970,7 +970,7 @@
     "Edit %lld Keywords" : {
 
     },
-    "Edit Profile" : {
+    "Edit Name & Pic" : {
 
     },
     "Failed to delete: %@" : {
@@ -1316,6 +1316,9 @@
           }
         }
       }
+    },
+    "I Started The Carnivore Diet" : {
+
     },
     "Ingredients" : {
       "extractionState" : "stale",

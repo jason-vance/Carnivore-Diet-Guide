@@ -148,7 +148,7 @@ struct EditUserProfileView: View {
         if mode == .createProfile {
             ScreenTitleBar("Create Profile")
         } else {
-            ScreenTitleBar("Edit Profile", leadingContent: CancelButton)
+            ScreenTitleBar("Edit Name & Pic", leadingContent: CancelButton)
         }
     }
     
