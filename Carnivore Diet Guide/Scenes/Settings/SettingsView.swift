@@ -13,8 +13,11 @@ struct SettingsView: View {
     
     private let signOutService = iocContainer~>UserProfileSignOutService.self
     private let accountDeleter = iocContainer~>UserAccountDeleter.self
+    private let notificationService = iocContainer~>NotificationService.self
     
     @Environment(\.dismiss) private var dismiss: DismissAction
+    
+    @State private var notificationsAreOn: Bool = false
     
     @State private var showResetArticleCacheDialog: Bool = false
     @State private var showLogoutDialog: Bool = false
@@ -64,6 +67,7 @@ struct SettingsView: View {
             TitleBar()
             List {
                 Section {
+                    NotificationsToggleButton()
                     ResetArticleCacheButton()
                 }
                 Section {
@@ -143,6 +147,31 @@ struct SettingsView: View {
             Text("Cancel")
         }
         .frame(height: 48)
+    }
+    
+    @ViewBuilder func NotificationsToggleButton() -> some View {
+        Button {
+            notificationService.shouldSendNotifications.toggle()
+            withAnimation(.snappy) {
+                notificationsAreOn = notificationService.shouldSendNotifications
+            }
+        } label: {
+            HStack {
+                ProfileControlLabel(
+                    String(localized: "Notifications"),
+                    icon: "bell.fill",
+                    showNavigationAccessories: false
+                )
+                Spacer()
+                Image(systemName: notificationsAreOn ? "checkmark.square.fill" : "square")
+                    .font(.body.bold())
+                    .foregroundStyle(notificationsAreOn ? Color.accent: Color.text)
+            }
+        }
+        .listRowBackground(Color.background)
+        .onAppear {
+            notificationsAreOn = notificationService.shouldSendNotifications
+        }
     }
     
     @ViewBuilder func ResetArticleCacheButton() -> some View {

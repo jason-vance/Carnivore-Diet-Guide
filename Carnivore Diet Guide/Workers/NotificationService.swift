@@ -18,6 +18,19 @@ class NotificationService {
         let trigger: UNTimeIntervalNotificationTrigger
     }
     
+    private let shouldSendNotificationsKey = "shouldSendNotificationsKey"
+    public var shouldSendNotifications: Bool {
+        get {
+            if let value = UserDefaults.standard.value(forKey: shouldSendNotificationsKey) as? Bool {
+                return value
+            }
+            return true
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: shouldSendNotificationsKey)
+        }
+    }
+    
     private var notificationCenter: UNUserNotificationCenter { UNUserNotificationCenter.current() }
     
     func requestPermissions() {
@@ -25,6 +38,8 @@ class NotificationService {
     }
     
     func send(notification: Notification?) {
+        guard shouldSendNotifications else { return }
+        
         Task {
             do {
                 if try await notificationCenter.requestAuthorization(options: [.alert, .badge]) {
@@ -41,6 +56,8 @@ class NotificationService {
     }
     
     private func add(notification: Notification) {
+        guard shouldSendNotifications else { return }
+        
         Task {
             let content = UNMutableNotificationContent()
             content.title = notification.title
