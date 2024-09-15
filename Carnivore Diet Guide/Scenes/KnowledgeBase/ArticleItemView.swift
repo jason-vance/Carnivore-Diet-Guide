@@ -58,6 +58,7 @@ struct ArticleItemView: View {
     
     var body: some View {
         ItemContent()
+            .taggedAsPremiumContent(article.isPremium)
             .background(Color.background)
             .clipShape(.rect(cornerRadius: .cornerRadiusMedium, style: .continuous))
             .clipped()
@@ -78,9 +79,8 @@ struct ArticleItemView: View {
             HStack {
                 TextContent()
                 ImageContent()
-                    .frame(width: 110, height: 110)
-                    .clipShape(.rect(cornerRadius: .cornerRadiusMedium))
-                    .padding(8)
+                    .frame(width: 126, height: 126)
+                    .clipShape(UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: .cornerRadiusMedium), style: .continuous))
             }
             BarDivider()
             PublicationDate()
@@ -88,7 +88,7 @@ struct ArticleItemView: View {
     }
     
     @ViewBuilder func VerticalContent() -> some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             ImageContent()
             TextContent()
             BarDivider()

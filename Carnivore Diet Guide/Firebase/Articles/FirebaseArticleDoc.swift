@@ -11,6 +11,7 @@ import FirebaseFirestoreSwift
 struct FirebaseArticleDoc: Codable {
     
     @DocumentID var id: String?
+    var isPremium: Bool?
     var author: String?
     var title: String?
     var coverImageUrl: String?
@@ -21,6 +22,7 @@ struct FirebaseArticleDoc: Codable {
     
     enum CodingKeys: String, CodingKey {
         case id
+        case isPremium
         case author
         case title
         case coverImageUrl
@@ -35,6 +37,7 @@ struct FirebaseArticleDoc: Codable {
     ) -> FirebaseArticleDoc {
         return .init(
             id: article.id,
+            isPremium: article.isPremium,
             author: article.author,
             title: article.title,
             coverImageUrl: article.coverImageUrl.absoluteString,
@@ -58,6 +61,7 @@ struct FirebaseArticleDoc: Codable {
 
         return Article(
             id: id,
+            isPremium: isPremium ?? true,
             author: author,
             title: title,
             coverImageUrl: coverImageUrl,

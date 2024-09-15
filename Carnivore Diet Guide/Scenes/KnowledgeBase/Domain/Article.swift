@@ -10,6 +10,7 @@ import Foundation
 struct Article: Identifiable, Hashable {
     
     let id: String
+    let isPremium: Bool
     let author: String
     let title: String
     let coverImageUrl: URL
@@ -21,6 +22,7 @@ struct Article: Identifiable, Hashable {
     
     init(
         id: String,
+        isPremium: Bool,
         author: String,
         title: String,
         coverImageUrl: URL,
@@ -30,6 +32,7 @@ struct Article: Identifiable, Hashable {
         categories: Set<Resource.Category>
     ) {
         self.id = id
+        self.isPremium = isPremium
         self.author = author
         self.title = title
         self.coverImageUrl = coverImageUrl
@@ -52,6 +55,7 @@ struct Article: Identifiable, Hashable {
 extension Article {
     static let sample: Article = .init(
         id: UUID().uuidString,
+        isPremium: false,
         author: "userId",
         title: "Sample KnowledgeBaseContent Title",
         coverImageUrl: URL(string: "https://firebasestorage.googleapis.com/v0/b/carnivore-diet-guide.appspot.com/o/BlogPostImages%2F2024.01.11.OriginsAndHistoricalContext.jpg?alt=media&token=a3755dcb-9920-493f-8888-af0650462782")!,
@@ -62,6 +66,7 @@ extension Article {
     )
     static let sample2: Article = .init(
         id: UUID().uuidString,
+        isPremium: true,
         author: "userId2",
         title: "Another Sample KnowledgeBaseContent Title",
         coverImageUrl: URL(string: "https://firebasestorage.googleapis.com/v0/b/carnivore-diet-guide.appspot.com/o/BlogPostImages%2F2024.01.09.PlanningAndBudgetingForTheCarnivoreDiet.jpg?alt=media&token=8abc332b-3618-4ead-8ba0-8683c2d4b71f")!,

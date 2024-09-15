@@ -14,6 +14,7 @@ final class ArticleTests: XCTestCase {
         
         let article = Article(
             id: Article.sample.id,
+            isPremium: true,
             author: Article.sample.author,
             title: "Title",
             coverImageUrl: Article.sample.coverImageUrl,
@@ -32,6 +33,7 @@ final class ArticleTests: XCTestCase {
         
         let article = Article(
             id: Article.sample.id,
+            isPremium: true,
             author: Article.sample.author,
             title: "Title",
             coverImageUrl: Article.sample.coverImageUrl,

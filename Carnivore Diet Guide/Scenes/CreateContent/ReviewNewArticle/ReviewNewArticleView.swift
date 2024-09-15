@@ -39,6 +39,7 @@ struct ReviewNewArticleView: View {
     private var article: Article {
         Article(
             id: newArticleData.data.id.uuidString,
+            isPremium: true,
             author: newArticleData.data.userId,
             title: newArticleData.data.title,
             coverImageUrl: newArticleData.data.imageUrls[0],

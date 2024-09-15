@@ -7,11 +7,24 @@
 
 import SwiftUI
 import Kingfisher
+import Swinject
 
 struct FeedItemView: View {
     
     @State var feedItem: FeedItem
-    @StateObject private var model = FeedItemViewModel()
+    
+    var isPremium: Bool {
+        switch feedItem.type {
+        case .post:
+            return false
+        case .recipe:
+            //TODO: Get the recipe's premium status for real
+            return true
+        case .article:
+            guard let articleLibrary = iocContainer.resolve(ArticleLibrary.self) else { return true }
+            return articleLibrary.getArticle(byId: feedItem.resourceId)?.isPremium ?? true
+        }
+    }
     
     var body: some View {
         VStack(spacing: 4) {
@@ -26,6 +39,7 @@ struct FeedItemView: View {
             .padding(8)
             .padding(.bottom, 4)
         }
+        .taggedAsPremiumContent(isPremium)
         .foregroundStyle(Color.text)
         .background(Color.background)
         .clipShape(RoundedRectangle(

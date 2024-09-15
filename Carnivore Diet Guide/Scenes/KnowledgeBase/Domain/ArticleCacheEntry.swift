@@ -19,6 +19,7 @@ struct ArticleCacheEntry: Codable {
     let refreshAfterDate: Date?
     
     let id: String?
+    let isPremium: Bool?
     let author: String?
     let title: String?
     let coverImageUrl: String?
@@ -33,6 +34,7 @@ struct ArticleCacheEntry: Codable {
         return .init(
             refreshAfterDate: Self.randomRefreshAfterDate,
             id: article.id,
+            isPremium: article.isPremium,
             author: article.author,
             title: article.title,
             coverImageUrl: article.coverImageUrl.absoluteString,
@@ -45,6 +47,7 @@ struct ArticleCacheEntry: Codable {
     
     func toArticle() -> Article? {
         guard let id = id else { return nil }
+        guard let isPremium = isPremium else { return nil }
         guard let author = author else { return nil }
         guard let title = title else { return nil }
         guard let coverImageUrl = URL(string: coverImageUrl ?? "") else { return nil }
@@ -56,6 +59,7 @@ struct ArticleCacheEntry: Codable {
         
         return Article(
             id: id,
+            isPremium: isPremium,
             author: author,
             title: title,
             coverImageUrl: coverImageUrl,

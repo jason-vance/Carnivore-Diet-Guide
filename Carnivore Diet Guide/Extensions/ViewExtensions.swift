@@ -23,4 +23,21 @@ extension View {
             })
         }
     }
+    
+    func taggedAsPremiumContent(_ isPremium: Bool = true) -> some View {
+        self
+            .overlay(alignment: .topTrailing) {
+                if isPremium {
+                    HStack {
+                        Text("Carnivore+")
+                            .font(.caption2.bold())
+                            .foregroundStyle(Color.background)
+                    }
+                    .padding(.horizontal, .paddingHorizontalButtonXSmall)
+                    .padding(.vertical, .paddingVerticalButtonXSmall)
+                    .background(Color.accent)
+                    .clipShape(UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: .cornerRadiusMedium), style: .continuous))
+                }
+            }
+    }
 }
