@@ -373,6 +373,12 @@
     "24 Hours" : {
 
     },
+    "Access to an expanded collection of carnivore diet recipes! (Even as good as a seared ribeye is, you probably shouldn't eat that for every meal)" : {
+
+    },
+    "Ad-Free Experience" : {
+
+    },
     "Add Article" : {
 
     },
@@ -382,10 +388,16 @@
     "Admin" : {
 
     },
+    "Advanced Progress Tracking" : {
+
+    },
     "Albums" : {
       "comment" : "Photo Albums"
     },
     "Allergies, Skin Conditions, Weight Loss, etc..." : {
+
+    },
+    "And all for less than the price of a pound of ground beef!" : {
 
     },
     "App Version" : {
@@ -976,6 +988,12 @@
     "Edit Name & Pic" : {
 
     },
+    "Enhanced tools to monitor your health metrics and progress. Coming soon!" : {
+
+    },
+    "Exclusive Articles & Guides" : {
+
+    },
     "Failed to delete: %@" : {
 
     },
@@ -1253,6 +1271,9 @@
         }
       }
     },
+    "Get exclusive access to premium content and tools designed to help you achieve your health goals faster." : {
+
+    },
     "Hard" : {
       "comment" : "Difficulty level is 'Hard'"
     },
@@ -1321,6 +1342,9 @@
       }
     },
     "I Started The Carnivore Diet" : {
+
+    },
+    "In-depth resources not available to free users. Get insights and tips from experts to optimize your health journey! For less than half the price of steak!" : {
 
     },
     "Ingredients" : {
@@ -1550,6 +1574,9 @@
     "Next" : {
 
     },
+    "No interruptions! Enjoy a seamless, ad-free experience for focused learning and community interaction. For about the same price as a pound of butter!" : {
+
+    },
     "None" : {
 
     },
@@ -1703,6 +1730,9 @@
 
     },
     "Posts by %@" : {
+
+    },
+    "Premium Recipes" : {
 
     },
     "Primary Articles (%lld):" : {
@@ -2261,6 +2291,9 @@
       "comment" : "Difficulty level is 'Unknown'"
     },
     "Unknown Author" : {
+
+    },
+    "Unlock the Full Carnivore Experience!" : {
 
     },
     "User Profile" : {
