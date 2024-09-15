@@ -15,8 +15,9 @@ struct RecipesView: View {
     
     @State private var showAds: Bool = false
     private var showAdsPublisher: AnyPublisher<Bool,Never> {
-        (iocContainer~>AdProvider.self)
-            .showAdsPublisher
+        (iocContainer~>SubscriptionLevelProvider.self)
+            .subscriptionLevelPublisher
+            .map { $0 == SubscriptionLevelProvider.SubscriptionLevel.none }
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }

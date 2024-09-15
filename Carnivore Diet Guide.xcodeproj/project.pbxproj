@@ -246,8 +246,8 @@
 		569A9AC72C9396420021F5EC /* ProfileFormUsernameField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9AC62C9396420021F5EC /* ProfileFormUsernameField.swift */; };
 		569A9AC92C939D460021F5EC /* UsernameAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9AC82C939D460021F5EC /* UsernameAvailabilityChecker.swift */; };
 		569A9ACA2C939D460021F5EC /* UsernameAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9AC82C939D460021F5EC /* UsernameAvailabilityChecker.swift */; };
-		569A9ACD2C93A9A70021F5EC /* AdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9ACC2C93A9A70021F5EC /* AdProvider.swift */; };
-		569A9ACE2C93A9A70021F5EC /* AdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9ACC2C93A9A70021F5EC /* AdProvider.swift */; };
+		569A9ACD2C93A9A70021F5EC /* SubscriptionLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9ACC2C93A9A70021F5EC /* SubscriptionLevelProvider.swift */; };
+		569A9ACE2C93A9A70021F5EC /* SubscriptionLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9ACC2C93A9A70021F5EC /* SubscriptionLevelProvider.swift */; };
 		569A9AD62C93ACDE0021F5EC /* BasicBannerAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9AD52C93ACDE0021F5EC /* BasicBannerAdView.swift */; };
 		569A9AD82C93AE540021F5EC /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 569A9AD72C93AE540021F5EC /* GoogleMobileAds */; };
 		56A6D0CA2B80A693003B27E5 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */; };
@@ -566,7 +566,7 @@
 		569A9AC42C9391640021F5EC /* UsernameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameTests.swift; sourceTree = "<group>"; };
 		569A9AC62C9396420021F5EC /* ProfileFormUsernameField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFormUsernameField.swift; sourceTree = "<group>"; };
 		569A9AC82C939D460021F5EC /* UsernameAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameAvailabilityChecker.swift; sourceTree = "<group>"; };
-		569A9ACC2C93A9A70021F5EC /* AdProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdProvider.swift; sourceTree = "<group>"; };
+		569A9ACC2C93A9A70021F5EC /* SubscriptionLevelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionLevelProvider.swift; sourceTree = "<group>"; };
 		569A9AD52C93ACDE0021F5EC /* BasicBannerAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicBannerAdView.swift; sourceTree = "<group>"; };
 		56A6D0C92B80A693003B27E5 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		56A6D0CB2B80A7DD003B27E5 /* FeedViewContentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewContentProvider.swift; sourceTree = "<group>"; };
@@ -1467,7 +1467,7 @@
 		569A9ACB2C93A99B0021F5EC /* AdProvider */ = {
 			isa = PBXGroup;
 			children = (
-				569A9ACC2C93A9A70021F5EC /* AdProvider.swift */,
+				569A9ACC2C93A9A70021F5EC /* SubscriptionLevelProvider.swift */,
 			);
 			path = AdProvider;
 			sourceTree = "<group>";
@@ -2053,7 +2053,7 @@
 				563BC6FE2B7AF4E8008F3C50 /* ResourceViewActivityTracker.swift in Sources */,
 				56B88A2D2B6CE9EF00C4C0DB /* UserData.swift in Sources */,
 				568F731B2C805B32005D16C6 /* ArticleItemView.swift in Sources */,
-				569A9ACD2C93A9A70021F5EC /* AdProvider.swift in Sources */,
+				569A9ACD2C93A9A70021F5EC /* SubscriptionLevelProvider.swift in Sources */,
 				56B88A552B6F275700C4C0DB /* UserOnboardingStateProvider.swift in Sources */,
 				56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */,
 				56B88A772B70DCFD00C4C0DB /* UserDataProvider.swift in Sources */,
@@ -2352,7 +2352,7 @@
 				5622EAD92C755D8900FE9C36 /* UserProfileViewModel.swift in Sources */,
 				563BC6FA2B78BE3E008F3C50 /* DateExtensionsTests.swift in Sources */,
 				568F730D2C800DCE005D16C6 /* ResourceTagTests.swift in Sources */,
-				569A9ACE2C93A9A70021F5EC /* AdProvider.swift in Sources */,
+				569A9ACE2C93A9A70021F5EC /* SubscriptionLevelProvider.swift in Sources */,
 				567D1D862C9682FA00AC990A /* UserDataSaver.swift in Sources */,
 				568F72812C7700BD005D16C6 /* UIImageExtensions.swift in Sources */,
 				568F72BA2C7C2A19005D16C6 /* BasicNutritionInfo.swift in Sources */,

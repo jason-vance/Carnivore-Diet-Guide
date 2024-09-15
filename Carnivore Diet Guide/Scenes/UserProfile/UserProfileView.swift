@@ -45,9 +45,10 @@ struct UserProfileView: View {
     
     @State private var showAds: Bool = false
     private var showAdsPublisher: AnyPublisher<Bool,Never> {
-        (iocContainer~>AdProvider.self)
-            .showAdsPublisher
+        (iocContainer~>SubscriptionLevelProvider.self)
+            .subscriptionLevelPublisher
             .receive(on: RunLoop.main)
+            .map { $0 == SubscriptionLevelProvider.SubscriptionLevel.none }
             .eraseToAnyPublisher()
     }
     
