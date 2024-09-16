@@ -415,6 +415,9 @@
     "Are you sure you want to reset the article cache?" : {
 
     },
+    "Are you sure you want to reset the recipe cache?" : {
+
+    },
     "Article" : {
 
     },
@@ -1953,6 +1956,9 @@
 
     },
     "Reset Article Cache" : {
+
+    },
+    "Reset Recipe Cache" : {
 
     },
     "Restore Subscription" : {

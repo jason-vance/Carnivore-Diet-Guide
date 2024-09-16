@@ -20,6 +20,7 @@ struct SettingsView: View {
     @State private var notificationsAreOn: Bool = false
     
     @State private var showResetArticleCacheDialog: Bool = false
+    @State private var showResetRecipeCacheDialog: Bool = false
     @State private var showLogoutDialog: Bool = false
     @State private var showDeleteAccountDialog: Bool = false
     @State private var showConfirmDeleteAccountSheet: Bool = false
@@ -69,6 +70,7 @@ struct SettingsView: View {
                 Section {
                     NotificationsToggleButton()
                     ResetArticleCacheButton()
+                    ResetRecipeCacheButton()
                 }
                 Section {
                     LogoutButton()
@@ -193,6 +195,29 @@ struct SettingsView: View {
             Button("Yes", role: .destructive) {
                 let resetter = iocContainer~>ArticleCacheResetter.self
                 resetter.resetArticleCache()
+            }
+        }
+    }
+    
+    @ViewBuilder func ResetRecipeCacheButton() -> some View {
+        Button {
+            showResetRecipeCacheDialog = true
+        } label: {
+            ProfileControlLabel(
+                String(localized: "Reset Recipe Cache"),
+                icon: "memorychip",
+                showNavigationAccessories: false
+            )
+        }
+        .listRowBackground(Color.background)
+        .confirmationDialog(
+            "Are you sure you want to reset the recipe cache?",
+            isPresented: $showResetRecipeCacheDialog,
+            titleVisibility: .visible
+        ) {
+            Button("Yes", role: .destructive) {
+                let resetter = iocContainer~>RecipeCacheResetter.self
+                resetter.resetRecipeCache()
             }
         }
     }
