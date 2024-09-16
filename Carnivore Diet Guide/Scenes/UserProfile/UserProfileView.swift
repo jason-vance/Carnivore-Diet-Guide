@@ -65,7 +65,7 @@ struct UserProfileView: View {
                     VStack {
                         if showAds { AdRow() }
                         PicPostsAndOtherStats()
-                            //TODO: Padding here if there is no AdRow
+                            .padding(.top, showAds ? 0 : 16)
                         ProfileControls()
                             .padding(.bottom)
                         BioField()
