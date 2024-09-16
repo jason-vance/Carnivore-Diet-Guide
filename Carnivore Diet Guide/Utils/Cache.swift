@@ -185,7 +185,7 @@ extension Cache where Key: Codable, Value: Codable {
         let fileUrl = Self.fileUrl(withFileName: name, using: fileManager)
         let data = try JSONEncoder().encode(self)
         try data.write(to: fileUrl)
-        print("Cache.saveToDisk: saved to disk\n - Location: \(fileUrl.absoluteString)\n - With \(keys.count) entries")
+        print("Cache: Saved to disk\n - Location: \(fileUrl.absoluteString)\n - With \(keys.count) entries")
     }
     
     static func readFromDisk<TypedCache>(
@@ -204,11 +204,11 @@ extension Cache where Key: Codable, Value: Codable {
         using fileManager: FileManager = .default
     ) -> TypedCache where TypedCache: Cache {
         if let cache = try? readFromDisk(TypedCache.self, withName: name) {
-            print("Cache.readFromDiskOrDefault: found cache on disk with \(cache.keys.count) entries")
+            print("Cache: Found `\(name)` cache on disk with \(cache.keys.count) entries")
             return cache
         }
         
-        print("Cache.readFromDiskOrDefault: instantiating new cache")
+        print("Cache: Instantiating new cache `\(name)`")
         return TypedCache()
     }
 }

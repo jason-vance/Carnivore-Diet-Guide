@@ -75,12 +75,24 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(PostFetcher.self, initializer: { DefaultPostFetcher.forProd })
 
     //Recipe Detail
+    iocContainer.autoregister(IndividualRecipeFetcher.self, initializer: FirebaseRecipeRepository.init)
+    //TODO: Probably get rid of the following after updating RecipeDetailView and adding RecipeView
     iocContainer.autoregister(RecipeFavoriter.self, argument: Recipe.self, initializer: DefaultRecipeFavoriter.init)
     iocContainer.autoregister(FavoriteRecipeRepo.self, initializer: FirebaseUserRepository.init)
     iocContainer.autoregister(RecipeFavoritersRepo.self, initializer: FirebaseRecipeRepository.init)
     iocContainer.autoregister(RecipeCommentsRepo.self, initializer: FirebaseRecipeRepository.init)
     iocContainer.autoregister(RecipeFavoriteCountProvider.self, argument: Recipe.self, initializer: DefaultRecipeFavoriteCountProvider.init)
     iocContainer.autoregister(RecipeCommentCountProvider.self, argument: Recipe.self, initializer: DefaultRecipeCommentCountProvider.init)
+    
+    //Recipes
+    iocContainer.autoregister(RecipeCollectionFetcher.self, initializer: FirebaseRecipeRepository.init)
+    RecipeLibrary.makeInstance(
+        authProvider: iocContainer~>ContentAuthenticationProvider.self,
+        recipeCollectionFetcher: iocContainer~>RecipeCollectionFetcher.self,
+        individualRecipeFetcher: iocContainer~>IndividualRecipeFetcher.self,
+        resourceDeleter: iocContainer~>ResourceDeleter.self
+    )
+    iocContainer.autoregister(RecipeLibrary.self, initializer: { RecipeLibrary.instance })
     
     //User Profile
     iocContainer.autoregister(UserProfileSignOutService.self) { FirebaseAuthenticationProvider.instance }
@@ -101,6 +113,7 @@ fileprivate func setup(iocContainer: Container) {
     //Settings
     iocContainer.autoregister(UserAccountDeleter.self, initializer: FirebaseUserAccountDeleter.init)
     iocContainer.autoregister(ArticleCacheResetter.self, initializer: { ArticleLibrary.instance })
+    iocContainer.autoregister(RecipeCacheResetter.self, initializer: { RecipeLibrary.instance })
 
     //Comment Section
     iocContainer.autoregister(CommentProvider.self, initializer: FirebaseCommentRepository.init)

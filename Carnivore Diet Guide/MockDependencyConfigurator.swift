@@ -66,9 +66,21 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(PostFetcher.self, initializer: { DefaultPostFetcher.forPreviewsWithSuccess })
     
     //Recipe Detail
+    iocContainer.autoregister(IndividualRecipeFetcher.self, initializer: MockIndividualRecipeFetcher.init)
+    //TODO: Probably get rid of the following after updating RecipeDetailView and adding RecipeView
     iocContainer.autoregister(RecipeFavoriter.self, argument: Recipe.self, initializer: MockRecipeFavoriter.init)
     iocContainer.autoregister(RecipeFavoriteCountProvider.self, argument: Recipe.self, initializer: MockRecipeFavoriteCountProvider.init)
     iocContainer.autoregister(RecipeCommentCountProvider.self, argument: Recipe.self, initializer: MockRecipeCommentCountProvider.init)
+    
+    //Recipes
+    iocContainer.autoregister(RecipeCollectionFetcher.self, initializer: MockRecipeCollectionFetcher.init)
+    RecipeLibrary.makeInstance(
+        authProvider: iocContainer~>ContentAuthenticationProvider.self,
+        recipeCollectionFetcher: iocContainer~>RecipeCollectionFetcher.self,
+        individualRecipeFetcher: iocContainer~>IndividualRecipeFetcher.self,
+        resourceDeleter: iocContainer~>ResourceDeleter.self
+    )
+    iocContainer.autoregister(RecipeLibrary.self, initializer: { RecipeLibrary.instance })
     
     //User Profile
     iocContainer.autoregister(UserProfileSignOutService.self, initializer: MockUserProfileSignOutService.init)
@@ -89,7 +101,8 @@ func setupMockIocContainer(_ iocContainer: Container) {
     //Settings
     iocContainer.autoregister(UserAccountDeleter.self, initializer: MockUserAccountDeleter.init)
     iocContainer.autoregister(ArticleCacheResetter.self, initializer: { ArticleLibrary.instance })
-    
+    iocContainer.autoregister(RecipeCacheResetter.self, initializer: { RecipeLibrary.instance })
+
     //Comment Section
     iocContainer.autoregister(CommentProvider.self, initializer: MockCommentProvider.init)
     iocContainer.autoregister(CommentSender.self, initializer: MockCommentSender.init)
