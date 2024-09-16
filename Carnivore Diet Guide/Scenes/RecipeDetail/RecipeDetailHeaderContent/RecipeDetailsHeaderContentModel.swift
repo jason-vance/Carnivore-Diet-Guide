@@ -33,7 +33,7 @@ class RecipeDetailsHeaderContentModel: ObservableObject {
     private func setup() {
         guard let recipe = recipe else { return }
         
-        recipeIsMine = recipe.authorUserId == currentUserIdProvider.currentUserId
+        recipeIsMine = recipe.author == currentUserIdProvider.currentUserId
         
         recipeFavoriter = iocContainer.resolve(RecipeFavoriter.self, argument: recipe)
         recipeFavoriter?.isMarkedAsFavoritePublisher

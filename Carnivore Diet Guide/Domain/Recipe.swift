@@ -30,16 +30,49 @@ struct Recipe: Identifiable {
     }
     
     var id: String
+    let isPremium: Bool
+    var author: String
     var title: String
-    var imageName: String?
-    var imageUrl: String?
-    var authorUserId: String
+    let coverImageUrl: URL
+    var prepTimeMinutes: Int
     var cookTimeMinutes: Int
     var servings: Int
     var difficultyLevel: DifficultyLevel
     var markdownContent: String
     var publicationDate: Date
     var basicNutritionInfo: BasicNutritionInfo?
+    var keywords: Set<SearchKeyword>
+    
+    init(
+        id: String,
+        isPremium: Bool,
+        author: String,
+        title: String,
+        coverImageUrl: URL,
+        prepTimeMinutes: Int,
+        cookTimeMinutes: Int,
+        servings: Int,
+        difficultyLevel: DifficultyLevel,
+        markdownContent: String, 
+        publicationDate: Date,
+        basicNutritionInfo: BasicNutritionInfo? = nil
+    ) {
+        self.id = id
+        self.isPremium = isPremium
+        self.author = author
+        self.title = title
+        self.coverImageUrl = coverImageUrl
+        self.prepTimeMinutes = prepTimeMinutes
+        self.cookTimeMinutes = cookTimeMinutes
+        self.servings = servings
+        self.difficultyLevel = difficultyLevel
+        self.markdownContent = markdownContent
+        self.publicationDate = publicationDate
+        self.basicNutritionInfo = basicNutritionInfo
+        
+        let string = "\(title)\n\(markdownContent.stripMarkdown())"
+        self.keywords = SearchKeyword.keywordsFrom(string: string)
+    }
 }
  
 extension Recipe: Equatable {
@@ -51,9 +84,11 @@ extension Recipe: Equatable {
 extension Recipe {
     static let sample = Recipe(
         id: "sampleRecipeId",
+        isPremium: false,
+        author: "author",
         title: "Seared Ribeye Steak",
-        imageName: "SearedRibeyeSteak",
-        authorUserId: "authorUserId",
+        coverImageUrl: URL(string: "https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_1:1/k%2FPhoto%2FRecipes%2F2023-06-ribeye-steak%2Fribeye-steak-043")!,
+        prepTimeMinutes: 5,
         cookTimeMinutes: 12,
         servings: 5,
         difficultyLevel: .easy,
@@ -75,18 +110,20 @@ extension Recipe {
 4. Serve sauce over cooked spaghetti.
 5. Enjoy!
 """,
-        publicationDate: Date(),
+        publicationDate: .now,
         basicNutritionInfo: .sample
     )
     
     static let longNamedSample = Recipe(
         id: "longNamedSampleRecipeId",
+        isPremium: true,
+        author: "author",
         title: "Grilled Salmon with Lemon Butter and Various Garnishes",
-        imageName: "GrilledSalmonWithLemonButter",
-        authorUserId: "authorUserId",
-        cookTimeMinutes: 17,
-        servings: 5,
-        difficultyLevel: .easy,
+        coverImageUrl: URL(string: "https://www.lecremedelacrumb.com/wp-content/uploads/2022/07/grilled-lemon-butter-salmon-9smb-7.jpg")!,
+        prepTimeMinutes: 10,
+        cookTimeMinutes: 15,
+        servings: 3,
+        difficultyLevel: .intermediate,
         markdownContent: """
 ### Ingredients
 
@@ -105,7 +142,7 @@ extension Recipe {
 4. Serve sauce over cooked spaghetti.
 5. Enjoy!
 """,
-        publicationDate: Date(),
+        publicationDate: .now,
         basicNutritionInfo: .sample
     )
     

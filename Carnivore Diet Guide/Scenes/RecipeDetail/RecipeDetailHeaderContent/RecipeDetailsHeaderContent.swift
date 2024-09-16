@@ -171,7 +171,7 @@ struct RecipeDetailsHeaderContent: View {
         
         iocContainer.autoregister(CurrentUserIdProvider.self) {
             let mock = MockCurrentUserIdProvider()
-            mock.currentUserId = Recipe.sample.authorUserId
+            mock.currentUserId = Recipe.sample.author
             return mock
         }
     } content: {

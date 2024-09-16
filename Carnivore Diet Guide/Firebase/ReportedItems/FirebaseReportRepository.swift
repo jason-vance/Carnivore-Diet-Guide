@@ -39,7 +39,7 @@ extension FirebaseReportRepository: ResourceReporter {
     ) async throws {
         let doc = FirestoreReportedItemDoc(
             item: .itemFrom(resource: resource),
-            itemOwnerId: resource.authorUserId,
+            itemOwnerId: resource.author,
             reporterId: reporterId,
             date: .now
         )

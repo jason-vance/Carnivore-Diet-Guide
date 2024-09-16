@@ -31,12 +31,8 @@ struct RecipeDetailView: View {
     }
     
     @ViewBuilder func HeaderBackground() -> some View {
-        if let imageName = model.recipe?.imageName {
-            Image(imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-        } else if let imageUrl = model.recipe?.imageUrl {
-            KFImage(URL(string: imageUrl))
+        if let imageUrl = model.recipe?.coverImageUrl {
+            KFImage(imageUrl)
                 .resizable()
                 .placeholder {
                     Rectangle()
@@ -59,7 +55,7 @@ struct RecipeDetailView: View {
                 RecipeDetailMetadataView(recipe: recipe)
                 RecipeTitle(recipe)
                 ServingsLine(recipe)
-                ByLineView(userId: recipe.authorUserId)
+                ByLineView(userId: recipe.author)
                 RecipeContentView(recipe)
                 NutritionalInformation(recipe)
             }

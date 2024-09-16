@@ -29,7 +29,7 @@ struct ExtraOptionsButton: View {
     }
     
     private var resourceIsMine: Bool {
-        resource.authorUserId == userIdProvider.currentUserId
+        resource.author == userIdProvider.currentUserId
     }
     
     private func dismissOnMainThread() {
@@ -123,7 +123,7 @@ fileprivate func previewSetup(isMine: Bool, fails: Bool) {
     if isMine {
         iocContainer.autoregister(CurrentUserIdProvider.self) {
             let provider = MockCurrentUserIdProvider()
-            provider.currentUserId = Resource.sample.authorUserId
+            provider.currentUserId = Resource.sample.author
             return provider
         }
     }
