@@ -15,6 +15,7 @@ struct ArticleDetailView: View {
     private let articleLibrary = iocContainer~>ArticleLibrary.self
     private let activityTracker = iocContainer~>ResourceViewActivityTracker.self
     private let userIdProvider = iocContainer~>CurrentUserIdProvider.self
+    private let subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
@@ -22,15 +23,16 @@ struct ArticleDetailView: View {
     @State private var article: Article?
     @State private var isWorking: Bool = false
     
+    @State private var showAds: Bool = false
+    @State private var showMarketing: Bool = false
     @State private var showArticleFailedToFetch: Bool = false
     @State private var showArticleNoLongerAvailable: Bool = false
     
-    @State private var showAds: Bool = false
-    private var showAdsPublisher: AnyPublisher<Bool,Never> {
+    private var isSubscribedPublisher: AnyPublisher<Bool,Never> {
         (iocContainer~>SubscriptionLevelProvider.self)
             .subscriptionLevelPublisher
             .receive(on: RunLoop.main)
-            .map { $0 == SubscriptionLevelProvider.SubscriptionLevel.none }
+            .map { $0 == SubscriptionLevelProvider.SubscriptionLevel.carnivorePlus }
             .eraseToAnyPublisher()
     }
 
@@ -78,36 +80,49 @@ struct ArticleDetailView: View {
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            NavigationBar()
-            if let article = article, !isWorking {
-                ScrollView {
-                    VStack(spacing: 0) {
-                        if showAds { AdRow() }
-                        ArticleView(article: article)
-                            .onAppear { markAsViewed() }
-                            .onAppear { updateArticleDataIfNecessary() }
-                            .onReceive(thisArticleWasRemoved) { _ in
-                                isWorking = true
-                                showArticleNoLongerAvailable = true
-                            }
-                    }
-                }
-            } else {
-                LoadingView()
+        Container()
+            .navigationBarBackButtonHidden()
+            .onChange(of: articleId, initial: true) { _, newArticleId in
+                fetchArticle(withId: newArticleId)
             }
-        }
-        .background(Color.background)
-        .navigationBarBackButtonHidden()
-        .onChange(of: articleId, initial: true) { _, newArticleId in
-            fetchArticle(withId: newArticleId)
-        }
-        .onReceive(showAdsPublisher) { showAds = $0 }
-        .alert("The article could not be fetched", isPresented: $showArticleFailedToFetch) {
-            AlertOkDismissButton()
-        }
-        .alert("This article is no longer available", isPresented: $showArticleNoLongerAvailable) {
-            AlertOkDismissButton()
+            .onReceive(isSubscribedPublisher) { isSubscribed in
+                showAds = !isSubscribed
+                showMarketing = !isSubscribed && (article?.isPremium == true)
+            }
+            .alert("The article could not be fetched", isPresented: $showArticleFailedToFetch) {
+                AlertOkDismissButton()
+            }
+            .alert("This article is no longer available", isPresented: $showArticleNoLongerAvailable) {
+                AlertOkDismissButton()
+            }
+    }
+    
+    @ViewBuilder func Container() -> some View {
+        if showMarketing {
+            MarketingView {
+                dismiss()
+            }
+        } else {
+            VStack(spacing: 0) {
+                NavigationBar()
+                if let article = article, !isWorking {
+                    ScrollView {
+                        VStack(spacing: 0) {
+                            if showAds { AdRow() }
+                            ArticleView(article: article)
+                                .onAppear { markAsViewed() }
+                                .onAppear { updateArticleDataIfNecessary() }
+                                .onReceive(thisArticleWasRemoved) { _ in
+                                    isWorking = true
+                                    showArticleNoLongerAvailable = true
+                                }
+                        }
+                    }
+                } else {
+                    LoadingView()
+                }
+            }
+            .background(Color.background)
         }
     }
     

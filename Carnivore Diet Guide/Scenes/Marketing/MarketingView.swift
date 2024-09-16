@@ -94,26 +94,6 @@ struct MarketingView: View {
         }
     }
     
-    @ViewBuilder func FeatureList() -> some View {
-//        let text = """
-//As a member of Carnivore+ you will gain access to premium content and features including:
-//* **Ad-Free Experience:** Enjoy the app without interruptions.
-//* **Exclusive Articles & Guides:** In-depth resources not available to free users.
-//* **Premium Recipes:** Access to an expanded collection of carnivore diet recipes.
-//* **Advanced Progress Tracking:** Enhanced tools to monitor your health metrics and progress. Coming soon.
-//"""
-//        
-//        HStack {
-//            Markdown(text)
-//                .markdownTextStyle {
-//                    ForegroundColor(Color.text)
-//                }
-//                .frame(maxWidth: .infinity)
-//                .padding(.vertical)
-//            Spacer()
-//        }
-    }
-    
     @ViewBuilder func AdFreeExperience() -> some View {
         VStack {
             HStack {
