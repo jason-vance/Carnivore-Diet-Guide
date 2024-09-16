@@ -27,6 +27,7 @@ struct ResourceCategoryView: View {
         HStack(spacing: 4) {
             if let image = category.image {
                 Image(systemName: image)
+                    .frame(height: 16)
             }
             Text(category.name)
         }
@@ -38,7 +39,6 @@ struct ResourceCategoryView: View {
             RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                 .foregroundStyle(isHighlighted ? Color.accent : Color.accent.opacity(0.1))
         }
-        //TODO: heights are different based on the image size
     }
 }
 
