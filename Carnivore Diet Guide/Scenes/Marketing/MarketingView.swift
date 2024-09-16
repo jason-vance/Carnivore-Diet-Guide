@@ -18,7 +18,9 @@ struct MarketingView: View {
     
     @Environment(\.purchase) private var purchase: PurchaseAction
     @State private var product: Product? = nil
-    
+    @State private var isWorking: Bool = false
+    @State private var showBuiltInRestoreButton: Bool = false
+
     var body: some View {
         VStack(spacing: 0) {
             TopBar()
@@ -57,8 +59,9 @@ struct MarketingView: View {
     
     @ViewBuilder func TopBar() -> some View {
         ScreenTitleBar(
-            "Carnivore+",
-            leadingContent: CancelButton
+            primaryContent: { Text("Carnivore+") },
+            leadingContent: CancelButton,
+            trailingContent: WorkingIndicator
         )
     }
     
@@ -67,6 +70,14 @@ struct MarketingView: View {
             cancel()
         } label: {
             ResourceMenuButtonLabel(sfSymbol: "xmark")
+        }
+    }
+    
+    @ViewBuilder func WorkingIndicator() -> some View {
+        if isWorking {
+            ProgressView()
+                .progressViewStyle(.circular)
+                .tint(Color.accent)
         }
     }
     
@@ -200,26 +211,37 @@ struct MarketingView: View {
     }
     
     @ViewBuilder func SubscribeButton() -> some View {
-        SubscriptionStoreView(groupID: subscriptionManager.carnivorePlusSubscriptionGroupId) {
-            Image("steak")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .clipShape(.rect(cornerRadius: .cornerRadiusMedium, style: .continuous))
-                .padding(.horizontal)
-        }
-        .onInAppPurchaseCompletion { product, purchaseResult in
-            if case .success(.success(let verificationResult)) = purchaseResult {
-                switch verificationResult {
-                case .verified(let transaction):
-                    subscriptionManager.handle(verifiedTransaction: transaction)
-                case .unverified(let transaction, let error):
-                    subscriptionManager.handle(unverifiedTransaction: transaction, withError: error)
+        VStack(spacing: 0) {
+            SubscriptionStoreView(groupID: subscriptionManager.carnivorePlusSubscriptionGroupId) {
+                Image("steak")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .clipShape(.rect(cornerRadius: .cornerRadiusMedium, style: .continuous))
+                    .padding(.horizontal)
+            }
+            .onInAppPurchaseStart { _ in
+                withAnimation(.snappy) { isWorking = true }
+            }
+            .onInAppPurchaseCompletion { product, purchaseResult in
+                withAnimation(.snappy) { isWorking = false }
+                if case .success(.success(let verificationResult)) = purchaseResult {
+                    subscriptionManager.handle(transactionUpdate: verificationResult)
+                }
+            }
+            .storeButton(showBuiltInRestoreButton ? .visible : .hidden, for: .restorePurchases)
+            .subscriptionStoreControlStyle(.picker)
+            .preferredColorScheme(.light)
+            if !showBuiltInRestoreButton {
+                Button {
+                    subscriptionManager.checkSubscriptionStatus()
+                    withAnimation(.snappy) { showBuiltInRestoreButton = true }
+                } label: {
+                    Text("Restore Subscription")
+                        .foregroundStyle(Color.accent)
+                        .bold()
                 }
             }
         }
-        .storeButton(.visible, for: .restorePurchases)
-        .subscriptionStoreControlStyle(.picker)
-        .preferredColorScheme(.light)
     }
 }
 

@@ -11,7 +11,6 @@ import StoreKit
 class SubscriptionLevelProvider {
     
     private let subscriptionLevelKey = "subscriptionLevelKey"
-    private let unverifiedCountKey = "unverifiedCountKey"
 
     enum SubscriptionLevel: String {
         case none
@@ -23,6 +22,8 @@ class SubscriptionLevelProvider {
     public let carnivorePlusYearlyId = "carnivorePlusYearly"
     private var subscriptions: [String] { [carnivorePlusMonthlyId, carnivorePlusYearlyId] }
     
+    private var updates: Task<Void, Never>? = nil
+    
     @Published public private(set) var subscriptionLevel: SubscriptionLevel = .none
     var subscriptionLevelPublisher: Published<SubscriptionLevel>.Publisher { $subscriptionLevel }
     
@@ -32,65 +33,74 @@ class SubscriptionLevelProvider {
     
     private init() {
         checkSubscriptionStatus()
+        updates = updatesListenerTask()
     }
     
+    private func updatesListenerTask() -> Task<Void, Never> {
+        Task(priority: .background) {
+            for await verificationResult in Transaction.updates {
+                handle(transactionUpdate: verificationResult)
+            }
+        }
+    }
+        
     func checkSubscriptionStatus() {
         subscriptionLevel = SubscriptionLevel(rawValue: UserDefaults.standard.string(forKey: subscriptionLevelKey) ?? "") ?? .none
         
-        Task {
+        Task(priority: .userInitiated) {
             var foundTransaction = false
             
             for await verificationResult in Transaction.currentEntitlements {
-                switch verificationResult {
-                case .verified(let transaction):
-                    if subscriptions.contains(transaction.productID) {
-                        handle(verifiedTransaction: transaction)
-                        foundTransaction = true
-                    }
-                case .unverified(let transaction, let error):
-                    if subscriptions.contains(transaction.productID) {
-                        handle(unverifiedTransaction: transaction, withError: error)
-                        foundTransaction = true
-                    }
+                if case .verified(let transaction) = verificationResult,
+                   carnivorePlusSubscriptionGroupId == transaction.subscriptionGroupID
+                {
+                    print("SubscriptionManager; found current entitlement")
+                    set(subscriptionLevel: .carnivorePlus)
+                    foundTransaction = true
                 }
             }
             
             if !foundTransaction {
+                print("SubscriptionManager; did not find current entitlement")
                 set(subscriptionLevel: .none)
-                saveVerifiedSubscriptionLevel()
             }
         }
     }
     
-    func handle(verifiedTransaction: Transaction) {
-        print("SubscriptionManager; Handling verified transaction `\(verifiedTransaction.productID)`.")
-        set(subscriptionLevel: .carnivorePlus)
-        saveVerifiedSubscriptionLevel()
-    }
-    
-    func handle(unverifiedTransaction: Transaction, withError error: VerificationResult<Transaction>.VerificationError) {
-        print("SubscriptionManager; Handling unverified transaction `\(unverifiedTransaction.productID)`. \(error.localizedDescription)")
-        set(subscriptionLevel: .carnivorePlus)
-        saveUnverifiedSubscriptionLevel()
-    }
-    
-    private func saveVerifiedSubscriptionLevel() {
-        UserDefaults.standard.set(subscriptionLevel.rawValue, forKey: subscriptionLevelKey)
-        UserDefaults.standard.set(0, forKey: unverifiedCountKey)
-    }
-    
-    private func saveUnverifiedSubscriptionLevel() {
-        UserDefaults.standard.set(subscriptionLevel.rawValue, forKey: subscriptionLevelKey)
-        let unverifiedCount = UserDefaults.standard.integer(forKey: unverifiedCountKey)
-        if unverifiedCount < 3 {
-            UserDefaults.standard.set(unverifiedCount + 1, forKey: unverifiedCountKey)
-        } else {
+    func handle(transactionUpdate verificationResult: VerificationResult<Transaction>) {
+        print("SubscriptionManager; handle(updatedTransaction:)")
+        guard case .verified(let transaction) = verificationResult else {
+            // Ignore unverified transactions.
+            return
+        }
+        guard subscriptions.contains(transaction.productID) else {
+            // Ignore transactions we don't know how to handle.
+            return
+        }
+
+
+        if let _ = transaction.revocationDate {
+            // Remove access to the product identified by transaction.productID.
+            // Transaction.revocationReason provides details about
+            // the revoked transaction.
             set(subscriptionLevel: .none)
-            saveVerifiedSubscriptionLevel()
+        } else if let expirationDate = transaction.expirationDate,
+            expirationDate < Date() {
+            // Do nothing, this subscription is expired.
+            return
+        } else if transaction.isUpgraded {
+            // Do nothing, there is an active transaction
+            // for a higher level of service.
+            return
+        } else {
+            // Provide access to the product identified by
+            // transaction.productID.
+            set(subscriptionLevel: .carnivorePlus)
         }
     }
     
     func set(subscriptionLevel: SubscriptionLevel) {
         self.subscriptionLevel = subscriptionLevel
+        UserDefaults.standard.set(subscriptionLevel.rawValue, forKey: subscriptionLevelKey)
     }
 }
