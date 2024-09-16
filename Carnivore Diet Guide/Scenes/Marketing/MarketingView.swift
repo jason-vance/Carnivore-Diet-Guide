@@ -8,10 +8,13 @@
 import SwiftUI
 import MarkdownUI
 import StoreKit
+import SwinjectAutoregistration
 
 struct MarketingView: View {
     
     let cancel: () -> ()
+    
+    private let subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
     
     @Environment(\.purchase) private var purchase: PurchaseAction
     @State private var product: Product? = nil
@@ -217,13 +220,24 @@ struct MarketingView: View {
     }
     
     @ViewBuilder func SubscribeButton() -> some View {
-        SubscriptionStoreView(groupID: "21537446") {
+        SubscriptionStoreView(groupID: subscriptionManager.carnivorePlusSubscriptionGroupId) {
             Image("steak")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .clipShape(.rect(cornerRadius: .cornerRadiusMedium, style: .continuous))
                 .padding(.horizontal)
         }
+        .onInAppPurchaseCompletion { product, purchaseResult in
+            if case .success(.success(let verificationResult)) = purchaseResult {
+                switch verificationResult {
+                case .verified(let transaction):
+                    subscriptionManager.handle(verifiedTransaction: transaction)
+                case .unverified(let transaction, let error):
+                    subscriptionManager.handle(unverifiedTransaction: transaction, withError: error)
+                }
+            }
+        }
+        .storeButton(.visible, for: .restorePurchases)
         .subscriptionStoreControlStyle(.picker)
         .preferredColorScheme(.light)
     }

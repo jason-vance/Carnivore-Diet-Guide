@@ -19,6 +19,11 @@ struct HomeView: View {
         (iocContainer~>CurrentUserIdProvider.self).currentUserId!
     }
     
+    private func checkSubscriptionStatus() {
+        let subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
+        subscriptionManager.checkSubscriptionStatus()
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
@@ -35,6 +40,7 @@ struct HomeView: View {
         }
         .ignoresSafeArea(.keyboard)
         .alert(model.alertMessage, isPresented: $model.showAlert) {}
+        .onAppear { checkSubscriptionStatus() }
     }
     
     @ViewBuilder func TabItemLabel(text: String, image: String) -> some View {
