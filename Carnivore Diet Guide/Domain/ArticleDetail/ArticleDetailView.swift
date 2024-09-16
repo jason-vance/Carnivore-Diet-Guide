@@ -24,7 +24,7 @@ struct ArticleDetailView: View {
     @State private var isWorking: Bool = false
     
     @State private var showAds: Bool = false
-    @State private var showMarketing: Bool = false
+    @State private var showMarketing: Bool? = nil
     @State private var showArticleFailedToFetch: Bool = false
     @State private var showArticleNoLongerAvailable: Bool = false
     
@@ -98,14 +98,14 @@ struct ArticleDetailView: View {
     }
     
     @ViewBuilder func Container() -> some View {
-        if showMarketing {
+        if showMarketing == true {
             MarketingView {
                 dismiss()
             }
         } else {
             VStack(spacing: 0) {
                 NavigationBar()
-                if let article = article, !isWorking {
+                if let article = article, !isWorking && showMarketing != nil {
                     ScrollView {
                         VStack(spacing: 0) {
                             if showAds { AdRow() }
@@ -116,6 +116,7 @@ struct ArticleDetailView: View {
                                     isWorking = true
                                     showArticleNoLongerAvailable = true
                                 }
+                                .padding(.top, showAds ? 16 : 0)
                         }
                     }
                 } else {

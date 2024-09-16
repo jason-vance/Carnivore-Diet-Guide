@@ -75,6 +75,7 @@ struct PostDetailView: View {
                         if showAds { AdRow() }
                         PostView(post: post)
                             .onAppear { markAsViewed() }
+                            .padding(.top, showAds ? 16 : 0)
                     }
                 }
             } else {

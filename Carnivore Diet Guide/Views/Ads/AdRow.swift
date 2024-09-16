@@ -8,28 +8,33 @@
 import SwiftUI
 
 struct AdRow: View {
+    
+    @State private var showMarketingView: Bool = false
+    
     var body: some View {
         VStack {
             BasicBannerAdView()
                 .frame(minHeight: 91)
-            //TODO: Uncomment this when subscriptions are available
-//            RemoveAdsButton()
+            RemoveAdsButton()
         }
     }
     
     @ViewBuilder func RemoveAdsButton() -> some View {
         Button {
-            //TODO: Show subscription info
+            showMarketingView = true
         } label: {
             Text("Remove these ads")
                 .foregroundStyle(Color.accent)
                 .font(.footnote.bold())
-                .padding(.horizontal, .paddingHorizontalButtonSmall)
-                .padding(.vertical, .paddingVerticalButtonSmall)
+                .padding(.horizontal, .paddingHorizontalButtonXSmall)
+                .padding(.vertical, .paddingVerticalButtonXSmall)
                 .background {
                     RoundedRectangle(cornerRadius: .cornerRadiusSmall, style: .continuous)
                         .foregroundStyle(Color.accent.opacity(0.1))
                 }
+        }
+        .fullScreenCover(isPresented: $showMarketingView) {
+            MarketingView { showMarketingView = false }
         }
     }
 }
