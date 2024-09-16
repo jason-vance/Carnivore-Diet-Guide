@@ -38,6 +38,7 @@ struct ResourceCategoryView: View {
             RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
                 .foregroundStyle(isHighlighted ? Color.accent : Color.accent.opacity(0.1))
         }
+        //TODO: heights are different based on the image size
     }
 }
 

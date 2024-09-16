@@ -12,14 +12,14 @@ struct ResourceImageView: View {
     
     private class ResourceImageModifier: ImageModifier {
         
-        let aspectRatio: CGFloat
+        private let aspectRatio: Binding<CGFloat>
         
-        init(aspectRatio: CGFloat) {
+        init(aspectRatio: Binding<CGFloat>) {
             self.aspectRatio = aspectRatio
         }
         
         func modify(_ image: KFCrossPlatformImage) -> KFCrossPlatformImage {
-            guard let image = image.scaledToFill(aspectRatio: aspectRatio) else {
+            guard let image = image.scaledToFill(aspectRatio: aspectRatio.wrappedValue) else {
                 return image
             }
             return image
@@ -48,7 +48,7 @@ struct ResourceImageView: View {
             .resizable()
             .cacheOriginalImage()
             .diskCacheExpiration(.days(7))
-            .imageModifier(ResourceImageModifier(aspectRatio: aspectRatio))
+            .imageModifier(ResourceImageModifier(aspectRatio: $aspectRatio))
             .placeholder { PlaceholderView() }
             .aspectRatio(aspectRatio, contentMode: .fill)
             .onChange(of: __aspectRatio, initial: true) { _, newAspectRatio in
