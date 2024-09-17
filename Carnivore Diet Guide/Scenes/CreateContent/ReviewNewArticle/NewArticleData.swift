@@ -9,7 +9,7 @@ import Foundation
 
 struct NewArticleData: Hashable {
     let data: ContentData
-    let metadata: ContentMetadata
+    let metadata: ArticleMetadata
     
     static let sample: NewArticleData = .init(data: .sample, metadata: .sample)
 }

@@ -23,16 +23,16 @@ struct RecipeCacheEntry: Codable {
     var author: String?
     var title: String?
     var coverImageUrl: String?
-    var prepTimeMinutes: Int?
-    var cookTimeMinutes: Int?
-    var servings: Int?
+    var prepTimeMinutes: UInt?
+    var cookTimeMinutes: UInt?
+    var servings: UInt?
     var difficultyLevel: String?
     var markdownContent: String?
     var publicationDate: Date?
-    var calories: Int?
-    var protein: Int?
-    var fat: Int?
-    var carbohydrates: Int?
+    var calories: UInt?
+    var protein: UInt?
+    var fat: UInt?
+    var carbohydrates: UInt?
     
     private var basicNutritionInfo: BasicNutritionInfo? {
         guard let calories = calories else { return nil }

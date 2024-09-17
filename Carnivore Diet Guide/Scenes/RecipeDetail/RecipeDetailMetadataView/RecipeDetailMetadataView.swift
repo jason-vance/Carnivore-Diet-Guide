@@ -44,7 +44,7 @@ struct RecipeDetailMetadataView: View {
         .foregroundStyle(Color.text)
         .onChange(of: model.difficultyLevel, initial: true) { difficultyLevel in
             withAnimation(.snappy) {
-                showDifficultyLevel = difficultyLevel != .unknown
+                showDifficultyLevel = true
             }
         }
         .onChange(of: model.cookTimeMinutes, initial: true) { cookTimeMinutes in

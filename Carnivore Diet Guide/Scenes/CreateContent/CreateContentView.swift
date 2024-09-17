@@ -104,8 +104,11 @@ struct CreateContentView: View {
                 dismissAll: { dismiss() }
             )
         case .recipe:
-            //TODO: Navigate to the next correct recipe creation step
-            Text(data.title)
+            CreateRecipeMetadataView(
+                contentData: data,
+                navigationPath: $navigationPath,
+                dismissAll: { dismiss() }
+            )
         case .article:
             CreateArticleMetadataView(
                 contentData: data,

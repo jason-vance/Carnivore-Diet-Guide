@@ -1,18 +1,18 @@
 //
-//  CreateArticleMetadataView.swift
+//  CreateRecipeMetadataView.swift
 //  Carnivore Diet Guide
 //
-//  Created by Jason Vance on 8/30/24.
+//  Created by Jason Vance on 9/16/24.
 //
 
 import SwiftUI
 import SwinjectAutoregistration
 
-struct CreateArticleMetadataView: View {
+struct CreateRecipeMetadataView: View {
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
-    @StateObject private var model = CreateArticleMetadataViewModel(
+    @StateObject private var model = CreateRecipeMetadataViewModel(
     )
     
     @State public var contentData: ContentData
@@ -21,15 +21,17 @@ struct CreateArticleMetadataView: View {
     
     @State private var summaryText: String = ""
     @State private var showPublicationDatePicker: Bool = false
-    @State private var showAddCategoryDialog: Bool = false
+    @State private var prepTimeText: String = ""
+    @State private var cookTimeText: String = ""
+    @State private var servingsText: String = ""
     @State private var showEditKeywordsDialog: Bool = false
     @State private var showDiscardDialog: Bool = false
     
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     
-    private var articleMetadata: ArticleMetadata? {
-        model.getArticleMetadata(id: contentData.id)
+    private var recipeMetadata: RecipeMetadata? {
+        model.getRecipeMetadata(id: contentData.id)
     }
     
     private var summaryInstructions: String {
@@ -46,12 +48,8 @@ struct CreateArticleMetadataView: View {
         return count
     }
     
-    private var sortedCategories: [Resource.Category] {
-        model.articleCategories.sorted { $0.name < $1.name }
-    }
-    
     private var sortedKeywords: [SearchKeyword] {
-        model.articleSearchKeywords.sorted { $0.text < $1.text }
+        model.recipeSearchKeywords.sorted { $0.text < $1.text }
     }
     
     private func show(alertMessage: String) {
@@ -68,11 +66,11 @@ struct CreateArticleMetadataView: View {
     }
     
     private func goToNext() {
-        guard let articleMetadata = model.getArticleMetadata(id: contentData.id) else {
-            show(alertMessage: "Could not create ArticleMetadata")
+        guard let recipeMetadata = model.getRecipeMetadata(id: contentData.id) else {
+            show(alertMessage: "Could not create RecipeMetadata")
             return
         }
-        navigationPath.append(NewArticleData(data: contentData, metadata: articleMetadata))
+        navigationPath.append(NewRecipeData(data: contentData, metadata: recipeMetadata))
     }
     
     var body: some View {
@@ -81,7 +79,9 @@ struct CreateArticleMetadataView: View {
             List {
                 SummaryField()
                 PublicationDateField()
-                CategoriesField()
+                DifficultyField()
+                PrepAndCookTimeField()
+                NutritionField()
                 SearchKeywordsField()
             }
             .listStyle(.grouped)
@@ -93,13 +93,13 @@ struct CreateArticleMetadataView: View {
             model.set(title: newData.title, markdownContent: newData.markdownContent)
         }
         .onChange(of: summaryText, initial: false) { _, newSummaryText in
-            model.articleSummary = .init(newSummaryText)
+            model.recipeSummary = .init(newSummaryText)
         }
     }
     
     @ViewBuilder func TopBar() -> some View {
         ScreenTitleBar {
-            Text("Article Metadata")
+            Text("Recipe Metadata")
         } leadingContent: {
             BackButton()
         } trailingContent: {
@@ -138,7 +138,7 @@ struct CreateArticleMetadataView: View {
         NextButton {
             goToNext()
         }
-        .disabled(articleMetadata == nil)
+        .disabled(recipeMetadata == nil)
     }
     
     @ViewBuilder func SummaryField() -> some View {
@@ -174,7 +174,7 @@ struct CreateArticleMetadataView: View {
                     showPublicationDatePicker.toggle()
                 }
             } label: {
-                Text(model.articlePublicationDate.toBasicUiString())
+                Text(model.recipePublicationDate.toBasicUiString())
                     .foregroundStyle(Color.accent)
                     .padding(.horizontal, .paddingHorizontalButtonMedium)
                     .padding(.vertical, .paddingVerticalButtonMedium)
@@ -190,7 +190,7 @@ struct CreateArticleMetadataView: View {
                 
                 DatePicker(
                     "Publication Date",
-                    selection: $model.articlePublicationDate,
+                    selection: $model.recipePublicationDate,
                     in: tomorrow...,
                     displayedComponents: [.date]
                 )
@@ -206,65 +206,109 @@ struct CreateArticleMetadataView: View {
         }
     }
     
-    @ViewBuilder func CategoriesField() -> some View {
+    @ViewBuilder func PrepAndCookTimeField() -> some View {
         Section {
-            if !sortedCategories.isEmpty {
-                ForEach(sortedCategories) { category in
-                    RemoveCategoryButton(category)
-                }
+            LabeledContent("Prep Time") {
+                TextField("Prep Time", text: $prepTimeText, prompt: Text("Minutes"))
+                    .keyboardType(.numberPad)
+                    .frame(width: 100)
+                    .padding(.horizontal, .paddingHorizontalButtonMedium)
+                    .padding(.vertical, .paddingVerticalButtonMedium)
+                    .background {
+                        RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                            .stroke(style: .init(lineWidth: .borderWidthMedium))
+                            .foregroundStyle(Color.accent)
+                    }
             }
-            AddCategoryButton()
+            .listRowBackground(Color.background)
+            .listRowSeparator(.hidden)
+            LabeledContent("Cook Time") {
+                TextField("Cook Time", text: $cookTimeText, prompt: Text("Minutes"))
+                    .keyboardType(.numberPad)
+                    .frame(width: 100)
+                    .padding(.horizontal, .paddingHorizontalButtonMedium)
+                    .padding(.vertical, .paddingVerticalButtonMedium)
+                    .background {
+                        RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                            .stroke(style: .init(lineWidth: .borderWidthMedium))
+                            .foregroundStyle(Color.accent)
+                    }
+            }
+            .listRowBackground(Color.background)
+            .listRowSeparator(.hidden)
         } header: {
-            Text("Categories")
+            Text("Prep & Cook Time")
+                .foregroundStyle(Color.text)
+        }
+        .onChange(of: prepTimeText, initial: true) { _, prepTimeText in
+            model.recipePrepTimeMinutes = UInt(prepTimeText)
+        }
+        .onChange(of: cookTimeText, initial: true) { _, cookTimeText in
+            model.recipeCookTimeMinutes = UInt(cookTimeText)
+        }
+    }
+    
+    @ViewBuilder func DifficultyField() -> some View {
+        Section {
+            Menu {
+                DifficultyLevelButton(.beginner)
+                DifficultyLevelButton(.intermediate)
+                DifficultyLevelButton(.advanced)
+            } label: {
+                Text(model.recipeDifficultyLevel.toUiString())
+                    .foregroundStyle(Color.accent)
+                    .padding(.horizontal, .paddingHorizontalButtonMedium)
+                    .padding(.vertical, .paddingVerticalButtonMedium)
+                    .background {
+                        RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                            .foregroundStyle(Color.accent.opacity(0.1))
+                    }
+            }
+            .listRowBackground(Color.background)
+            .listRowSeparator(.hidden)
+        } header: {
+            Text("Difficulty Level")
                 .foregroundStyle(Color.text)
         }
     }
     
-    @ViewBuilder func RemoveCategoryButton(_ category: Resource.Category) -> some View {
+    @ViewBuilder func DifficultyLevelButton(_ level: Recipe.DifficultyLevel) -> some View {
         Button {
-            withAnimation(.snappy) {
-                model.remove(category: category)
-            }
+            model.recipeDifficultyLevel = level
         } label: {
             HStack {
-                Image(systemName: "minus")
-                    .foregroundStyle(Color.accent)
-                ResourceCategoryView(category)
+                Text(level.toUiString())
                 Spacer()
-            }
-        }
-        .listRowSeparator(.hidden)
-        .listRowBackground(Color.background)
-    }
-    
-    @ViewBuilder func AddCategoryButton() -> some View {
-        let isHighlighted = model.articleCategories.isEmpty
-        
-        Button {
-            showAddCategoryDialog = true
-        } label: {
-            HStack {
-                Image(systemName: "plus")
-                Text("Category")
-            }
-            .foregroundStyle(isHighlighted ? Color.background : Color.accent)
-            .padding(.horizontal, isHighlighted ? .paddingHorizontalButtonMedium : 0)
-            .padding(.vertical, isHighlighted ? .paddingVerticalButtonMedium : 0)
-            .background {
-                RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
-                    .foregroundStyle(isHighlighted ? Color.accent : Color.background)
-            }
-        }
-        .listRowSeparator(.hidden)
-        .listRowBackground(Color.background)
-        .sheet(isPresented: $showAddCategoryDialog) {
-            SelectCategoryView(resourceType: .article) { selectedCategory in
-                withAnimation(.snappy) {
-                    model.add(category: selectedCategory)
+                if model.recipeDifficultyLevel == level {
+                    Image(systemName: "checkmark")
                 }
             }
-            .padding(.top)
-            .presentationBackground(Color.background)
+        }
+    }
+    
+    @ViewBuilder func NutritionField() -> some View {
+        Section {
+            LabeledContent("Servings") {
+                TextField("Servings", text: $servingsText, prompt: Text("Servings"))
+                    .keyboardType(.numberPad)
+                    .frame(width: 100)
+                    .padding(.horizontal, .paddingHorizontalButtonMedium)
+                    .padding(.vertical, .paddingVerticalButtonMedium)
+                    .background {
+                        RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                            .stroke(style: .init(lineWidth: .borderWidthMedium))
+                            .foregroundStyle(Color.accent)
+                    }
+            }
+            .listRowBackground(Color.background)
+            .listRowSeparator(.hidden)
+            //TODO: Implement NutritionInfoField
+        } header: {
+            Text("Nutrition")
+                .foregroundStyle(Color.text)
+        }
+        .onChange(of: servingsText, initial: true) { _, servingsText in
+            model.recipeServings = UInt(servingsText)
         }
     }
     
@@ -278,12 +322,12 @@ struct CreateArticleMetadataView: View {
     }
     
     @ViewBuilder func AddSearchKeywordButton() -> some View {
-        let isHighlighted = model.articleSearchKeywords.isEmpty
+        let isHighlighted = model.recipeSearchKeywords.isEmpty
         
         Button {
             showEditKeywordsDialog = true
         } label: {
-            Text("Edit \(model.articleSearchKeywords.count) Keywords")
+            Text("Edit \(model.recipeSearchKeywords.count) Keywords")
                 .foregroundStyle(isHighlighted ? Color.background : Color.accent)
                 .padding(.horizontal, isHighlighted ? .paddingHorizontalButtonMedium : 0)
                 .padding(.vertical, isHighlighted ? .paddingVerticalButtonMedium : 0)
@@ -295,7 +339,7 @@ struct CreateArticleMetadataView: View {
         .listRowBackground(Color.background)
         .listRowSeparator(.hidden)
         .sheet(isPresented: $showEditKeywordsDialog) {
-            EditKeywordsView(keywords: model.articleSearchKeywords)
+            EditKeywordsView(keywords: model.recipeSearchKeywords)
                 .padding(.top)
                 .presentationBackground(Color.background)
                 .presentationDragIndicator(.visible)
@@ -307,7 +351,7 @@ struct CreateArticleMetadataView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
-        CreateArticleMetadataView(
+        CreateRecipeMetadataView(
             contentData: .sample,
             navigationPath: .constant(.init())
         ) {}

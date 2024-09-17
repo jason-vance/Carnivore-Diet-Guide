@@ -27,7 +27,7 @@ class CreateArticleMetadataViewModel: ObservableObject {
         || articleCategories.count > 0
     }
     
-    public func getContentMetadata(id: UUID) -> ContentMetadata? {
+    public func getArticleMetadata(id: UUID) -> ArticleMetadata? {
         guard let articleSummary = articleSummary else { return nil }
         guard !articleCategories.isEmpty else { return nil }
         guard !articleSearchKeywords.isEmpty else { return nil }
@@ -36,8 +36,7 @@ class CreateArticleMetadataViewModel: ObservableObject {
             id: id,
             summary: articleSummary,
             publicationDate: articlePublicationDate,
-            categories: articleCategories,
-            searchKeywords: articleSearchKeywords
+            categories: articleCategories
         )
     }
     

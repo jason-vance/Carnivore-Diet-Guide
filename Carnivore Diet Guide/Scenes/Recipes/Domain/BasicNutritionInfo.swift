@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct BasicNutritionInfo {
-    var calories: Int
-    var protein: Int
-    var fat: Int
-    var carbohydrates: Int
+struct BasicNutritionInfo: Hashable {
+    var calories: UInt
+    var protein: UInt
+    var fat: UInt
+    var carbohydrates: UInt
 }
 
 extension BasicNutritionInfo {

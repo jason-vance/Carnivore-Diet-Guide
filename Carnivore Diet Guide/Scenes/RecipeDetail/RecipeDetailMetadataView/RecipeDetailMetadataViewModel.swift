@@ -18,8 +18,8 @@ class RecipeDetailMetadataViewModel: ObservableObject {
         }
     }
     
-    @Published var difficultyLevel: Recipe.DifficultyLevel = .unknown
-    @Published var cookTimeMinutes: Int = 0
+    @Published var difficultyLevel: Recipe.DifficultyLevel = .beginner
+    @Published var cookTimeMinutes: UInt = 0
     @Published var commentCount: UInt = 0
     @Published var favoriteCount: UInt = 0
 

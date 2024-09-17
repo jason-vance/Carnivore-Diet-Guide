@@ -10,21 +10,18 @@ import Foundation
 struct Recipe: Identifiable {
     
     enum DifficultyLevel: String {
-        case unknown
-        case easy
+        case beginner
         case intermediate
-        case hard
+        case advanced
         
         func toUiString() -> String {
             switch self {
-            case .unknown:
-                return String(localized: "Unknown", comment: "Difficulty level is 'Unknown'")
-            case .easy:
-                return String(localized: "Easy", comment: "Difficulty level is 'Easy'")
+            case .beginner:
+                return String(localized: "Beginner", comment: "Difficulty level is 'Beginner'")
             case .intermediate:
                 return String(localized: "Intermediate", comment: "Difficulty level is 'Intermediate'")
-            case .hard:
-                return String(localized: "Hard", comment: "Difficulty level is 'Hard'")
+            case .advanced:
+                return String(localized: "Advanced", comment: "Difficulty level is 'Advanced'")
             }
         }
     }
@@ -34,9 +31,9 @@ struct Recipe: Identifiable {
     var author: String
     var title: String
     let coverImageUrl: URL
-    var prepTimeMinutes: Int
-    var cookTimeMinutes: Int
-    var servings: Int
+    var prepTimeMinutes: UInt
+    var cookTimeMinutes: UInt
+    var servings: UInt
     var difficultyLevel: DifficultyLevel
     var markdownContent: String
     var publicationDate: Date
@@ -49,9 +46,9 @@ struct Recipe: Identifiable {
         author: String,
         title: String,
         coverImageUrl: URL,
-        prepTimeMinutes: Int,
-        cookTimeMinutes: Int,
-        servings: Int,
+        prepTimeMinutes: UInt,
+        cookTimeMinutes: UInt,
+        servings: UInt,
         difficultyLevel: DifficultyLevel,
         markdownContent: String, 
         publicationDate: Date,
@@ -97,7 +94,7 @@ extension Recipe {
         prepTimeMinutes: 5,
         cookTimeMinutes: 12,
         servings: 5,
-        difficultyLevel: .easy,
+        difficultyLevel: .beginner,
         markdownContent: """
 ### Ingredients
 

@@ -8,7 +8,7 @@
 import Foundation
 
 enum CookTimeFormatter {
-    static func formatMinutes(_ cookTimeMinutes: Int) -> String {
+    static func formatMinutes(_ cookTimeMinutes: UInt) -> String {
         let hours = cookTimeMinutes / 60
         let minutes = cookTimeMinutes % 60
         
