@@ -10,12 +10,7 @@ import Kingfisher
 import SwinjectAutoregistration
 
 struct KnowledgeBaseView: View {
-    
-    private let prominentItemHeight: CGFloat = 150
-    private let regularItemHeight: CGFloat = 100
-    private let subduedItemHeight: CGFloat = 72
-    private let margin: CGFloat = 16
-    
+        
     @State private var navigationPath = NavigationPath()
 
     @State var selectedCategory: Resource.Category = .featured

@@ -69,5 +69,4 @@ final class SearchKeywordTests: XCTestCase {
         )
         XCTAssertEqual(11, keywords.first!.score)
     }
-
 }

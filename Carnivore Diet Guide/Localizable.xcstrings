@@ -78,9 +78,6 @@
         }
       }
     },
-    "%lld" : {
-
-    },
     "%lld days ago" : {
       "localizations" : {
         "en" : {
@@ -419,9 +416,6 @@
 
     },
     "Article" : {
-
-    },
-    "Article Detail\n(Fails to Load)" : {
 
     },
     "Article Metadata" : {
@@ -1565,6 +1559,9 @@
     "Looks Good" : {
 
     },
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." : {
+
+    },
     "moments ago" : {
 
     },
@@ -1726,9 +1723,6 @@
     "Post" : {
 
     },
-    "Post Detail\n(Fails to Load)" : {
-
-    },
     "Posts" : {
 
     },
@@ -1815,9 +1809,6 @@
 
     },
     "Recipe" : {
-
-    },
-    "Recipe Details" : {
 
     },
     "Recipes" : {
@@ -1979,6 +1970,9 @@
     "Search Keywords" : {
 
     },
+    "Seared Steak, Grilled Salmon, etc..." : {
+
+    },
     "Secondary Articles (%lld):" : {
 
     },
@@ -2063,9 +2057,6 @@
 
     },
     "Summary text" : {
-
-    },
-    "Tap to turn\non and off" : {
 
     },
     "Tell us about yourself" : {

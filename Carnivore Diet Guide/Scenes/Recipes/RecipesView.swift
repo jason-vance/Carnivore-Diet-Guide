@@ -11,7 +11,38 @@ import SwinjectAutoregistration
 
 struct RecipesView: View {
     
+    @State private var navigationPath = NavigationPath()
+    
+    //TODO: Do I need this model?
     @StateObject private var model = RecipesViewModel()
+    
+    @State private var recipes: [Recipe] = [.sample, .longNamedSample]
+    
+    @State private var searchText: String = ""
+    @State private var searchPresented: Bool = false
+
+    private var searching: Bool {
+        searchPresented || !searchText.isEmpty
+    }
+    
+    private var displayRecipes: [Recipe] {
+        recipes.sorted { $0.publicationDate > $1.publicationDate }
+    }
+    
+    private var filteredRecipes: [Recipe] {
+        var recipes = displayRecipes
+        
+        let keywords = SearchKeyword.keywordsFrom(string: searchText)
+        if !keywords.isEmpty {
+            recipes = recipes
+                .map { ($0, $0.keywords.relevanceTo(keywords)) }
+                .filter { $0.1 > 0 }
+                .sorted { $0.1 > $1.1 }
+                .map { $0.0 }
+        }
+        
+        return recipes
+    }
     
     @State private var showAds: Bool = false
     private var showAdsPublisher: AnyPublisher<Bool,Never> {
@@ -23,13 +54,76 @@ struct RecipesView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            ScreenTitleBar(String(localized: "Recipes"))
-            if showAds { AdRow() }
-            Spacer()
+        NavigationStack(path: $navigationPath) {
+            VStack(spacing: 0) {
+                ScreenTitleBar(String(localized: "Recipes"))
+                SearchArea()
+                ScrollView {
+                    if showAds { AdRow() }
+                    ListContent()
+                        .padding()
+                }
+                .scrollIndicators(.hidden)
+            }
+            .background(Color.background)
+            .navigationDestination(for: Recipe.self) { recipe in
+                //TODO: Uncomment this after adding the appropriate RecipeDetailView.init
+//                RecipeDetailView(recipe: recipe)
+            }
         }
-        .background(Color.background)
         .onReceive(showAdsPublisher) { showAds = $0 }
+    }
+    
+    @ViewBuilder func SearchArea() -> some View {
+        SearchBar(
+            prompt: String(localized: "Seared Steak, Grilled Salmon, etc..."),
+            searchText: $searchText,
+            searchPresented: $searchPresented,
+            action: { }
+        )
+        .padding()
+    }
+    
+    @ViewBuilder func ListContent() -> some View {
+        if searching {
+            SearchContent()
+        } else {
+            FeaturedContent()
+        }
+    }
+    
+    @ViewBuilder func SearchContent() -> some View {
+        let columns = [
+            GridItem.init(.adaptive(minimum: 100, maximum: 300)),
+            GridItem.init(.adaptive(minimum: 100, maximum: 300))
+        ]
+        
+        LazyVGrid(columns: columns) {
+            ForEach(filteredRecipes) { recipe in
+                Button {
+                    navigationPath.append(recipe)
+                } label: {
+                    RecipeItemView(recipe)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder func FeaturedContent() -> some View {
+        let columns = [
+            GridItem.init(.adaptive(minimum: 100, maximum: 300)),
+            GridItem.init(.adaptive(minimum: 100, maximum: 300))
+        ]
+        
+        LazyVGrid(columns: columns) {
+            ForEach(displayRecipes) { recipe in
+                Button {
+                    navigationPath.append(recipe)
+                } label: {
+                    RecipeItemView(recipe)
+                }
+            }
+        }
     }
 }
 

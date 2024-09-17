@@ -50,7 +50,7 @@ struct ArticlesInCategoryView: View {
         let keywords = SearchKeyword.keywordsFrom(string: searchText)
         if !keywords.isEmpty {
             articles = articles
-                .map { ($0, $0.relevanceTo(keywords)) }
+                .map { ($0, $0.keywords.relevanceTo(keywords)) }
                 .filter { $0.1 > 0 }
                 .sorted { $0.1 > $1.1 }
                 .map { $0.0 }

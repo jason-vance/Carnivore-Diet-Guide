@@ -24,7 +24,7 @@ final class ArticleTests: XCTestCase {
             categories: Article.sample.categories
         )
         
-        let relevance = article.relevanceTo(Set([keyword]))
+        let relevance = article.keywords.relevanceTo(Set([keyword]))
         XCTAssertEqual(1, relevance)
     }
     
@@ -43,7 +43,7 @@ final class ArticleTests: XCTestCase {
             categories: Article.sample.categories
         )
         
-        let relevance = article.relevanceTo(keywords)
+        let relevance = article.keywords.relevanceTo(keywords)
         XCTAssertEqual(3, relevance)
     }
 

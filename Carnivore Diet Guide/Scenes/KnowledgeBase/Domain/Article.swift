@@ -44,12 +44,6 @@ struct Article: Identifiable, Hashable {
         let string = "\(title)\n\(summary.text)\n\(markdownContent.stripMarkdown())"
         self.keywords = SearchKeyword.keywordsFrom(string: string)
     }
-    
-    func relevanceTo(_ keywords: Set<SearchKeyword>) -> UInt {
-        self.keywords
-            .filter { keywords.contains($0) }
-            .reduce(0) { $0 + $1.score }
-    }
 }
 
 extension Article {

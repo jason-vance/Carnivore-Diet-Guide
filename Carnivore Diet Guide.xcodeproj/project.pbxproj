@@ -373,6 +373,8 @@
 		56E305712B4D310A0098079A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 56E305702B4D310A0098079A /* Localizable.xcstrings */; };
 		56E305732B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 56E305722B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings */; };
 		56E305762B4D4DC50098079A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 56E305752B4D4DC50098079A /* Kingfisher */; };
+		56ECA3372C996E62003412A2 /* SearchKeywordSetExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ECA3362C996E62003412A2 /* SearchKeywordSetExtensions.swift */; };
+		56ECA3382C996E62003412A2 /* SearchKeywordSetExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ECA3362C996E62003412A2 /* SearchKeywordSetExtensions.swift */; };
 		56F2137C2B7222CA009DB057 /* PositionObservingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2137B2B7222CA009DB057 /* PositionObservingView.swift */; };
 		56F2137E2B722305009DB057 /* OffsetObservingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2137D2B722305009DB057 /* OffsetObservingScrollView.swift */; };
 		56F213802B722A2D009DB057 /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2137F2B722A2D009DB057 /* RecipeDetailView.swift */; };
@@ -658,6 +660,7 @@
 		56E305672B4BF83C0098079A /* PreviewContainerWithSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainerWithSetup.swift; sourceTree = "<group>"; };
 		56E305702B4D310A0098079A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		56E305722B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = "Carnivore-Diet-Guide-InfoPlist.xcstrings"; sourceTree = "<group>"; };
+		56ECA3362C996E62003412A2 /* SearchKeywordSetExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKeywordSetExtensions.swift; sourceTree = "<group>"; };
 		56F2137B2B7222CA009DB057 /* PositionObservingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionObservingView.swift; sourceTree = "<group>"; };
 		56F2137D2B722305009DB057 /* OffsetObservingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetObservingScrollView.swift; sourceTree = "<group>"; };
 		56F2137F2B722A2D009DB057 /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
@@ -757,6 +760,7 @@
 				563BC6F52B78BDFA008F3C50 /* DateExtensions.swift */,
 				568F727F2C7700BD005D16C6 /* UIImageExtensions.swift */,
 				567D1D7A2C942F5000AC990A /* ArrayExtensions.swift */,
+				56ECA3362C996E62003412A2 /* SearchKeywordSetExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2136,6 +2140,7 @@
 				563BC7362B7F506A008F3C50 /* FeedItemView.swift in Sources */,
 				5677542C2B70E55C0094EB8C /* CurrentUserDataProvider.swift in Sources */,
 				568F734C2C8250EA005D16C6 /* ResourceSummary.swift in Sources */,
+				56ECA3372C996E62003412A2 /* SearchKeywordSetExtensions.swift in Sources */,
 				569A9A932C90E01B0021F5EC /* IsPublisherChecker.swift in Sources */,
 				568F72952C794022005D16C6 /* FirebasePostFetcher.swift in Sources */,
 				56A6D0CF2B80AF07003B27E5 /* FeedItemRepository.swift in Sources */,
@@ -2382,6 +2387,7 @@
 				5622EAD42C753CBB00FE9C36 /* RecipesViewModel.swift in Sources */,
 				56D470A02C8A3CCF00F48A64 /* ResourceCreatedActivityTracker.swift in Sources */,
 				567D1D822C95869600AC990A /* WhyCarnivore.swift in Sources */,
+				56ECA3382C996E62003412A2 /* SearchKeywordSetExtensions.swift in Sources */,
 				568F728F2C793731005D16C6 /* FeedItem.swift in Sources */,
 				568F73522C82567E005D16C6 /* ContentMetadata.swift in Sources */,
 				569A9AC52C9391640021F5EC /* UsernameTests.swift in Sources */,

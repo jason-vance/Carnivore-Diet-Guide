@@ -74,10 +74,16 @@ struct Recipe: Identifiable {
         self.keywords = SearchKeyword.keywordsFrom(string: string)
     }
 }
- 
+
 extension Recipe: Equatable {
     static func == (lhs: Recipe, rhs: Recipe) -> Bool {
         lhs.id == rhs.id
+    }
+}
+
+extension Recipe: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 
