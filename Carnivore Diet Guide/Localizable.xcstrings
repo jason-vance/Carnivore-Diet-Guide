@@ -387,6 +387,9 @@
     "Add Article" : {
 
     },
+    "Add Nutrition Info" : {
+
+    },
     "Add Section" : {
 
     },
@@ -816,6 +819,9 @@
 
     },
     "Cook Time" : {
+
+    },
+    "Cook Time & Servings" : {
 
     },
     "Cooking Steps" : {
@@ -1609,6 +1615,9 @@
     "Nutrition" : {
 
     },
+    "Nutrition Info" : {
+
+    },
     "Nutritional Info" : {
       "localizations" : {
         "ar" : {
@@ -1750,9 +1759,6 @@
 
     },
     "Premium Recipes" : {
-
-    },
-    "Prep & Cook Time" : {
 
     },
     "Prep Time" : {

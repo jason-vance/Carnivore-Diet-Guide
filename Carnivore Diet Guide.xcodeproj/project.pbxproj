@@ -381,6 +381,7 @@
 		56ECA3422C99797E003412A2 /* RecipeMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ECA3402C99797E003412A2 /* RecipeMetadata.swift */; };
 		56ECA3482C9A1D6F003412A2 /* NewRecipeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ECA3472C9A1D6F003412A2 /* NewRecipeData.swift */; };
 		56ECA3492C9A1D6F003412A2 /* NewRecipeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ECA3472C9A1D6F003412A2 /* NewRecipeData.swift */; };
+		56ECA34B2C9A470D003412A2 /* BasicNutritionInfoCreatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ECA34A2C9A470D003412A2 /* BasicNutritionInfoCreatorView.swift */; };
 		56F2137C2B7222CA009DB057 /* PositionObservingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2137B2B7222CA009DB057 /* PositionObservingView.swift */; };
 		56F2137E2B722305009DB057 /* OffsetObservingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2137D2B722305009DB057 /* OffsetObservingScrollView.swift */; };
 		56F213802B722A2D009DB057 /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F2137F2B722A2D009DB057 /* RecipeDetailView.swift */; };
@@ -671,6 +672,7 @@
 		56ECA33C2C9976ED003412A2 /* CreateRecipeMetadataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecipeMetadataViewModel.swift; sourceTree = "<group>"; };
 		56ECA3402C99797E003412A2 /* RecipeMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeMetadata.swift; sourceTree = "<group>"; };
 		56ECA3472C9A1D6F003412A2 /* NewRecipeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRecipeData.swift; sourceTree = "<group>"; };
+		56ECA34A2C9A470D003412A2 /* BasicNutritionInfoCreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionInfoCreatorView.swift; sourceTree = "<group>"; };
 		56F2137B2B7222CA009DB057 /* PositionObservingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionObservingView.swift; sourceTree = "<group>"; };
 		56F2137D2B722305009DB057 /* OffsetObservingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetObservingScrollView.swift; sourceTree = "<group>"; };
 		56F2137F2B722A2D009DB057 /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
@@ -1877,6 +1879,7 @@
 				56ECA3402C99797E003412A2 /* RecipeMetadata.swift */,
 				56ECA33A2C9976E0003412A2 /* CreateRecipeMetadataView.swift */,
 				56ECA33C2C9976ED003412A2 /* CreateRecipeMetadataViewModel.swift */,
+				56ECA34A2C9A470D003412A2 /* BasicNutritionInfoCreatorView.swift */,
 			);
 			path = CreateRecipeMetadata;
 			sourceTree = "<group>";
@@ -2299,6 +2302,7 @@
 				56B88A5F2B6F335800C4C0DB /* FirestoreRecipeDoc.swift in Sources */,
 				561F7E512C98D5D7007F87DC /* RecipeCacheEntry.swift in Sources */,
 				56A6D0CC2B80A7DD003B27E5 /* FeedViewContentProvider.swift in Sources */,
+				56ECA34B2C9A470D003412A2 /* BasicNutritionInfoCreatorView.swift in Sources */,
 				56B88A642B6F896000C4C0DB /* ProfileImageUploader.swift in Sources */,
 				5622EAD82C755D8900FE9C36 /* UserProfileViewModel.swift in Sources */,
 				569A9ABD2C92DFBA0021F5EC /* FirebasePublishersRepository.swift in Sources */,

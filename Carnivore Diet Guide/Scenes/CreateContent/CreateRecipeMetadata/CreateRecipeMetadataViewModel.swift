@@ -19,10 +19,7 @@ class CreateRecipeMetadataViewModel: ObservableObject {
     @Published public var recipeCookTimeMinutes: UInt? = nil
     @Published public var recipeServings: UInt? = nil
     @Published public var recipeDifficultyLevel: Recipe.DifficultyLevel = .beginner
-    @Published public var recipeCalories: UInt? = 0
-    @Published public var recipeProtein: UInt? = 0
-    @Published public var recipeFat: UInt? = 0
-    @Published public var recipeCarbohydrates: UInt? = 0
+    @Published public var recipeNutritionInfo: BasicNutritionInfo? = nil
 
     public var recipeSearchKeywords: Set<SearchKeyword> {
         let keywordText = "\(recipeTitle)\n\(recipeContent)\n\(recipeSummary?.text ?? "")"
@@ -31,28 +28,11 @@ class CreateRecipeMetadataViewModel: ObservableObject {
     
     public var isFormChanged: Bool {
         recipeSummary != nil ||
-        recipePrepTimeMinutes == nil ||
-        recipeCookTimeMinutes == nil ||
-        recipeServings == nil ||
+        recipePrepTimeMinutes != nil ||
+        recipeCookTimeMinutes != nil ||
+        recipeServings != nil ||
         recipeDifficultyLevel != .beginner ||
-        recipeCalories != 0 ||
-        recipeProtein != 0 ||
-        recipeFat != 0 ||
-        recipeCarbohydrates != 0
-    }
-    
-    private var nutritionInfo: BasicNutritionInfo? {
-        guard let calories = recipeCalories else { return nil }
-        guard let protein = recipeProtein else { return nil }
-        guard let fat = recipeFat else { return nil }
-        guard let carbohydrates = recipeCarbohydrates else { return nil }
-
-        return .init(
-            calories: calories,
-            protein: protein,
-            fat: fat,
-            carbohydrates: carbohydrates
-        )
+        recipeNutritionInfo != nil
     }
     
     public func getRecipeMetadata(id: UUID) -> RecipeMetadata? {
@@ -70,7 +50,7 @@ class CreateRecipeMetadataViewModel: ObservableObject {
             cookTimeMinutes: recipeCookTimeMinutes,
             servings: recipeServings,
             difficultyLevel: recipeDifficultyLevel,
-            basicNutritionInfo: nutritionInfo
+            basicNutritionInfo: recipeNutritionInfo
         )
     }
     

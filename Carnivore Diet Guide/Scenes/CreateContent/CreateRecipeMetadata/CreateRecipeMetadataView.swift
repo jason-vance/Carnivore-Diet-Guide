@@ -24,6 +24,7 @@ struct CreateRecipeMetadataView: View {
     @State private var prepTimeText: String = ""
     @State private var cookTimeText: String = ""
     @State private var servingsText: String = ""
+    @State private var showBasicNutritionInfoDialog: Bool = false
     @State private var showEditKeywordsDialog: Bool = false
     @State private var showDiscardDialog: Bool = false
     
@@ -80,7 +81,7 @@ struct CreateRecipeMetadataView: View {
                 SummaryField()
                 PublicationDateField()
                 DifficultyField()
-                PrepAndCookTimeField()
+                PrepTimeCookTimeServingsField()
                 NutritionField()
                 SearchKeywordsField()
             }
@@ -206,12 +207,11 @@ struct CreateRecipeMetadataView: View {
         }
     }
     
-    @ViewBuilder func PrepAndCookTimeField() -> some View {
+    @ViewBuilder func PrepTimeCookTimeServingsField() -> some View {
         Section {
             LabeledContent("Prep Time") {
                 TextField("Prep Time", text: $prepTimeText, prompt: Text("Minutes"))
                     .keyboardType(.numberPad)
-                    .frame(width: 100)
                     .padding(.horizontal, .paddingHorizontalButtonMedium)
                     .padding(.vertical, .paddingVerticalButtonMedium)
                     .background {
@@ -219,13 +219,13 @@ struct CreateRecipeMetadataView: View {
                             .stroke(style: .init(lineWidth: .borderWidthMedium))
                             .foregroundStyle(Color.accent)
                     }
+                    .frame(width: 120)
             }
             .listRowBackground(Color.background)
             .listRowSeparator(.hidden)
             LabeledContent("Cook Time") {
                 TextField("Cook Time", text: $cookTimeText, prompt: Text("Minutes"))
                     .keyboardType(.numberPad)
-                    .frame(width: 100)
                     .padding(.horizontal, .paddingHorizontalButtonMedium)
                     .padding(.vertical, .paddingVerticalButtonMedium)
                     .background {
@@ -233,11 +233,26 @@ struct CreateRecipeMetadataView: View {
                             .stroke(style: .init(lineWidth: .borderWidthMedium))
                             .foregroundStyle(Color.accent)
                     }
+                    .frame(width: 120)
+            }
+            .listRowBackground(Color.background)
+            .listRowSeparator(.hidden)
+            LabeledContent("Servings") {
+                TextField("Servings", text: $servingsText, prompt: Text("Servings"))
+                    .keyboardType(.numberPad)
+                    .padding(.horizontal, .paddingHorizontalButtonMedium)
+                    .padding(.vertical, .paddingVerticalButtonMedium)
+                    .background {
+                        RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                            .stroke(style: .init(lineWidth: .borderWidthMedium))
+                            .foregroundStyle(Color.accent)
+                    }
+                    .frame(width: 120)
             }
             .listRowBackground(Color.background)
             .listRowSeparator(.hidden)
         } header: {
-            Text("Prep & Cook Time")
+            Text("Cook Time & Servings")
                 .foregroundStyle(Color.text)
         }
         .onChange(of: prepTimeText, initial: true) { _, prepTimeText in
@@ -245,6 +260,9 @@ struct CreateRecipeMetadataView: View {
         }
         .onChange(of: cookTimeText, initial: true) { _, cookTimeText in
             model.recipeCookTimeMinutes = UInt(cookTimeText)
+        }
+        .onChange(of: servingsText, initial: true) { _, servingsText in
+            model.recipeServings = UInt(servingsText)
         }
     }
     
@@ -288,27 +306,40 @@ struct CreateRecipeMetadataView: View {
     
     @ViewBuilder func NutritionField() -> some View {
         Section {
-            LabeledContent("Servings") {
-                TextField("Servings", text: $servingsText, prompt: Text("Servings"))
-                    .keyboardType(.numberPad)
-                    .frame(width: 100)
-                    .padding(.horizontal, .paddingHorizontalButtonMedium)
-                    .padding(.vertical, .paddingVerticalButtonMedium)
-                    .background {
-                        RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
-                            .stroke(style: .init(lineWidth: .borderWidthMedium))
+            HStack {
+                Button {
+                    showBasicNutritionInfoDialog = true
+                } label: {
+                    if let nutritionInfo = model.recipeNutritionInfo {
+                        Text(nutritionInfo.toSingleLineString())
                             .foregroundStyle(Color.accent)
+                            .padding(.horizontal, .paddingHorizontalButtonMedium)
+                            .padding(.vertical, .paddingVerticalButtonMedium)
+                            .background {
+                                RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                                    .foregroundStyle(Color.accent.opacity(0.1))
+                            }
+                    } else {
+                        HStack {
+                            Image(systemName: "plus")
+                            Text("Add Nutrition Info")
+                        }
+                        .foregroundStyle(Color.accent)
+                        .bold()
                     }
+                }
+                .sheet(isPresented: $showBasicNutritionInfoDialog) {
+                    BasicNutritionInfoCreatorView(nutritionInfo: $model.recipeNutritionInfo)
+                        .padding(.top)
+                        .presentationBackground(Color.background)
+                        .presentationDragIndicator(.visible)
+                }
             }
             .listRowBackground(Color.background)
             .listRowSeparator(.hidden)
-            //TODO: Implement NutritionInfoField
         } header: {
             Text("Nutrition")
                 .foregroundStyle(Color.text)
-        }
-        .onChange(of: servingsText, initial: true) { _, servingsText in
-            model.recipeServings = UInt(servingsText)
         }
     }
     
