@@ -67,8 +67,7 @@ struct RecipesView: View {
             }
             .background(Color.background)
             .navigationDestination(for: Recipe.self) { recipe in
-                //TODO: Uncomment this after adding the appropriate RecipeDetailView.init
-//                RecipeDetailView(recipe: recipe)
+                RecipeDetailView(recipe: recipe)
             }
         }
         .onReceive(showAdsPublisher) { showAds = $0 }

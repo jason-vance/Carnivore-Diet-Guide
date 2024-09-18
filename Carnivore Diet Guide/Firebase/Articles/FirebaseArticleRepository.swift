@@ -32,7 +32,7 @@ class FirebaseArticleRepository {
         try await articlesCollection.document(article.id).setData(from: doc)
     }
     
-    
+
     func deleteArticle(withId articleId: String) async throws {
         try await articlesCollection.document(articleId).delete()
     }

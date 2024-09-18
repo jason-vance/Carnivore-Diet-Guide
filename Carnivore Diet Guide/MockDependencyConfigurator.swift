@@ -61,7 +61,8 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(ResourceCategoryProvider.self, initializer: MockResourceCategoryProvider.init)
     iocContainer.autoregister(ArticlePoster.self, initializer: { DefaultArticlePoster.forPreviewsWithSuccess })
     iocContainer.autoregister(PublishersFetcher.self, initializer: MockPublishersFetcher.init)
-    
+    iocContainer.autoregister(RecipePoster.self, initializer: { DefaultRecipePoster.forPreviewsWithSuccess })
+
     //Post Detail
     iocContainer.autoregister(PostFetcher.self, initializer: { DefaultPostFetcher.forPreviewsWithSuccess })
     

@@ -108,7 +108,7 @@ struct RecipeItemView: View {
             RecipeTitle()
             RecipeSummary()
             Spacer(minLength: 0)
-            FavoriteCount()
+            StatsLine()
         }
         .foregroundStyle(Color.text)
         .padding(8)
@@ -123,21 +123,28 @@ struct RecipeItemView: View {
         }
     }
     
-    //TODO: Add ResourceSummary to Recipe
     @ViewBuilder func RecipeSummary() -> some View {
         HStack {
-            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
+            Text(recipe.summary.text)
                 .font(summaryFont)
                 .multilineTextAlignment(.leading)
             Spacer(minLength: 0)
         }
     }
     
-    @ViewBuilder func FavoriteCount() -> some View {
+    @ViewBuilder func StatsLine() -> some View {
         HStack {
-            FavoriteCountView(resource: .init(recipe))
+            CookTimeView()
             Spacer(minLength: 0)
+            FavoriteCountView(resource: .init(recipe))
         }
+    }
+    
+    @ViewBuilder func CookTimeView() -> some View {
+        MetadataItemView(
+            text: "\(CookTimeFormatter.formatMinutes(recipe.prepTimeMinutes + recipe.cookTimeMinutes))",
+            icon: "clock"
+        )
     }
     
     @ViewBuilder func ImageContent() -> some View {

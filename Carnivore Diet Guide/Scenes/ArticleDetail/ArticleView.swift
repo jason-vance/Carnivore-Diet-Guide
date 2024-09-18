@@ -14,7 +14,7 @@ struct ArticleView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            ResourceImageViewPager(urls: [article.coverImageUrl ])
+            ResourceImageViewPager(urls: [article.coverImageUrl])
             VStack(spacing: 0) {
                 ArticleMetadata()
                 Title()

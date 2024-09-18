@@ -31,6 +31,7 @@ struct Recipe: Identifiable {
     var author: String
     var title: String
     let coverImageUrl: URL
+    let summary: Resource.Summary
     var prepTimeMinutes: UInt
     var cookTimeMinutes: UInt
     var servings: UInt
@@ -46,6 +47,7 @@ struct Recipe: Identifiable {
         author: String,
         title: String,
         coverImageUrl: URL,
+        summary: Resource.Summary,
         prepTimeMinutes: UInt,
         cookTimeMinutes: UInt,
         servings: UInt,
@@ -59,6 +61,7 @@ struct Recipe: Identifiable {
         self.author = author
         self.title = title
         self.coverImageUrl = coverImageUrl
+        self.summary = summary
         self.prepTimeMinutes = prepTimeMinutes
         self.cookTimeMinutes = cookTimeMinutes
         self.servings = servings
@@ -67,7 +70,7 @@ struct Recipe: Identifiable {
         self.publicationDate = publicationDate
         self.basicNutritionInfo = basicNutritionInfo
         
-        let string = "\(title)\n\(markdownContent.stripMarkdown())"
+        let string = "\(title)\n\(summary.text)\n\(markdownContent.stripMarkdown())"
         self.keywords = SearchKeyword.keywordsFrom(string: string)
     }
 }
@@ -91,6 +94,7 @@ extension Recipe {
         author: "author",
         title: "Seared Ribeye Steak",
         coverImageUrl: URL(string: "https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_1:1/k%2FPhoto%2FRecipes%2F2023-06-ribeye-steak%2Fribeye-steak-043")!,
+        summary: .init("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")!,
         prepTimeMinutes: 5,
         cookTimeMinutes: 12,
         servings: 5,
@@ -123,6 +127,7 @@ extension Recipe {
         author: "author",
         title: "Grilled Salmon with Lemon Butter and Various Garnishes",
         coverImageUrl: URL(string: "https://www.lecremedelacrumb.com/wp-content/uploads/2022/07/grilled-lemon-butter-salmon-9smb-7.jpg")!,
+        summary: .init("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")!,
         prepTimeMinutes: 10,
         cookTimeMinutes: 15,
         servings: 3,

@@ -438,6 +438,9 @@
     "Articles, Guides, and more" : {
 
     },
+    "As seen in Recipes" : {
+
+    },
     "As seen in the Community Feed" : {
 
     },
@@ -1228,6 +1231,7 @@
     },
     "g" : {
       "comment" : "grams",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1436,6 +1440,7 @@
 
     },
     "kcal" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1579,9 +1584,6 @@
     "Looks Good" : {
 
     },
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." : {
-
-    },
     "Minutes" : {
 
     },
@@ -1619,6 +1621,7 @@
 
     },
     "Nutritional Info" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1686,6 +1689,7 @@
 
     },
     "Per Serving" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1996,6 +2000,9 @@
     "Review Your Post" : {
 
     },
+    "Review Your Recipe" : {
+
+    },
     "Save" : {
 
     },
@@ -2177,6 +2184,9 @@
     "The post could not be fetched" : {
 
     },
+    "The recipe could not be fetched" : {
+
+    },
     "The report has been filed. It will be reviewed to make sure that our content guidelines are being followed." : {
 
     },
@@ -2184,6 +2194,9 @@
 
     },
     "This recipe has been reported. It will be reviewed to make sure it follows our content guidelines." : {
+
+    },
+    "This recipe is no longer available" : {
 
     },
     "Title" : {
@@ -2439,9 +2452,6 @@
           }
         }
       }
-    },
-    "Yields: %llu servings" : {
-
     },
     "Your comment" : {
 

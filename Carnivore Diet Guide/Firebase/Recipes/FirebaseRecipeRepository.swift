@@ -33,6 +33,15 @@ class FirebaseRecipeRepository {
             .compactMap { try $0.data(as: FirestoreRecipeDoc.self).toRecipe() }
     }
     
+    
+    func create(
+        recipe: Recipe
+    ) async throws {
+        let doc = FirestoreRecipeDoc.from(recipe: recipe)
+        try await recipesCollection.document(recipe.id).setData(from: doc)
+    }
+    
+    
     func deleteRecipe(withId recipeId: String) async throws {
         try await recipesCollection.document(recipeId).delete()
     }

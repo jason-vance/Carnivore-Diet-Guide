@@ -23,6 +23,7 @@ struct RecipeCacheEntry: Codable {
     var author: String?
     var title: String?
     var coverImageUrl: String?
+    var summary: String?
     var prepTimeMinutes: UInt?
     var cookTimeMinutes: UInt?
     var servings: UInt?
@@ -56,6 +57,7 @@ struct RecipeCacheEntry: Codable {
             author: recipe.author,
             title: recipe.title,
             coverImageUrl: recipe.coverImageUrl.absoluteString,
+            summary: recipe.summary.text,
             prepTimeMinutes: recipe.prepTimeMinutes,
             cookTimeMinutes: recipe.cookTimeMinutes,
             servings: recipe.servings,
@@ -74,6 +76,7 @@ struct RecipeCacheEntry: Codable {
         guard let author = author else { return nil }
         guard let title = title else { return nil }
         guard let coverImageUrl = URL(string: coverImageUrl ?? "") else { return nil }
+        guard let summary = Resource.Summary(summary ?? "") else { return nil }
         guard let prepTimeMinutes = prepTimeMinutes else { return nil }
         guard let cookTimeMinutes = cookTimeMinutes else { return nil }
         guard let servings = servings else { return nil }
@@ -87,6 +90,7 @@ struct RecipeCacheEntry: Codable {
             author: author,
             title: title,
             coverImageUrl: coverImageUrl,
+            summary: summary,
             prepTimeMinutes: prepTimeMinutes,
             cookTimeMinutes: cookTimeMinutes,
             servings: servings,

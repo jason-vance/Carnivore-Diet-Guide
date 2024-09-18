@@ -1,22 +1,22 @@
 //
-//  ReviewNewArticleView.swift
+//  ReviewNewRecipeView.swift
 //  Carnivore Diet Guide
 //
-//  Created by Jason Vance on 9/1/24.
+//  Created by Jason Vance on 9/17/24.
 //
 
 import SwiftUI
 import SwinjectAutoregistration
 
-struct ReviewNewArticleView: View {
+struct ReviewNewRecipeView: View {
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
-    private let articlePoster = iocContainer~>ArticlePoster.self
+    private let recipePoster = iocContainer~>RecipePoster.self
     private let activityTracker = iocContainer~>ResourceCreatedActivityTracker.self
     private let userIdProvider = iocContainer~>CurrentUserIdProvider.self
     
-    public let newArticleData: NewArticleData
+    public let newRecipeData: NewRecipeData
     public let dismissAll: () -> ()
     
     @State private var isPosting: Bool = false
@@ -26,27 +26,31 @@ struct ReviewNewArticleView: View {
     private var feedItem: FeedItem {
         FeedItem(
             id: UUID().uuidString,
-            publicationDate: newArticleData.metadata.publicationDate,
-            type: .article,
-            resourceId: newArticleData.data.id.uuidString,
-            userId: newArticleData.data.userId,
-            imageUrls: newArticleData.data.imageUrls,
-            title: newArticleData.data.title,
-            summary: newArticleData.metadata.summary.text
+            publicationDate: newRecipeData.metadata.publicationDate,
+            type: .recipe,
+            resourceId: newRecipeData.data.id.uuidString,
+            userId: newRecipeData.data.userId,
+            imageUrls: newRecipeData.data.imageUrls,
+            title: newRecipeData.data.title,
+            summary: newRecipeData.metadata.summary.text
         )
     }
     
-    private var article: Article {
-        Article(
-            id: newArticleData.data.id.uuidString,
+    private var recipe: Recipe {
+        Recipe(
+            id: newRecipeData.data.id.uuidString,
             isPremium: true,
-            author: newArticleData.data.userId,
-            title: newArticleData.data.title,
-            coverImageUrl: newArticleData.data.imageUrls[0],
-            summary: newArticleData.metadata.summary,
-            markdownContent: newArticleData.data.markdownContent,
-            publicationDate: newArticleData.metadata.publicationDate,
-            categories: newArticleData.metadata.categories
+            author: newRecipeData.data.userId,
+            title: newRecipeData.data.title,
+            coverImageUrl: newRecipeData.data.imageUrls[0],
+            summary: newRecipeData.metadata.summary,
+            prepTimeMinutes: newRecipeData.metadata.prepTimeMinutes,
+            cookTimeMinutes: newRecipeData.metadata.cookTimeMinutes,
+            servings: newRecipeData.metadata.servings,
+            difficultyLevel: newRecipeData.metadata.difficultyLevel,
+            markdownContent: newRecipeData.data.markdownContent,
+            publicationDate: newRecipeData.metadata.publicationDate,
+            basicNutritionInfo: newRecipeData.metadata.basicNutritionInfo
         )
     }
     
@@ -57,7 +61,7 @@ struct ReviewNewArticleView: View {
     private func addCreatedActivity() {
         guard let userId = userIdProvider.currentUserId else { return }
         Task {
-            try? await activityTracker.resource(.init(article), wasCreatedByUser: userId)
+            try? await activityTracker.resource(.init(recipe), wasCreatedByUser: userId)
         }
     }
     
@@ -65,7 +69,7 @@ struct ReviewNewArticleView: View {
         Task {
             do {
                 withAnimation(.snappy) { isPosting = true }
-                try await articlePoster.post(article: article, feedItem: feedItem)
+                try await recipePoster.post(recipe: recipe, feedItem: feedItem)
                 addCreatedActivity()
                 dismissAll()
             } catch {
@@ -82,18 +86,18 @@ struct ReviewNewArticleView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            ScreenTitleBar(String(localized: "Review Your Article"))
+            ScreenTitleBar(String(localized: "Review Your Recipe"))
             ScrollView {
                 VStack {
                     VStack {
                         ReviewContentSectionHeader(String(localized: "As seen in the Community Feed"))
                         FeedItemView(feedItem: feedItem)
-                        ReviewContentSectionHeader(String(localized: "As seen in the Knowledge Base"))
-                        KnowledgeBaseArticleViews()
+                        ReviewContentSectionHeader(String(localized: "As seen in Recipes"))
+                        RecipesViews()
                         ReviewContentSectionHeader(String(localized: "As seen while reading"))
                     }
                     .padding(.horizontal, .itemHorizontalPadding)
-                    ArticleView(article: article)
+                    RecipeView(recipe: recipe)
                 }
                 .padding(.bottom, .barHeight)
             }
@@ -125,18 +129,18 @@ struct ReviewNewArticleView: View {
         }
     }
     
-    @ViewBuilder func KnowledgeBaseArticleViews() -> some View {
+    @ViewBuilder func RecipesViews() -> some View {
         VStack {
-            ArticleItemView(article)
-                .articleStyle(.largeVertical)
+            RecipeItemView(recipe)
+                .recipeStyle(.largeVertical)
             HStack {
-                ArticleItemView(article)
-                    .articleStyle(.vertical)
-                ArticleItemView(article)
-                    .articleStyle(.vertical)
+                RecipeItemView(recipe)
+                    .recipeStyle(.vertical)
+                RecipeItemView(recipe)
+                    .recipeStyle(.vertical)
             }
-            ArticleItemView(article)
-                .articleStyle(.horizontal)
+            RecipeItemView(recipe)
+                .recipeStyle(.horizontal)
         }
     }
 }
@@ -145,10 +149,10 @@ struct ReviewNewArticleView: View {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
         
-        iocContainer.autoregister(ArticlePoster.self) {
-            DefaultArticlePoster.forPreviewsWithFailure
+        iocContainer.autoregister(RecipePoster.self) {
+            DefaultRecipePoster.forPreviewsWithFailure
         }
     } content: {
-        ReviewNewArticleView(newArticleData: .sample) {}
+        ReviewNewRecipeView(newRecipeData: .sample) {}
     }
 }

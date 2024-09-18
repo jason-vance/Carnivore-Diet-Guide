@@ -70,6 +70,7 @@ fileprivate func setup(iocContainer: Container) {
     iocContainer.autoregister(ResourceCategoryProvider.self, initializer: FirebaseResourceCategoryRepository.init)
     iocContainer.autoregister(ArticlePoster.self, initializer: { DefaultArticlePoster.forProd })
     iocContainer.autoregister(PublishersFetcher.self, initializer: FirebasePublishersRepository.init)
+    iocContainer.autoregister(RecipePoster.self, initializer: { DefaultRecipePoster.forProd })
 
     //Post Detail
     iocContainer.autoregister(PostFetcher.self, initializer: { DefaultPostFetcher.forProd })
