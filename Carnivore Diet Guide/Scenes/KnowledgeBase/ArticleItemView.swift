@@ -83,7 +83,7 @@ struct ArticleItemView: View {
                     .clipShape(UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: .cornerRadiusMedium), style: .continuous))
             }
             BarDivider()
-            PublicationDate()
+            BottomPart()
         }
     }
     
@@ -92,7 +92,7 @@ struct ArticleItemView: View {
             ImageContent()
             TextContent()
             BarDivider()
-            PublicationDate()
+            BottomPart()
         }
     }
     
@@ -110,13 +110,21 @@ struct ArticleItemView: View {
             .aspectRatio(imageAspectRatio)
     }
     
+    @ViewBuilder func BottomPart() -> some View {
+        HStack {
+            PublicationDate()
+            Spacer()
+            FavoriteCountView(resource: .init(article))
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+    }
+    
     @ViewBuilder func PublicationDate() -> some View {
         HStack {
             PublicationDateView(date: article.publicationDate)
             Spacer()
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
     }
 }
 
