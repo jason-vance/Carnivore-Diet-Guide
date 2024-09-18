@@ -114,7 +114,7 @@ extension FirebaseArticleRepository: IndividualArticleFetcher {
         let categories = try await getCategoryDict()
         
         guard let article = try doc.data(as: FirebaseArticleDoc.self).toArticle(categoryDict: categories) else {
-            throw "Could convert Firestore doc to Article"
+            throw TextError("Could convert Firestore doc to Article")
         }
         return article
     }

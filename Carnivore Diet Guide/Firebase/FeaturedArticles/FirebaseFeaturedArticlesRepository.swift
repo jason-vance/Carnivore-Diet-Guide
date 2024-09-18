@@ -36,7 +36,7 @@ extension FirebaseFeaturedArticlesRepository: FeaturedArticlesFetcher {
             .data(as: FirebaseFeaturedArticlesDoc.self)
             .toFeaturedArticles() 
         else {
-            throw "Couldn't read FeaturedArticles from Firebase"
+            throw TextError("Couldn't read FeaturedArticles from Firebase")
         }
         
         return rv

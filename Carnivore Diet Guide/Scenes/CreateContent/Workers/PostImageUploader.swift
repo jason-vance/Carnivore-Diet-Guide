@@ -21,7 +21,7 @@ class MockPostImageUploader: PostImageUploader {
     func upload(image: UIImage, withId: String, forPost: String, byUser: String) async throws -> URL {
         try? await Task.sleep(for: .seconds(1))
         if willThrow {
-            throw "error"
+            throw TextError("error")
         }
         return returnUrl
     }
@@ -29,7 +29,7 @@ class MockPostImageUploader: PostImageUploader {
     func delete(image: String, forPost: String, byUser: String) async throws {
         try? await Task.sleep(for: .seconds(1))
         if willThrow {
-            throw "error"
+            throw TextError("error")
         }
     }
 }

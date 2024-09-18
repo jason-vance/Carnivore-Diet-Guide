@@ -35,7 +35,7 @@ extension DefaultPostFetcher {
     static var forPreviewsWithFailure: PostFetcher {
         return DefaultPostFetcher { _ in
             try await Task.sleep(for: .seconds(1))
-            throw "Test failure"
+            throw TextError("Test failure")
         }
     }
 }

@@ -37,7 +37,7 @@ class CommentSectionViewModel: ObservableObject {
         text: String,
         toResource resource: Resource
     ) async throws {
-        guard !text.isEmpty else { throw "Comment text is empty" }
+        guard !text.isEmpty else { throw TextError("Comment text is empty") }
         
         isSendingComment = true
         try await commentSender.sendComment(text: text, toResource: resource)

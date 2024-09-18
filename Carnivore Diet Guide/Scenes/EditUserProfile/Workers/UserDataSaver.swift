@@ -20,7 +20,7 @@ class MockUserDataSaver: UserDataSaver {
     
     func saveOnboarding(userData: UserData) async throws {
         try? await Task.sleep(for: .seconds(1))
-        if willThrow { throw "MockUserDataSaver.willThrow = \(willThrow)" }
+        if willThrow { throw TextError("MockUserDataSaver.willThrow = \(willThrow)") }
     }
     
     func save(userBio: UserBio?, toUser userId: String) async throws {

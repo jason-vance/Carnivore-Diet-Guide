@@ -25,13 +25,13 @@ fileprivate struct PostImage {
         if let image = image.jpegData(compressionQuality: 0.5) {
             return image
         }
-        throw "Image could not be compressed"
+        throw TextError("Image could not be compressed")
     }
     
     private static func throwIfTooBig(data: Data) throws {
         let fiveMB = 5 * 1024 * 1024
         if data.count - fiveMB > 0 {
-            throw "Image data must be 5MB or less"
+            throw TextError("Image data must be 5MB or less")
         }
     }
     
@@ -39,7 +39,7 @@ fileprivate struct PostImage {
         if let image = image.resizeToMinSideWithMaxLength(of: 1024) {
             return image
         }
-        throw "Image could not be resized"
+        throw TextError("Image could not be resized")
     }
 }
 
@@ -75,7 +75,7 @@ public class FirebasePostImageStorage {
         try await withCheckedThrowingContinuation { (continuation:CheckedContinuation<Void,Error>) in
             let uploadTask = storageReference.putData(image.imageData, metadata: storageMetadata)
             uploadTask.observe(.failure) { taskSnapshot in
-                continuation.resume(throwing: taskSnapshot.error ?? "Failed to upload image")
+                continuation.resume(throwing: taskSnapshot.error ?? TextError("Failed to upload image"))
             }
             uploadTask.observe(.success) { taskSnapshot in
                 continuation.resume()

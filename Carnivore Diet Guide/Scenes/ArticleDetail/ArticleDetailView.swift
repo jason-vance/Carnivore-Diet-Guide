@@ -207,7 +207,7 @@ struct ArticleDetailView: View {
         setupMockIocContainer(iocContainer)
         iocContainer.autoregister(IndividualArticleFetcher.self) {
             let fetcher = MockIndividualArticleFetcher()
-            fetcher.error = "Test failure"
+            fetcher.error = TextError("Test failure")
             return fetcher
         }
     } content: {

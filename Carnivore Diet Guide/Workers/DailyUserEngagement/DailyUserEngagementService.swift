@@ -101,7 +101,7 @@ class DailyUserEngagementService {
     
     private func fetchNewArticles() async throws -> [Article] {
         guard let articleLibrary = iocContainer.resolve(ArticleLibrary.self) else {
-            throw "Couldn't resolve ArticleLibrary"
+            throw TextError("Couldn't resolve ArticleLibrary")
         }
         
         let lastCheckIn = lastCheckIn

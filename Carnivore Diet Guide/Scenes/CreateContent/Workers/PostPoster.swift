@@ -34,7 +34,7 @@ extension DefaultPostPoster {
     static var forPreviewsWithFailure: PostPoster {
         DefaultPostPoster { post, feedItem in
             try await Task.sleep(for: .seconds(1))
-            throw "Test Error"
+            throw TextError("Test Error")
         }
     }
 }

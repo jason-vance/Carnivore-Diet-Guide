@@ -63,13 +63,13 @@ class FirebaseAuthenticationProvider {
     
     func signIn(withAuthorization authorization: ASAuthorization) async throws {
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
-            throw "Unable to fetch credential"
+            throw TextError("Unable to fetch credential")
         }
         guard let appleIDToken = appleIDCredential.identityToken else {
-            throw "Unable to fetch identity token"
+            throw TextError("Unable to fetch identity token")
         }
         guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-            throw "Unable to serialize token string from data: \(appleIDToken.debugDescription)"
+            throw TextError("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
         }
         
         DispatchQueue.main.sync {
@@ -87,16 +87,16 @@ class FirebaseAuthenticationProvider {
     
     private func reathenticate(withAuthorization authorization: ASAuthorization) async throws {
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
-            throw "Unable to fetch credential"
+            throw TextError("Unable to fetch credential")
         }
         guard let appleIDToken = appleIDCredential.identityToken else {
-            throw "Unable to fetch identity token"
+            throw TextError("Unable to fetch identity token")
         }
         guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-            throw "Unable to serialize token string from data: \(appleIDToken.debugDescription)"
+            throw TextError("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
         }
         guard let currentUser = currentUser else {
-            throw "User is not logged in"
+            throw TextError("User is not logged in")
         }
         
         // Initialize a Firebase credential, including the user's full name.
@@ -114,7 +114,7 @@ class FirebaseAuthenticationProvider {
     
     func deleteUser(authorization: ASAuthorization) async throws {
         guard let currentUser = currentUser else {
-            throw "User is not logged in"
+            throw TextError("User is not logged in")
         }
         
         try await reathenticate(withAuthorization: authorization)

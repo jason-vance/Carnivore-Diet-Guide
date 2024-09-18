@@ -41,7 +41,7 @@ class FirebaseCommentRepository {
         let listener = commentsCollection(forResource: resource)
             .addSnapshotListener { snapshot, error in
                 guard let snapshot = snapshot else {
-                    onError?(error ?? "¯\\_(ツ)_/¯ While listening to recipe's comments")
+                    onError?(error ?? TextError("¯\\_(ツ)_/¯ While listening to recipe's comments"))
                     return
                 }
                 
@@ -62,7 +62,7 @@ extension FirebaseCommentRepository: CommentProvider {
             .order(by: DATE)
             .addSnapshotListener { snapshot, error in
                 guard let snapshot = snapshot else {
-                    onError?(error ?? "¯\\_(ツ)_/¯ While listening for comments on \(resource.type) `\(resource.id)`")
+                    onError?(error ?? TextError("¯\\_(ツ)_/¯ While listening for comments on \(resource.type) `\(resource.id)`"))
                     return
                 }
                 
@@ -82,7 +82,7 @@ extension FirebaseCommentRepository: CommentSender {
         toResource resource: Resource
     ) async throws {
         guard let userId = FirebaseAuthenticationProvider.instance.currentUserId else {
-            throw "User is not currently signed in"
+            throw TextError("User is not currently signed in")
         }
         
         let doc = FirestoreCommentDoc(

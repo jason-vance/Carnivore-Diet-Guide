@@ -55,8 +55,8 @@ class CommentViewModel: ObservableObject {
     func deleteComment() {
         Task {
             do {
-                guard let comment = comment else { throw "`comment` was nil" }
-                guard let resource = resource else { throw "`resource` was nil" }
+                guard let comment = comment else { throw TextError("`comment` was nil") }
+                guard let resource = resource else { throw TextError("`resource` was nil") }
 
                 try await commentDeleter.deleteComment(comment, onResource: resource)
             } catch {
@@ -68,9 +68,9 @@ class CommentViewModel: ObservableObject {
     func reportComment() {
         Task {
             do {
-                guard let comment = comment else { throw "`comment` was nil" }
-                guard let resource = resource else { throw "`resource` was nil" }
-                guard let reporterId = currentUserIdProvider.currentUserId else { throw "`reporterId` was nil" }
+                guard let comment = comment else { throw TextError("`comment` was nil") }
+                guard let resource = resource else { throw TextError("`resource` was nil") }
+                guard let reporterId = currentUserIdProvider.currentUserId else { throw TextError("`reporterId` was nil") }
 
                 try await commentReporter.reportComment(comment, onResource: resource, reportedBy: reporterId)
                 show(errorMessage: "Comment was reported")

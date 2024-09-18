@@ -37,7 +37,7 @@ class FirestoreFavoritersRepository {
 
     func markAsFavorite(resource: Resource) async throws {
         guard let userId = currentUserId else {
-            throw "User is not currently signed in"
+            throw TextError("User is not currently signed in")
         }
         
         let doc = FirestoreFavoriterDoc(userId: userId, date: .now)
@@ -57,7 +57,7 @@ class FirestoreFavoritersRepository {
 
     func unmarkAsFavorite(resource: Resource) async throws {
         guard let userId = currentUserId else {
-            throw "User is not currently signed in"
+            throw TextError("User is not currently signed in")
         }
         
         try await favoritersCollection(forResource: resource)
@@ -82,7 +82,7 @@ class FirestoreFavoritersRepository {
         let collection = favoritersCollection(forResource: resource)
         let listener = collection.addSnapshotListener { snapshot, error in
             guard let snapshot = snapshot else {
-                onError?(error ?? "¯\\_(ツ)_/¯ While listening to recipe's favoriters")
+                onError?(error ?? TextError("¯\\_(ツ)_/¯ While listening to recipe's favoriters"))
                 return
             }
             

@@ -189,13 +189,13 @@ struct CommentView: View {
         
         iocContainer.autoregister(CommentDeleter.self) {
             let mock = MockCommentDeleter()
-            mock.error = "Test Failure"
+            mock.error = TextError("Test Failure")
             return mock
         }
         
         iocContainer.autoregister(CommentReporter.self) {
             let mock = MockCommentReporter()
-            mock.error = "Test Failure"
+            mock.error = TextError("Test Failure")
             return mock
         }
     } content: {

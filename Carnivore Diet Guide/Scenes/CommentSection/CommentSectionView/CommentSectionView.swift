@@ -198,7 +198,7 @@ struct CommentSectionView: View {
         
         iocContainer.autoregister(CommentSender.self) {
             let mock = MockCommentSender()
-            mock.errorToThrowOnSend = "Test Failure"
+            mock.errorToThrowOnSend = TextError("Test Failure")
             return mock
         }
     } content: {

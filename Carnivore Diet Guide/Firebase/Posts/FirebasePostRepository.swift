@@ -40,7 +40,7 @@ class FirebasePostRepository {
     func fetchPost(withId postId: String) async throws -> Post {
         let doc = try await postsCollection.document(postId).getDocument()
         guard let post = try doc.data(as: FirestorePostDoc.self).toPost() else {
-            throw "Could convert Firestore doc to Post"
+            throw TextError("Could convert Firestore doc to Post")
         }
         return post
     }
@@ -62,7 +62,7 @@ extension FirebasePostRepository: PostCountProvider {
                 if let snapshot = snapshot {
                     onUpdate(snapshot.count)
                 } else {
-                    onError(error ?? "¯\\_(ツ)_/¯ While listening to recipe's favoriters")
+                    onError(error ?? TextError("¯\\_(ツ)_/¯ While listening to recipe's favoriters"))
                 }
             }
         

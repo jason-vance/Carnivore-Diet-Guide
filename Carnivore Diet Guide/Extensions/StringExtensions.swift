@@ -8,11 +8,6 @@
 import Foundation
 import NaturalLanguage
 
-extension String: Error {}
-extension String: LocalizedError {
-    public var errorDescription: String? { self }
-}
-
 extension String {
     
     func lemmatized() -> [Lemma] {

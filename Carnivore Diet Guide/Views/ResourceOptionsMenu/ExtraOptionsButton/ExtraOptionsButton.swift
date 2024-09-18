@@ -131,7 +131,7 @@ fileprivate func previewSetup(isMine: Bool, fails: Bool) {
     if fails {
         iocContainer.autoregister(ResourceReporter.self) {
             let reporter = MockResourceReporter()
-            reporter.error = "Test Failure"
+            reporter.error = TextError("Test Failure")
             return reporter
         }
     }

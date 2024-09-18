@@ -20,7 +20,7 @@ extension CollectionReference {
                 
                 docRef = try self.addDocument(from: value) { error in
                     guard let docRef = docRef else {
-                        continuation.resume(throwing: error ?? "")
+                        continuation.resume(throwing: error ?? TextError(""))
                         return
                     }
                     continuation.resume(returning: docRef)

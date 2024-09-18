@@ -21,7 +21,7 @@ class FirebaseCurrentUserDataProvider: CurrentUserDataProvider {
     }
     
     func fetchCurrentUserData() async throws -> UserData {
-        guard let userId = authProvider.currentUserId else { throw "User is not currently logged in" }
+        guard let userId = authProvider.currentUserId else { throw TextError("User is not currently logged in") }
         
         let userDoc = try await userRepo.fetchUserDocument(withId: userId)
         

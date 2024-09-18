@@ -40,7 +40,7 @@ extension DefaultRecipePoster {
     static var forPreviewsWithFailure: RecipePoster {
         DefaultRecipePoster { recipe, feedItem in
             try await Task.sleep(for: .seconds(1))
-            throw "Test Error"
+            throw TextError("Test Error")
         }
     }
 }

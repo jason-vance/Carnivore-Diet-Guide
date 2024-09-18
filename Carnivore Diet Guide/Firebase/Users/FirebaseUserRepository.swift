@@ -56,7 +56,7 @@ class FirebaseUserRepository {
             } else if let error = error {
                 onError?(error)
             } else {
-                onError?("¯\\_(ツ)_/¯ While listening to user doc changes")
+                onError?(TextError("¯\\_(ツ)_/¯ While listening to user doc changes"))
             }
         }
     }
@@ -90,7 +90,7 @@ class FirebaseUserRepository {
     ) -> AnyCancellable {
         let listener = usersCollection.document(userId).addSnapshotListener { snapshot, error in
             guard let snapshot = snapshot else {
-                onError?(error ?? "¯\\_(ツ)_/¯ While listening to user's recipe favorite status")
+                onError?(error ?? TextError("¯\\_(ツ)_/¯ While listening to user's recipe favorite status"))
                 return
             }
             
@@ -98,7 +98,7 @@ class FirebaseUserRepository {
             let favoritesAsAny = snapshot.get(field)
             
             guard let favorites = favoritesAsAny as? [String]? else {
-                onError?("Couldn't cast to array of favorites")
+                onError?(TextError("Couldn't cast to array of favorites"))
                 return
             }
             
@@ -114,7 +114,7 @@ class FirebaseUserRepository {
     }
     
     func add(resource: Resource, toFavoritesOf userId: String) async throws {
-        guard !resource.id.isEmpty else { throw "`resource.id` was empty." }
+        guard !resource.id.isEmpty else { throw TextError("`resource.id` was empty.") }
         
         let field = Self.favoritesField(for: resource)
 
@@ -126,7 +126,7 @@ class FirebaseUserRepository {
     }
     
     func remove(resource: Resource, fromFavoritesOf userId: String) async throws {
-        guard !resource.id.isEmpty else { throw "`resource.id` was empty." }
+        guard !resource.id.isEmpty else { throw TextError("`resource.id` was empty.") }
         
         let field = Self.favoritesField(for: resource)
 
@@ -165,7 +165,7 @@ extension FirebaseUserRepository: UserDataSaver {
 extension FirebaseUserRepository: UserFetcher {
 
     func fetchUser(userId: String) async throws -> UserData {
-        guard !userId.isEmpty else { throw "`userId` is empty" }
+        guard !userId.isEmpty else { throw TextError("`userId` is empty") }
         
         let userData = try await usersCollection
             .document(userId)
@@ -173,7 +173,7 @@ extension FirebaseUserRepository: UserFetcher {
             .data(as: FirestoreUserDoc.self)
             .toUserData()
         
-        guard let userData = userData else { throw "Could not transform FirestoreUserDoc to UserData" }
+        guard let userData = userData else { throw TextError("Could not transform FirestoreUserDoc to UserData") }
         
         return userData
     }

@@ -125,7 +125,7 @@ extension FirebaseRecipeRepository: IndividualRecipeFetcher {
         guard doc.exists else { throw Resource.Errors.doesNotExist }
         
         guard let recipe = try doc.data(as: FirestoreRecipeDoc.self).toRecipe() else {
-            throw "Could convert Firestore doc to Recipe"
+            throw TextError("Could convert Firestore doc to Recipe")
         }
         return recipe
     }

@@ -207,7 +207,7 @@ struct RecipeDetailView: View {
         setupMockIocContainer(iocContainer)
         iocContainer.autoregister(IndividualRecipeFetcher.self) {
             let fetcher = MockIndividualRecipeFetcher()
-            fetcher.error = "Test failure"
+            fetcher.error = TextError("Test failure")
             return fetcher
         }
     } content: {

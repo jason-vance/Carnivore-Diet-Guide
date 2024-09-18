@@ -40,7 +40,7 @@ extension DefaultArticlePoster {
     static var forPreviewsWithFailure: ArticlePoster {
         DefaultArticlePoster { article, feedItem in
             try await Task.sleep(for: .seconds(1))
-            throw "Test Error"
+            throw TextError("Test Error")
         }
     }
 }

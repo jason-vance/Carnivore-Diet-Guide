@@ -20,7 +20,7 @@ class MockProfileImageUploader: ProfileImageUploader {
     func upload(profileImage: UIImage, for userId: String) async throws -> URL {
         try? await Task.sleep(for: .seconds(1))
         if willThrow {
-            throw "error"
+            throw TextError("error")
         }
         return returnUrl
     }

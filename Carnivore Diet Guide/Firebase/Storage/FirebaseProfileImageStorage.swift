@@ -24,7 +24,7 @@ class FirebaseProfileImageStorage {
     
     private func upload(image: UIImage, to path: String) async throws -> URL {
         guard let jpgImage = image.jpegData(compressionQuality: 0.5) else {
-            throw "Image could not be converted to jpg"
+            throw TextError("Image could not be converted to jpg")
         }
         return try await upload(jpgImage: jpgImage, to: path)
     }
@@ -37,7 +37,7 @@ class FirebaseProfileImageStorage {
         try await withCheckedThrowingContinuation { (continuation:CheckedContinuation<Void,Error>) in
             let uploadTask = storageReference.putData(jpgImage, metadata: storageMetadata)
             uploadTask.observe(.failure) { taskSnapshot in
-                continuation.resume(throwing: taskSnapshot.error ?? "Failed to upload image")
+                continuation.resume(throwing: taskSnapshot.error ?? TextError("Failed to upload image"))
             }
             uploadTask.observe(.success) { taskSnapshot in
                 continuation.resume()
