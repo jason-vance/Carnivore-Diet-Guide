@@ -100,17 +100,21 @@ struct RecipesView: View {
     }
     
     @ViewBuilder func SearchContent() -> some View {
-        let columns = [
-            GridItem.init(.adaptive(minimum: 100, maximum: 300)),
-            GridItem.init(.adaptive(minimum: 100, maximum: 300))
-        ]
-        
-        LazyVGrid(columns: columns) {
-            ForEach(filteredRecipes) { recipe in
-                Button {
-                    navigationPath.append(recipe)
-                } label: {
-                    RecipeItemView(recipe)
+        if filteredRecipes.isEmpty {
+            EmptyRecipesView()
+        } else {
+            let columns = [
+                GridItem.init(.adaptive(minimum: 100, maximum: 300)),
+                GridItem.init(.adaptive(minimum: 100, maximum: 300))
+            ]
+            
+            LazyVGrid(columns: columns) {
+                ForEach(filteredRecipes) { recipe in
+                    Button {
+                        navigationPath.append(recipe)
+                    } label: {
+                        RecipeItemView(recipe)
+                    }
                 }
             }
         }
@@ -131,6 +135,14 @@ struct RecipesView: View {
                 }
             }
         }
+    }
+    
+    @ViewBuilder func EmptyRecipesView() -> some View {
+        ContentUnavailableView(
+            "Nothing to see here.\nTry changing your search criteria.",
+            systemImage: "magnifyingglass"
+        )
+        .foregroundStyle(Color.text)
     }
 }
 
