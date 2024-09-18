@@ -16,17 +16,24 @@ struct RecipesView: View {
     //TODO: Do I need this model?
     @StateObject private var model = RecipesViewModel()
     
-    @State private var recipes: [Recipe] = [.sample, .longNamedSample]
+    @State private var allRecipes: [Recipe] = []
     
     @State private var searchText: String = ""
     @State private var searchPresented: Bool = false
+    
+    private let recipeLibrary = iocContainer~>RecipeLibrary.self
+    private var recipePublisher: AnyPublisher<[Recipe],Never> {
+        recipeLibrary.publishedRecipesPublisher
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
 
     private var searching: Bool {
         searchPresented || !searchText.isEmpty
     }
     
     private var displayRecipes: [Recipe] {
-        recipes.sorted { $0.publicationDate > $1.publicationDate }
+        allRecipes.sorted { $0.publicationDate > $1.publicationDate }
     }
     
     private var filteredRecipes: [Recipe] {
@@ -70,12 +77,13 @@ struct RecipesView: View {
                 RecipeDetailView(recipe: recipe)
             }
         }
+        .onReceive(recipePublisher) { allRecipes = $0 }
         .onReceive(showAdsPublisher) { showAds = $0 }
     }
     
     @ViewBuilder func SearchArea() -> some View {
         SearchBar(
-            prompt: String(localized: "Seared Steak, Grilled Salmon, etc..."),
+            prompt: String(localized: "Entrées, Snacks, and more"),
             searchText: $searchText,
             searchPresented: $searchPresented,
             action: { }
