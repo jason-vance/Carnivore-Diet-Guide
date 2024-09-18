@@ -18,7 +18,6 @@ func setup(iocContainer: Container) {
     iocContainer.autoregister(UserDataProvider.self, initializer: FirestoreUserDataProvider.init)
     iocContainer.autoregister(FirebaseUserRepository.self, initializer: FirebaseUserRepository.init)
     iocContainer.autoregister(UserFetcher.self, initializer: FirebaseUserRepository.init)
-    iocContainer.autoregister(RecipeRepository.self, initializer: FirebaseRecipeRepository.init)
     iocContainer.autoregister(IsPublisherChecker.self, initializer: FirebasePublishersRepository.init)
     iocContainer.autoregister(DailyUserEngagementService.self, initializer: { DailyUserEngagementService.instance })
     iocContainer.autoregister(NotificationService.self, initializer: NotificationService.init)
@@ -74,13 +73,6 @@ func setup(iocContainer: Container) {
 
     //Recipe Detail
     iocContainer.autoregister(IndividualRecipeFetcher.self, initializer: FirebaseRecipeRepository.init)
-    //TODO: Probably get rid of the following after updating RecipeDetailView and adding RecipeView
-    iocContainer.autoregister(RecipeFavoriter.self, argument: Recipe.self, initializer: DefaultRecipeFavoriter.init)
-    iocContainer.autoregister(FavoriteRecipeRepo.self, initializer: FirebaseUserRepository.init)
-    iocContainer.autoregister(RecipeFavoritersRepo.self, initializer: FirebaseRecipeRepository.init)
-    iocContainer.autoregister(RecipeCommentsRepo.self, initializer: FirebaseRecipeRepository.init)
-    iocContainer.autoregister(RecipeFavoriteCountProvider.self, argument: Recipe.self, initializer: DefaultRecipeFavoriteCountProvider.init)
-    iocContainer.autoregister(RecipeCommentCountProvider.self, argument: Recipe.self, initializer: DefaultRecipeCommentCountProvider.init)
     
     //Recipes
     iocContainer.autoregister(RecipeCollectionFetcher.self, initializer: FirebaseRecipeRepository.init)

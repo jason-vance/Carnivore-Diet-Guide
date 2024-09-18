@@ -1026,9 +1026,6 @@
     "Failed to file report: %@" : {
 
     },
-    "Failed to report recipe: %@" : {
-
-    },
     "Fat" : {
       "localizations" : {
         "ar" : {
@@ -2191,9 +2188,6 @@
 
     },
     "This article is no longer available" : {
-
-    },
-    "This recipe has been reported. It will be reviewed to make sure it follows our content guidelines." : {
 
     },
     "This recipe is no longer available" : {

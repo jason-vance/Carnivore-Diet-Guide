@@ -13,7 +13,6 @@ func setupMockIocContainer(_ iocContainer: Container) {
     //Workers
     iocContainer.autoregister(CurrentUserIdProvider.self, initializer: MockCurrentUserIdProvider.init)
     iocContainer.autoregister(UserFetcher.self, initializer: MockUserFetcher.init)
-    iocContainer.autoregister(RecipeRepository.self, initializer: MockRecipeRepository.init)
     iocContainer.autoregister(IsPublisherChecker.self, initializer: MockIsPublisherChecker.init)
     iocContainer.autoregister(DailyUserEngagementService.self, initializer: { DailyUserEngagementService.instance })
     iocContainer.autoregister(NotificationService.self, initializer: NotificationService.init)
@@ -69,10 +68,6 @@ func setupMockIocContainer(_ iocContainer: Container) {
     
     //Recipe Detail
     iocContainer.autoregister(IndividualRecipeFetcher.self, initializer: MockIndividualRecipeFetcher.init)
-    //TODO: Probably get rid of the following after updating RecipeDetailView and adding RecipeView
-    iocContainer.autoregister(RecipeFavoriter.self, argument: Recipe.self, initializer: MockRecipeFavoriter.init)
-    iocContainer.autoregister(RecipeFavoriteCountProvider.self, argument: Recipe.self, initializer: MockRecipeFavoriteCountProvider.init)
-    iocContainer.autoregister(RecipeCommentCountProvider.self, argument: Recipe.self, initializer: MockRecipeCommentCountProvider.init)
     
     //Recipes
     iocContainer.autoregister(RecipeCollectionFetcher.self, initializer: MockRecipeCollectionFetcher.init)

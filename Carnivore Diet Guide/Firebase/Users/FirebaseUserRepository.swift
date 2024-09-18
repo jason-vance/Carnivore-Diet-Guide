@@ -162,56 +162,6 @@ extension FirebaseUserRepository: UserDataSaver {
     }
 }
 
-extension FirebaseUserRepository: FavoriteRecipeRepo {
-    func listenToFavoriteStatusOf(
-        recipe: Recipe,
-        byUser userId: String,
-        onUpdate: @escaping (Bool)->(),
-        onError: ((Error)->())? = nil
-    ) -> AnyCancellable {
-        let listener = usersCollection.document(userId).addSnapshotListener { snapshot, error in
-            guard let snapshot = snapshot else {
-                onError?(error ?? "¯\\_(ツ)_/¯ While listening to user's recipe favorite status")
-                return
-            }
-            
-            let favoritesAsAny = snapshot.get(FirestoreUserDoc.CodingKeys.favoriteRecipes.rawValue)
-            
-            guard let favorites = favoritesAsAny as? [String]? else {
-                onError?("Couldn't cast to array of favorites")
-                return
-            }
-            
-            guard let favorites = favorites else {
-                onUpdate(false)
-                return
-            }
-            
-            onUpdate(favorites.contains { $0 == recipe.id })
-        }
-        
-        return AnyCancellable({ listener.remove() })
-    }
-    
-    func addRecipe(_ recipe: Recipe, toFavoritesOf userId: String) async throws {
-        guard !recipe.id.isEmpty else { throw "`recipe.id` was empty." }
-        try await usersCollection
-            .document(userId)
-            .updateData(
-                [FirestoreUserDoc.CodingKeys.favoriteRecipes.rawValue : FieldValue.arrayUnion([recipe.id])]
-            )
-    }
-    
-    func removeRecipe(_ recipe: Recipe, fromFavoritesOf userId: String) async throws {
-        guard !recipe.id.isEmpty else { throw "`recipe.id` was empty." }
-        try await usersCollection
-            .document(userId)
-            .updateData(
-                [FirestoreUserDoc.CodingKeys.favoriteRecipes.rawValue : FieldValue.arrayRemove([recipe.id])]
-            )
-    }
-}
-
 extension FirebaseUserRepository: UserFetcher {
 
     func fetchUser(userId: String) async throws -> UserData {
