@@ -13,9 +13,6 @@ struct RecipesView: View {
     
     @State private var navigationPath = NavigationPath()
     
-    //TODO: Do I need this model?
-    @StateObject private var model = RecipesViewModel()
-    
     @State private var allRecipes: [Recipe] = []
     
     @State private var searchText: String = ""

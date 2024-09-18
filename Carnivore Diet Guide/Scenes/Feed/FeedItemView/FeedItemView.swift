@@ -18,8 +18,8 @@ struct FeedItemView: View {
         case .post:
             return false
         case .recipe:
-            //TODO: Get the recipe's premium status for real
-            return true
+            guard let recipeLibrary = iocContainer.resolve(RecipeLibrary.self) else { return true }
+            return recipeLibrary.getRecipe(byId: feedItem.resourceId)?.isPremium ?? true
         case .article:
             guard let articleLibrary = iocContainer.resolve(ArticleLibrary.self) else { return true }
             return articleLibrary.getArticle(byId: feedItem.resourceId)?.isPremium ?? true
