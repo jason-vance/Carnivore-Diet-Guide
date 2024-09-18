@@ -77,6 +77,7 @@ struct ContentAgnosticArticlesView: View {
         VStack(spacing: 0) {
             TimeFramePicker(timeFrame: $timeFrame)
                 .padding(.horizontal)
+                .padding(.bottom, showAds ? 0 : 24)
             if showAds {
                 AdRow()
                     .padding(.top, 16)
