@@ -9,13 +9,9 @@ import Foundation
 import Swinject
 import SwinjectAutoregistration
 
-let iocContainer: Container = {
-    let container = Container()
-    setup(iocContainer: container)
-    return container
-}()
+let iocContainer: Container = Container()
 
-fileprivate func setup(iocContainer: Container) {
+func setup(iocContainer: Container) {
     //Workers
     iocContainer.autoregister(FirebaseAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }
     iocContainer.autoregister(CurrentUserIdProvider.self) { FirebaseAuthenticationProvider.instance }
@@ -55,13 +51,14 @@ fileprivate func setup(iocContainer: Container) {
     
     //Knowledge Base
     iocContainer.autoregister(ArticleCollectionFetcher.self, initializer: FirebaseArticleRepository.init)
-    ArticleLibrary.makeInstance(
-        authProvider: iocContainer~>ContentAuthenticationProvider.self,
-        articleCollectionFetcher: iocContainer~>ArticleCollectionFetcher.self,
-        individualArticleFetcher: iocContainer~>IndividualArticleFetcher.self,
-        resourceDeleter: iocContainer~>ResourceDeleter.self
-    )
-    iocContainer.autoregister(ArticleLibrary.self, initializer: { ArticleLibrary.instance })
+    iocContainer.autoregister(ArticleLibrary.self, initializer: {
+        ArticleLibrary.getInstance(
+            authProvider: iocContainer~>ContentAuthenticationProvider.self,
+            articleCollectionFetcher: iocContainer~>ArticleCollectionFetcher.self,
+            individualArticleFetcher: iocContainer~>IndividualArticleFetcher.self,
+            resourceDeleter: iocContainer~>ResourceDeleter.self
+        )
+    })
     iocContainer.autoregister(FeaturedArticlesFetcher.self, initializer: FirebaseFeaturedArticlesRepository.init)
 
     //Content Creation
@@ -87,14 +84,15 @@ fileprivate func setup(iocContainer: Container) {
     
     //Recipes
     iocContainer.autoregister(RecipeCollectionFetcher.self, initializer: FirebaseRecipeRepository.init)
-    RecipeLibrary.makeInstance(
-        authProvider: iocContainer~>ContentAuthenticationProvider.self,
-        recipeCollectionFetcher: iocContainer~>RecipeCollectionFetcher.self,
-        individualRecipeFetcher: iocContainer~>IndividualRecipeFetcher.self,
-        resourceDeleter: iocContainer~>ResourceDeleter.self
-    )
-    iocContainer.autoregister(RecipeLibrary.self, initializer: { RecipeLibrary.instance })
-    
+    iocContainer.autoregister(RecipeLibrary.self, initializer: {
+        RecipeLibrary.getInstance(
+            authProvider: iocContainer~>ContentAuthenticationProvider.self,
+            recipeCollectionFetcher: iocContainer~>RecipeCollectionFetcher.self,
+            individualRecipeFetcher: iocContainer~>IndividualRecipeFetcher.self,
+            resourceDeleter: iocContainer~>ResourceDeleter.self
+        )
+    })
+
     //User Profile
     iocContainer.autoregister(UserProfileSignOutService.self) { FirebaseAuthenticationProvider.instance }
     iocContainer.autoregister(UserDataProvider.self, initializer: FirestoreUserDataProvider.init)
@@ -113,8 +111,8 @@ fileprivate func setup(iocContainer: Container) {
 
     //Settings
     iocContainer.autoregister(UserAccountDeleter.self, initializer: FirebaseUserAccountDeleter.init)
-    iocContainer.autoregister(ArticleCacheResetter.self, initializer: { ArticleLibrary.instance })
-    iocContainer.autoregister(RecipeCacheResetter.self, initializer: { RecipeLibrary.instance })
+    iocContainer.autoregister(ArticleCacheResetter.self, initializer: { iocContainer~>ArticleLibrary.self })
+    iocContainer.autoregister(RecipeCacheResetter.self, initializer: { iocContainer~>RecipeLibrary.self })
 
     //Comment Section
     iocContainer.autoregister(CommentProvider.self, initializer: FirebaseCommentRepository.init)

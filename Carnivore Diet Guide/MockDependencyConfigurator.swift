@@ -46,13 +46,14 @@ func setupMockIocContainer(_ iocContainer: Container) {
     
     //Knowledge Base
     iocContainer.autoregister(ArticleCollectionFetcher.self, initializer: MockArticleCollectionFetcher.init)
-    ArticleLibrary.makeInstance(
-        authProvider: iocContainer~>ContentAuthenticationProvider.self,
-        articleCollectionFetcher: iocContainer~>ArticleCollectionFetcher.self,
-        individualArticleFetcher: iocContainer~>IndividualArticleFetcher.self,
-        resourceDeleter: iocContainer~>ResourceDeleter.self
-    )
-    iocContainer.autoregister(ArticleLibrary.self, initializer: { ArticleLibrary.instance })
+    iocContainer.autoregister(ArticleLibrary.self, initializer: {
+        ArticleLibrary.getInstance(
+            authProvider: iocContainer~>ContentAuthenticationProvider.self,
+            articleCollectionFetcher: iocContainer~>ArticleCollectionFetcher.self,
+            individualArticleFetcher: iocContainer~>IndividualArticleFetcher.self,
+            resourceDeleter: iocContainer~>ResourceDeleter.self
+        )
+    })
     iocContainer.autoregister(FeaturedArticlesFetcher.self, initializer: MockFeaturedArticlesFetcher.init)
 
     //Content Creation
@@ -75,13 +76,14 @@ func setupMockIocContainer(_ iocContainer: Container) {
     
     //Recipes
     iocContainer.autoregister(RecipeCollectionFetcher.self, initializer: MockRecipeCollectionFetcher.init)
-    RecipeLibrary.makeInstance(
-        authProvider: iocContainer~>ContentAuthenticationProvider.self,
-        recipeCollectionFetcher: iocContainer~>RecipeCollectionFetcher.self,
-        individualRecipeFetcher: iocContainer~>IndividualRecipeFetcher.self,
-        resourceDeleter: iocContainer~>ResourceDeleter.self
-    )
-    iocContainer.autoregister(RecipeLibrary.self, initializer: { RecipeLibrary.instance })
+    iocContainer.autoregister(RecipeLibrary.self, initializer: {
+        RecipeLibrary.getInstance(
+            authProvider: iocContainer~>ContentAuthenticationProvider.self,
+            recipeCollectionFetcher: iocContainer~>RecipeCollectionFetcher.self,
+            individualRecipeFetcher: iocContainer~>IndividualRecipeFetcher.self,
+            resourceDeleter: iocContainer~>ResourceDeleter.self
+        )
+    })
     
     //User Profile
     iocContainer.autoregister(UserProfileSignOutService.self, initializer: MockUserProfileSignOutService.init)
@@ -101,8 +103,8 @@ func setupMockIocContainer(_ iocContainer: Container) {
 
     //Settings
     iocContainer.autoregister(UserAccountDeleter.self, initializer: MockUserAccountDeleter.init)
-    iocContainer.autoregister(ArticleCacheResetter.self, initializer: { ArticleLibrary.instance })
-    iocContainer.autoregister(RecipeCacheResetter.self, initializer: { RecipeLibrary.instance })
+    iocContainer.autoregister(ArticleCacheResetter.self, initializer: { iocContainer~>ArticleLibrary.self })
+    iocContainer.autoregister(RecipeCacheResetter.self, initializer: { iocContainer~>RecipeLibrary.self })
 
     //Comment Section
     iocContainer.autoregister(CommentProvider.self, initializer: MockCommentProvider.init)

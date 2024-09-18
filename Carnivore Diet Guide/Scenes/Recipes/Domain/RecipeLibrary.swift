@@ -42,21 +42,23 @@ class RecipeLibrary {
 
     private let recipeCache = Cache.readFromDiskOrDefault(RecipeCache.self, withName: RecipeLibrary.cacheName)
     
-    private static var _instance: RecipeLibrary? = nil
-    public static var instance: RecipeLibrary { _instance! }
-    public static func makeInstance(
+    private static var instance: RecipeLibrary? = nil
+    public static func getInstance(
         authProvider: ContentAuthenticationProvider,
         recipeCollectionFetcher: RecipeCollectionFetcher,
         individualRecipeFetcher: IndividualRecipeFetcher,
         resourceDeleter: ResourceDeleter
-    ) {
-        assert(_instance == nil)
-        _instance = .init(
-            authProvider: authProvider,
-            recipeCollectionFetcher: recipeCollectionFetcher,
-            individualRecipeFetcher: individualRecipeFetcher,
-            resourceDeleter: resourceDeleter
-        )
+    ) -> RecipeLibrary {
+        if instance == nil {
+            instance = .init(
+                authProvider: authProvider,
+                recipeCollectionFetcher: recipeCollectionFetcher,
+                individualRecipeFetcher: individualRecipeFetcher,
+                resourceDeleter: resourceDeleter
+            )
+        }
+        
+        return instance!
     }
     
     private var newestPublishedRecipe: Recipe? {

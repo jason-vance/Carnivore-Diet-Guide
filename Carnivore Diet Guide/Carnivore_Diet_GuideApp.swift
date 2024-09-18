@@ -19,6 +19,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         setupAdMob()
         DailyUserEngagementService.registerLaunchHandler()
         setupToolbars()
+        setup(iocContainer: iocContainer)
         return true
     }
     

@@ -42,21 +42,23 @@ class ArticleLibrary {
 
     private let articleCache = Cache.readFromDiskOrDefault(ArticleCache.self, withName: ArticleLibrary.cacheName)
     
-    private static var _instance: ArticleLibrary? = nil
-    public static var instance: ArticleLibrary { _instance! }
-    public static func makeInstance(
+    private static var instance: ArticleLibrary? = nil
+    public static func getInstance(
         authProvider: ContentAuthenticationProvider,
         articleCollectionFetcher: ArticleCollectionFetcher,
         individualArticleFetcher: IndividualArticleFetcher,
         resourceDeleter: ResourceDeleter
-    ) {
-        assert(_instance == nil)
-        _instance = .init(
-            authProvider: authProvider,
-            articleCollectionFetcher: articleCollectionFetcher,
-            individualArticleFetcher: individualArticleFetcher,
-            resourceDeleter: resourceDeleter
-        )
+    ) -> ArticleLibrary {
+        if instance == nil {
+            instance = .init(
+                authProvider: authProvider,
+                articleCollectionFetcher: articleCollectionFetcher,
+                individualArticleFetcher: individualArticleFetcher,
+                resourceDeleter: resourceDeleter
+            )
+        }
+        
+        return instance!
     }
     
     private var newestPublishedArticle: Article? {
