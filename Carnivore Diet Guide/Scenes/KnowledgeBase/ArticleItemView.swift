@@ -97,12 +97,15 @@ struct ArticleItemView: View {
     }
     
     @ViewBuilder func TextContent() -> some View {
-        Text(article.summary.text)
-            .font(summaryFont.weight(.medium).width(.condensed))
-            .foregroundStyle(Color.text)
-            .lineLimit(summaryLineLimit, reservesSpace: true)
-            .multilineTextAlignment(.leading)
-            .padding(8)
+        HStack {
+            Text(article.summary.text)
+                .font(summaryFont.weight(.medium).width(.condensed))
+                .foregroundStyle(Color.text)
+                .lineLimit(summaryLineLimit, reservesSpace: true)
+                .multilineTextAlignment(.leading)
+                .padding(8)
+            Spacer(minLength: 0)
+        }
     }
     
     @ViewBuilder func ImageContent() -> some View {

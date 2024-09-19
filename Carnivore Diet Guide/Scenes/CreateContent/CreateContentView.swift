@@ -67,10 +67,10 @@ struct CreateContentView: View {
             VStack(spacing: 0) {
                 TopBar()
                 List {
-                    ImageCarouselField()
                     if model.isAdmin {
                         AuthorField()
                     }
+                    ImageCarouselField()
                     PostTitleField()
                     PostTextField()
                 }
