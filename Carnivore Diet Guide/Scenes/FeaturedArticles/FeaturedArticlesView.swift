@@ -52,7 +52,7 @@ struct FeaturedArticlesView: View {
         
         Task {
             guard let articleLibrary = iocContainer.resolve(ArticleLibrary.self) else { return }
-            guard let article = articleLibrary.getArticle(byId: Self.welcomeArticleId) else { return }
+            guard let article = await articleLibrary.getArticle(byId: Self.welcomeArticleId) else { return }
             
             welcomeSection = .init(
                 id: .init(),

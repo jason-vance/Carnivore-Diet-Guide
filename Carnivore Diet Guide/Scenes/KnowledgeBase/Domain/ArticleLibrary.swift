@@ -95,8 +95,11 @@ class ArticleLibrary {
         fetchArticles()
     }
     
-    public func getArticle(byId articleId: String) -> Article? {
-        return articlesSubject.value[articleId]
+    public func getArticle(byId articleId: String) async -> Article? {
+        if let article = articlesSubject.value[articleId] {
+            return article
+        }
+        return try? await individualArticleFetcher.fetchArticle(withId: articleId)
     }
     
     private func listenToUserAuthState() {

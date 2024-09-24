@@ -13,16 +13,20 @@ struct FeedItemView: View {
     
     @State var feedItem: FeedItem
     
-    var isPremium: Bool {
-        switch feedItem.type {
-        case .post:
-            return false
-        case .recipe:
-            guard let recipeLibrary = iocContainer.resolve(RecipeLibrary.self) else { return true }
-            return recipeLibrary.getRecipe(byId: feedItem.resourceId)?.isPremium ?? true
-        case .article:
-            guard let articleLibrary = iocContainer.resolve(ArticleLibrary.self) else { return true }
-            return articleLibrary.getArticle(byId: feedItem.resourceId)?.isPremium ?? true
+    @State var isPremium: Bool = true
+    
+    func checkIsPremium(resourceId: String) {
+        Task {
+            switch feedItem.type {
+            case .post:
+                isPremium = false
+            case .recipe:
+                guard let recipeLibrary = iocContainer.resolve(RecipeLibrary.self) else { return }
+                isPremium = recipeLibrary.getRecipe(byId: feedItem.resourceId)?.isPremium ?? true
+            case .article:
+                guard let articleLibrary = iocContainer.resolve(ArticleLibrary.self) else { return }
+                isPremium = await articleLibrary.getArticle(byId: feedItem.resourceId)?.isPremium ?? true
+            }
         }
     }
     
@@ -48,6 +52,9 @@ struct FeedItemView: View {
         ))
         .clipped()
         .shadow(color: Color.text, radius: 4)
+        .onChange(of: feedItem.resourceId, initial: true) { _, newResourceId in
+            checkIsPremium(resourceId: newResourceId)
+        }
     }
     
     @ViewBuilder func ItemImage() -> some View {

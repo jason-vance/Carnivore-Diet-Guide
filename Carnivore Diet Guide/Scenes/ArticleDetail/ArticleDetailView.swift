@@ -57,11 +57,13 @@ struct ArticleDetailView: View {
     private func fetchArticle(withId articleId: String) {
         guard articleId != article?.id else { return }
         
-        if let article = articleLibrary.getArticle(byId: articleId) {
-            self.article = article
-        } else {
-            print("Article failed to fetch")
-            showArticleFailedToFetch = true
+        Task {
+            if let article = await articleLibrary.getArticle(byId: articleId) {
+                self.article = article
+            } else {
+                print("Article failed to fetch")
+                showArticleFailedToFetch = true
+            }
         }
     }
 

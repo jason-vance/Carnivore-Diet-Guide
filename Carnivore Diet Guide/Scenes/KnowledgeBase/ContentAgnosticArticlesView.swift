@@ -40,7 +40,7 @@ struct ContentAgnosticArticlesView: View {
     
     private func fetchArticles() {
         isWorking = true
-        articles = []
+        self.articles = []
         
         Task {
             do {
@@ -52,7 +52,12 @@ struct ContentAgnosticArticlesView: View {
                     articleIds = try await articleFetcher.fetchTrendingArticles(in: timeFrame)
                 }
                 
-                articles = articleIds.compactMap { articleLibrary.getArticle(byId: $0) }
+                var articles: [Article] = []
+                for id in articleIds {
+                    guard let article = await articleLibrary.getArticle(byId: id) else { continue }
+                    articles.append(article)
+                }
+                self.articles = articles
             } catch {
                 show(alert: "Error fetching articles. \(error.localizedDescription)")
             }

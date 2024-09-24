@@ -27,11 +27,20 @@ struct FirebaseFeaturedArticlesDoc: Codable {
         )
     }
     
-    public func toFeaturedArticles() -> FeaturedArticles? {
-        guard let sections = (sections?.compactMap { $0.toSection() }) else { return nil }
+    public func toFeaturedArticles() async -> FeaturedArticles? {
         guard let publicationDate = publicationDate else { return nil }
+        guard let sections = sections else { return nil }
+        
+        var mappedSections: [FeaturedArticles.Section] = []
+        for section in sections {
+            guard let mappedSection = await section.toSection() else { continue }
+            mappedSections.append(mappedSection)
+        }
 
-        return .init(sections: sections, publicationDate: publicationDate)
+        return .init(
+            sections: mappedSections,
+            publicationDate: publicationDate
+        )
     }
 }
 
@@ -58,18 +67,24 @@ extension FirebaseFeaturedArticlesDoc {
             )
         }
         
-        func toSection() -> FeaturedArticles.Section? {
+        func toSection() async -> FeaturedArticles.Section? {
             guard let layout = FeaturedArticles.Section.Layout(rawValue: layout ?? "") else { return nil }
             guard let title = FeaturedSectionTitle(title ?? "") else { return nil }
             let description = FeaturedSectionDescription(description ?? "")
-            guard let items = (items?.compactMap { $0.toItem() }) else { return nil }
+            guard let items = items else { return nil }
             
+            var mappedItems: [FeaturedArticles.Section.Item] = []
+            for item in items {
+                guard let mappedItem = await item.toItem() else { continue }
+                mappedItems.append(mappedItem)
+            }
+
             return .init(
                 id: UUID(),
                 layout: layout,
                 title: title,
                 description: description,
-                content: items
+                content: mappedItems
             )
         }
     }
@@ -92,9 +107,9 @@ extension FirebaseFeaturedArticlesDoc.Section {
             )
         }
         
-        func toItem() -> FeaturedArticles.Section.Item? {
+        func toItem() async -> FeaturedArticles.Section.Item? {
             guard let articleLibrary = iocContainer.resolve(ArticleLibrary.self) else { return nil }
-            guard let article = articleLibrary.getArticle(byId: articleId ?? "") else { return nil }
+            guard let article = await articleLibrary.getArticle(byId: articleId ?? "") else { return nil }
             guard let prominence = FeaturedArticles.Section.Item.Prominence(rawValue: prominence ?? "") else { return nil }
             
             return .init(id: UUID(), article: article, prominence: prominence)
