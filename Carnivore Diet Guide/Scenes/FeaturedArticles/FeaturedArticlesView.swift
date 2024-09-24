@@ -11,6 +11,11 @@ import SwinjectAutoregistration
 
 struct FeaturedArticlesView: View {
     
+    static let showWelcomeArticleKey = "FeaturedArticlesView.showWelcomeArticle"
+    static let welcomeArticleId = "ADA8F00C-ED8E-4419-82F9-D802B76E10B5"
+    
+    @AppStorage(Self.showWelcomeArticleKey) var showWelcomeArticle: Bool = true
+    
     @Binding public var navigationPath: NavigationPath
     
     @State private var isWorking: Bool = false
@@ -43,9 +48,11 @@ struct FeaturedArticlesView: View {
     }
     
     private func fetchWelcomeArticle() {
+        guard showWelcomeArticle else { return }
+        
         Task {
             guard let articleLibrary = iocContainer.resolve(ArticleLibrary.self) else { return }
-            guard let article = articleLibrary.getArticle(byId: "ADA8F00C-ED8E-4419-82F9-D802B76E10B5") else { return }
+            guard let article = articleLibrary.getArticle(byId: Self.welcomeArticleId) else { return }
             
             welcomeSection = .init(
                 id: .init(),

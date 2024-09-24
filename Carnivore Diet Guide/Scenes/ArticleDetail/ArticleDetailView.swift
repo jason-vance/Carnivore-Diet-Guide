@@ -16,6 +16,7 @@ struct ArticleDetailView: View {
     private let activityTracker = iocContainer~>ResourceViewActivityTracker.self
     private let userIdProvider = iocContainer~>CurrentUserIdProvider.self
     private let subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
+    private let onDeviceWasViewedFlagger = iocContainer~>ResourceOnDeviceWasViewedFlagger.self
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
@@ -66,6 +67,9 @@ struct ArticleDetailView: View {
 
     private func markAsViewed() {
         guard let article = article else { return }
+        
+        onDeviceWasViewedFlagger.flagAsViewed(resource: .init(article))
+        
         guard let userId = userIdProvider.currentUserId else { return }
         guard article.author != userId else { return }
         
