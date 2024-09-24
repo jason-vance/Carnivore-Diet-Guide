@@ -49,7 +49,7 @@ struct FeaturedArticlesView: View {
             do {
                 content = try await featuredArticlesFetcher.fetchFeaturedArticles()
             } catch {
-                show(alert: "Failed to fetch featured articles. \(error.localizedDescription)")
+                print("Failed to fetch featured articles. \(error.localizedDescription)")
             }
             
             isWorking = false
