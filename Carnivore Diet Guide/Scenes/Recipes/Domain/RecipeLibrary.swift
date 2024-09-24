@@ -95,8 +95,11 @@ class RecipeLibrary {
         fetchRecipes()
     }
     
-    public func getRecipe(byId recipeId: String) -> Recipe? {
-        return recipesSubject.value[recipeId]
+    public func getRecipe(byId recipeId: String) async -> Recipe? {
+        if let recipe = recipesSubject.value[recipeId] {
+            return recipe
+        }
+        return try? await individualRecipeFetcher.fetchRecipe(withId: recipeId)
     }
     
     private func listenToUserAuthState() {

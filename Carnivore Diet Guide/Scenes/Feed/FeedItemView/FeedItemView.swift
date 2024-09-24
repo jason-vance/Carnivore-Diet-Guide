@@ -22,7 +22,7 @@ struct FeedItemView: View {
                 isPremium = false
             case .recipe:
                 guard let recipeLibrary = iocContainer.resolve(RecipeLibrary.self) else { return }
-                isPremium = recipeLibrary.getRecipe(byId: feedItem.resourceId)?.isPremium ?? true
+                isPremium = await recipeLibrary.getRecipe(byId: feedItem.resourceId)?.isPremium ?? true
             case .article:
                 guard let articleLibrary = iocContainer.resolve(ArticleLibrary.self) else { return }
                 isPremium = await articleLibrary.getArticle(byId: feedItem.resourceId)?.isPremium ?? true

@@ -16,10 +16,42 @@ struct MarketingView: View {
     
     private let subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
     
-    @Environment(\.purchase) private var purchase: PurchaseAction
-    @State private var product: Product? = nil
+    private let showcaseArticleIds: [String] = [
+        "41F4B6E8-534E-4B45-81F1-D7C29F58C168",
+        "159AAB77-225A-4AFF-9F26-9CFE0B8132CF",
+        "56A9D06C-1121-4C5A-9755-7C4B538EA7DD"
+    ]
+    private let showcaseRecipeIds: [String] = [
+        "0F2B8F14-1D3D-4C7F-B07C-4AAFE6479F5A",
+        "31FAE98F-F20B-40D7-A6F6-427EB7729E30",
+        "3784988C-7396-49E2-900B-39FC977F997C"
+    ]
+    
+    @State private var showcaseArticles: [Article] = []
+    @State private var showcaseRecipes: [Recipe] = []
     @State private var isWorking: Bool = false
     @State private var showBuiltInRestoreButton: Bool = false
+    
+    func fetchShowcaseResources() {
+        Task {
+            guard let articleLibrary = iocContainer.resolve(ArticleLibrary.self) else { return }
+            guard let recipeLibrary = iocContainer.resolve(RecipeLibrary.self) else { return }
+            
+            var articles: [Article] = []
+            for articleId in showcaseArticleIds {
+                guard let article = await articleLibrary.getArticle(byId: articleId) else { continue }
+                articles.append(article)
+            }
+            self.showcaseArticles = articles
+            
+            var recipes: [Recipe] = []
+            for recipeId in showcaseRecipeIds {
+                guard let recipe = await recipeLibrary.getRecipe(byId: recipeId) else { continue }
+                recipes.append(recipe)
+            }
+            self.showcaseRecipes = recipes
+        }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -55,6 +87,7 @@ struct MarketingView: View {
             }
         }
         .background(Color.background)
+        .onAppear { fetchShowcaseResources() }
     }
     
     @ViewBuilder func TopBar() -> some View {
@@ -136,8 +169,7 @@ struct MarketingView: View {
             .padding(.horizontal)
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 24) {
-                    //TODO: Get real articles to show off, maybe the three most popular premium ones
-                    ForEach([Article.sample, Article.sample2]) { article in
+                    ForEach(showcaseArticles) { article in
                         ArticleItemView(article)
                             .articleStyle(.largeVertical)
                             .containerRelativeFrame(.horizontal) { length, axis in
@@ -170,20 +202,12 @@ struct MarketingView: View {
             .padding(.horizontal)
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 24) {
-                    //TODO: Get real recipes to show off, maybe the three most popular premium ones
-                    ForEach(Recipe.samples) { recipe in
-                        VStack {
-                            Text(recipe.title)
-                                Spacer()
-                        }
-                        .padding()
-                        .frame(height: 100)
-                        .containerRelativeFrame(.horizontal) { length, axis in
-                            length * 0.75
-                        }
-                        .background(Color.background)
-                        .clipShape(.rect(cornerRadius: .cornerRadiusMedium, style: .continuous))
-                        .shadow(color: Color.text, radius: 4)
+                    ForEach(showcaseRecipes) { recipe in
+                        RecipeItemView(recipe)
+                            .recipeStyle(.largeVertical)
+                            .containerRelativeFrame(.horizontal) { length, axis in
+                                length * 0.75
+                            }
                     }
                 }
                 .scrollTargetLayout()

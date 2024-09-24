@@ -56,11 +56,13 @@ struct RecipeDetailView: View {
     private func fetchRecipe(withId recipeId: String) {
         guard recipeId != recipe?.id else { return }
         
-        if let recipe = recipeLibrary.getRecipe(byId: recipeId) {
-            self.recipe = recipe
-        } else {
-            print("Recipe failed to fetch")
-            showRecipeFailedToFetch = true
+        Task {
+            if let recipe = await recipeLibrary.getRecipe(byId: recipeId) {
+                self.recipe = recipe
+            } else {
+                print("Recipe failed to fetch")
+                showRecipeFailedToFetch = true
+            }
         }
     }
 
