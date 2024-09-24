@@ -31,6 +31,8 @@ struct FeaturedArticlesView: View {
             .eraseToAnyPublisher()
     }
     
+    @State private var welcomeSection: FeaturedArticles.Section?
+    
     private func resetAppBadgeValue() {
         notificationService.resetAppBadgeValue()
     }
@@ -38,6 +40,27 @@ struct FeaturedArticlesView: View {
     private func show(alert: String) {
         showAlert = true
         alertMessage = alert
+    }
+    
+    private func fetchWelcomeArticle() {
+        Task {
+            guard let articleLibrary = iocContainer.resolve(ArticleLibrary.self) else { return }
+            guard let article = articleLibrary.getArticle(byId: "ADA8F00C-ED8E-4419-82F9-D802B76E10B5") else { return }
+            
+            welcomeSection = .init(
+                id: .init(),
+                layout: .collage,
+                title: .init("Welcome to The Carnivore Diet Guide")!,
+                description: .init("Better Health, One Steak at a Time!"),
+                content: [
+                    .init(
+                        id: .init(),
+                        article: article,
+                        prominence: .primary
+                    )
+                ]
+            )
+        }
     }
     
     private func fetchFeaturedArticles() {
@@ -60,6 +83,7 @@ struct FeaturedArticlesView: View {
         Container()
             .padding(.bottom)
             .alert(alertMessage, isPresented: $showAlert) {}
+            .onAppear { fetchWelcomeArticle() }
             .onAppear { fetchFeaturedArticles() }
             .onAppear { resetAppBadgeValue() }
             .onReceive(showAdsPublisher) { showAds = $0 }
@@ -80,6 +104,10 @@ struct FeaturedArticlesView: View {
     
     @ViewBuilder func ArticleList(_ content: FeaturedArticles) -> some View {
         LazyVStack(spacing: 16) {
+            if let welcomeSection = welcomeSection {
+                FeaturedContentSection(welcomeSection)
+                    .padding(.horizontal)
+            }
             ForEach(content.sections) { section in
                 if showAds { AdRow() }
                 FeaturedContentSection(section)
