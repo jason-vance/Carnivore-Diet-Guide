@@ -1,12 +1,9 @@
 Recipe Ideas:
 
-Simple Seared Steak
-Advanced Seared Steak
-Bone Broth
 Meal
+	Breakfast
 	Lunch
 	Dinner
-	Breakfast
 	Snack
 	Dessert
 Meat
@@ -21,7 +18,6 @@ Meat
 	Turkey
 	Unique, like alligator or something
 Cuisine
-	Soup
 	American
 	Japanese
 	Italian
@@ -35,16 +31,23 @@ Cuisine
 	German
 	Morroccan
 	Middle Eastern
+	Soup
+Sauce, Topping, Extra
+	Bone Marrow Butter
+	Egg Yolk Butter Sauce
+	Béarnaise Sauce
+	Chimichurri
+	Smoked Beef Fat
+	Liver Pâté
+	Garlic Butter
 Method
+	Sous Vide
+	Slow Cook
+	Pressure Cook
 	Grill
 	Fry
 	Bake
-	Slow Cook
-	Sous Vide
 	Roast
-	Boil
-	Steam
-	Pressure Cook
 Holidays
 	Whatever special holiday the current day is
 	Halloween
