@@ -25,7 +25,9 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     
     private func setupAdMob() {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+#if DEBUG
         GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = [ "0a0dbc6a509e6ab553770ec5d465ccb9" ]
+#endif
     }
     
     func userNotificationCenter(

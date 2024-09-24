@@ -1,0 +1,57 @@
+Recipe Ideas:
+
+Simple Seared Steak
+Advanced Seared Steak
+Bone Broth
+Meal
+	Lunch
+	Dinner
+	Breakfast
+	Snack
+	Dessert
+Meat
+	Beef
+	Liver
+	Pork
+	Chicken
+	Salmon
+	Lamb
+	Shrimp
+	Eggs
+	Turkey
+	Unique, like alligator or something
+Cuisine
+	Soup
+	American
+	Japanese
+	Italian
+	Mexican
+	Chinese
+	French
+	Thai
+	Filipino
+	Korean
+	Greek
+	German
+	Morroccan
+	Middle Eastern
+Method
+	Grill
+	Fry
+	Bake
+	Slow Cook
+	Sous Vide
+	Roast
+	Boil
+	Steam
+	Pressure Cook
+Holidays
+	Whatever special holiday the current day is
+	Halloween
+	Thanksgiving
+	Christmas
+	New Years
+	Valentine's Day
+	Labor Day
+Animal Based
+	One or two not-carnivore ingredients
