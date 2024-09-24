@@ -24,6 +24,7 @@ struct FeaturedArticlesView: View {
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
     
+    private let featuredArticlesCache = iocContainer~>FeaturedArticlesCache.self
     private let featuredArticlesFetcher = iocContainer~>FeaturedArticlesFetcher.self
     private let notificationService = iocContainer~>NotificationService.self
     
@@ -77,7 +78,17 @@ struct FeaturedArticlesView: View {
         
         Task {
             do {
+                content = featuredArticlesCache.retrieveFeaturedArticles()
+                if content != nil {
+                    print("FeaturedArticlesView: retrieved FeaturedArticles from cache")
+                    try await Task.sleep(for: .seconds(0.5))
+                }
+                
                 content = try await featuredArticlesFetcher.fetchFeaturedArticles()
+                if let content = content {
+                    print("FeaturedArticlesView: caching FeaturedArticles")
+                    featuredArticlesCache.cache(featuredArticles: content)
+                }
             } catch {
                 print("Failed to fetch featured articles. \(error.localizedDescription)")
             }

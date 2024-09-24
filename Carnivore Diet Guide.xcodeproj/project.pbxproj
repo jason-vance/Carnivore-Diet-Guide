@@ -104,6 +104,10 @@
 		5673D9FA2C9B920B007833E0 /* TextError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673D9F82C9B920B007833E0 /* TextError.swift */; };
 		5673D9FC2CA34402007833E0 /* ResourceOnDeviceWasViewedFlagger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673D9FB2CA34402007833E0 /* ResourceOnDeviceWasViewedFlagger.swift */; };
 		5673D9FD2CA34402007833E0 /* ResourceOnDeviceWasViewedFlagger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673D9FB2CA34402007833E0 /* ResourceOnDeviceWasViewedFlagger.swift */; };
+		5673DA012CA35B0C007833E0 /* FeaturedArticlesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673DA002CA35B0C007833E0 /* FeaturedArticlesCache.swift */; };
+		5673DA022CA35B0C007833E0 /* FeaturedArticlesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673DA002CA35B0C007833E0 /* FeaturedArticlesCache.swift */; };
+		5673DA042CA35D1A007833E0 /* FeaturedArticlesCacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673DA032CA35D1A007833E0 /* FeaturedArticlesCacheEntry.swift */; };
+		5673DA052CA35D1A007833E0 /* FeaturedArticlesCacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673DA032CA35D1A007833E0 /* FeaturedArticlesCacheEntry.swift */; };
 		5676A1362B477933009C1DA6 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5676A1352B477933009C1DA6 /* Recipe.swift */; };
 		5677542C2B70E55C0094EB8C /* CurrentUserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5677542B2B70E55C0094EB8C /* CurrentUserDataProvider.swift */; };
 		5677542E2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5677542D2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift */; };
@@ -473,6 +477,8 @@
 		5673D9F52C9AC28C007833E0 /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		5673D9F82C9B920B007833E0 /* TextError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextError.swift; sourceTree = "<group>"; };
 		5673D9FB2CA34402007833E0 /* ResourceOnDeviceWasViewedFlagger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceOnDeviceWasViewedFlagger.swift; sourceTree = "<group>"; };
+		5673DA002CA35B0C007833E0 /* FeaturedArticlesCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedArticlesCache.swift; sourceTree = "<group>"; };
+		5673DA032CA35D1A007833E0 /* FeaturedArticlesCacheEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedArticlesCacheEntry.swift; sourceTree = "<group>"; };
 		5676A1352B477933009C1DA6 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		5677542B2B70E55C0094EB8C /* CurrentUserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUserDataProvider.swift; sourceTree = "<group>"; };
 		5677542D2B70E5900094EB8C /* FirebaseCurrentUserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCurrentUserDataProvider.swift; sourceTree = "<group>"; };
@@ -1065,6 +1071,15 @@
 				56B88A152B6C5AA400C4C0DB /* ContentAuthenticationProvider.swift */,
 			);
 			path = AppContent;
+			sourceTree = "<group>";
+		};
+		5673D9FE2CA35AEC007833E0 /* FeaturedArticlesCache */ = {
+			isa = PBXGroup;
+			children = (
+				5673DA002CA35B0C007833E0 /* FeaturedArticlesCache.swift */,
+				5673DA032CA35D1A007833E0 /* FeaturedArticlesCacheEntry.swift */,
+			);
+			path = FeaturedArticlesCache;
 			sourceTree = "<group>";
 		};
 		5676A1312B477853009C1DA6 /* RecipeDetail */ = {
@@ -1698,6 +1713,7 @@
 		56D470B12C8BB21D00F48A64 /* FeaturedArticles */ = {
 			isa = PBXGroup;
 			children = (
+				5673D9FE2CA35AEC007833E0 /* FeaturedArticlesCache */,
 				56D470DC2C902BD100F48A64 /* FeaturedArticlesFetcher */,
 				56D470B22C8BB24500F48A64 /* FeaturedArticlesView.swift */,
 				56D470B42C8D8C1800F48A64 /* FeaturedArticles.swift */,
@@ -2107,6 +2123,7 @@
 				563BC7332B7E105C008F3C50 /* CreateMenu.swift in Sources */,
 				56F2137E2B722305009DB057 /* OffsetObservingScrollView.swift in Sources */,
 				568F73412C824767005D16C6 /* CreateArticleMetadataViewModel.swift in Sources */,
+				5673DA052CA35D1A007833E0 /* FeaturedArticlesCacheEntry.swift in Sources */,
 				567754302B7168DD0094EB8C /* BlockingSpinnerView.swift in Sources */,
 				568F731D2C807227005D16C6 /* ArticlesInCategoryView.swift in Sources */,
 				568F72922C793C17005D16C6 /* PostFetcher.swift in Sources */,
@@ -2264,6 +2281,7 @@
 				568F72D42C7E635D005D16C6 /* Square.swift in Sources */,
 				56D470C72C8F930200F48A64 /* NonEmptyString.swift in Sources */,
 				568F72EF2C7FB9C2005D16C6 /* AppVersionRow.swift in Sources */,
+				5673DA022CA35B0C007833E0 /* FeaturedArticlesCache.swift in Sources */,
 				568F72B32C79F0DE005D16C6 /* FavoriteCountProvider.swift in Sources */,
 				56B88A2B2B6CE94600C4C0DB /* ProfileFormPictureField.swift in Sources */,
 				568F72F42C7FC607005D16C6 /* PublicationDateView.swift in Sources */,
@@ -2306,6 +2324,7 @@
 				56D470BC2C8EDE8F00F48A64 /* IsAdminChecker.swift in Sources */,
 				5622EAB92C70AC1600FE9C36 /* ResourceCommentActivityTracker.swift in Sources */,
 				5673D9F72C9AC40E007833E0 /* ContentData.swift in Sources */,
+				5673DA012CA35B0C007833E0 /* FeaturedArticlesCache.swift in Sources */,
 				563BC71C2B7CB6D8008F3C50 /* CookTimeFormatterTests.swift in Sources */,
 				568F72EB2C7EAC78005D16C6 /* PostsFetcher.swift in Sources */,
 				569A9AA62C923DF00021F5EC /* ArticleTests.swift in Sources */,
@@ -2361,6 +2380,7 @@
 				5622EADA2C755F8C00FE9C36 /* UserData.swift in Sources */,
 				563BC6F82B78BE31008F3C50 /* DateExtensions.swift in Sources */,
 				5622EAD92C755D8900FE9C36 /* UserProfileViewModel.swift in Sources */,
+				5673DA042CA35D1A007833E0 /* FeaturedArticlesCacheEntry.swift in Sources */,
 				563BC6FA2B78BE3E008F3C50 /* DateExtensionsTests.swift in Sources */,
 				568F730D2C800DCE005D16C6 /* ResourceTagTests.swift in Sources */,
 				569A9ACE2C93A9A70021F5EC /* SubscriptionLevelProvider.swift in Sources */,

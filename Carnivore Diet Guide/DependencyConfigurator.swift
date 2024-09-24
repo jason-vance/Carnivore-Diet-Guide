@@ -60,6 +60,7 @@ func setup(iocContainer: Container) {
         )
     })
     iocContainer.autoregister(FeaturedArticlesFetcher.self, initializer: FirebaseFeaturedArticlesRepository.init)
+    iocContainer.autoregister(FeaturedArticlesCache.self, initializer: FeaturedArticlesCache.getInstance)
 
     //Content Creation
     iocContainer.autoregister(PostImageUploader.self, initializer: FirebasePostImageStorage.init)
