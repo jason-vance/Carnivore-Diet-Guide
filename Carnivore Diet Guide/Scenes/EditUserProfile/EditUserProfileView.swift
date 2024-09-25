@@ -67,7 +67,7 @@ struct EditUserProfileView: View {
     
     private func saveProfileData() async -> TaskStatus {
         do {
-            guard let username = username else { return .failed("Username is invalid") }
+            guard let username = username else { return .failed("Username is invalid. A username...\n\(Username.rulesDescription)") }
             if mode == .createProfile {
                 guard termsOfServiceAcceptance != nil else { return .failed("Please agree to the Terms of Service") }
                 guard privacyPolicyAcceptance != nil else { return .failed("Please accept the Privacy Policy") }
@@ -250,17 +250,28 @@ struct EditUserProfileView: View {
                 .foregroundStyle(Color.background)
                 .frame(maxWidth: .infinity)
         }
-        .disabled(isSaveDisabled)
     }
 }
 
-#Preview {
+#Preview("Edit") {
     PreviewContainerWithSetup {
         setupMockIocContainer(iocContainer)
     } content: {
         Rectangle()
             .sheet(isPresented: .constant(true)) {
                 EditUserProfileView(userId: "userId", mode: .editProfile)
+            }
+    }
+}
+
+
+#Preview("Create") {
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        Rectangle()
+            .sheet(isPresented: .constant(true)) {
+                EditUserProfileView(userId: "userId", mode: .createProfile)
             }
     }
 }

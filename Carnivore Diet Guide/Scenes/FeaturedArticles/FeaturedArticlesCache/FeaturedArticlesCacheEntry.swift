@@ -77,7 +77,7 @@ extension FeaturedArticlesCacheEntry {
 
 extension FeaturedArticlesCacheEntry.Section {
     struct Item: Codable {
-        var article: Article?
+        var article: ItemArticle?
         var prominence: String?
         
         static func from(_ item: FeaturedArticles.Section.Item) -> Item {
@@ -88,7 +88,6 @@ extension FeaturedArticlesCacheEntry.Section {
         }
         
         func toItem() -> FeaturedArticles.Section.Item? {
-            guard let articleLibrary = iocContainer.resolve(ArticleLibrary.self) else { return nil }
             guard let article = article?.toArticle() else { return nil }
             guard let prominence = FeaturedArticles.Section.Item.Prominence(rawValue: prominence ?? "") else { return nil }
             
@@ -100,7 +99,7 @@ extension FeaturedArticlesCacheEntry.Section {
 
 
 extension FeaturedArticlesCacheEntry.Section.Item {
-    struct Article: Codable {
+    struct ItemArticle: Codable {
         var id: String?
         var isPremium: Bool?
         var author: String?
@@ -111,7 +110,7 @@ extension FeaturedArticlesCacheEntry.Section.Item {
         var publicationDate: Date?
         var categories: [Resource.Category]?
         
-        static func from(article: Carnivore_Diet_Guide.Article) -> Article {
+        static func from(article: Article) -> ItemArticle {
             return .init(
                 id: article.id,
                 isPremium: article.isPremium,
@@ -125,7 +124,7 @@ extension FeaturedArticlesCacheEntry.Section.Item {
             )
         }
         
-        func toArticle() -> Carnivore_Diet_Guide.Article? {
+        func toArticle() -> Article? {
             guard let id = id else { return nil }
             guard let isPremium = isPremium else { return nil }
             guard let author = author else { return nil }

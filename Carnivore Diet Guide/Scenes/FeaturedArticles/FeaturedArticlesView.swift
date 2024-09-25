@@ -11,10 +11,7 @@ import SwinjectAutoregistration
 
 struct FeaturedArticlesView: View {
     
-    static let showWelcomeArticleKey = "FeaturedArticlesView.showWelcomeArticle"
-    static let welcomeArticleId = "ADA8F00C-ED8E-4419-82F9-D802B76E10B5"
-    
-    @AppStorage(Self.showWelcomeArticleKey) var showWelcomeArticle: Bool = true
+    @AppStorage(WelcomeArticleInfo.showWelcomeArticleKey) var showWelcomeArticle: Bool = true
     
     @Binding public var navigationPath: NavigationPath
     
@@ -53,7 +50,7 @@ struct FeaturedArticlesView: View {
         
         Task {
             guard let articleLibrary = iocContainer.resolve(ArticleLibrary.self) else { return }
-            guard let article = await articleLibrary.getArticle(byId: Self.welcomeArticleId) else { return }
+            guard let article = await articleLibrary.getArticle(byId: WelcomeArticleInfo.welcomeArticleId) else { return }
             
             welcomeSection = .init(
                 id: .init(),

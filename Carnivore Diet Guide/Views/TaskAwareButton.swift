@@ -117,7 +117,8 @@ fileprivate extension View {
                 Text(text)
                     .font(.caption)
                     .foregroundColor(.gray)
-                    .padding(.horizontal)
+                    .padding(.horizontal, .paddingHorizontalButtonMedium)
+                    .padding(.vertical, .paddingVerticalButtonMedium)
                     .presentationCompactAdaptation(.popover)
             }
         }

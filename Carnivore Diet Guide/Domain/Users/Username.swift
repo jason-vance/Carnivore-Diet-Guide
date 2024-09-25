@@ -8,6 +8,15 @@
 import Foundation
 
 struct Username {
+    
+    static let rulesDescription: String = """
+* Has between 3-32 Characters
+* Only contains letters, numbers, and periods
+* Has at least one letter
+* Cannot start with a number
+* Cannot have two periods in a row
+"""
+    
     var value: String
 
     init?(_ input: String) {

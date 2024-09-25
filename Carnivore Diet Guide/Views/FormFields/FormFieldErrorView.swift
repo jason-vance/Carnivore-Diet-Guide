@@ -30,7 +30,6 @@ struct FormFieldErrorView: View {
             Spacer()
         }
         .frame(height: 20)
-        .padding(.horizontal)
     }
 }
 
