@@ -38,6 +38,7 @@ struct NextButton: View {
                 }
         }
         .disabled(isDisabled)
+        .opacity(isDisabled ? 0.5 : 1)
     }
 }
 
