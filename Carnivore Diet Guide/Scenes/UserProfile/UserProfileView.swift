@@ -31,6 +31,9 @@ struct UserProfileView: View {
     @State private var userBio: String = ""
     @State private var whyCarnivore: String = ""
     @State private var carnivoreSince: Date = .now
+    
+    @State private var showBioDoneButton: Bool = false
+    @State private var showWhyCarnivoreDoneButton: Bool = false
     @State private var showCarnivoreSinceDatePicker: Bool = false
     
     @FocusState private var focusedField: Field?
@@ -57,6 +60,15 @@ struct UserProfileView: View {
         self.errorMessage = errorMessage
     }
     
+    private func saveEditedUserData() {
+        if whyCarnivore != model.userData.whyCarnivore?.value {
+            model.save(whyCarnivore: whyCarnivore)
+        }
+        if userBio != model.userData.bio?.value {
+            model.save(userBio: userBio)
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -73,19 +85,6 @@ struct UserProfileView: View {
                         CarnivoreSinceField()
                     }
                     .padding(.bottom)
-                    .toolbar {
-                        ToolbarItemGroup(placement: .keyboard) {
-                            Spacer()
-                            Button {
-                                focusedField = nil
-                                model.save(whyCarnivore: whyCarnivore)
-                            } label: {
-                                Text("Done")
-                                    .foregroundStyle(Color.accent)
-                                    .bold()
-                            }
-                        }
-                    }
                 }
             }
             .background(Color.background)
@@ -104,6 +103,12 @@ struct UserProfileView: View {
         }
         .onChange(of: model.userData.carnivoreSince?.date, initial: true) { _, newDate in
             carnivoreSince = newDate ?? .now
+        }
+        .onChange(of: focusedField) { _, newFocus in
+            withAnimation(.snappy) {
+                showBioDoneButton = newFocus == .bio
+                showWhyCarnivoreDoneButton = newFocus == .whyCarnivore
+            }
         }
     }
     
@@ -266,6 +271,27 @@ struct UserProfileView: View {
                         .foregroundStyle(userBio.count > UserBio.maxLength ? Color.accentColor : Color.text)
                         .opacity(userBio.count > UserBio.maxLength ? 1 : focusedField == .bio ? 0.5 : 0)
                 }
+                if showBioDoneButton {
+                    HStack {
+                        Spacer()
+                        Button {
+                            focusedField = nil
+                            saveEditedUserData()
+                        } label: {
+                            Text("Done")
+                                .foregroundStyle(Color.background)
+                                .font(.caption)
+                                .bold()
+                                .padding(.horizontal, .paddingHorizontalButtonSmall)
+                                .padding(.vertical, .paddingVerticalButtonSmall)
+                                .background {
+                                    RoundedRectangle(cornerRadius: .cornerRadiusSmall, style: .continuous)
+                                        .foregroundStyle(Color.accent)
+                                }
+                        }
+                    }
+                    .transition(.asymmetric(insertion: .push(from: .trailing), removal: .push(from: .leading)))
+                }
             }
         }
     }
@@ -305,6 +331,27 @@ struct UserProfileView: View {
                         .font(.caption2)
                         .foregroundStyle(whyCarnivore.count > WhyCarnivore.maxLength ? Color.accentColor : Color.text)
                         .opacity(whyCarnivore.count > WhyCarnivore.maxLength ? 1 : focusedField == .whyCarnivore ? 0.5 : 0)
+                }
+                if showWhyCarnivoreDoneButton {
+                    HStack {
+                        Spacer()
+                        Button {
+                            focusedField = nil
+                            saveEditedUserData()
+                        } label: {
+                            Text("Done")
+                                .foregroundStyle(Color.background)
+                                .font(.caption)
+                                .bold()
+                                .padding(.horizontal, .paddingHorizontalButtonSmall)
+                                .padding(.vertical, .paddingVerticalButtonSmall)
+                                .background {
+                                    RoundedRectangle(cornerRadius: .cornerRadiusSmall, style: .continuous)
+                                        .foregroundStyle(Color.accent)
+                                }
+                        }
+                    }
+                    .transition(.asymmetric(insertion: .push(from: .trailing), removal: .push(from: .leading)))
                 }
             }
         }
