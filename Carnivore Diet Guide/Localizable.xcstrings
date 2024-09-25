@@ -361,10 +361,50 @@
       }
     },
     "%lluhrs" : {
-      "comment" : "Abbreviation for hours"
+      "comment" : "Abbreviation for hours",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lluhr"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%lluhrs"
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "%llumins" : {
-      "comment" : "Abbreviation for minutes"
+      "comment" : "Abbreviation for minutes",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%llumin"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%llumins"
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "3-32 characters. No spaces. At least 1 letter." : {
 
