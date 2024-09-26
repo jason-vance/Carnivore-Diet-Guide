@@ -20,7 +20,6 @@ struct UserData {
     
     var isFullyOnboarded: Bool {
         username != nil &&
-        profileImageUrl != nil &&
         termsOfServiceAcceptance != nil &&
         privacyPolicyAcceptance != nil
     }

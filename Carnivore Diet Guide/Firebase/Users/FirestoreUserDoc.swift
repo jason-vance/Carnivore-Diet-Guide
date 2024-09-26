@@ -52,7 +52,6 @@ struct FirestoreUserDoc: Codable {
     func toUserData() -> UserData? {
         guard let id = id else { return nil }
         guard let username = Username(username ?? "") else { return nil }
-        guard let profileImageUrl = profileImageUrl else { return nil }
 
         return .init(
             id: id,

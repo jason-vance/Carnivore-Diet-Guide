@@ -58,13 +58,6 @@ struct EditUserProfileView: View {
         }
     }
     
-    private var isSaveDisabled: Bool {
-        (profileImage == .init() && profileImageUrl == nil) ||
-        username == nil ||
-        (termsOfServiceAcceptance == nil && mode == .createProfile) ||
-        (privacyPolicyAcceptance == nil && mode == .createProfile)
-    }
-    
     private func saveProfileData() async -> TaskStatus {
         do {
             guard let username = username else { return .failed("Username is invalid. A username...\n\(Username.rulesDescription)") }
