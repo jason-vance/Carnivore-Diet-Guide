@@ -11,6 +11,7 @@
 		56025D222B6B01E800F31A07 /* FirebasePostRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D212B6B01E800F31A07 /* FirebasePostRepository.swift */; };
 		56025D262B6B04AB00F31A07 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D252B6B04AB00F31A07 /* StringExtensions.swift */; };
 		56025D292B6B8CD000F31A07 /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D282B6B8CD000F31A07 /* UI.swift */; };
+		56103CF82CAB593C00035D7B /* BasicNutritionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56103CF72CAB593C00035D7B /* BasicNutritionView.swift */; };
 		561F7E512C98D5D7007F87DC /* RecipeCacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561F7E502C98D5D7007F87DC /* RecipeCacheEntry.swift */; };
 		561F7E522C98D5D7007F87DC /* RecipeCacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561F7E502C98D5D7007F87DC /* RecipeCacheEntry.swift */; };
 		561F7E572C98D6B6007F87DC /* RecipeLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561F7E562C98D6B6007F87DC /* RecipeLibrary.swift */; };
@@ -411,6 +412,7 @@
 		56025D212B6B01E800F31A07 /* FirebasePostRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebasePostRepository.swift; sourceTree = "<group>"; };
 		56025D252B6B04AB00F31A07 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		56025D282B6B8CD000F31A07 /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
+		56103CF72CAB593C00035D7B /* BasicNutritionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionView.swift; sourceTree = "<group>"; };
 		561F7E502C98D5D7007F87DC /* RecipeCacheEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCacheEntry.swift; sourceTree = "<group>"; };
 		561F7E562C98D6B6007F87DC /* RecipeLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeLibrary.swift; sourceTree = "<group>"; };
 		561F7E592C98D960007F87DC /* RecipeCacheResetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCacheResetter.swift; sourceTree = "<group>"; };
@@ -814,6 +816,7 @@
 				561F7E4F2C98D5A0007F87DC /* Domain */,
 				5622EACA2C7527B500FE9C36 /* RecipesView.swift */,
 				561F7E632C98E217007F87DC /* RecipeItemView.swift */,
+				56103CF72CAB593C00035D7B /* BasicNutritionView.swift */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";
@@ -2154,6 +2157,7 @@
 				563BC7282B7D914D008F3C50 /* ResourceCommentActivityTracker.swift in Sources */,
 				569A9AA92C924EA50021F5EC /* DailyUserEngagementService.swift in Sources */,
 				56A6D0D22B835593003B27E5 /* FirebaseFeedItemRepository.swift in Sources */,
+				56103CF82CAB593C00035D7B /* BasicNutritionView.swift in Sources */,
 				568F72D82C7E706B005D16C6 /* ResourceImageViewPager.swift in Sources */,
 				569A9AA32C9228EA0021F5EC /* PrivacyPolicy.swift in Sources */,
 				568F72C32C7D0C32005D16C6 /* CommentCountProvider.swift in Sources */,

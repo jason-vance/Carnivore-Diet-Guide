@@ -360,6 +360,9 @@
         }
       }
     },
+    "%llu" : {
+
+    },
     "%lluhrs" : {
       "comment" : "Abbreviation for hours",
       "localizations" : {
@@ -700,6 +703,9 @@
 
     },
     "Cannot be empty" : {
+
+    },
+    "Carbohydrate" : {
 
     },
     "Carbohydrates" : {

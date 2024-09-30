@@ -18,9 +18,12 @@ struct RecipeView: View {
             VStack(spacing: 0) {
                 RecipeMetadata()
                 Title()
-//                ServingsView()
                 ByLineView(userId: recipe.author)
                 RecipeContent()
+                if let nutritionInfo = recipe.basicNutritionInfo {
+                    BasicNutritionView(nutritionInfo: nutritionInfo)
+                        .padding(.vertical)
+                }
             }
             .padding(.horizontal)
             .padding(.top, 4)
