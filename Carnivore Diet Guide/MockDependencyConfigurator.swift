@@ -12,7 +12,9 @@ import SwinjectAutoregistration
 func setupMockIocContainer(_ iocContainer: Container) {
     //Workers
     iocContainer.autoregister(CurrentUserIdProvider.self, initializer: MockCurrentUserIdProvider.init)
-    iocContainer.autoregister(UserFetcher.self, initializer: MockUserFetcher.init)
+    iocContainer.autoregister(LocalUserDataFetcher.self, initializer: MockLocalUserDataFetcher.init)
+    iocContainer.autoregister(RemoteUserDataFetcher.self, initializer: MockRemoteUserDataFetcher.init)
+    iocContainer.autoregister(UserFetcher.self, initializer: UserFetcher.init)
     iocContainer.autoregister(IsPublisherChecker.self, initializer: MockIsPublisherChecker.init)
     iocContainer.autoregister(DailyUserEngagementService.self, initializer: { DailyUserEngagementService.instance })
     iocContainer.autoregister(NotificationService.self, initializer: NotificationService.init)

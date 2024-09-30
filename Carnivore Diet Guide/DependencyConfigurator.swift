@@ -17,7 +17,9 @@ func setup(iocContainer: Container) {
     iocContainer.autoregister(CurrentUserIdProvider.self) { FirebaseAuthenticationProvider.instance }
     iocContainer.autoregister(UserDataProvider.self, initializer: FirestoreUserDataProvider.init)
     iocContainer.autoregister(FirebaseUserRepository.self, initializer: FirebaseUserRepository.init)
-    iocContainer.autoregister(UserFetcher.self, initializer: FirebaseUserRepository.init)
+    iocContainer.autoregister(LocalUserDataFetcher.self, initializer: UserDataCache.getInstance)
+    iocContainer.autoregister(RemoteUserDataFetcher.self, initializer: FirebaseUserRepository.init)
+    iocContainer.autoregister(UserFetcher.self, initializer: UserFetcher.init)
     iocContainer.autoregister(IsPublisherChecker.self, initializer: FirebasePublishersRepository.init)
     iocContainer.autoregister(DailyUserEngagementService.self, initializer: { DailyUserEngagementService.instance })
     iocContainer.autoregister(NotificationService.self, initializer: NotificationService.init)

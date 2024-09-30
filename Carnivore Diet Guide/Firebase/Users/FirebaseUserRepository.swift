@@ -162,7 +162,7 @@ extension FirebaseUserRepository: UserDataSaver {
     }
 }
 
-extension FirebaseUserRepository: UserFetcher {
+extension FirebaseUserRepository: RemoteUserDataFetcher {
 
     func fetchUser(userId: String) async throws -> UserData {
         guard !userId.isEmpty else { throw TextError("`userId` is empty") }

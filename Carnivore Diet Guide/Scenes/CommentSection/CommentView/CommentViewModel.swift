@@ -7,6 +7,7 @@
 
 import Foundation
 import SwinjectAutoregistration
+import Combine
 
 @MainActor
 class CommentViewModel: ObservableObject {
@@ -29,6 +30,8 @@ class CommentViewModel: ObservableObject {
     private var comment: Comment?
     private var resource: Resource?
     
+    private var sub: AnyCancellable? = nil
+    
     func set(comment: Comment, resource: Resource) {
         self.comment = comment
         self.resource = resource
@@ -41,15 +44,14 @@ class CommentViewModel: ObservableObject {
     }
     
     private func fetchUserData(userId: String) {
-        Task {
-            isLoading = true
-            do {
-                let userData = try await userFetcher.fetchUser(userId: userId)
-                userImageUrl = userData.profileImageUrl
-                username = userData.username?.value ?? "Unknown User"
+        isLoading = true
+        sub = userFetcher.fetchUser(userId: userId)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] userData in
+                self?.userImageUrl = userData.profileImageUrl
+                self?.username = userData.username?.value ?? "Unknown User"
+                self?.isLoading = false
             }
-            isLoading = false
-        }
     }
     
     func deleteComment() {

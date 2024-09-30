@@ -12,6 +12,10 @@
 		56025D262B6B04AB00F31A07 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D252B6B04AB00F31A07 /* StringExtensions.swift */; };
 		56025D292B6B8CD000F31A07 /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56025D282B6B8CD000F31A07 /* UI.swift */; };
 		56103CF82CAB593C00035D7B /* BasicNutritionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56103CF72CAB593C00035D7B /* BasicNutritionView.swift */; };
+		56103CFB2CAB62D400035D7B /* LocalUserDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56103CFA2CAB62D400035D7B /* LocalUserDataFetcher.swift */; };
+		56103CFC2CAB62D400035D7B /* LocalUserDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56103CFA2CAB62D400035D7B /* LocalUserDataFetcher.swift */; };
+		56103CFE2CAB637C00035D7B /* RemoteUserDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56103CFD2CAB637C00035D7B /* RemoteUserDataFetcher.swift */; };
+		56103CFF2CAB637C00035D7B /* RemoteUserDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56103CFD2CAB637C00035D7B /* RemoteUserDataFetcher.swift */; };
 		561F7E512C98D5D7007F87DC /* RecipeCacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561F7E502C98D5D7007F87DC /* RecipeCacheEntry.swift */; };
 		561F7E522C98D5D7007F87DC /* RecipeCacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561F7E502C98D5D7007F87DC /* RecipeCacheEntry.swift */; };
 		561F7E572C98D6B6007F87DC /* RecipeLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561F7E562C98D6B6007F87DC /* RecipeLibrary.swift */; };
@@ -413,6 +417,8 @@
 		56025D252B6B04AB00F31A07 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		56025D282B6B8CD000F31A07 /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
 		56103CF72CAB593C00035D7B /* BasicNutritionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicNutritionView.swift; sourceTree = "<group>"; };
+		56103CFA2CAB62D400035D7B /* LocalUserDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUserDataFetcher.swift; sourceTree = "<group>"; };
+		56103CFD2CAB637C00035D7B /* RemoteUserDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserDataFetcher.swift; sourceTree = "<group>"; };
 		561F7E502C98D5D7007F87DC /* RecipeCacheEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCacheEntry.swift; sourceTree = "<group>"; };
 		561F7E562C98D6B6007F87DC /* RecipeLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeLibrary.swift; sourceTree = "<group>"; };
 		561F7E592C98D960007F87DC /* RecipeCacheResetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCacheResetter.swift; sourceTree = "<group>"; };
@@ -776,6 +782,16 @@
 			path = Values;
 			sourceTree = "<group>";
 		};
+		56103CF92CAB62AC00035D7B /* UserFetcher */ = {
+			isa = PBXGroup;
+			children = (
+				563BC6FB2B7A0973008F3C50 /* UserFetcher.swift */,
+				56103CFA2CAB62D400035D7B /* LocalUserDataFetcher.swift */,
+				56103CFD2CAB637C00035D7B /* RemoteUserDataFetcher.swift */,
+			);
+			path = UserFetcher;
+			sourceTree = "<group>";
+		};
 		561F7E4F2C98D5A0007F87DC /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -1114,13 +1130,13 @@
 		5677542A2B70E5500094EB8C /* Users */ = {
 			isa = PBXGroup;
 			children = (
+				56103CF92CAB62AC00035D7B /* UserFetcher */,
 				569A9A912C90E00B0021F5EC /* IsPublisherChecker */,
 				56D470BD2C8EDF4800F48A64 /* IsAdminChecker */,
 				56B88A762B70DCFD00C4C0DB /* UserDataProvider.swift */,
 				56B88A712B70DC9800C4C0DB /* CurrentUserIdProvider.swift */,
 				5677542B2B70E55C0094EB8C /* CurrentUserDataProvider.swift */,
 				567754362B7184640094EB8C /* UserAccountDeleter.swift */,
-				563BC6FB2B7A0973008F3C50 /* UserFetcher.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -2074,6 +2090,7 @@
 				568F731B2C805B32005D16C6 /* ArticleItemView.swift in Sources */,
 				56ECA34E2C9ABD90003412A2 /* ReviewNewRecipeView.swift in Sources */,
 				569A9ACD2C93A9A70021F5EC /* SubscriptionLevelProvider.swift in Sources */,
+				56103CFE2CAB637C00035D7B /* RemoteUserDataFetcher.swift in Sources */,
 				56B88A552B6F275700C4C0DB /* UserOnboardingStateProvider.swift in Sources */,
 				56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */,
 				56B88A772B70DCFD00C4C0DB /* UserDataProvider.swift in Sources */,
@@ -2264,6 +2281,7 @@
 				56D470A92C8B03AA00F48A64 /* ContentAgnosticArticlesView.swift in Sources */,
 				565CFEB02C87A14100CBEEAC /* IndividualArticleFetcher.swift in Sources */,
 				565CFEAA2C87991A00CBEEAC /* ArticleDetailView.swift in Sources */,
+				56103CFB2CAB62D400035D7B /* LocalUserDataFetcher.swift in Sources */,
 				563BC73B2B7F51E3008F3C50 /* ByLineView.swift in Sources */,
 				56ECA3412C99797E003412A2 /* RecipeMetadata.swift in Sources */,
 				561F7E5E2C98DA6D007F87DC /* RecipeCollectionFetcher.swift in Sources */,
@@ -2320,6 +2338,7 @@
 				568F734A2C824EC7005D16C6 /* SearchKeywordTests.swift in Sources */,
 				56ECA3492C9A1D6F003412A2 /* NewRecipeData.swift in Sources */,
 				568F734D2C8250EA005D16C6 /* ResourceSummary.swift in Sources */,
+				56103CFF2CAB637C00035D7B /* RemoteUserDataFetcher.swift in Sources */,
 				569A9A8F2C90DEC70021F5EC /* ContentAuthenticationProvider.swift in Sources */,
 				565CFEC62C88FC6E00CBEEAC /* CacheTests.swift in Sources */,
 				568F727A2C76961B005D16C6 /* PostImageUploader.swift in Sources */,
@@ -2370,6 +2389,7 @@
 				568F73082C8009CB005D16C6 /* Article.swift in Sources */,
 				5622EADD2C755FAD00FE9C36 /* PersonName.swift in Sources */,
 				568F735D2C827D9B005D16C6 /* ResourceCategoryProvider.swift in Sources */,
+				56103CFC2CAB62D400035D7B /* LocalUserDataFetcher.swift in Sources */,
 				56D470A72C8AF56C00F48A64 /* ArticleCacheResetter.swift in Sources */,
 				568F72862C781A05005D16C6 /* Post.swift in Sources */,
 				563BC7192B7CB67F008F3C50 /* CookTimeFormatter.swift in Sources */,
