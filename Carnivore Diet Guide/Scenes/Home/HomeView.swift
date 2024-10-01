@@ -24,6 +24,32 @@ struct HomeView: View {
         subscriptionManager.checkSubscriptionStatus()
     }
     
+    private func logScreenView(_ selectedTab: HomeMenuBar.HomeMenuTab) {
+        guard let analytics = iocContainer.resolve(Analytics.self) else { return }
+
+        var screenName = ""
+        var screenClass: Any = KnowledgeBaseView.self
+        switch selectedTab {
+        case .feed:
+            screenName = "FeedView"
+            screenClass = FeedView.self
+        case .knowledge:
+            screenName = "KnowledgeBaseView"
+            screenClass = KnowledgeBaseView.self
+        case .createPost:
+            screenName = "KnowledgeBaseView"
+            screenClass = KnowledgeBaseView.self
+        case .recipes:
+            screenName = "RecipesView"
+            screenClass = RecipesView.self
+        case .profile:
+            screenName = "UserProfileView"
+            screenClass = UserProfileView.self
+        }
+        
+        analytics.logScreenView(screenName: screenName, screenClass: screenClass)
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             ZStack {
@@ -41,6 +67,7 @@ struct HomeView: View {
         .ignoresSafeArea(.keyboard)
         .alert(model.alertMessage, isPresented: $model.showAlert) {}
         .onAppear { checkSubscriptionStatus() }
+        .onChange(of: selectedTab, initial: true) { _, tab in logScreenView(tab) }
     }
     
     @ViewBuilder func TabItemLabel(text: String, image: String) -> some View {

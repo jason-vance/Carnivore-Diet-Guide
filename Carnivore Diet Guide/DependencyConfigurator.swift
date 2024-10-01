@@ -13,6 +13,7 @@ let iocContainer: Container = Container()
 
 func setup(iocContainer: Container) {
     //Workers
+    iocContainer.autoregister(Analytics.self, initializer: FirebaseAnalyticsAnalytics.init)
     iocContainer.autoregister(FirebaseAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }
     iocContainer.autoregister(CurrentUserIdProvider.self) { FirebaseAuthenticationProvider.instance }
     iocContainer.autoregister(UserDataProvider.self, initializer: FirestoreUserDataProvider.init)

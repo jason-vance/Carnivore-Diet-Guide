@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseAuth
 import AuthenticationServices
+import FirebaseAnalytics
 
 class FirebaseAuthenticationProvider {
     
@@ -37,10 +38,12 @@ class FirebaseAuthenticationProvider {
                     self?.currentUser = user
                     self?.currentUserId = user.uid
                     self?.userAuthState = .loggedIn
+                    FirebaseAnalytics.Analytics.setUserID(user.uid)
                 } else {
                     self?.currentUser = nil
                     self?.currentUserId = nil
                     self?.userAuthState = .loggedOut
+                    FirebaseAnalytics.Analytics.setUserID(nil)
                 }
             }
         }

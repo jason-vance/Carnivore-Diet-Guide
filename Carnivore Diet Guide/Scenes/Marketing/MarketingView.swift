@@ -52,6 +52,11 @@ struct MarketingView: View {
             self.showcaseRecipes = recipes
         }
     }
+    
+    private func logScreenView() {
+        guard let analytics = iocContainer.resolve(Analytics.self) else { return }
+        analytics.logScreenView(screenName: "RecipeDetailView", screenClass: RecipeDetailView.self)
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -88,6 +93,7 @@ struct MarketingView: View {
         }
         .background(Color.background)
         .onAppear { fetchShowcaseResources() }
+        .onAppear { logScreenView() }
     }
     
     @ViewBuilder func TopBar() -> some View {

@@ -84,6 +84,11 @@ struct ArticleDetailView: View {
         guard let article = article else { return }
         articleLibrary.updateArticleDataIfNecessary(article)
     }
+    
+    private func logScreenView() {
+        guard let analytics = iocContainer.resolve(Analytics.self) else { return }
+        analytics.logScreenView(screenName: "ArticleDetailView", screenClass: ArticleDetailView.self)
+    }
 
     var body: some View {
         Container()
@@ -101,6 +106,7 @@ struct ArticleDetailView: View {
             .alert("This article is no longer available", isPresented: $showArticleNoLongerAvailable) {
                 AlertOkDismissButton()
             }
+            .onAppear { logScreenView() }
     }
     
     @ViewBuilder func Container() -> some View {

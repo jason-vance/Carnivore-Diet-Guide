@@ -62,6 +62,11 @@ struct CreateContentView: View {
         navigationPath.append(postData)
     }
     
+    private func logScreenView() {
+        guard let analytics = iocContainer.resolve(Analytics.self) else { return }
+        analytics.logScreenView(screenName: "CreateContentView", screenClass: CreateContentView.self)
+    }
+    
     var body: some View {
         NavigationStack(path: $navigationPath) {
             VStack(spacing: 0) {
@@ -97,6 +102,7 @@ struct CreateContentView: View {
             }
         }
         .alert(alertMessage, isPresented: $showAlert) {}
+        .onAppear { logScreenView() }
     }
     
     @ViewBuilder func NextCreationStepView(data: ContentData) -> some View {

@@ -65,6 +65,11 @@ struct PostDetailView: View {
             try? await activityTracker.resource(.init(post), wasViewedByUser: userId)
         }
     }
+    
+    private func logScreenView() {
+        guard let analytics = iocContainer.resolve(Analytics.self) else { return }
+        analytics.logScreenView(screenName: "PostDetailView", screenClass: PostDetailView.self)
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -93,6 +98,7 @@ struct PostDetailView: View {
                 dismiss()
             }
         }
+        .onAppear { logScreenView() }
     }
     
     @ViewBuilder func NavigationBar() -> some View {

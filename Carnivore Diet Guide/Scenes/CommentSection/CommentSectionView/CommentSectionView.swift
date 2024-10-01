@@ -47,6 +47,11 @@ struct CommentSectionView: View {
         showError = true
         self.errorMessage = errorMessage
     }
+    
+    private func logScreenView() {
+        guard let analytics = iocContainer.resolve(Analytics.self) else { return }
+        analytics.logScreenView(screenName: "CommentSectionView", screenClass: CommentSectionView.self)
+    }
 
     var body: some View {
         CommentSectionContent()
@@ -57,6 +62,7 @@ struct CommentSectionView: View {
             .onChange(of: resource, initial: true) { newResource in
                 model.startListeningForComments(onResource: newResource)
             }
+            .onAppear { logScreenView() }
     }
     
     @ViewBuilder func CommentSectionContent() -> some View {

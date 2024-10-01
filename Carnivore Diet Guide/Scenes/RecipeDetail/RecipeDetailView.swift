@@ -80,6 +80,11 @@ struct RecipeDetailView: View {
         guard let recipe = recipe else { return }
         recipeLibrary.updateRecipeDataIfNecessary(recipe)
     }
+    
+    private func logScreenView() {
+        guard let analytics = iocContainer.resolve(Analytics.self) else { return }
+        analytics.logScreenView(screenName: "RecipeDetailView", screenClass: RecipeDetailView.self)
+    }
 
     var body: some View {
         Container()
@@ -97,6 +102,7 @@ struct RecipeDetailView: View {
             .alert("This recipe is no longer available", isPresented: $showRecipeNoLongerAvailable) {
                 AlertOkDismissButton()
             }
+            .onAppear{ logScreenView() }
     }
     
     @ViewBuilder func Container() -> some View {
