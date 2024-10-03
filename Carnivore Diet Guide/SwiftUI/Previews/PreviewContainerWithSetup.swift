@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUI
 
 struct PreviewContainerWithSetup<Content: View>: View {
     
