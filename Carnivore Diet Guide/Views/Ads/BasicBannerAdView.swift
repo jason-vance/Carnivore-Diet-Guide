@@ -21,15 +21,15 @@ struct BasicBannerAdView: UIViewControllerRepresentable {
 
 class BannerAdViewController: UIViewController {
     
-    var bannerView: GADBannerView!
+    var bannerView: BannerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let viewWidth = view.frame.inset(by: view.safeAreaInsets).width
         
-        let adSize = GADCurrentOrientationInlineAdaptiveBannerAdSizeWithWidth(viewWidth)
-        bannerView = GADBannerView(adSize: adSize)
+        let adSize = currentOrientationInlineAdaptiveBanner(width: viewWidth)
+        bannerView = BannerView(adSize: adSize)
         
         addBannerViewToView(bannerView)
         
@@ -41,10 +41,10 @@ class BannerAdViewController: UIViewController {
 #endif
         bannerView.rootViewController = self
         
-        bannerView.load(GADRequest())
+        bannerView.load(Request())
     }
     
-    func addBannerViewToView(_ bannerView: GADBannerView) {
+    func addBannerViewToView(_ bannerView: BannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bannerView)
         view.addConstraints([

@@ -52,7 +52,7 @@ class UserDataCache: LocalUserDataFetcher {
 
             return .init(
                 id: id,
-                fullName: PersonName(fullName ?? ""),
+                fullName: try? PersonName(fullName ?? ""),
                 username: username,
                 profileImageUrl: profileImageUrl,
                 bio: UserBio(bio),

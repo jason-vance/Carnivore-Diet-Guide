@@ -41,7 +41,7 @@ extension UserData {
     
     static let sampleWithPersonName: UserData = {
         var sample = Self.sample
-        sample.fullName = PersonName("Clive Rosfield")
+        sample.fullName = try! PersonName("Clive Rosfield")
         return sample
     }()
 }

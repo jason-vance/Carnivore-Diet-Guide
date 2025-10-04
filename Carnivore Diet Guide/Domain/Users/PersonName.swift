@@ -10,17 +10,24 @@ import ValueOf
 
 class PersonName: ValueOf<String> {
     
-    override class func validate(value: String) -> Bool {
-        hasAtLeastThreeChars(value)
-        &&
-        beginsAndEndsWithNonWhitespace(value)
+    init(_ value: String) throws {
+        try super.init(value, validator: Self.validate)
     }
     
-    private class func hasAtLeastThreeChars(_ value: String) -> Bool {
+    private static func validate(value: String) throws {
+        guard hasAtLeastThreeChars(value) else {
+            throw NSError(domain: "Name must be at least 3 characters long.", code: 0, userInfo: nil)
+        }
+        guard beginsAndEndsWithNonWhitespace(value) else {
+            throw NSError(domain: "Name must not start or end with a whitespace character.", code: 0, userInfo: nil)
+        }
+    }
+    
+    private static func hasAtLeastThreeChars(_ value: String) -> Bool {
         value.count >= 3
     }
     
-    private class func beginsAndEndsWithNonWhitespace(_ value: String) -> Bool {
+    private static func beginsAndEndsWithNonWhitespace(_ value: String) -> Bool {
         (value.first?.isWhitespace == false)
         &&
         (value.last?.isWhitespace == false)

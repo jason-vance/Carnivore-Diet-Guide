@@ -75,7 +75,7 @@ struct SearchBar: View {
                     searchPresented: searchedPresented,
                     action: { }
                 )
-                Text("searchedPresented: \(searchedPresented.wrappedValue)")
+                Text("searchedPresented: \(String(describing: searchedPresented.wrappedValue))")
                 Spacer()
             }
         }

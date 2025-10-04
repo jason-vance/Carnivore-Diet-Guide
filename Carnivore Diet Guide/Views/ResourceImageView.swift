@@ -10,7 +10,7 @@ import Kingfisher
 
 struct ResourceImageView: View {
     
-    private class ResourceImageModifier: ImageModifier {
+    private final class ResourceImageModifier: ImageModifier {
         
         private let aspectRatio: Binding<CGFloat>
         

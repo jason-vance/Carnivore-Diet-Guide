@@ -30,7 +30,8 @@ struct BasicNutritionView: View {
     
     @ViewBuilder func DividerLine() -> some View {
         Rectangle()
-            .frame(width: .infinity, height: 0.5)
+            .frame(height: 0.5)
+            .frame(maxWidth: .infinity)
             .foregroundStyle(Color.text)
     }
     

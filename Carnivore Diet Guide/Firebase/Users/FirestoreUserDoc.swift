@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import FirebaseFirestoreSwift
+import FirebaseFirestore
 
 struct FirestoreUserDoc: Codable {
     
@@ -55,7 +55,7 @@ struct FirestoreUserDoc: Codable {
 
         return .init(
             id: id,
-            fullName: PersonName(fullName ?? ""),
+            fullName: try? PersonName(fullName ?? ""),
             username: username,
             profileImageUrl: profileImageUrl,
             termsOfServiceAcceptance: termsOfServiceAcceptance,
