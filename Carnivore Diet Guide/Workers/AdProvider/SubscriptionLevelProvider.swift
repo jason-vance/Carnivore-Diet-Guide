@@ -131,7 +131,9 @@ class SubscriptionLevelProvider {
         } else {
             // Provide access to the product identified by
             // transaction.productID.
-            set(subscriptionLevel: .carnivorePlus)
+            if Self.productIds.contains(transaction.productID) {
+                set(subscriptionLevel: .carnivorePlus)
+            }
         }
     }
     
