@@ -2524,8 +2524,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Carnivore-Diet-Guide-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Carnivore Diet";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Used for capturing a profile pic";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Used for selecting a profile pic";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Carnivore Diet Guide does not use your device's microphone, but one of it's libraries might.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Used for selecting profile pictures and post images";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -2561,8 +2563,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Carnivore-Diet-Guide-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Carnivore Diet";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Used for capturing a profile pic";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Used for selecting a profile pic";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Carnivore Diet Guide does not use your device's microphone, but one of it's libraries might.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Used for selecting profile pictures and post images";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -157,6 +157,18 @@
         }
       }
     },
+    "NSMicrophoneUsageDescription" : {
+      "comment" : "Privacy - Microphone Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Carnivore Diet Guide does not use your device's microphone, but one of it's libraries might."
+          }
+        }
+      }
+    },
     "NSPhotoLibraryUsageDescription" : {
       "comment" : "Privacy - Photo Library Usage Description",
       "extractionState" : "extracted_with_value",
@@ -164,7 +176,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Used for selecting a profile pic"
+            "value" : "Used for selecting profile pictures and post images"
           }
         }
       }
