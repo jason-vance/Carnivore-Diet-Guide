@@ -19,11 +19,6 @@ struct HomeView: View {
         (iocContainer~>CurrentUserIdProvider.self).currentUserId!
     }
     
-    private func checkSubscriptionStatus() {
-        let subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
-        subscriptionManager.checkSubscriptionStatus()
-    }
-    
     private func logScreenView(_ selectedTab: HomeMenuBar.HomeMenuTab) {
         guard let analytics = iocContainer.resolve(Analytics.self) else { return }
 
@@ -66,7 +61,6 @@ struct HomeView: View {
         }
         .ignoresSafeArea(.keyboard)
         .alert(model.alertMessage, isPresented: $model.showAlert) {}
-        .onAppear { checkSubscriptionStatus() }
         .onChange(of: selectedTab, initial: true) { _, tab in logScreenView(tab) }
     }
     

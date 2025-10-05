@@ -34,7 +34,7 @@ struct AdRow: View {
                 }
         }
         .fullScreenCover(isPresented: $showMarketingView) {
-            MarketingView { showMarketingView = false }
+            MarketingView()
         }
     }
 }

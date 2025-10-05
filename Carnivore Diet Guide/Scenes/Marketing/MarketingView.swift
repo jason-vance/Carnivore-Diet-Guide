@@ -12,7 +12,7 @@ import SwinjectAutoregistration
 
 struct MarketingView: View {
     
-    let cancel: () -> ()
+    @Environment(\.presentationMode) private var presentationMode
     
     private let subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
     
@@ -29,8 +29,57 @@ struct MarketingView: View {
     
     @State private var showcaseArticles: [Article] = []
     @State private var showcaseRecipes: [Recipe] = []
-    @State private var isWorking: Bool = false
-    @State private var showBuiltInRestoreButton: Bool = false
+    @State private var isPurchasing: Bool = false
+    @State private var showDiscountCodeDialog = false
+    @State private var errorMessage: String?
+    @State private var showError = false
+    
+    private var displayProducts: [Product] {
+        subscriptionManager.products
+            .map { $0.value }
+            .sorted { $0.price < $1.price }
+    }
+    
+    private func dismiss() {
+        presentationMode.wrappedValue.dismiss()
+    }
+    
+    private func doPurchase(productId: String) {
+        Task {
+            isPurchasing = true
+            do {
+                let _ = try await subscriptionManager.purchase(productId: productId)
+            } catch {
+                if let subError = error as? SubscriptionError {
+                    errorMessage = subError.message
+                } else {
+                    errorMessage = error.localizedDescription
+                }
+                showError = true
+            }
+            isPurchasing = false
+        }
+    }
+    
+    private func handleOfferCodeCompletion() {
+        Task {
+            isPurchasing = true
+            let _ = await subscriptionManager.isSubscribed()
+            isPurchasing = false
+        }
+    }
+    
+    private func restorePurchases() {
+        Task {
+            do {
+                try await subscriptionManager.restorePurchases()
+                let _ = await subscriptionManager.isSubscribed()
+            } catch {
+                errorMessage = error.localizedDescription
+                showError = true
+            }
+        }
+    }
     
     func fetchShowcaseResources() {
         Task {
@@ -65,6 +114,7 @@ struct MarketingView: View {
                 LazyVStack(spacing: 24) {
                     VStack {
                         Headline()
+                        FirstMonthIsFree1()
                         Subheadline()
                         SubSubheadline()
                     }
@@ -75,7 +125,9 @@ struct MarketingView: View {
                     PremiumRecipes()
                     AdvancedProgressTracking()
                         .padding(.horizontal)
-                    SubscribeButton()
+                    FirstMonthIsFree2()
+                        .padding(.horizontal)
+                    SubscribeButtons()
                 }
                 .foregroundStyle(Color.text)
                 .padding(.vertical)
@@ -94,29 +146,43 @@ struct MarketingView: View {
         .background(Color.background)
         .onAppear { fetchShowcaseResources() }
         .onAppear { logScreenView() }
+        .alert(
+            "Purchase Error",
+            isPresented: $showError,
+            actions: { Button("OK", role: .cancel) { } },
+            message: { Text(errorMessage ?? "An unknown error occurred") }
+        )
+        .overlay { IsPurchasingView() }
+        .onChange(of: subscriptionManager.subscriptionLevel, initial: true) { _, subscriptionLevel in
+            if case .carnivorePlus = subscriptionLevel { dismiss() }
+        }
+        .onAppear {
+            subscriptionManager.refreshProducts()
+        }
     }
     
     @ViewBuilder func TopBar() -> some View {
         ScreenTitleBar(
             primaryContent: { Text("Carnivore+") },
             leadingContent: CancelButton,
-            trailingContent: WorkingIndicator
+            trailingContent: { EmptyView() }
         )
     }
     
     @ViewBuilder func CancelButton() -> some View {
         Button {
-            cancel()
+            dismiss()
         } label: {
             ResourceMenuButtonLabel(sfSymbol: "xmark")
         }
     }
     
-    @ViewBuilder func WorkingIndicator() -> some View {
-        if isWorking {
+    @ViewBuilder private func IsPurchasingView() -> some View {
+        if isPurchasing {
             ProgressView()
-                .progressViewStyle(.circular)
-                .tint(Color.accent)
+                .scaleEffect(1.5)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.black.opacity(0.2))
         }
     }
     
@@ -124,6 +190,17 @@ struct MarketingView: View {
         HStack {
             Text("Unlock the Full Carnivore Experience!")
                 .font(.title)
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder func FirstMonthIsFree1() -> some View {
+        HStack {
+            Spacer()
+            Text("Free for the First Month!")
+                .foregroundStyle(Color.accentColor)
+                .font(.headline)
+                .bold(true)
             Spacer()
         }
     }
@@ -240,41 +317,73 @@ struct MarketingView: View {
         }
     }
     
-    @ViewBuilder func SubscribeButton() -> some View {
-        VStack(spacing: 0) {
-            SubscriptionStoreView(groupID: subscriptionManager.carnivorePlusSubscriptionGroupId) {
-                Image("steak")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .clipShape(.rect(cornerRadius: .cornerRadiusMedium, style: .continuous))
-                    .padding(.horizontal)
-            }
-            .onInAppPurchaseStart { _ in
-                withAnimation(.snappy) { isWorking = true }
-            }
-            .onInAppPurchaseCompletion { product, purchaseResult in
-                withAnimation(.snappy) { isWorking = false }
-                if case .success(.success(let verificationResult)) = purchaseResult {
-                    subscriptionManager.handle(transactionUpdate: verificationResult)
-                }
-            }
-            .storeButton(showBuiltInRestoreButton ? .visible : .hidden, for: .restorePurchases)
-            .subscriptionStoreControlStyle(.picker)
-            .preferredColorScheme(.light)
-            if !showBuiltInRestoreButton {
-                Button {
-                    subscriptionManager.checkSubscriptionStatus()
-                    withAnimation(.snappy) { showBuiltInRestoreButton = true }
-                } label: {
-                    Text("Restore Subscription")
-                        .foregroundStyle(Color.accent)
-                        .bold()
-                }
+    @ViewBuilder func FirstMonthIsFree2() -> some View {
+        VStack {
+            HStack {
+                Text("The First Month is absolutely Free!")
+                    .font(.headline)
+                Spacer()
             }
         }
+    }
+    
+    @ViewBuilder func SubscribeButtons() -> some View {
+        VStack {
+            ForEach(displayProducts, id: \.self) { product in
+                SubscribeButton(product: product)
+            }
+            DiscountCodeButton()
+            RestoreSubscriptionButton()
+        }
+        .padding(.horizontal)
+    }
+    
+    @ViewBuilder private func SubscribeButton(product: Product) -> some View {
+        Button {
+            doPurchase(productId: product.id)
+        } label: {
+            HStack(spacing: 0) {
+                Text(product.displayName)
+                    .bold()
+                Spacer()
+                Text(product.displayPrice)
+                    .bold()
+                if let period = product.subscription?.subscriptionPeriod.unit.localizedDescription {
+                    Text("/\(period.lowercased())")
+                        .font(.footnote)
+                }
+            }
+            .foregroundStyle(Color.white)
+            .padding()
+            .background {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .foregroundStyle(Color.accentColor.gradient)
+            }
+        }
+        .disabled(isPurchasing)
+        .padding(.top, 8)
+    }
+    
+    @ViewBuilder private func DiscountCodeButton() -> some View {
+        Button("Enter Discount Code") {
+            showDiscountCodeDialog = true
+        }
+        .foregroundColor(.accentColor)
+        .offerCodeRedemption(isPresented: $showDiscountCodeDialog) { result in
+            handleOfferCodeCompletion()
+        }
+        .padding(.top)
+    }
+    
+    @ViewBuilder private func RestoreSubscriptionButton() -> some View {
+        Button("Restore Subscription") {
+            restorePurchases()
+        }
+        .foregroundColor(.accentColor)
+        .padding(.top)
     }
 }
 
 #Preview {
-    MarketingView { }
+    MarketingView()
 }

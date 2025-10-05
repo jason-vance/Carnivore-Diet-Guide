@@ -111,9 +111,7 @@ struct ArticleDetailView: View {
     
     @ViewBuilder func Container() -> some View {
         if showMarketing == true {
-            MarketingView {
-                dismiss()
-            }
+            MarketingView()
         } else {
             VStack(spacing: 0) {
                 NavigationBar()
