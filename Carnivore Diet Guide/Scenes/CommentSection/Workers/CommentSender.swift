@@ -11,7 +11,7 @@ protocol CommentSender {
     func sendComment(
         text: String,
         toResource resource: Resource
-    ) async throws
+    ) async throws -> Comment
 }
 
 class MockCommentSender: CommentSender {
@@ -21,10 +21,11 @@ class MockCommentSender: CommentSender {
     func sendComment(
         text: String,
         toResource resource: Resource
-    ) async throws {
+    ) async throws -> Comment {
         try await Task.sleep(for: .seconds(1))
         if let error = errorToThrowOnSend {
             throw error
         }
+        return .sample
     }
 }

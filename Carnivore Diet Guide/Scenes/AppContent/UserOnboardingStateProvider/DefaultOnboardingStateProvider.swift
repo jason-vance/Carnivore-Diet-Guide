@@ -34,10 +34,18 @@ class DefaultUserOnboardingStateProvider: UserOnboardingStateProvider {
     }
     
     private func onUpdate(currentUserId: String?) {
+        //TODO: I might need to pass a special polling period parameter into here
         userDataProvider.startListeningToUser(withId: currentUserId)
     }
     
     private func onUpdate(userData: UserData) {
+        Task {
+            await setUserOnboardingState(from: userData)
+        }
+    }
+    
+    @MainActor
+    private func setUserOnboardingState(from userData: UserData) {
         if userData.id.isEmpty {
             self.userOnboardingState = .unknown
         } else if userData.isFullyOnboarded {

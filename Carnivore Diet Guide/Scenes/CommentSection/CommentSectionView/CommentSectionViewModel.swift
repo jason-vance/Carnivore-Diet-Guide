@@ -40,7 +40,8 @@ class CommentSectionViewModel: ObservableObject {
         guard !text.isEmpty else { throw TextError("Comment text is empty") }
         
         isSendingComment = true
-        try await commentSender.sendComment(text: text, toResource: resource)
+        let comment = try await commentSender.sendComment(text: text, toResource: resource)
+        comments.append(comment)
         isSendingComment = false
         
         addCommentActivity(onResource: resource)
@@ -55,6 +56,12 @@ class CommentSectionViewModel: ObservableObject {
     }
     
     private func onUpdate(comments: [Comment]) {
+        Task {
+            await setComments(comments)
+        }
+    }
+    
+    private func setComments(_ comments: [Comment]) async {
         self.comments = comments
     }
     

@@ -48,17 +48,23 @@ class FirebaseUserRepository {
         withId id: String,
         onUpdate: @escaping (FirestoreUserDoc?)->(),
         onError: ((Error)->())? = nil
-    ) -> ListenerRegistration {
-        usersCollection.document(id).addSnapshotListener { snapshot, error in
-            if let snapshot = snapshot {
-                let userDoc = try? snapshot.data(as: FirestoreUserDoc.self)
-                onUpdate(userDoc)
-            } else if let error = error {
-                onError?(error)
-            } else {
-                onError?(TextError("¯\\_(ツ)_/¯ While listening to user doc changes"))
+    ) -> AnyCancellable {
+        let timer = Timer.scheduledTimer(
+            withTimeInterval: 60.0,
+            repeats: true
+        ) { _ in
+            Task {
+                do {
+                    let userDoc = try await self.fetchUserDocument(withId: id)
+                    onUpdate(userDoc)
+                } catch {
+                    onError?(error)
+                }
             }
         }
+        timer.fire()
+        
+        return .init({ timer.invalidate() })
     }
     
     func fetchUserDocument(withId id: String) async throws -> FirestoreUserDoc? {
@@ -88,29 +94,34 @@ class FirebaseUserRepository {
         onUpdate: @escaping (Bool)->(),
         onError: ((Error)->())? = nil
     ) -> AnyCancellable {
-        let listener = usersCollection.document(userId).addSnapshotListener { snapshot, error in
-            guard let snapshot = snapshot else {
-                onError?(error ?? TextError("¯\\_(ツ)_/¯ While listening to user's recipe favorite status"))
-                return
+        let timer = Timer.scheduledTimer(
+            withTimeInterval: 60.0,
+            repeats: true
+        ) { _ in
+            Task {
+                do {
+                    let doc = try await self.usersCollection.document(userId).getDocument()
+                    let favoritesAsAny = doc.get(Self.favoritesField(for: resource))
+
+                    guard let favorites = favoritesAsAny as? [String]? else {
+                        onError?(TextError("Couldn't cast to array of favorites"))
+                        return
+                    }
+                    
+                    guard let favorites = favorites else {
+                        onUpdate(false)
+                        return
+                    }
+                    
+                    onUpdate(favorites.contains { $0 == resource.id })
+                } catch {
+                    onError?(error)
+                }
             }
-            
-            let field = Self.favoritesField(for: resource)
-            let favoritesAsAny = snapshot.get(field)
-            
-            guard let favorites = favoritesAsAny as? [String]? else {
-                onError?(TextError("Couldn't cast to array of favorites"))
-                return
-            }
-            
-            guard let favorites = favorites else {
-                onUpdate(false)
-                return
-            }
-            
-            onUpdate(favorites.contains { $0 == resource.id })
         }
+        timer.fire()
         
-        return AnyCancellable({ listener.remove() })
+        return .init({ timer.invalidate() })
     }
     
     func add(resource: Resource, toFavoritesOf userId: String) async throws {

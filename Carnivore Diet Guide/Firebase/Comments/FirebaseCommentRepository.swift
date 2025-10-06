@@ -38,17 +38,31 @@ class FirebaseCommentRepository {
         onUpdate: @escaping (UInt) -> (),
         onError: ((Error) -> ())?
     ) -> AnyCancellable {
-        let listener = commentsCollection(forResource: resource)
-            .addSnapshotListener { snapshot, error in
-                guard let snapshot = snapshot else {
-                    onError?(error ?? TextError("¯\\_(ツ)_/¯ While listening to recipe's comments"))
-                    return
+        let timer = Timer.scheduledTimer(
+            withTimeInterval: 60.0,
+            repeats: true
+        ) { _ in
+            Task {
+                do {
+                    let count = try await self.getCommentCountOf(resource: resource)
+                    onUpdate(count)
+                } catch {
+                    onError?(error)
                 }
-                
-                onUpdate(UInt(snapshot.count))
             }
+        }
+        timer.fire()
         
-        return .init({ listener.remove() })
+        return .init({ timer.invalidate() })
+    }
+    
+    func getCommentCountOf(resource: Resource) async throws -> UInt {
+        let count = try await commentsCollection(forResource: resource)
+            .count
+            .getAggregation(source: .server)
+            .count
+            .intValue
+        return UInt(count)
     }
 }
 
@@ -58,21 +72,32 @@ extension FirebaseCommentRepository: CommentProvider {
         onUpdate: @escaping ([Comment]) -> (),
         onError: ((Error) -> ())?
     ) -> AnyCancellable {
-        let listener = commentsCollection(forResource: resource)
-            .order(by: DATE)
-            .addSnapshotListener { snapshot, error in
-                guard let snapshot = snapshot else {
-                    onError?(error ?? TextError("¯\\_(ツ)_/¯ While listening for comments on \(resource.type) `\(resource.id)`"))
-                    return
+        let timer = Timer.scheduledTimer(
+            withTimeInterval: 60.0,
+            repeats: true
+        ) { _ in
+            Task {
+                do {
+                    let comments = try await self.getCommentsOrderedByDate(resource: resource)
+                    onUpdate(comments)
+                } catch {
+                    onError?(error)
                 }
-                
-                let comments = snapshot.documents.compactMap {
-                    try? $0.data(as: FirestoreCommentDoc.self).toComment()
-                }
-                onUpdate(comments)
             }
+        }
+        timer.fire()
         
-        return .init({ listener.remove() })
+        return .init({ timer.invalidate() })
+    }
+    
+    func getCommentsOrderedByDate(resource: Resource) async throws -> [Comment] {
+        try await commentsCollection(forResource: resource)
+            .order(by: DATE)
+            .getDocuments()
+            .documents
+            .compactMap {
+                try? $0.data(as: FirestoreCommentDoc.self).toComment()
+            }
     }
 }
 
@@ -80,17 +105,23 @@ extension FirebaseCommentRepository: CommentSender {
     func sendComment(
         text: String,
         toResource resource: Resource
-    ) async throws {
+    ) async throws -> Comment {
         guard let userId = FirebaseAuthenticationProvider.instance.currentUserId else {
             throw TextError("User is not currently signed in")
         }
         
-        let doc = FirestoreCommentDoc(
+        var doc = FirestoreCommentDoc(
             userId: userId,
             text: text,
             date: .now
         )
-        try await commentsCollection(forResource: resource).addDocument(from: doc)
+        let reference = try await commentsCollection(forResource: resource).addDocument(from: doc)
+        doc.id = reference.documentID
+        
+        guard let comment = doc.toComment() else {
+            throw NSError(domain: "Failure to create comment", code: 1001, userInfo: nil)
+        }
+        return comment
     }
 }
 

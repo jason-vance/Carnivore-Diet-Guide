@@ -48,6 +48,15 @@ class FirebasePostRepository {
     func deletePost(withId postId: String) async throws {
         try await postsCollection.document(postId).delete()
     }
+    
+    func getPostCount(forUser userId: String) async -> Int {
+        let countSnapshot = try? await postsCollection
+            .whereField(authorField, isEqualTo: userId)
+            .count
+            .getAggregation(source: .server)
+            .count
+        return Int(truncating: countSnapshot ?? 0)
+    }
 }
 
 extension FirebasePostRepository: PostCountProvider {
@@ -56,17 +65,18 @@ extension FirebasePostRepository: PostCountProvider {
         onUpdate: @escaping (Int) -> (),
         onError: @escaping (Error) -> ()
     ) -> AnyCancellable {
-        let listener = postsCollection
-            .whereField(authorField, isEqualTo: userId)
-            .addSnapshotListener { snapshot, error in
-                if let snapshot = snapshot {
-                    onUpdate(snapshot.count)
-                } else {
-                    onError(error ?? TextError("¯\\_(ツ)_/¯ While listening to recipe's favoriters"))
-                }
+        let timer = Timer.scheduledTimer(
+            withTimeInterval: 60.0,
+            repeats: true
+        ) { _ in
+            Task {
+                let count = await self.getPostCount(forUser: userId)
+                onUpdate(count)
             }
+        }
+        timer.fire()
         
-        return .init({ listener.remove() })
+        return .init({ timer.invalidate() })
     }
 }
 

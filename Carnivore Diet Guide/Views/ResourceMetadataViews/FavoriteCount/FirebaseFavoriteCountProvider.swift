@@ -19,9 +19,14 @@ class FirebaseFavoriteCountProvider: FavoriteCountProvider {
     
     public func startListening(to resource: Resource) {
         favoriteCountListener = favoritersRepo.listenToFavoriteCountOf(resource: resource) { [weak self] count in
-            self?.favoriteCount = count
+            Task { await self?.setFavoriteCount(count) }
         } onError: { error in
             print("Failed to retrieve favorite count: \(error.localizedDescription)")
         }
+    }
+    
+    @MainActor
+    private func setFavoriteCount(_ count: UInt) {
+        self.favoriteCount = count
     }
 }

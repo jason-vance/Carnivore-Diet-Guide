@@ -19,9 +19,14 @@ class FirebaseCommentCountProvider: CommentCountProvider {
     
     public func startListening(to resource: Resource) {
         commentCountListener = commentsRepo.listenToCommentCountOf(resource: resource) { [weak self] count in
-            self?.commentCount = count
+            Task { await self?.setCommentCount(count) }
         } onError: { error in
             print("Failed to retrieve comment count: \(error.localizedDescription)")
         }
+    }
+    
+    @MainActor
+    private func setCommentCount(_ count: UInt) {
+        self.commentCount = count
     }
 }

@@ -61,6 +61,11 @@ class CommentViewModel: ObservableObject {
                 guard let resource = resource else { throw TextError("`resource` was nil") }
 
                 try await commentDeleter.deleteComment(comment, onResource: resource)
+                
+                userImageUrl = nil
+                username = "[Deleted]"
+                commentText = "[Deleted]"
+                dateString = ""
             } catch {
                 show(errorMessage: "Comment could not be deleted: \(error.localizedDescription)")
             }

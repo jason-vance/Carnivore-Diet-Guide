@@ -7,13 +7,14 @@
 
 import Foundation
 import FirebaseFirestore
+import Combine
 
 class FirestoreUserDataProvider: UserDataProvider {
     
     @Published var userData: UserData = .empty
     var userDataPublisher: Published<UserData>.Publisher { $userData }
     
-    var userDocListener: ListenerRegistration?
+    var userDocListener: AnyCancellable?
     
     let userRepo: FirebaseUserRepository
     
@@ -26,7 +27,7 @@ class FirestoreUserDataProvider: UserDataProvider {
     }
     
     private func cleanUpListeners() {
-        userDocListener?.remove()
+        userDocListener?.cancel()
         userDocListener = nil
     }
     

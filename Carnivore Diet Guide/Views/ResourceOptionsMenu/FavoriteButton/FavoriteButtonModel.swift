@@ -39,6 +39,7 @@ class FavoriteButtonModel: ObservableObject {
         isWorking = true
         Task {
             await favoriter.toggleFavorite(resource: resource)
+            isMarkedAsFavorite?.toggle()
             isWorking = false
         }
     }
