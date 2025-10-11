@@ -1,5 +1,9 @@
 Recipe Ideas:
 
+
+Make a ____ recipe that conforms to the carnivore diet. Include a title, short description, difficulty level, prep/cook time, servings, basic nutrition info (calories, protein, fat, carbs), ingredients, and instructions in markdown format
+
+
 Meal
 	Breakfast
 	Lunch
