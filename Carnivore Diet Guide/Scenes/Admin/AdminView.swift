@@ -15,6 +15,7 @@ struct AdminView: View {
     
     @State private var showFeaturedArticlesCreator: Bool = false
     @State private var showSeedUserCreator: Bool = false
+    @State private var showSeedFavoritingView: Bool = false
 
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
@@ -67,6 +68,7 @@ struct AdminView: View {
         Section {
             FeaturedArticlesButton()
             SeedUserButton()
+            SeedFavoritingButton()
         } header: {
             Text("Create Content")
                 .foregroundStyle(Color.text)
@@ -90,6 +92,16 @@ struct AdminView: View {
         .listRowBackground(Color.background)
         .fullScreenCover(isPresented: $showSeedUserCreator) {
             SeedUserCreatorView()
+        }
+    }
+    
+    @ViewBuilder func SeedFavoritingButton() -> some View {
+        Button("Seed Favoriting Articles") {
+            showSeedFavoritingView = true
+        }
+        .listRowBackground(Color.background)
+        .fullScreenCover(isPresented: $showSeedFavoritingView) {
+            SeedFavoritingView()
         }
     }
     

@@ -48,6 +48,7 @@ struct Carnivore_Diet_GuideApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(SeedUserCreator.forProd)
+                .environmentObject(SeedFavoriter.forProd)
         }
     }
 }

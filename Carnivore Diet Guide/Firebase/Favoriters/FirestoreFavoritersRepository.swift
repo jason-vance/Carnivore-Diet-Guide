@@ -34,12 +34,15 @@ class FirestoreFavoritersRepository {
             return recipesCollection.document(resource.id).collection(FAVORITERS)
         }
     }
-
+    
     func markAsFavorite(resource: Resource) async throws {
         guard let userId = currentUserId else {
             throw TextError("User is not currently signed in")
         }
-        
+        try await markAsFavorite(resource: resource, of: userId)
+    }
+    
+    func markAsFavorite(resource: Resource, of userId: String) async throws {
         let doc = FirestoreFavoriterDoc(userId: userId, date: .now)
         try await favoritersCollection(forResource: resource)
             .document(userId)
