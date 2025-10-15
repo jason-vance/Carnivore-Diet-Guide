@@ -14,6 +14,11 @@ class FirebasePublishersRepository {
     
     private let publishersCollection = Firestore.firestore().collection(PUBLISHERS)
     
+    func addPublisher(_ userData: UserData) async throws {
+        try await publishersCollection
+            .document(userData.id)
+            .setData([:])
+    }
 }
 
 extension FirebasePublishersRepository: PublishersFetcher {

@@ -14,7 +14,8 @@ struct AdminView: View {
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     @State private var showFeaturedArticlesCreator: Bool = false
-    
+    @State private var showSeedUserCreator: Bool = false
+
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     
@@ -65,6 +66,7 @@ struct AdminView: View {
     @ViewBuilder func CreateContentSection() -> some View {
         Section {
             FeaturedArticlesButton()
+            SeedUserButton()
         } header: {
             Text("Create Content")
                 .foregroundStyle(Color.text)
@@ -78,6 +80,16 @@ struct AdminView: View {
         .listRowBackground(Color.background)
         .fullScreenCover(isPresented: $showFeaturedArticlesCreator) {
             FeaturedArticlesCreatorView()
+        }
+    }
+    
+    @ViewBuilder func SeedUserButton() -> some View {
+        Button("Seed User") {
+            showSeedUserCreator = true
+        }
+        .listRowBackground(Color.background)
+        .fullScreenCover(isPresented: $showSeedUserCreator) {
+            SeedUserCreatorView()
         }
     }
     

@@ -147,6 +147,25 @@ class FirebaseUserRepository {
                 [field : FieldValue.arrayRemove([resource.id])]
             )
     }
+    
+    func createSeedUser(_ userData: UserData) async throws {
+        let userDoc = FirestoreUserDoc.from(userData)
+
+        try await usersCollection
+            .document(userData.id)
+            .setData(from: userDoc)
+        
+        var dict: [AnyHashable : Any] = [:]
+        dict[FirestoreUserDoc.CodingKeys.bio.rawValue] = userData.bio?.value ?? FieldValue.delete()
+        dict[FirestoreUserDoc.CodingKeys.whyCarnivore.rawValue] = userData.whyCarnivore?.value ?? FieldValue.delete()
+        try await usersCollection.document(userData.id).updateData(dict)
+    }
+    
+    func addProfileImageUrlToUser(using userData: UserData) async throws {
+        var dict: [AnyHashable : Any] = [:]
+        dict[FirestoreUserDoc.CodingKeys.profileImageUrl.rawValue] = userData.profileImageUrl?.absoluteString
+        try await usersCollection.document(userData.id).updateData(dict)
+    }
 }
 
 extension FirebaseUserRepository: UserDataSaver {
