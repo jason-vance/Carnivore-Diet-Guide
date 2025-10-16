@@ -4,14 +4,16 @@ Article Ideas:
 Write an article for Carnivore Diet Guide. Make the tone light and fun. Include a title, 128 character summary, and the article itself in markdown format. Category "____", Topic "____"
 
 
+
+What are some topics that might be interesting to users of the app under the category "_____"
+
+
 General Research Posts
 	My own questions
 	User submitted requests
 
 
 
-Common Challenges
-Tips for Success
 Advanced Carnivore
 	Carnivore challenges (beef only, fat only)
 	Lion Diet
@@ -113,3 +115,23 @@ Nutrition
 	Carnitine
 	Antinutrients
 	In-depth articles on nutrients, macros, and what you get (or don’t get) from a carnivore diet
+Common Challenges
+	The "Disaster Pants" Dilemma: A Guide to Diarrhea
+	Where's My Energy? Dealing with Initial Fatigue
+	My Doctor Thinks I'm Crazy: How to Talk About Carnivore
+	Carnivore for One (in a Carb-Loving Household)
+	Navigating the Holidays Without Going Insane
+	Hitting a Weight Loss Stall: Why It Happens & How to Break It
+	Food Boredom: How to Keep Your Meals Exciting
+	Dealing with Leg Cramps (The Charley Horse Menace)
+	What About "Cheat Days"? The Carnivore Perspective
+	"Just One Bite Won't Hurt..." Dealing with Food Pushers
+Tips for Success
+	The Sizzle & The Slow: Mastering Different Cooking Methods
+	Beyond the Burger: A Fun Guide to Exploring New Cuts
+	The Carnivore Spice Rack: Flavoring with Fat and Salt
+	Ditch the Scale, Find Your Victory: Tracking Non-Scale Victories
+	Finding Your "Why": The Secret to Long-Term Motivation
+	The Carnivore at the Cubicle: Your Guide to Office Lunches
+	Build Your Foundation: The Power of a Simple Routine
+	Becoming Your Own Health Detective: Listening to Your Body's Signals
