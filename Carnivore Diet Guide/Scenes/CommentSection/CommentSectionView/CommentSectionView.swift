@@ -10,6 +10,8 @@ import SwinjectAutoregistration
 
 struct CommentSectionView: View {
     
+    @EnvironmentObject private var commentProxyContainer: CommentProxyContainer
+    
     private let controlSize: CGFloat = 48
     
     @State var resource: Resource
@@ -33,7 +35,8 @@ struct CommentSectionView: View {
         do {
             try await model.sendComment(
                 text: commentText,
-                toResource: resource
+                toResource: resource,
+                commentProxyContainer: commentProxyContainer
             )
             isCommentFieldFocused = false
             commentText = ""
@@ -104,6 +107,9 @@ struct CommentSectionView: View {
     @ViewBuilder func CommentControls() -> some View {
         HStack(alignment: .bottom, spacing: 8) {
             VStack(spacing: 2) {
+                if let proxyUserId = commentProxyContainer.proxyUserId {
+                    ByLineView(userId: proxyUserId)
+                }
                 CommentTextFieldLabel()
                 CommentTextField()
             }

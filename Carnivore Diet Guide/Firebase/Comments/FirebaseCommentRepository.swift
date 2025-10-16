@@ -104,9 +104,10 @@ extension FirebaseCommentRepository: CommentProvider {
 extension FirebaseCommentRepository: CommentSender {
     func sendComment(
         text: String,
-        toResource resource: Resource
+        toResource resource: Resource,
+        commentProxyContainer: CommentProxyContainer
     ) async throws -> Comment {
-        guard let userId = FirebaseAuthenticationProvider.instance.currentUserId else {
+        guard let userId = commentProxyContainer.proxyUserId ?? FirebaseAuthenticationProvider.instance.currentUserId else {
             throw TextError("User is not currently signed in")
         }
         

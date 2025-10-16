@@ -35,12 +35,17 @@ class CommentSectionViewModel: ObservableObject {
     
     func sendComment(
         text: String,
-        toResource resource: Resource
+        toResource resource: Resource,
+        commentProxyContainer: CommentProxyContainer
     ) async throws {
         guard !text.isEmpty else { throw TextError("Comment text is empty") }
         
         isSendingComment = true
-        let comment = try await commentSender.sendComment(text: text, toResource: resource)
+        let comment = try await commentSender.sendComment(
+            text: text,
+            toResource: resource,
+            commentProxyContainer: commentProxyContainer
+        )
         comments.append(comment)
         isSendingComment = false
         

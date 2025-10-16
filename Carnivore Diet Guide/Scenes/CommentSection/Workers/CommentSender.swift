@@ -10,7 +10,8 @@ import Foundation
 protocol CommentSender {
     func sendComment(
         text: String,
-        toResource resource: Resource
+        toResource resource: Resource,
+        commentProxyContainer: CommentProxyContainer
     ) async throws -> Comment
 }
 
@@ -20,7 +21,8 @@ class MockCommentSender: CommentSender {
     
     func sendComment(
         text: String,
-        toResource resource: Resource
+        toResource resource: Resource,
+        commentProxyContainer: CommentProxyContainer
     ) async throws -> Comment {
         try await Task.sleep(for: .seconds(1))
         if let error = errorToThrowOnSend {
