@@ -397,8 +397,9 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Admin/FeaturedArticlesCreator/FeaturedArticlesPoster/FeaturedArticlesPoster.swift,
-				Admin/SeedFavoriting/SeedFavoriter_ForProd.swift,
-				Admin/SeedFavoriting/SeedFavoriter.swift,
+				Admin/SeedArticleFavoriting/SeedArticleFavoriter_ForProd.swift,
+				Admin/SeedArticleFavoriting/SeedArticleFavoriter.swift,
+				Admin/SeedRecipeFavoriting/SeedRecipeFavoriter.swift,
 				Admin/SeedUserCreator/SeedUserCreator.swift,
 				AppContent/ContentAuthenticationProvider.swift,
 				ArticleDetail/Workers/IndividualArticleFetcher.swift,

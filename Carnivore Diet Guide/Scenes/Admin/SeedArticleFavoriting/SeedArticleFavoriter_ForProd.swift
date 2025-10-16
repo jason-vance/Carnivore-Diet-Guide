@@ -1,5 +1,5 @@
 //
-//  SeedFavoriter_ForProd.swift
+//  SeedArticleFavoriter_ForProd.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 10/15/25.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-extension SeedFavoriter {
-    static let forProd = SeedFavoriter(
+extension SeedArticleFavoriter {
+    static let forProd = SeedArticleFavoriter(
         favoriteArticleWithSeeds: { article, seeds in
             for seed in seeds {
                 let resource = Resource(article)

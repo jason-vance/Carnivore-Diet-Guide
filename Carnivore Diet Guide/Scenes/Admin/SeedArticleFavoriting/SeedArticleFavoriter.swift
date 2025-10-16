@@ -1,5 +1,5 @@
 //
-//  SeedFavoriter.swift
+//  SeedArticleFavoriter.swift
 //  Carnivore Diet Guide
 //
 //  Created by Jason Vance on 10/15/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SeedFavoriter: ObservableObject {
+class SeedArticleFavoriter: ObservableObject {
     
     private let favoriteArticleWithSeeds: (Article, [String]) async throws -> Void
     
@@ -20,8 +20,8 @@ class SeedFavoriter: ObservableObject {
     }
 }
 
-extension SeedFavoriter {
-    static let forTesting = SeedFavoriter(
+extension SeedArticleFavoriter {
+    static let forTesting = SeedArticleFavoriter(
         favoriteArticleWithSeeds: { _, _ in try await Task.sleep(for: .seconds(1)) }
     )
 }

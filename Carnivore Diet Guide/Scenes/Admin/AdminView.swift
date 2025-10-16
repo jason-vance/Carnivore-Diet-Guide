@@ -15,7 +15,8 @@ struct AdminView: View {
     
     @State private var showFeaturedArticlesCreator: Bool = false
     @State private var showSeedUserCreator: Bool = false
-    @State private var showSeedFavoritingView: Bool = false
+    @State private var showSeedFavoritingArticlesView: Bool = false
+    @State private var showSeedFavoritingRecipesView: Bool = false
 
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
@@ -68,7 +69,8 @@ struct AdminView: View {
         Section {
             FeaturedArticlesButton()
             SeedUserButton()
-            SeedFavoritingButton()
+            SeedFavoritingArticlesButton()
+            SeedFavoritingRecipesButton()
         } header: {
             Text("Create Content")
                 .foregroundStyle(Color.text)
@@ -95,13 +97,23 @@ struct AdminView: View {
         }
     }
     
-    @ViewBuilder func SeedFavoritingButton() -> some View {
+    @ViewBuilder func SeedFavoritingArticlesButton() -> some View {
         Button("Seed Favoriting Articles") {
-            showSeedFavoritingView = true
+            showSeedFavoritingArticlesView = true
         }
         .listRowBackground(Color.background)
-        .fullScreenCover(isPresented: $showSeedFavoritingView) {
-            SeedFavoritingView()
+        .fullScreenCover(isPresented: $showSeedFavoritingArticlesView) {
+            SeedArticleFavoritingView()
+        }
+    }
+    
+    @ViewBuilder func SeedFavoritingRecipesButton() -> some View {
+        Button("Seed Favoriting Recipes") {
+            showSeedFavoritingRecipesView = true
+        }
+        .listRowBackground(Color.background)
+        .fullScreenCover(isPresented: $showSeedFavoritingRecipesView) {
+            SeedRecipeFavoritingView()
         }
     }
     

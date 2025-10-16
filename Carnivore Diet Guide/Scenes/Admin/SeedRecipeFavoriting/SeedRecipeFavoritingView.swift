@@ -1,22 +1,22 @@
 //
-//  SeedFavoritingView.swift
+//  SeedRecipeFavoritingView.swift
 //  Carnivore Diet Guide
 //
-//  Created by Jason Vance on 10/14/25.
+//  Created by Jason Vance on 10/15/25.
 //
 
 import SwiftUI
 import SwinjectAutoregistration
 
-struct SeedFavoritingView: View {
+struct SeedRecipeFavoritingView: View {
     
     @Environment(\.dismiss) private var dismiss: DismissAction
     
-    @EnvironmentObject private var seedFavoriter: SeedFavoriter
+    @EnvironmentObject private var seedFavoriter: SeedRecipeFavoriter
     
     @State private var isWorking: Bool = false
     
-    @State private var selectedArticle: Article? = nil
+    @State private var selectedRecipe: Recipe? = nil
     
     @State private var publishers: [String] = []
     @State private var favoriters: [String] = []
@@ -26,15 +26,15 @@ struct SeedFavoritingView: View {
     
     private let publishersFetcher = iocContainer~>PublishersFetcher.self
     
-    private var showArticleSelectorBinding: Binding<Bool> {
+    private var showRecipeSelectorBinding: Binding<Bool> {
         .init(
-            get: { selectedArticle == nil },
+            get: { selectedRecipe == nil },
             set: { isShowing in }
         )
     }
     
     private var isFormValid: Bool {
-        selectedArticle != nil && !favoriters.isEmpty
+        selectedRecipe != nil && !favoriters.isEmpty
     }
     
     private func show(alert: String) {
@@ -61,11 +61,11 @@ struct SeedFavoritingView: View {
                 guard isFormValid else {
                     throw NSError(domain: "article is nil or favoriters is empty", code: 1234)
                 }
-                try await seedFavoriter.favorite(article: selectedArticle!, withSeeds: favoriters)
+                try await seedFavoriter.favorite(recipe: selectedRecipe!, withSeeds: favoriters)
                 
                 dismiss()
             } catch {
-                let msg = "Failed to favorite article: \(error.localizedDescription)"
+                let msg = "Failed to favorite recipe: \(error.localizedDescription)"
                 print(msg)
                 show(alert: msg)
             }
@@ -77,9 +77,9 @@ struct SeedFavoritingView: View {
         VStack(spacing: 0) {
             TitleBar()
             List {
-                if let selectedArticle {
-                    ArticleItemView(selectedArticle)
-                        .articleStyle(.horizontal)
+                if let selectedRecipe {
+                    RecipeItemView(selectedRecipe)
+                        .recipeStyle(.horizontal)
                         .listRowBackground(Color.background)
                         .listRowSeparator(.hidden)
                 }
@@ -93,7 +93,7 @@ struct SeedFavoritingView: View {
         }
         .background(Color.background)
         .alert(alertMessage, isPresented: $showAlert) {}
-        .animation(.snappy, value: selectedArticle)
+        .animation(.snappy, value: selectedRecipe)
         .animation(.snappy, value: publishers)
         .animation(.snappy, value: favoriters)
         .onAppear(perform: fetchAuthors)
@@ -102,9 +102,9 @@ struct SeedFavoritingView: View {
                 BlockingSpinnerView()
             }
         }
-        .fullScreenCover(isPresented: showArticleSelectorBinding) {
-            ArticleSelectorView {
-                selectedArticle = $0
+        .fullScreenCover(isPresented: showRecipeSelectorBinding) {
+            RecipeSelectorView {
+                selectedRecipe = $0
             }
         }
     }
@@ -165,6 +165,6 @@ struct SeedFavoritingView: View {
 }
 
 #Preview {
-    SeedFavoritingView()
-        .environmentObject(SeedFavoriter.forTesting)
+    SeedRecipeFavoritingView()
+        .environmentObject(SeedRecipeFavoriter.forTesting)
 }
