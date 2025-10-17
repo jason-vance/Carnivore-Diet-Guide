@@ -21,10 +21,49 @@ struct OnboardingPaywallDiscountView: View {
     
     @State private var showButtons: Bool = false
     
+    @State private var animateTimer: Bool = false
+    @State private var timeRemaining: String = "..."
+    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     private var displayProducts: [Product] {
         products
             .map { $0.value }
             .sorted { $0.price < $1.price }
+    }
+    
+    private var limitedTimeOfferEndDate: Date? {
+        // 86400 seconds = 24 hours
+        return subscriptionManager.limitedTimeOfferStartDate?.addingTimeInterval(86400)
+    }
+    
+    private func updateRemainingTime() {
+        guard let targetDate = limitedTimeOfferEndDate else {
+            timeRemaining = "..."
+            return
+        }
+        
+        let now = Date()
+        
+        // Calculate the interval between now and the target date
+        let remaining = targetDate.timeIntervalSince(now)
+        
+        if remaining > 0 {
+            // We have time left, so format it
+            timeRemaining = format(duration: remaining)
+        } else {
+            // Countdown has finished
+            timeRemaining = "00:00:00"
+            timer.upstream.connect().cancel() // Optional: Stop the timer
+        }
+    }
+    
+    private func format(duration: TimeInterval) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .positional // Gives "HH:MM:SS"
+        formatter.zeroFormattingBehavior = .pad // Adds leading zeros, e.g., "01" vs "1"
+        
+        return formatter.string(from: duration) ?? "00:00:00"
     }
     
     private func doPurchase(productId: String) {
@@ -86,7 +125,7 @@ struct OnboardingPaywallDiscountView: View {
                     .multilineTextAlignment(.leading)
                 Spacer()
             }
-            Add a blinking timer or something
+            CountdownTimerView()
             Spacer()
             if showButtons {
                 SubscribeButtons()
@@ -104,6 +143,9 @@ struct OnboardingPaywallDiscountView: View {
         .overlay { IsPurchasingView() }
         .animation(.snappy, value: showButtons)
         .onAppear {
+            subscriptionManager.limitedTimeOfferStartDate = .now
+        }
+        .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                 showButtons = true
             }
@@ -117,6 +159,8 @@ struct OnboardingPaywallDiscountView: View {
             actions: { Button("OK", role: .cancel) { } },
             message: { Text(errorMessage ?? "An unknown error occurred") }
         )
+        .onReceive(timer) { _ in updateRemainingTime() }
+        .onAppear { updateRemainingTime() }
     }
     
     @ViewBuilder private func IsPurchasingView() -> some View {
@@ -125,6 +169,33 @@ struct OnboardingPaywallDiscountView: View {
                 .scaleEffect(1.5)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.black.opacity(0.2))
+        }
+    }
+    
+    @ViewBuilder private func CountdownTimerView() -> some View {
+        VStack {
+            Spacer()
+            Text(timeRemaining)
+                .font(.largeTitle.bold())
+                .foregroundStyle(Color.accentColor)
+            Text("To lock in 75% off")
+                .font(.subheadline)
+                .foregroundStyle(Color.secondary)
+            Spacer()
+        }
+        .padding()
+        .frame(minWidth: 225)
+        .background {
+            Circle()
+                .stroke(style: .init(lineWidth: 8))
+                .foregroundStyle(Color.accentColor)
+                .opacity(animateTimer ? 0.3 : 1.0)
+                .animation(
+                    .easeInOut(duration: 1.0)
+                    .repeatForever(autoreverses: true),
+                    value: animateTimer
+                )
+                .onAppear { animateTimer = true }
         }
     }
     
@@ -144,13 +215,13 @@ struct OnboardingPaywallDiscountView: View {
             HStack(spacing: 0) {
                 Text(product.displayName)
                     .bold()
-                    .fontWidth(.condensed)
                 Spacer(minLength: 0)
                 Text(product.displayPrice)
                     .bold()
                 if let period = product.subscription?.subscriptionPeriod.unit.localizedDescription {
                     Text("/\(period.lowercased())")
                         .font(.caption2)
+                        .fontWidth(.compressed)
                 }
             }
             .foregroundStyle(Color.white)

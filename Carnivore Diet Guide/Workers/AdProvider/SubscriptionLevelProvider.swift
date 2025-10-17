@@ -7,6 +7,7 @@
 
 import Foundation
 import StoreKit
+import SwiftUI
 
 enum SubscriptionError: Error {
     case productNotFound
@@ -61,6 +62,17 @@ class SubscriptionLevelProvider {
     @Published var fullPriceProducts: [String: Product] = [:]
     @Published var discountProducts: [String: Product] = [:]
     
+    @AppStorage("LimitedTimeOfferStartTimeKey") private var limitedTimeOfferStart: Double = 0
+    var limitedTimeOfferStartDate: Date? {
+        get {
+            guard limitedTimeOfferStart > 0 else { return nil }
+            return Date(timeIntervalSince1970: limitedTimeOfferStart)
+        }
+        set {
+            limitedTimeOfferStart = newValue.map(\.timeIntervalSince1970) ?? 0
+        }
+    }
+    
     private var products: [String: Product] {
         .init(uniqueKeysWithValues: fullPriceProducts.map(\.self) + discountProducts.map(\.self))
     }
@@ -106,7 +118,7 @@ class SubscriptionLevelProvider {
         subscriptionLevel = SubscriptionLevel(rawValue: UserDefaults.standard.string(forKey: subscriptionLevelKey) ?? "") ?? .none
         
         Task(priority: .userInitiated) {
-            set(subscriptionLevel: await isSubscribed() ? .carnivorePlus : .none)
+            await set(subscriptionLevel: await isSubscribed() ? .carnivorePlus : .none)
         }
     }
     
@@ -119,7 +131,7 @@ class SubscriptionLevelProvider {
         return false
     }
     
-    private func handle(transactionUpdate verificationResult: VerificationResult<Transaction>) {
+    private func handle(transactionUpdate verificationResult: VerificationResult<StoreKit.Transaction>) {
         print("SubscriptionManager; handle(updatedTransaction:)")
         guard case .verified(let transaction) = verificationResult else {
             // Ignore unverified transactions.
@@ -135,7 +147,9 @@ class SubscriptionLevelProvider {
             // Remove access to the product identified by transaction.productID.
             // Transaction.revocationReason provides details about
             // the revoked transaction.
-            set(subscriptionLevel: .none)
+            Task {
+                await set(subscriptionLevel: .none)
+            }
         } else if let expirationDate = transaction.expirationDate,
             expirationDate < Date() {
             // Do nothing, this subscription is expired.
@@ -148,7 +162,9 @@ class SubscriptionLevelProvider {
             // Provide access to the product identified by
             // transaction.productID.
             if Self.allProductIds.contains(transaction.productID) {
-                set(subscriptionLevel: .carnivorePlus)
+                Task {
+                    await set(subscriptionLevel: .carnivorePlus)
+                }
             }
         }
     }
@@ -167,14 +183,14 @@ class SubscriptionLevelProvider {
             switch verification {
             case .verified(let transaction):
                 // Update the user's subscription status
-                set(subscriptionLevel: .carnivorePlus)
+                await set(subscriptionLevel: .carnivorePlus)
                 await transaction.finish()
                 return true
             case .unverified:
                 throw SubscriptionError.verificationFailed
             }
         case .userCancelled:
-            set(subscriptionLevel: .none)
+            await set(subscriptionLevel: .none)
             return false
         case .pending:
             throw SubscriptionError.pending
@@ -185,9 +201,10 @@ class SubscriptionLevelProvider {
     
     func restorePurchases() async throws {
         try? await AppStore.sync()
-        set(subscriptionLevel: await isSubscribed() ? .carnivorePlus : .none)
+        await set(subscriptionLevel: await isSubscribed() ? .carnivorePlus : .none)
     }
     
+    @MainActor
     func set(subscriptionLevel: SubscriptionLevel) {
         self.subscriptionLevel = subscriptionLevel
         UserDefaults.standard.set(subscriptionLevel.rawValue, forKey: subscriptionLevelKey)
