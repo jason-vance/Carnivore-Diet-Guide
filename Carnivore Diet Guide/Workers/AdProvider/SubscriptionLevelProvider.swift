@@ -40,17 +40,31 @@ class SubscriptionLevelProvider {
     static let carnivorePlusSubscriptionGroupId = "21537446"
     static let monthlyProductId = "carnivorePlus499"
     static let yearlyProductId = "carnivorePlusYearly"
-
-    static let productIds = [
+    static let discountMonthlyProductId = "carnivorePlusMonthlyDiscounted"
+    static let discountYearlyProductId = "carnivorePlusYearlyDiscounted"
+    
+    static let fullPriceProductIds = [
         monthlyProductId,
         yearlyProductId,
     ]
     
+    static let discountProductIds = [
+        discountMonthlyProductId,
+        discountYearlyProductId,
+    ]
+    
+    static var allProductIds: [String] { fullPriceProductIds + discountProductIds }
+    
     @Published public private(set) var subscriptionLevel: SubscriptionLevel = .none
     var subscriptionLevelPublisher: Published<SubscriptionLevel>.Publisher { $subscriptionLevel }
     
-    @Published var products: [String: Product] = [:]
+    @Published var fullPriceProducts: [String: Product] = [:]
+    @Published var discountProducts: [String: Product] = [:]
     
+    private var products: [String: Product] {
+        .init(uniqueKeysWithValues: fullPriceProducts.map(\.self) + discountProducts.map(\.self))
+    }
+
     private var updates: Task<Void, Never>? = nil
     
     public static let instance: SubscriptionLevelProvider = {
@@ -69,9 +83,11 @@ class SubscriptionLevelProvider {
         }
     }
     
+    @MainActor
     private func loadProducts() async {
         do {
-            products = .init(uniqueKeysWithValues: try await Product.products(for: Self.productIds).map { ($0.id, $0) })
+            fullPriceProducts = .init(uniqueKeysWithValues: try await Product.products(for: Self.fullPriceProductIds).map { ($0.id, $0) })
+            discountProducts = .init(uniqueKeysWithValues: try await Product.products(for: Self.discountProductIds).map { ($0.id, $0) })
             print("Loaded products: \(products)")
         } catch {
             print("Failed to load products: \(error)")
@@ -97,7 +113,7 @@ class SubscriptionLevelProvider {
     func isSubscribed() async -> Bool {
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result {
-                return Self.productIds.contains(transaction.productID)
+                return Self.allProductIds.contains(transaction.productID)
             }
         }
         return false
@@ -109,7 +125,7 @@ class SubscriptionLevelProvider {
             // Ignore unverified transactions.
             return
         }
-        guard Self.productIds.contains(transaction.productID) else {
+        guard Self.allProductIds.contains(transaction.productID) else {
             // Ignore transactions we don't know how to handle.
             return
         }
@@ -131,14 +147,14 @@ class SubscriptionLevelProvider {
         } else {
             // Provide access to the product identified by
             // transaction.productID.
-            if Self.productIds.contains(transaction.productID) {
+            if Self.allProductIds.contains(transaction.productID) {
                 set(subscriptionLevel: .carnivorePlus)
             }
         }
     }
     
     func purchase(productId: String? = nil) async throws -> Bool {
-        let productId = productId ?? Self.productIds.first!
+        let productId = productId ?? Self.allProductIds.first!
         guard let product = products[productId] else {
             throw SubscriptionError.productNotFound
         }

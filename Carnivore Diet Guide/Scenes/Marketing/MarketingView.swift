@@ -35,7 +35,7 @@ struct MarketingView: View {
     @State private var showError = false
     
     private var displayProducts: [Product] {
-        subscriptionManager.products
+        subscriptionManager.fullPriceProducts
             .map { $0.value }
             .sorted { $0.price < $1.price }
     }
