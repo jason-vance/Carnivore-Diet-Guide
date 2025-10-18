@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwinjectAutoregistration
+import StoreKit
 
 struct OnboardingView: View {
     
@@ -58,11 +59,25 @@ struct OnboardingView: View {
         }
     }
     
+    @Environment(\.presentationMode) private var presentationMode
+    
     private let subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
     
     @State private var onboardingStep: OnboardingStep = .welcome
     
     @State private var whyCarnivore: WhyCarnivore? = nil
+    
+    private func dismiss() {
+        presentationMode.wrappedValue.dismiss()
+    }
+    
+    private func promptForReview() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                SKStoreReviewController.requestReview(in: scene)
+            }
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -96,13 +111,17 @@ struct OnboardingView: View {
         }
         .onReceive(subscriptionManager.subscriptionLevelPublisher) { level in
             if level == .carnivorePlus {
-//                onboardingStep = .finished
+                onboardingStep = .finished
             }
         }
     }
     
     @ViewBuilder private func OnboardingFinishedView() -> some View {
-        
+        Rectangle()
+            .foregroundStyle(Color.accentColor)
+            .ignoresSafeArea()
+            .onAppear { dismiss() }
+            .onAppear { promptForReview() }
     }
 }
 

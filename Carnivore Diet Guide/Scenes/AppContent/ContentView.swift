@@ -19,6 +19,8 @@ struct ContentView: View {
     @State private var currentUserId: String = ""
     @State private var userAuthState: UserAuthState = .working
     
+    @AppStorage("ShouldShowOnboardingKey") private var shouldShowOnboarding: Bool = true
+    
     private func setupDailyEngagement() {
         dailyEngagement.scheduleDailyEngagementReminders()
     }
@@ -57,8 +59,12 @@ struct ContentView: View {
             EditUserProfileView(userId: currentUserId, mode: .createProfile)
         } else {
             HomeView()
-                .onAppear { requestNotificationsPermission() }
-                .onAppear { setupDailyEngagement() }
+                .fullScreenCover(
+                    isPresented: $shouldShowOnboarding,
+                    onDismiss: { shouldShowOnboarding = false },
+                ) {
+                    OnboardingView()
+                }
         }
     }
 }
