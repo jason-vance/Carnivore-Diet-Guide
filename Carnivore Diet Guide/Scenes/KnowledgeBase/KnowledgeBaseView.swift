@@ -19,6 +19,7 @@ struct KnowledgeBaseView: View {
         NavigationStack(path: $navigationPath) {
             VStack(spacing: 0) {
                 TopBar()
+                LimitedTimeOfferButton()
                 ScrollView() {
                     VStack(spacing: 0) {
                         CategoryPicker()
