@@ -35,9 +35,19 @@ struct MarketingView: View {
     @State private var showError = false
     
     private var displayProducts: [Product] {
-        subscriptionManager.fullPriceProducts
+        let products = limitedTimeOfferValid ? subscriptionManager.discountProducts : subscriptionManager.fullPriceProducts
+        
+        return products
             .map { $0.value }
             .sorted { $0.price < $1.price }
+    }
+    
+    private var limitedTimeOfferValid: Bool {
+        // 86400 seconds = 24 hours
+        if let endDate = subscriptionManager.limitedTimeOfferStartDate?.addingTimeInterval(86400) {
+            return endDate > .now
+        }
+        return false
     }
     
     private func dismiss() {
