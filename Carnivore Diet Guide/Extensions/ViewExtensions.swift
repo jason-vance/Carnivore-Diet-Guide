@@ -27,7 +27,9 @@ extension View {
     func taggedAsPremiumContent(_ isPremium: Bool = true) -> some View {
         self
             .overlay(alignment: .topTrailing) {
-                if isPremium {
+                let isSubscribed = iocContainer.resolve(SubscriptionLevelProvider.self)?.subscriptionLevel == .carnivorePlus
+                
+                if isPremium && !isSubscribed {
                     HStack {
                         Text("Carnivore+")
                             .font(.caption2.bold())
