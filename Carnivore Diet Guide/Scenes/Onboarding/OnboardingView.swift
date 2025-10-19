@@ -91,37 +91,47 @@ struct OnboardingView: View {
         }
     }
     
+    private func logScreenView(_ screenName: String, screenClass: Any) {
+        guard let analytics = iocContainer.resolve(Analytics.self) else { return }
+        analytics.logScreenView(screenName: screenName, screenClass: screenClass)
+    }
+    
     var body: some View {
         ZStack {
             switch onboardingStep {
             case .welcome:
                 OnboardingWelcomeView(onboardingStep: $onboardingStep)
                     .slideUpTransition()
+                    .onAppear { logScreenView("OnboardingWelcomeView", screenClass: OnboardingWelcomeView.self)}
             case .goalPrompt:
                 OnboardingGoalPromptView(onboardingStep: $onboardingStep, whyCarnivore: $whyCarnivore)
                     .slideUpTransition()
+                    .onAppear { logScreenView("OnboardingGoalPromptView", screenClass: OnboardingGoalPromptView.self)}
             case .goalReview:
                 OnboardingGoalReviewView(onboardingStep: $onboardingStep, whyCarnivore: $whyCarnivore)
                     .slideUpTransition()
                     .onAppear { saveWhyCarnivore() }
+                    .onAppear { logScreenView("OnboardingGoalReviewView", screenClass: OnboardingGoalReviewView.self)}
             case .beforeAndAfter:
                 OnboardingBeforeAndAfterView(onboardingStep: $onboardingStep)
                     .slideUpTransition()
+                    .onAppear { logScreenView("OnboardingBeforeAndAfterView", screenClass: OnboardingBeforeAndAfterView.self)}
             case .paywall:
                 OnboardingPaywallView(onboardingStep: $onboardingStep, subscriptionManager: subscriptionManager)
                     .slideUpTransition()
+                    .onAppear { logScreenView("OnboardingPaywallView", screenClass: OnboardingPaywallView.self)}
             case .paywallDiscount:
                 OnboardingPaywallDiscountView(onboardingStep: $onboardingStep, subscriptionManager: subscriptionManager)
                     .slideUpTransition()
+                    .onAppear { logScreenView("OnboardingPaywallDiscountView", screenClass: OnboardingPaywallDiscountView.self)}
             case .finished:
                 OnboardingFinishedView()
                     .slideUpTransition()
+                    .onAppear { logScreenView("OnboardingFinishedView", screenClass: OnboardingView.self)}
             }
         }
         .animation(.snappy, value: onboardingStep)
-        .onAppear {
-            subscriptionManager.refreshProducts()
-        }
+        .onAppear { subscriptionManager.refreshProducts() }
         .onReceive(subscriptionManager.subscriptionLevelPublisher) { level in
             if level == .carnivorePlus {
                 onboardingStep = .finished
