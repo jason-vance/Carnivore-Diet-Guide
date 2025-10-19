@@ -62,13 +62,25 @@ struct OnboardingView: View {
     @Environment(\.presentationMode) private var presentationMode
     
     private let subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
-    
+    private let userDataSaver = iocContainer~>UserDataSaver.self
+    private let currentUserIdProvider = iocContainer~>CurrentUserIdProvider.self
+
     @State private var onboardingStep: OnboardingStep = .welcome
     
     @State private var whyCarnivore: WhyCarnivore? = nil
     
     private func dismiss() {
         presentationMode.wrappedValue.dismiss()
+    }
+    
+    private func saveWhyCarnivore() {
+        guard let userId = currentUserIdProvider.currentUserId else {
+            return
+        }
+        
+        Task {
+            try await userDataSaver.save(whyCarnivore: whyCarnivore, toUser: userId)
+        }
     }
     
     private func promptForReview() {
@@ -91,6 +103,7 @@ struct OnboardingView: View {
             case .goalReview:
                 OnboardingGoalReviewView(onboardingStep: $onboardingStep, whyCarnivore: $whyCarnivore)
                     .slideUpTransition()
+                    .onAppear { saveWhyCarnivore() }
             case .beforeAndAfter:
                 OnboardingBeforeAndAfterView(onboardingStep: $onboardingStep)
                     .slideUpTransition()
