@@ -355,12 +355,13 @@ struct MarketingView: View {
             HStack(spacing: 0) {
                 Text(product.displayName)
                     .bold()
-                Spacer()
+                Spacer(minLength: 0)
                 Text(product.displayPrice)
                     .bold()
                 if let period = product.subscription?.subscriptionPeriod.unit.localizedDescription {
                     Text("/\(period.lowercased())")
-                        .font(.footnote)
+                        .font(.caption2)
+                        .fontWidth(.compressed)
                 }
             }
             .foregroundStyle(Color.white)

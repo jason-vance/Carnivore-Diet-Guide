@@ -17,7 +17,6 @@ struct OnboardingView: View {
         case goalReview
         case beforeAndAfter
         case paywall
-        case paywallDiscount
         case finished
         
         var next: OnboardingStep {
@@ -31,8 +30,6 @@ struct OnboardingView: View {
             case .beforeAndAfter:
                     .paywall
             case .paywall:
-                    .paywallDiscount
-            case .paywallDiscount:
                     .finished
             case .finished:
                     .finished
@@ -50,8 +47,6 @@ struct OnboardingView: View {
             case .beforeAndAfter:
                     .paywall
             case .paywall:
-                    .paywallDiscount
-            case .paywallDiscount:
                     .finished
             case .finished:
                     .finished
@@ -120,10 +115,6 @@ struct OnboardingView: View {
                 OnboardingPaywallView(onboardingStep: $onboardingStep, subscriptionManager: subscriptionManager)
                     .slideUpTransition()
                     .onAppear { logScreenView("OnboardingPaywallView", screenClass: OnboardingPaywallView.self)}
-            case .paywallDiscount:
-                OnboardingPaywallDiscountView(onboardingStep: $onboardingStep, subscriptionManager: subscriptionManager)
-                    .slideUpTransition()
-                    .onAppear { logScreenView("OnboardingPaywallDiscountView", screenClass: OnboardingPaywallDiscountView.self)}
             case .finished:
                 OnboardingFinishedView()
                     .slideUpTransition()

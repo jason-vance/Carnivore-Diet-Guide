@@ -92,6 +92,12 @@ struct OnboardingPaywallView: View {
             }
             .padding(.top, 4)
             Spacer()
+            HStack {
+                Text("Start your 30 day free trial in the next 24 hours and lock in a 75% discount!")
+                    .foregroundColor(.text)
+                    .multilineTextAlignment(.leading)
+                Spacer()
+            }
             if showButtons {
                 SubscribeButtons()
             }
@@ -112,9 +118,8 @@ struct OnboardingPaywallView: View {
                 showButtons = true
             }
         }
-        .onReceive(subscriptionManager.$fullPriceProducts) { products in
-            self.products = products
-        }
+        .onAppear { subscriptionManager.limitedTimeOfferStartDate = .now }
+        .onReceive(subscriptionManager.$discountProducts) { p in products = p }
         .alert(
             "Purchase Error",
             isPresented: $showError,
@@ -165,12 +170,13 @@ struct OnboardingPaywallView: View {
             HStack(spacing: 0) {
                 Text(product.displayName)
                     .bold()
-                Spacer()
+                Spacer(minLength: 0)
                 Text(product.displayPrice)
                     .bold()
                 if let period = product.subscription?.subscriptionPeriod.unit.localizedDescription {
                     Text("/\(period.lowercased())")
-                        .font(.footnote)
+                        .font(.caption2)
+                        .fontWidth(.compressed)
                 }
             }
             .foregroundStyle(Color.white)
