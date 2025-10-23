@@ -19,6 +19,7 @@ struct FirebaseArticleDoc: Codable {
     var markdownContent: String?
     var publicationDate: Date?
     var categories: [String]?
+    var citations: [String]?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -30,6 +31,7 @@ struct FirebaseArticleDoc: Codable {
         case markdownContent
         case publicationDate
         case categories
+        case citations
     }
     
     static func from(
@@ -44,7 +46,8 @@ struct FirebaseArticleDoc: Codable {
             summary: article.summary.text,
             markdownContent: article.markdownContent,
             publicationDate: article.publicationDate,
-            categories: article.categories.map { $0.id }
+            categories: article.categories.map { $0.id },
+            citations: article.citations.map(\.url.absoluteString)
         )
     }
     
@@ -58,6 +61,7 @@ struct FirebaseArticleDoc: Codable {
         guard let markdownContent = markdownContent else { return nil }
         guard let publicationDate = publicationDate else { return nil }
         guard let categories = (categories?.compactMap { categoryId in categoryDict[categoryId] }) else { return nil }
+        let citations = citations?.compactMap(Article.Citation.init) ?? []
 
         return Article(
             id: id,
@@ -68,7 +72,8 @@ struct FirebaseArticleDoc: Codable {
             summary: summary,
             markdownContent: markdownContent,
             publicationDate: publicationDate,
-            categories: Set(categories)
+            categories: Set(categories),
+            citations: citations
         )
     }
 }

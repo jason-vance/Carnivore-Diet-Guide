@@ -16,7 +16,8 @@ class FirebaseArticleRepository {
     
     private let categoriesField = FirebaseArticleDoc.CodingKeys.categories.rawValue
     private let publicationDateField = FirebaseArticleDoc.CodingKeys.publicationDate.rawValue
-    
+    private let citationsField = FirebaseArticleDoc.CodingKeys.citations.rawValue
+
     private func getCategoryDict() async throws -> Dictionary<String,Resource.Category> {
         let categoryRepo = FirebaseResourceCategoryRepository()
         let set = try await categoryRepo.fetchAllCategories(forType: .article)
@@ -24,17 +25,23 @@ class FirebaseArticleRepository {
         return Dictionary(uniqueKeysWithValues: set.map{ ($0.id, $0) })
     }
 
-    
     func create(
         article: Article
     ) async throws {
         let doc = FirebaseArticleDoc.from(article: article)
         try await articlesCollection.document(article.id).setData(from: doc)
     }
-    
 
     func deleteArticle(withId articleId: String) async throws {
         try await articlesCollection.document(articleId).delete()
+    }
+    
+    func add(citations: [Article.Citation], toArticle article: Article) async throws {
+        let citations = citations.map(\.url.absoluteString)
+        
+        try await articlesCollection
+            .document(article.id)
+            .updateData([citationsField: citations])
     }
 }
 

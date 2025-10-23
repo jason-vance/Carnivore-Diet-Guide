@@ -16,6 +16,7 @@ struct AdminView: View {
     @EnvironmentObject private var commentProxyContainer: CommentProxyContainer
     
     @State private var showFeaturedArticlesCreator: Bool = false
+    @State private var showAddArticleCitations: Bool = false
     @State private var showSeedUserCreator: Bool = false
     @State private var showSeedFavoritingArticlesView: Bool = false
     @State private var showSeedFavoritingRecipesView: Bool = false
@@ -71,6 +72,7 @@ struct AdminView: View {
     @ViewBuilder func CreateContentSection() -> some View {
         Section {
             FeaturedArticlesButton()
+            AddCitationsButton()
             SeedUserButton()
             SeedFavoritingArticlesButton()
             SeedFavoritingRecipesButton()
@@ -87,6 +89,16 @@ struct AdminView: View {
         .listRowBackground(Color.background)
         .fullScreenCover(isPresented: $showFeaturedArticlesCreator) {
             FeaturedArticlesCreatorView()
+        }
+    }
+    
+    @ViewBuilder func AddCitationsButton() -> some View {
+        Button("Add Article Citations") {
+            showAddArticleCitations = true
+        }
+        .listRowBackground(Color.background)
+        .fullScreenCover(isPresented: $showAddArticleCitations) {
+            AddArticleCitationsView()
         }
     }
     

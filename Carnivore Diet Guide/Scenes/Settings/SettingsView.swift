@@ -21,6 +21,8 @@ struct SettingsView: View {
     
     @State private var showResetArticleCacheDialog: Bool = false
     @State private var showResetRecipeCacheDialog: Bool = false
+    @State private var showTermsOfService: Bool = false
+    @State private var showPrivacyPolicy: Bool = false
     @State private var showLogoutDialog: Bool = false
     @State private var showDeleteAccountDialog: Bool = false
     @State private var showConfirmDeleteAccountSheet: Bool = false
@@ -67,12 +69,16 @@ struct SettingsView: View {
         VStack(spacing: 0) {
             TitleBar()
             List {
-                Section {
+                Section("App") {
                     NotificationsToggleButton()
                     ResetArticleCacheButton()
                     ResetRecipeCacheButton()
                 }
-                Section {
+                Section("Legal") {
+                    TermsOfServiceButton()
+                    PrivacyPolicyButton()
+                }
+                Section("Account") {
                     LogoutButton()
                     DeleteAccountButton()
                 }
@@ -220,6 +226,40 @@ struct SettingsView: View {
                 resetter.resetRecipeCache()
             }
         }
+    }
+    
+    @ViewBuilder private func TermsOfServiceButton() -> some View {
+        Button {
+            showTermsOfService = true
+        } label: {
+            ProfileControlLabel(
+                String(localized: "Terms of Service"),
+                icon: "scroll.fill",
+                showNavigationAccessories: false
+            )
+        }
+        .sheet(isPresented: $showTermsOfService) {
+            TextWall(TermsOfService.markdownContent)
+                .presentationDragIndicator(.visible)
+        }
+        .listRowBackground(Color.background)
+    }
+    
+    @ViewBuilder private func PrivacyPolicyButton() -> some View {
+        Button {
+            showPrivacyPolicy = true
+        } label: {
+            ProfileControlLabel(
+                String(localized: "Privacy Policy"),
+                icon: "lock.shield.fill",
+                showNavigationAccessories: false
+            )
+        }
+        .sheet(isPresented: $showPrivacyPolicy) {
+            TextWall(PrivacyPolicy.markdownContent)
+                .presentationDragIndicator(.visible)
+        }
+        .listRowBackground(Color.background)
     }
     
     @ViewBuilder func LogoutButton() -> some View {

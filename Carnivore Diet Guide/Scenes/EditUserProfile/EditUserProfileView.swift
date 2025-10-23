@@ -184,6 +184,7 @@ struct EditUserProfileView: View {
             }
             .sheet(isPresented: $showTermsOfService) {
                 TextWall(TermsOfService.markdownContent)
+                    .presentationDragIndicator(.visible)
             }
             Spacer()
         }
@@ -219,20 +220,10 @@ struct EditUserProfileView: View {
             }
             .sheet(isPresented: $showPrivacyPolicy) {
                 TextWall(PrivacyPolicy.markdownContent)
+                    .presentationDragIndicator(.visible)
             }
             Spacer()
         }
-    }
-    
-    @ViewBuilder func TextWall(_ markdownContent: String) -> some View {
-        ScrollView {
-            Markdown(markdownContent)
-                .markdownTextStyle { ForegroundColor(Color.text) }
-                .frame(maxWidth: .infinity)
-                .padding()
-        }
-        .background(Color.background)
-        .presentationDragIndicator(.visible)
     }
     
     @ViewBuilder func SaveButton() -> some View {

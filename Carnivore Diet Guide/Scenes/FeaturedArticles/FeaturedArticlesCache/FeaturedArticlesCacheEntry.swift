@@ -109,6 +109,7 @@ extension FeaturedArticlesCacheEntry.Section.Item {
         var markdownContent: String?
         var publicationDate: Date?
         var categories: [Resource.Category]?
+        var citations: [String]?
         
         static func from(article: Article) -> ItemArticle {
             return .init(
@@ -120,7 +121,8 @@ extension FeaturedArticlesCacheEntry.Section.Item {
                 summary: article.summary.text,
                 markdownContent: article.markdownContent,
                 publicationDate: article.publicationDate,
-                categories: Array(article.categories)
+                categories: Array(article.categories),
+                citations: article.citations.map(\.url.absoluteString)
             )
         }
         
@@ -135,7 +137,8 @@ extension FeaturedArticlesCacheEntry.Section.Item {
             guard let markdownContent = markdownContent else { return nil }
             guard let publicationDate = publicationDate else { return nil }
             guard let categories = categories else { return nil }
-            
+            let citations = citations?.compactMap(Article.Citation.init) ?? []
+
             return .init(
                 id: id,
                 isPremium: isPremium,
@@ -145,7 +148,8 @@ extension FeaturedArticlesCacheEntry.Section.Item {
                 summary: summary,
                 markdownContent: markdownContent,
                 publicationDate: publicationDate,
-                categories: Set(categories)
+                categories: Set(categories),
+                citations: citations
             )
         }
     }

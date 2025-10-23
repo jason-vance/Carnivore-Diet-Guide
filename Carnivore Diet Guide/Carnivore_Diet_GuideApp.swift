@@ -51,6 +51,7 @@ struct Carnivore_Diet_GuideApp: App {
                 .environmentObject(SeedArticleFavoriter.forProd)
                 .environmentObject(SeedRecipeFavoriter.forProd)
                 .environmentObject(CommentProxyContainer.shared)
+                .environmentObject(ArticleCitationAdder.forProd)
         }
     }
 }

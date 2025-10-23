@@ -312,6 +312,7 @@
 		56B36CA82E9A638B0070DF04 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Admin/AddArticleCitations/ArticleCitationAdder.swift,
 				Admin/FeaturedArticlesCreator/FeaturedArticlesPoster/FeaturedArticlesPoster.swift,
 				Admin/SeedArticleFavoriting/SeedArticleFavoriter_ForProd.swift,
 				Admin/SeedArticleFavoriting/SeedArticleFavoriter.swift,

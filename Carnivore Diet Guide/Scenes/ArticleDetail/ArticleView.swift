@@ -10,6 +10,8 @@ import MarkdownUI
 
 struct ArticleView: View {
     
+    @Environment(\.openURL) var openURL
+    
     let article: Article
     
     var body: some View {
@@ -20,6 +22,7 @@ struct ArticleView: View {
                 Title()
                 ByLineView(userId: article.author)
                 ArticleContent()
+                CitationsView()
             }
             .padding(.horizontal)
             .padding(.top, 4)
@@ -51,6 +54,37 @@ struct ArticleView: View {
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical)
+    }
+    
+    @ViewBuilder private func CitationsView() -> some View {
+        if !article.citations.isEmpty {
+            VStack {
+                HStack {
+                    Text("Sources:")
+                        .font(.caption2.bold())
+                        .foregroundStyle(Color.text.opacity(0.7))
+                    Spacer()
+                }
+                ForEach(article.citations) { citation in
+                    HStack {
+                        Text("•")
+                            .font(.caption)
+                            .foregroundStyle(Color.text)
+                        Button {
+                            openURL(citation.url)
+                        } label: {
+                            Text(citation.url.absoluteString)
+                                .font(.caption)
+                                .underline(true)
+                                .foregroundStyle(Color.accentColor)
+                                .multilineTextAlignment(.leading)
+                        }
+                        Spacer()
+                    }
+                }
+            }
+            .padding(.bottom)
+        }
     }
 }
 

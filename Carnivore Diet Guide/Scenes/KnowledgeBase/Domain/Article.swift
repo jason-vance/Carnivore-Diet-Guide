@@ -9,6 +9,20 @@ import Foundation
 
 struct Article: Identifiable, Hashable {
     
+    struct Citation: Codable, Identifiable, Hashable {
+        
+        var id: URL { url }
+        
+        let url: URL
+        
+        init?(_ text: String) {
+            guard let url = URL(string: text) else { return nil }
+            self.url = url
+        }
+        
+        static let sample: Citation = .init("https://www.lipsum.com/")!
+    }
+    
     let id: String
     let isPremium: Bool
     let author: String
@@ -19,6 +33,7 @@ struct Article: Identifiable, Hashable {
     let publicationDate: Date
     let categories: Set<Resource.Category>
     let keywords: Set<SearchKeyword>
+    let citations: [Citation]
     
     init(
         id: String,
@@ -29,7 +44,8 @@ struct Article: Identifiable, Hashable {
         summary: Resource.Summary,
         markdownContent: String,
         publicationDate: Date,
-        categories: Set<Resource.Category>
+        categories: Set<Resource.Category>,
+        citations: [Citation]
     ) {
         self.id = id
         self.isPremium = isPremium
@@ -40,6 +56,7 @@ struct Article: Identifiable, Hashable {
         self.markdownContent = markdownContent
         self.publicationDate = publicationDate
         self.categories = categories
+        self.citations = citations
         
         let string = "\(title)\n\(summary.text)\n\(markdownContent.stripMarkdown())"
         self.keywords = SearchKeyword.keywordsFrom(string: string)
@@ -56,7 +73,8 @@ extension Article {
         summary: .init("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")!,
         markdownContent: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         publicationDate: .now,
-        categories: Resource.Category.samples
+        categories: Resource.Category.samples,
+        citations: []
     )
     static let sample2: Article = .init(
         id: UUID().uuidString,
@@ -67,6 +85,7 @@ extension Article {
         summary: .init("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")!,
         markdownContent: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         publicationDate: .now,
-        categories: Resource.Category.samples
+        categories: Resource.Category.samples,
+        citations: []
     )
 }
