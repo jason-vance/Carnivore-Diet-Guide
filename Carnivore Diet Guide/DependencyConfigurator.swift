@@ -39,7 +39,11 @@ func setup(iocContainer: Container) {
 
     //Content
     iocContainer.autoregister(ContentAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }
-    iocContainer.autoregister(UserOnboardingStateProvider.self, initializer: DefaultUserOnboardingStateProvider.init)
+    let userOnboardingStateProvider = DefaultUserOnboardingStateProvider(
+        userIdProvider: iocContainer.resolve(CurrentUserIdProvider.self)!,
+        userDataProvider: iocContainer.resolve(UserDataProvider.self)!
+    )
+    iocContainer.autoregister(UserOnboardingStateProvider.self, initializer: { userOnboardingStateProvider })
 
     //Sign In
     iocContainer.autoregister(SignInAuthenticationProvider.self) { FirebaseAuthenticationProvider.instance }

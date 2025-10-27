@@ -26,6 +26,11 @@ class DefaultUserOnboardingStateProvider: UserOnboardingStateProvider {
         listenToUserDataChanges()
     }
     
+    func refreshUserOnboardingState() {
+        let currentUserId = userIdProvider.currentUserId
+        onUpdate(currentUserId: currentUserId)
+    }
+    
     private func listenToUserDataChanges() {
         userIdSub = userIdProvider.currentUserIdPublisher
             .sink(receiveValue: onUpdate(currentUserId:))

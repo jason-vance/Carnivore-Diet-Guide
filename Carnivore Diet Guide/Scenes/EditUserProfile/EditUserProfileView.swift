@@ -24,7 +24,8 @@ struct EditUserProfileView: View {
     private let userDataProvider = iocContainer~>CurrentUserDataProvider.self
     private let imageUploader = iocContainer~>ProfileImageUploader.self
     private let userDataSaver = iocContainer~>UserDataSaver.self
-    
+    private let userOnboardingStateProvider = iocContainer~>UserOnboardingStateProvider.self
+
     var userId: String
     var mode: Mode
     
@@ -79,6 +80,7 @@ struct EditUserProfileView: View {
             }
 
             try await userDataSaver.saveOnboarding(userData: userData)
+            userOnboardingStateProvider.refreshUserOnboardingState()
             return .success
         } catch {
             return .failed("Unable to save profile data: \(error.localizedDescription)")
