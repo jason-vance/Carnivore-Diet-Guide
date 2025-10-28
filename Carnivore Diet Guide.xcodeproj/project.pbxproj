@@ -164,8 +164,6 @@
 		56E305622B4BF77A0098079A /* DependencyConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305612B4BF77A0098079A /* DependencyConfigurator.swift */; };
 		56E305642B4BF7890098079A /* MockDependencyConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305632B4BF7890098079A /* MockDependencyConfigurator.swift */; };
 		56E305682B4BF83C0098079A /* PreviewContainerWithSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56E305672B4BF83C0098079A /* PreviewContainerWithSetup.swift */; };
-		56E305712B4D310A0098079A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 56E305702B4D310A0098079A /* Localizable.xcstrings */; };
-		56E305732B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 56E305722B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings */; };
 		56ECA3372C996E62003412A2 /* SearchKeywordSetExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ECA3362C996E62003412A2 /* SearchKeywordSetExtensions.swift */; };
 		56ECA3382C996E62003412A2 /* SearchKeywordSetExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56ECA3362C996E62003412A2 /* SearchKeywordSetExtensions.swift */; };
 		56F213912B74293F009DB057 /* FirestoreFavoriterDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F213902B74293F009DB057 /* FirestoreFavoriterDoc.swift */; };
@@ -290,8 +288,6 @@
 		56E305612B4BF77A0098079A /* DependencyConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyConfigurator.swift; sourceTree = "<group>"; };
 		56E305632B4BF7890098079A /* MockDependencyConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDependencyConfigurator.swift; sourceTree = "<group>"; };
 		56E305672B4BF83C0098079A /* PreviewContainerWithSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainerWithSetup.swift; sourceTree = "<group>"; };
-		56E305702B4D310A0098079A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		56E305722B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = "Carnivore-Diet-Guide-InfoPlist.xcstrings"; sourceTree = "<group>"; };
 		56ECA3362C996E62003412A2 /* SearchKeywordSetExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchKeywordSetExtensions.swift; sourceTree = "<group>"; };
 		56F213902B74293F009DB057 /* FirestoreFavoriterDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFavoriterDoc.swift; sourceTree = "<group>"; };
 		56F213932B742B1B009DB057 /* DocumentReferenceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentReferenceExtensions.swift; sourceTree = "<group>"; };
@@ -502,8 +498,6 @@
 				563BC7162B7CB66A008F3C50 /* Utils */,
 				562E03DA2B4411E100859F81 /* Carnivore-Diet-Guide-Info.plist */,
 				56E305172B4BE3C40098079A /* GoogleService-Info.plist */,
-				56E305702B4D310A0098079A /* Localizable.xcstrings */,
-				56E305722B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings */,
 				56353B592B440C9B00C4E972 /* Assets.xcassets */,
 				56353B5B2B440C9B00C4E972 /* Preview Content */,
 			);
@@ -952,17 +946,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
-				"zh-Hans",
-				ja,
-				de,
-				fr,
-				"pt-BR",
-				ar,
-				ko,
-				ru,
-				es,
-				hi,
 			);
 			mainGroup = 56353B492B440C9900C4E972;
 			packageReferences = (
@@ -990,10 +973,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56E305732B4D36EB0098079A /* Carnivore-Diet-Guide-InfoPlist.xcstrings in Resources */,
 				56353B5D2B440C9B00C4E972 /* Preview Assets.xcassets in Resources */,
 				56353B5A2B440C9B00C4E972 /* Assets.xcassets in Resources */,
-				56E305712B4D310A0098079A /* Localizable.xcstrings in Resources */,
 				56E305182B4BE3C40098079A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
