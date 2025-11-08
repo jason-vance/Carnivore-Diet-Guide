@@ -1295,6 +1295,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Carnivore Diet Guide/Preview Content\"";
+				DEVELOPMENT_TEAM = QTXW6735S3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Carnivore-Diet-Guide-Info.plist";
@@ -1334,6 +1335,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Carnivore Diet Guide/Preview Content\"";
+				DEVELOPMENT_TEAM = QTXW6735S3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Carnivore-Diet-Guide-Info.plist";
