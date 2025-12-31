@@ -60,7 +60,7 @@ struct CommentSectionView: View {
         CommentSectionContent()
             .background(Color.background)
             .presentationDragIndicator(.visible)
-            .presentationDetents([.large])
+            .presentationDetents([.medium,.large])
             .alert(errorMessage, isPresented: $showError) {}
             .onChange(of: resource, initial: true) { newResource in
                 model.startListeningForComments(onResource: newResource)

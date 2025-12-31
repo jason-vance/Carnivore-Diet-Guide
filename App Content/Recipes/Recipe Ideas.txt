@@ -3,7 +3,15 @@ Recipe Ideas:
 
 Make a ____ recipe that conforms to the carnivore diet. Include a title, 128 character summary, difficulty level, prep/cook time, servings, basic nutrition info (calories, protein, fat, carbs), ingredients, and instructions in markdown format. 
 
-Generate an image of what this dish looks like when made.
+Generate a square image of what this dish looks like when made.
+
+Make a video from this image that showcases the recipe in the image. Add the following voiceover with a manly voice
+"Come level up your meal prep with the Carnivore Diet Guide on iOS. Today’s menu? This incredible <Recipe Name>."
+
+Find delicious recipes like this on The Carnivore Diet Guide.
+https://apps.apple.com/us/app/carnivore-diet-guide/id1440700246
+
+a0s98dg-spdg9y8-d98gy
 
 
 Meal
