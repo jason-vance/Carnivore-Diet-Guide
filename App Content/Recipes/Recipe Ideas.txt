@@ -14,16 +14,22 @@ https://apps.apple.com/us/app/carnivore-diet-guide/id1440700246
 a0s98dg-spdg9y8-d98gy
 
 
+Holidays
+	Whatever special holiday the current day is
+	Halloween
+	Thanksgiving
+	Christmas
+	New Years
+	Valentine's Day
+	Labor Day
 Meal
-	Breakfast
 	Lunch
 	Dinner
 	Snack
 	Dessert
+	Breakfast
 Meat
-	Beef
 	Liver
-	Pork
 	Chicken
 	Salmon
 	Lamb
@@ -31,10 +37,11 @@ Meat
 	Eggs
 	Turkey
 	Unique, like alligator or something
+	Beef
+	Pork
 Cuisine
 	American
 	Japanese
-	Italian
 	Mexican
 	Chinese
 	French
@@ -46,29 +53,12 @@ Cuisine
 	Morroccan
 	Middle Eastern
 	Soup
-Sauce, Topping, Extra
-	Bone Marrow Butter
-	Egg Yolk Butter Sauce
-	Béarnaise Sauce
-	Chimichurri
-	Smoked Beef Fat
-	Liver Pâté
-	Garlic Butter
+	Italian
 Method
 	Sous Vide
 	Slow Cook
-	Pressure Cook
 	Grill
 	Fry
 	Bake
 	Roast
-Holidays
-	Whatever special holiday the current day is
-	Halloween
-	Thanksgiving
-	Christmas
-	New Years
-	Valentine's Day
-	Labor Day
-Animal Based
-	One or two not-carnivore ingredients
+	Pressure Cook
