@@ -9,7 +9,7 @@ import Foundation
 
 struct Article: Identifiable, Hashable {
     
-    struct Citation: Codable, Identifiable, Hashable {
+    struct Citation: Codable, Identifiable, Hashable, Equatable {
         
         var id: URL { url }
         

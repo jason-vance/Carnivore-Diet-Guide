@@ -47,7 +47,7 @@ struct ReviewNewArticleView: View {
             markdownContent: newArticleData.data.markdownContent,
             publicationDate: newArticleData.metadata.publicationDate,
             categories: newArticleData.metadata.categories,
-            citations: []
+            citations: newArticleData.metadata.citations
         )
     }
     

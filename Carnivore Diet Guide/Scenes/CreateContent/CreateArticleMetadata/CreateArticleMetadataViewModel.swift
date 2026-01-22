@@ -16,7 +16,8 @@ class CreateArticleMetadataViewModel: ObservableObject {
     @Published public var articleSummary: Resource.Summary? = nil
     @Published public var articlePublicationDate: Date = Calendar.current.startOfDay(for: Calendar.current.date(byAdding: .day, value: 1, to: .now)!)
     @Published public var articleCategories: Set<Resource.Category> = []
-    
+    @Published public var articleCitations: [Article.Citation] = []
+
     public var articleSearchKeywords: Set<SearchKeyword> {
         let keywordText = "\(articleTitle)\n\(articleContent)\n\(articleSummary?.text ?? "")"
         return SearchKeyword.keywordsFrom(string: keywordText)
@@ -36,7 +37,8 @@ class CreateArticleMetadataViewModel: ObservableObject {
             id: id,
             summary: articleSummary,
             publicationDate: articlePublicationDate,
-            categories: articleCategories
+            categories: articleCategories,
+            citations: articleCitations
         )
     }
     

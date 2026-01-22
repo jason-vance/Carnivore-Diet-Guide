@@ -11,15 +11,16 @@ import SwinjectAutoregistration
 struct CreateArticleMetadataView: View {
     
     @Environment(\.dismiss) private var dismiss: DismissAction
-    
-    @StateObject private var model = CreateArticleMetadataViewModel(
-    )
+    @Environment(\.openURL) var openURL
+
+    @StateObject private var model = CreateArticleMetadataViewModel()
     
     @State public var contentData: ContentData
     @Binding public var navigationPath: NavigationPath
     public let dismissAll: () -> ()
     
     @State private var summaryText: String = ""
+    @State private var newCitationText: String = ""
     @State private var showPublicationDatePicker: Bool = false
     @State private var showAddCategoryDialog: Bool = false
     @State private var showEditKeywordsDialog: Bool = false
@@ -54,9 +55,9 @@ struct CreateArticleMetadataView: View {
         model.articleSearchKeywords.sorted { $0.text < $1.text }
     }
     
-    private func show(alertMessage: String) {
+    private func show(alert: String) {
         showAlert = true
-        self.alertMessage = alertMessage
+        self.alertMessage = alert
     }
     
     private func close() {
@@ -69,7 +70,7 @@ struct CreateArticleMetadataView: View {
     
     private func goToNext() {
         guard let articleMetadata = model.getArticleMetadata(id: contentData.id) else {
-            show(alertMessage: "Could not create ArticleMetadata")
+            show(alert: "Could not create ArticleMetadata")
             return
         }
         navigationPath.append(NewArticleData(data: contentData, metadata: articleMetadata))
@@ -80,6 +81,7 @@ struct CreateArticleMetadataView: View {
             TopBar()
             List {
                 SummaryField()
+                CitationsField()
                 PublicationDateField()
                 CategoriesField()
                 SearchKeywordsField()
@@ -165,6 +167,59 @@ struct CreateArticleMetadataView: View {
             Text("Summary")
                 .foregroundStyle(Color.text)
         }
+    }
+    
+    @ViewBuilder private func CitationsField() -> some View {
+            HStack {
+                Text("Citations to add: \(model.articleCitations.count)")
+                Spacer()
+            }
+            .listRowBackground(Color.background)
+            .listRowSeparator(.hidden)
+            ForEach(model.articleCitations) { citation in
+                HStack {
+                    Text("•")
+                        .font(.caption)
+                        .foregroundStyle(Color.text)
+                    Button {
+                        openURL(citation.url)
+                    } label: {
+                        Text(citation.url.absoluteString)
+                            .font(.caption)
+                            .underline(true)
+                            .foregroundStyle(Color.accentColor)
+                            .multilineTextAlignment(.leading)
+                    }
+                    Spacer()
+                }
+                .listRowBackground(Color.background)
+                .listRowSeparator(.hidden)
+            }
+            .onDelete { indexSet in
+                model.articleCitations.remove(atOffsets: indexSet)
+            }
+            NewCitationField()
+    }
+    
+    @ViewBuilder func NewCitationField() -> some View {
+        TextField(
+            "New Citation",
+            text: $newCitationText,
+            prompt: Text("New Citation").foregroundStyle(Color.text.opacity(0.3))
+        )
+        .textContentType(.URL)
+        .foregroundStyle(Color.text)
+        .submitLabel(.next)
+        .onSubmit {
+            if let citation = Article.Citation(newCitationText) {
+                model.articleCitations.append(citation)
+                newCitationText = ""
+            } else {
+                show(alert: "Not a valid citation")
+            }
+        }
+        .listRowBackground(Color.background)
+        .listRowSeparator(.hidden)
     }
     
     @ViewBuilder func PublicationDateField() -> some View {
