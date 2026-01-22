@@ -22,43 +22,42 @@ Holidays
 	New Years
 	Valentine's Day
 	Labor Day
-Meal
-	Lunch
-	Dinner
-	Snack
-	Dessert
-	Breakfast
 Meat
-	Liver
-	Chicken
-	Salmon
-	Lamb
 	Shrimp
 	Eggs
 	Turkey
 	Unique, like alligator or something
 	Beef
 	Pork
+	Chicken
+	Liver
+	Fish
+	Lamb
+Meal
+	Breakfast
+	Lunch
+	Dinner
+	Snack
+	Dessert
 Cuisine
 	American
-	Japanese
-	Mexican
-	Chinese
-	French
-	Thai
-	Filipino
 	Korean
-	Greek
 	German
 	Morroccan
 	Middle Eastern
 	Soup
 	Italian
+	Japanese
+	Mexican
+	Chinese
+	French
+	Thai
+	Greek
+	Filipino
 Method
-	Sous Vide
 	Slow Cook
-	Grill
 	Fry
 	Bake
 	Roast
 	Pressure Cook
+	Sous Vide
