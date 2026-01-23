@@ -75,7 +75,7 @@ struct OnboardingPaywallView: View {
                 Spacer()
             }
             HStack {
-                Text("The first 30 days are free!")
+                Text("The first 7 days are free!")
                     .font(.title)
                     .foregroundColor(.text.opacity(0.5))
                     .multilineTextAlignment(.leading)
@@ -93,7 +93,7 @@ struct OnboardingPaywallView: View {
             .padding(.top, 4)
             Spacer()
             HStack {
-                Text("Start your 30 day free trial in the next 24 hours and lock in a 75% discount!")
+                Text("Start your 7 day free trial in the next 24 hours and lock in a 75% discount!")
                     .foregroundColor(.text)
                     .multilineTextAlignment(.leading)
                 Spacer()

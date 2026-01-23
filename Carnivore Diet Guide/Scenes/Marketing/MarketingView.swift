@@ -124,7 +124,7 @@ struct MarketingView: View {
                 LazyVStack(spacing: 24) {
                     VStack {
                         Headline()
-                        FirstMonthIsFree1()
+                        FirstWeekIsFree1()
                         Subheadline()
                         SubSubheadline()
                     }
@@ -135,7 +135,7 @@ struct MarketingView: View {
                     PremiumRecipes()
                     AdvancedProgressTracking()
                         .padding(.horizontal)
-                    FirstMonthIsFree2()
+                    FirstWeekIsFree2()
                         .padding(.horizontal)
                     SubscribeButtons()
                 }
@@ -204,10 +204,10 @@ struct MarketingView: View {
         }
     }
     
-    @ViewBuilder func FirstMonthIsFree1() -> some View {
+    @ViewBuilder func FirstWeekIsFree1() -> some View {
         HStack {
             Spacer()
-            Text("Free for the First Month!")
+            Text("Free for the First Week!")
                 .foregroundStyle(Color.accentColor)
                 .font(.headline)
                 .bold(true)
@@ -327,10 +327,10 @@ struct MarketingView: View {
         }
     }
     
-    @ViewBuilder func FirstMonthIsFree2() -> some View {
+    @ViewBuilder func FirstWeekIsFree2() -> some View {
         VStack {
             HStack {
-                Text("The First Month is absolutely Free!")
+                Text("The First Week is absolutely Free!")
                     .font(.headline)
                 Spacer()
             }

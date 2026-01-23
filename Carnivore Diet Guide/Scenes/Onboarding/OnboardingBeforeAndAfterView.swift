@@ -78,7 +78,7 @@ struct OnboardingBeforeAndAfterView: View {
             Button {
                 onboardingStep = onboardingStep.next
             } label: {
-                Text("Try 30 days for free!")
+                Text("Try 7 days for free!")
                     .foregroundColor(Color.background)
                     .frame(maxWidth: .infinity)
                     .padding()
