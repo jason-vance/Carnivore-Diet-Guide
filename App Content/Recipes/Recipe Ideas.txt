@@ -40,8 +40,6 @@ Meal
 	Snack
 	Dessert
 Cuisine
-	American
-	Korean
 	German
 	Morroccan
 	Middle Eastern
@@ -54,6 +52,8 @@ Cuisine
 	Thai
 	Greek
 	Filipino
+	American
+	Korean
 Method
 	Slow Cook
 	Fry
