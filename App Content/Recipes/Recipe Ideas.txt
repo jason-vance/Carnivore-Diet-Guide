@@ -23,8 +23,6 @@ Holidays
 	Valentine's Day
 	Labor Day
 Meat
-	Shrimp
-	Eggs
 	Turkey
 	Unique, like alligator or something
 	Beef
@@ -33,19 +31,15 @@ Meat
 	Liver
 	Fish
 	Lamb
+	Shrimp
+	Eggs
 Meal
-	Breakfast
-	Lunch
 	Dinner
 	Snack
 	Dessert
+	Breakfast
+	Lunch
 Cuisine
-	German
-	Morroccan
-	Middle Eastern
-	Soup
-	Italian
-	Japanese
 	Mexican
 	Chinese
 	French
@@ -54,10 +48,17 @@ Cuisine
 	Filipino
 	American
 	Korean
+	German
+	Middle Eastern
+	Indian
+	Soup
+	Moroccan
+	Italian
+	Japanese
 Method
-	Slow Cook
-	Fry
 	Bake
 	Roast
 	Pressure Cook
 	Sous Vide
+	Slow Cook
+	Fried
