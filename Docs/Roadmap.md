@@ -4,26 +4,7 @@
 
 ---
 
-## v3.12 — Quick Wins & Reduced Friction
-
-Low-effort, high-impact changes. No major new features — focus on converting more users and polishing the storefront.
-
-### App Store Listing Improvements
-- **Fill promotional text** (currently 0/170 chars) — free marketing real estate, updatable without a new build.
-- **Improve "What's New" text** — highlight specific content and features instead of generic "UX improvements, minor bug fixes."
-- **Add a proper privacy policy URL** — currently only links to Apple's standard EULA. Needed for compliance and user trust.
-
-### Guest Browsing
-- Allow unauthenticated users to browse free articles, recipes, and the feed before requiring sign-in.
-- Move the sign-in wall to actions that require identity: favoriting, commenting, posting, subscribing.
-- Goal: let users see value before asking for commitment. Reduces top-of-funnel drop-off.
-
-### Housekeeping
-- Gate admin tools (seed data, featured articles management) behind a build configuration or feature flag so they aren't shipped to regular users.
-
----
-
-## v4.0 — Daily Tracking & Journaling
+## v2.6 — Daily Tracking & Journaling
 
 The marquee release. Transforms the app from a content library into a daily-use tool.
 
@@ -53,7 +34,7 @@ The marquee release. Transforms the app from a content library into a daily-use 
 
 ---
 
-## v4.1 — Widgets & Notifications
+## v2.7 — Widgets & Notifications
 
 Build on the daily tracking habit with passive touchpoints outside the app.
 
@@ -70,7 +51,7 @@ Build on the daily tracking habit with passive touchpoints outside the app.
 
 ---
 
-## v4.2 — Meal Plans & Offline Access
+## v2.8 — Meal Plans & Offline Access
 
 Utility features that deepen the app's value as a daily companion.
 
@@ -89,7 +70,7 @@ Utility features that deepen the app's value as a daily companion.
 
 ---
 
-## v5.0 — Platform Expansion
+## v2.9 — Platform Expansion
 
 Extend the app's reach beyond the iPhone.
 
@@ -109,6 +90,27 @@ Extend the app's reach beyond the iPhone.
 - Donate user actions (view article, open recipe, log meal) to Siri Suggestions.
 - Index articles and recipes for Spotlight search via `CSSearchableIndex`.
 - Support Siri Shortcuts for quick logging: "Log my breakfast on Carnivore."
+
+---
+
+## Deferred — Community / User Posts
+
+*Decision: August 3, 2026*
+
+The Community feed and Create Post button were removed from the tab bar. The code
+(`Scenes/Feed`, `Scenes/Posts`, `Scenes/PostDetail`, and the Firestore post/feed/report
+repositories) is left intact but dormant.
+
+**Why:** the feature had been untouched since September 2024 while occupying 2 of 5 tabs,
+including the prime center slot. At ~0.7 downloads/day there is nowhere near the user density
+for a feed to feel alive, and an empty Community tab reads as an abandoned app to a new user.
+It also carried an App Review risk (no post-level reporting, no user blocking — guideline 1.2)
+and a moderation burden on a health topic.
+
+**Revisit when:** the v2.6 journal and progress tracker have shipped and there is enough DAU to
+fill a feed. The right shape then is a social layer *on top of* journaling (share a streak, a
+before/after photo) — content that has a built-in reason to be posted — not a standalone forum.
+Before reviving it, post-level reporting and user blocking must be implemented.
 
 ---
 

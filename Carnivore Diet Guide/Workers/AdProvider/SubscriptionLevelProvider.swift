@@ -29,7 +29,7 @@ enum SubscriptionError: Error {
     }
 }
 
-class SubscriptionLevelProvider {
+class SubscriptionLevelProvider: ObservableObject {
     
     private let subscriptionLevelKey = "subscriptionLevelKey"
 
@@ -61,7 +61,14 @@ class SubscriptionLevelProvider {
     
     @Published var fullPriceProducts: [String: Product] = [:]
     @Published var discountProducts: [String: Product] = [:]
-    
+
+    enum ProductsLoadState {
+        case loading
+        case loaded
+        case failed
+    }
+    @Published private(set) var productsLoadState: ProductsLoadState = .loading
+
     @AppStorage("LimitedTimeOfferStartTimeKey") private var limitedTimeOfferStart: Double = 0
     var limitedTimeOfferStartDate: Date? {
         get {
@@ -97,19 +104,36 @@ class SubscriptionLevelProvider {
     
     @MainActor
     private func loadProducts() async {
+        productsLoadState = .loading
         do {
-            fullPriceProducts = .init(uniqueKeysWithValues: try await Product.products(for: Self.fullPriceProductIds).map { ($0.id, $0) })
-            discountProducts = .init(uniqueKeysWithValues: try await Product.products(for: Self.discountProductIds).map { ($0.id, $0) })
+            // One request for every product, so a failure can't leave one set loaded and the other empty.
+            let loaded = try await Product.products(for: Self.allProductIds)
+            fullPriceProducts = Self.productsById(loaded, matching: Self.fullPriceProductIds)
+            discountProducts = Self.productsById(loaded, matching: Self.discountProductIds)
+            // StoreKit can return an empty list instead of throwing (e.g. offline), so treat that as a failure too.
+            productsLoadState = loaded.isEmpty ? .failed : .loaded
             print("Loaded products: \(products)")
         } catch {
             print("Failed to load products: \(error)")
+            productsLoadState = .failed
         }
     }
-    
+
+    private static func productsById(_ products: [Product], matching ids: [String]) -> [String: Product] {
+        Dictionary(
+            products.filter { ids.contains($0.id) }.map { ($0.id, $0) },
+            uniquingKeysWith: { first, _ in first }
+        )
+    }
+
     private func updatesListenerTask() -> Task<Void, Never> {
         Task(priority: .background) {
             for await verificationResult in Transaction.updates {
                 handle(transactionUpdate: verificationResult)
+                // Unfinished transactions (renewals, offer codes, Ask to Buy) are redelivered on every launch.
+                if case .verified(let transaction) = verificationResult {
+                    await transaction.finish()
+                }
             }
         }
     }
@@ -123,9 +147,11 @@ class SubscriptionLevelProvider {
     }
     
     func isSubscribed() async -> Bool {
+        // Check every entitlement: returning on the first one gave a wrong "false" when an
+        // entitlement for some other product (e.g. the legacy food logging subscription) came first.
         for await result in Transaction.currentEntitlements {
-            if case .verified(let transaction) = result {
-                return Self.allProductIds.contains(transaction.productID)
+            if case .verified(let transaction) = result, Self.allProductIds.contains(transaction.productID) {
+                return true
             }
         }
         return false
@@ -190,7 +216,7 @@ class SubscriptionLevelProvider {
                 throw SubscriptionError.verificationFailed
             }
         case .userCancelled:
-            await set(subscriptionLevel: .none)
+            // Leave the level alone: an existing subscriber who opens the paywall and cancels must keep Carnivore+.
             return false
         case .pending:
             throw SubscriptionError.pending

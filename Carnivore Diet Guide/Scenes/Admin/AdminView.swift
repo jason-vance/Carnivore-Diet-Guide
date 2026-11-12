@@ -134,7 +134,7 @@ struct AdminView: View {
     
     @ViewBuilder func SettingsSection() -> some View {
         Section {
-            ShowAdsToggle()
+            SubscriptionLevelPicker()
             CommentAsDropDown()
         } header: {
             Text("Settings")
@@ -142,7 +142,7 @@ struct AdminView: View {
         }
     }
     
-    @ViewBuilder func ShowAdsToggle() -> some View {
+    @ViewBuilder func SubscriptionLevelPicker() -> some View {
         HStack {
             Text("Subscription Level")
                 .foregroundStyle(Color.text)

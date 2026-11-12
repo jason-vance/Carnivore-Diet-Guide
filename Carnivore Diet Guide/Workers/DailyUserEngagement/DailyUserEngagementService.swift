@@ -72,7 +72,7 @@ class DailyUserEngagementService {
             cancellable = authProvider.userAuthStatePublisher
                 .first()
                 .sink { value in
-                    continuation.resume(returning: value == .loggedIn)
+                    continuation.resume(returning: value.canReadContent)
                     cancellable?.cancel()
                 }
         }

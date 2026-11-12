@@ -24,7 +24,6 @@ struct ArticleDetailView: View {
     @State private var article: Article?
     @State private var isWorking: Bool = false
     
-    @State private var showAds: Bool = false
     @State private var showMarketing: Bool? = nil
     @State private var showArticleFailedToFetch: Bool = false
     @State private var showArticleNoLongerAvailable: Bool = false
@@ -97,7 +96,6 @@ struct ArticleDetailView: View {
                 fetchArticle(withId: newArticleId)
             }
             .onReceive(isSubscribedPublisher) { isSubscribed in
-                showAds = !isSubscribed
                 showMarketing = !isSubscribed && (article?.isPremium == true)
             }
             .alert("The article could not be fetched", isPresented: $showArticleFailedToFetch) {
@@ -118,7 +116,10 @@ struct ArticleDetailView: View {
                 if let article = article, !isWorking && showMarketing != nil {
                     ScrollView {
                         VStack(spacing: 0) {
-                            if showAds { AdRow() }
+                            PremiumCTARow(placement: .articleDetail, size: .small)
+                                .padding(.horizontal)
+                                .padding(.top, 8)
+                                .padding(.bottom, 16)
                             ArticleView(article: article)
                                 .onAppear { markAsViewed() }
                                 .onAppear { updateArticleDataIfNecessary() }
@@ -126,7 +127,6 @@ struct ArticleDetailView: View {
                                     isWorking = true
                                     showArticleNoLongerAvailable = true
                                 }
-                                .padding(.top, showAds ? 16 : 0)
                         }
                     }
                 } else {

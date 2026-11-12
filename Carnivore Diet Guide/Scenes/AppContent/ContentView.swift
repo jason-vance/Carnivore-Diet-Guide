@@ -31,9 +31,12 @@ struct ContentView: View {
     
     var body: some View {
         Group {
-            if userAuthState == .loggedIn {
+            switch userAuthState {
+            case .loggedIn:
                 LoggedInView()
-            } else {
+            case .guest:
+                GuestView()
+            case .working, .loggedOut:
                 LoggedOutView()
             }
         }
@@ -66,6 +69,17 @@ struct ContentView: View {
                     OnboardingView()
                 }
         }
+    }
+
+    /// Browsing without an account: straight to the content, no profile setup.
+    @ViewBuilder func GuestView() -> some View {
+        HomeView()
+            .fullScreenCover(
+                isPresented: $shouldShowOnboarding,
+                onDismiss: { shouldShowOnboarding = false },
+            ) {
+                OnboardingView()
+            }
     }
 }
 

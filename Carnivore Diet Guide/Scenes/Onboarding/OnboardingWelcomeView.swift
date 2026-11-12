@@ -50,11 +50,6 @@ struct OnboardingWelcomeView: View {
                     review : "I love trying out the recipes in this app",
                     reviewAuthor: "mario495"
                 )
-                SellingPoint(
-                    "A strong and growing community of carnivores just like you",
-                    review : "This app is simple to use, helps understand what you can and can’t eat. And measures the nutrients which is handy.",
-                    reviewAuthor: "Jolemcd"
-                )
             }
             .padding(.top, 4)
             Spacer()
@@ -116,6 +111,7 @@ struct OnboardingWelcomeView: View {
                 .font(.caption)
                 .foregroundColor(.text)
                 .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 }

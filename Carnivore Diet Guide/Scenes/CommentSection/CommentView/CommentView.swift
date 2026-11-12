@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct CommentView: View {
     
@@ -15,7 +16,8 @@ struct CommentView: View {
     @State var comment: Comment
     @State var resource: Resource
     @StateObject var model = CommentViewModel()
-    
+    @State private var showSignInPrompt = false
+
     var body: some View {
         VStack {
             VStack {
@@ -86,11 +88,19 @@ struct CommentView: View {
             Image(systemName: "ellipsis")
                 .padding()
         }
+        .signInPrompt(
+            isPresented: $showSignInPrompt,
+            reason: String(localized: "Sign in to report comments so they can be reviewed.")
+        )
     }
-    
+
     @ViewBuilder func ReportCommentButton() -> some View {
         Button {
-            model.reportComment()
+            if (iocContainer~>CurrentUserIdProvider.self).currentUserId == nil {
+                showSignInPrompt = true
+            } else {
+                model.reportComment()
+            }
         } label: {
             Label("Report", systemImage: "megaphone")
         }

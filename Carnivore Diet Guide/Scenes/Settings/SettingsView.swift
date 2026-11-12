@@ -29,7 +29,12 @@ struct SettingsView: View {
     
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
-    
+    @State private var showSignInPrompt: Bool = false
+
+    private var isGuest: Bool {
+        (iocContainer~>CurrentUserIdProvider.self).currentUserId == nil
+    }
+
     private func show(errorMessage: String) {
         showError = true
         self.errorMessage = errorMessage
@@ -79,8 +84,12 @@ struct SettingsView: View {
                     PrivacyPolicyButton()
                 }
                 Section("Account") {
-                    LogoutButton()
-                    DeleteAccountButton()
+                    if isGuest {
+                        SignInButton()
+                    } else {
+                        LogoutButton()
+                        DeleteAccountButton()
+                    }
                 }
                 AppVersionRow()
             }
@@ -262,6 +271,23 @@ struct SettingsView: View {
         .listRowBackground(Color.background)
     }
     
+    @ViewBuilder func SignInButton() -> some View {
+        Button {
+            showSignInPrompt = true
+        } label: {
+            ProfileControlLabel(
+                String(localized: "Sign In"),
+                icon: "person.crop.circle.badge.plus",
+                showNavigationAccessories: false
+            )
+        }
+        .listRowBackground(Color.background)
+        .signInPrompt(
+            isPresented: $showSignInPrompt,
+            reason: String(localized: "Sign in to save favorites, join the comments, and set up your profile.")
+        )
+    }
+
     @ViewBuilder func LogoutButton() -> some View {
         Button {
             showLogoutDialog = true

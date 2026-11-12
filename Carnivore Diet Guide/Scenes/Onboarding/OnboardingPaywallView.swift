@@ -15,7 +15,9 @@ struct OnboardingPaywallView: View {
     let subscriptionManager: SubscriptionLevelProvider
 
     @State private var products: [String: Product] = [:]
+    @State private var productsLoadState: SubscriptionLevelProvider.ProductsLoadState = .loading
     @State private var isPurchasing: Bool = false
+    @State private var showNothingToRestore = false
     @State private var showDiscountCodeDialog = false
     @State private var errorMessage: String?
     @State private var showError = false
@@ -55,61 +57,72 @@ struct OnboardingPaywallView: View {
     
     private func restorePurchases() {
         Task {
+            isPurchasing = true
             do {
                 try await subscriptionManager.restorePurchases()
-                let _ = await subscriptionManager.isSubscribed()
+                let isSubscribed = await subscriptionManager.isSubscribed()
+                if !isSubscribed {
+                    showNothingToRestore = true
+                }
             } catch {
                 errorMessage = error.localizedDescription
                 showError = true
             }
+            isPurchasing = false
         }
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                Text("Become a Carnivore+ subscriber for amazing benefits!")
-                    .font(.largeTitle)
-                    .foregroundColor(.text)
-                    .multilineTextAlignment(.leading)
-                Spacer()
+        // Scrolls only when the content is taller than the screen (e.g. iPhone SE), so the
+        // subscribe buttons and legal links are never squeezed off the bottom.
+        GeometryReader { proxy in
+            ScrollView {
+                VStack {
+                    HStack {
+                        Text("Become a Carnivore+ subscriber for amazing benefits!")
+                            .font(.largeTitle)
+                            .foregroundColor(.text)
+                            .multilineTextAlignment(.leading)
+                        Spacer()
+                    }
+                    HStack {
+                        Text("The first 7 days are free!")
+                            .font(.title)
+                            .foregroundColor(.text.opacity(0.5))
+                            .multilineTextAlignment(.leading)
+                        Spacer()
+                    }
+                    VStack(spacing: 8) {
+                        SellingPoint("Access all premium content")
+                        SellingPoint("Achieve your health goals faster")
+                        SellingPoint("Premium articles and guides")
+                        SellingPoint("Cook up premium recipes")
+                        SellingPoint("And much more!")
+                    }
+                    .padding(.top, 4)
+                    Spacer(minLength: 16)
+                    HStack {
+                        Text("Start your 7 day free trial in the next 24 hours and lock in a 75% discount!")
+                            .foregroundColor(.text)
+                            .multilineTextAlignment(.leading)
+                        Spacer()
+                    }
+                    if showButtons {
+                        SubscribeButtons()
+                    }
+                    Button {
+                        onboardingStep = onboardingStep.skip
+                    } label: {
+                        Text("Maybe Later")
+                            .foregroundColor(Color.accentColor.opacity(0.7))
+                    }
+                    .padding(.top)
+                }
+                .padding()
+                .frame(minHeight: proxy.size.height)
             }
-            HStack {
-                Text("The first 7 days are free!")
-                    .font(.title)
-                    .foregroundColor(.text.opacity(0.5))
-                    .multilineTextAlignment(.leading)
-                Spacer()
-            }
-            VStack(spacing: 8) {
-                SellingPoint("Access premium content and tools")
-                SellingPoint("Achieve your health goals faster")
-                SellingPoint("Enjoy an ad free experience")
-                SellingPoint("Premium articles and guides")
-                SellingPoint("Cook up premium recipes")
-                SellingPoint("Join a strong, growing community")
-                SellingPoint("And much more!")
-            }
-            .padding(.top, 4)
-            Spacer()
-            HStack {
-                Text("Start your 7 day free trial in the next 24 hours and lock in a 75% discount!")
-                    .foregroundColor(.text)
-                    .multilineTextAlignment(.leading)
-                Spacer()
-            }
-            if showButtons {
-                SubscribeButtons()
-            }
-            Button {
-                onboardingStep = onboardingStep.skip
-            } label: {
-                Text("Maybe Later")
-                    .foregroundColor(Color.accentColor.opacity(0.7))
-            }
-            .padding(.top)
+            .scrollBounceBehavior(.basedOnSize)
         }
-        .padding()
         .background(Color.background)
         .overlay { IsPurchasingView() }
         .animation(.snappy, value: showButtons)
@@ -120,6 +133,7 @@ struct OnboardingPaywallView: View {
         }
         .onAppear { subscriptionManager.limitedTimeOfferStartDate = .now }
         .onReceive(subscriptionManager.$discountProducts) { p in products = p }
+        .onReceive(subscriptionManager.$productsLoadState) { productsLoadState = $0 }
         .alert(
             "Purchase Error",
             isPresented: $showError,
@@ -156,10 +170,23 @@ struct OnboardingPaywallView: View {
     
     @ViewBuilder func SubscribeButtons() -> some View {
         VStack {
-            ForEach(displayProducts, id: \.self) { product in
-                SubscribeButton(product: product)
+            if displayProducts.isEmpty {
+                SubscriptionProductsUnavailableView(isLoading: productsLoadState == .loading) {
+                    subscriptionManager.refreshProducts()
+                }
+            } else {
+                ForEach(displayProducts, id: \.self) { product in
+                    SubscribeButton(product: product)
+                }
             }
-            DiscountCodeButton()
+            HStack {
+                DiscountCodeButton()
+                Spacer()
+                RestorePurchasesButton()
+            }
+            .padding(.top)
+            SubscriptionLegalFooter()
+                .padding(.top, 8)
         }
     }
     
@@ -198,7 +225,20 @@ struct OnboardingPaywallView: View {
         .offerCodeRedemption(isPresented: $showDiscountCodeDialog) { result in
             handleOfferCodeCompletion()
         }
-        .padding(.top)
+    }
+
+    @ViewBuilder private func RestorePurchasesButton() -> some View {
+        Button("Restore Purchases") {
+            restorePurchases()
+        }
+        .foregroundColor(.accentColor)
+        .disabled(isPurchasing)
+        .alert(
+            "No Subscription Found",
+            isPresented: $showNothingToRestore,
+            actions: { Button("OK", role: .cancel) { } },
+            message: { Text("We couldn't find an active Carnivore+ subscription for your Apple Account.") }
+        )
     }
 }
 

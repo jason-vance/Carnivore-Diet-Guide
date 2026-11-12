@@ -29,14 +29,21 @@ struct MarketingView: View {
     
     @State private var showcaseArticles: [Article] = []
     @State private var showcaseRecipes: [Recipe] = []
+    @State private var fullPriceProducts: [String: Product] = [:]
+    @State private var discountProducts: [String: Product] = [:]
+    @State private var productsLoadState: SubscriptionLevelProvider.ProductsLoadState = .loading
     @State private var isPurchasing: Bool = false
     @State private var showDiscountCodeDialog = false
+    @State private var showNothingToRestore = false
     @State private var errorMessage: String?
     @State private var showError = false
-    
+
+    // Products are mirrored into @State (see the onReceive calls in body) because
+    // SubscriptionLevelProvider is not observed: reading its properties directly meant the
+    // subscribe buttons never appeared if the products finished loading after the first render.
     private var displayProducts: [Product] {
-        let products = limitedTimeOfferValid ? subscriptionManager.discountProducts : subscriptionManager.fullPriceProducts
-        
+        let products = limitedTimeOfferValid ? discountProducts : fullPriceProducts
+
         return products
             .map { $0.value }
             .sorted { $0.price < $1.price }
@@ -81,13 +88,18 @@ struct MarketingView: View {
     
     private func restorePurchases() {
         Task {
+            isPurchasing = true
             do {
                 try await subscriptionManager.restorePurchases()
-                let _ = await subscriptionManager.isSubscribed()
+                let isSubscribed = await subscriptionManager.isSubscribed()
+                if !isSubscribed {
+                    showNothingToRestore = true
+                }
             } catch {
                 errorMessage = error.localizedDescription
                 showError = true
             }
+            isPurchasing = false
         }
     }
     
@@ -114,7 +126,7 @@ struct MarketingView: View {
     
     private func logScreenView() {
         guard let analytics = iocContainer.resolve(Analytics.self) else { return }
-        analytics.logScreenView(screenName: "RecipeDetailView", screenClass: RecipeDetailView.self)
+        analytics.logScreenView(screenName: "MarketingView", screenClass: MarketingView.self)
     }
 
     var body: some View {
@@ -129,12 +141,8 @@ struct MarketingView: View {
                         SubSubheadline()
                     }
                     .padding(.horizontal)
-                    AdFreeExperience()
-                        .padding(.horizontal)
                     ExclusiveArticles()
                     PremiumRecipes()
-                    AdvancedProgressTracking()
-                        .padding(.horizontal)
                     FirstWeekIsFree2()
                         .padding(.horizontal)
                     SubscribeButtons()
@@ -169,6 +177,9 @@ struct MarketingView: View {
         .onAppear {
             subscriptionManager.refreshProducts()
         }
+        .onReceive(subscriptionManager.$fullPriceProducts) { fullPriceProducts = $0 }
+        .onReceive(subscriptionManager.$discountProducts) { discountProducts = $0 }
+        .onReceive(subscriptionManager.$productsLoadState) { productsLoadState = $0 }
     }
     
     @ViewBuilder func TopBar() -> some View {
@@ -217,7 +228,7 @@ struct MarketingView: View {
     
     @ViewBuilder func Subheadline() -> some View {
         HStack {
-            Text("Get exclusive access to premium content and tools designed to help you achieve your health goals faster.")
+            Text("Get exclusive access to premium articles and recipes designed to help you achieve your health goals faster.")
                 .font(.headline)
             Spacer()
         }
@@ -228,21 +239,6 @@ struct MarketingView: View {
             Text("And all for less than the price of a pound of ground beef!")
                 .font(.body)
             Spacer()
-        }
-    }
-    
-    @ViewBuilder func AdFreeExperience() -> some View {
-        VStack {
-            HStack {
-                Text("Ad-Free Experience")
-                    .font(.headline)
-                Spacer()
-            }
-            HStack {
-                Text("No interruptions! Enjoy a seamless, ad-free experience for focused learning and community interaction. For about the same price as a pound of butter!")
-                    .font(.body)
-                Spacer()
-            }
         }
     }
     
@@ -312,21 +308,6 @@ struct MarketingView: View {
         }
     }
     
-    @ViewBuilder func AdvancedProgressTracking() -> some View {
-        VStack {
-            HStack {
-                Text("Advanced Progress Tracking")
-                    .font(.headline)
-                Spacer()
-            }
-            HStack {
-                Text("Enhanced tools to monitor your health metrics and progress. Coming soon!")
-                    .font(.body)
-                Spacer()
-            }
-        }
-    }
-    
     @ViewBuilder func FirstWeekIsFree2() -> some View {
         VStack {
             HStack {
@@ -339,11 +320,19 @@ struct MarketingView: View {
     
     @ViewBuilder func SubscribeButtons() -> some View {
         VStack {
-            ForEach(displayProducts, id: \.self) { product in
-                SubscribeButton(product: product)
+            if displayProducts.isEmpty {
+                SubscriptionProductsUnavailableView(isLoading: productsLoadState == .loading) {
+                    subscriptionManager.refreshProducts()
+                }
+            } else {
+                ForEach(displayProducts, id: \.self) { product in
+                    SubscribeButton(product: product)
+                }
             }
             DiscountCodeButton()
             RestoreSubscriptionButton()
+            SubscriptionLegalFooter()
+                .padding(.top)
         }
         .padding(.horizontal)
     }
@@ -391,7 +380,14 @@ struct MarketingView: View {
             restorePurchases()
         }
         .foregroundColor(.accentColor)
+        .disabled(isPurchasing)
         .padding(.top)
+        .alert(
+            "No Subscription Found",
+            isPresented: $showNothingToRestore,
+            actions: { Button("OK", role: .cancel) { } },
+            message: { Text("We couldn't find an active Carnivore+ subscription for your Apple Account.") }
+        )
     }
 }
 

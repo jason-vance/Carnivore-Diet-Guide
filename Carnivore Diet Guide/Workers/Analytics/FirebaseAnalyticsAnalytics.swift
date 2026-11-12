@@ -18,4 +18,18 @@ class FirebaseAnalyticsAnalytics: Analytics {
             ]
         )
     }
+
+    func logNutrientLoggerPromoTapped(placement: String) {
+        FirebaseAnalytics.Analytics.logEvent(
+            "nutrient_logger_promo_tapped",
+            parameters: ["placement": placement]
+        )
+    }
+
+    func logPremiumCTATapped(placement: PremiumCTAPlacement) {
+        FirebaseAnalytics.Analytics.logEvent(
+            "premium_cta_tapped",
+            parameters: ["placement": placement.rawValue]
+        )
+    }
 }

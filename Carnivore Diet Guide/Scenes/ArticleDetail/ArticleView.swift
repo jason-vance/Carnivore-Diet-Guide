@@ -22,6 +22,8 @@ struct ArticleView: View {
                 Title()
                 ByLineView(userId: article.author)
                 ArticleContent()
+                NutrientLoggerPromoCard(placement: "article_end")
+                    .padding(.bottom)
                 CitationsView()
             }
             .padding(.horizontal)

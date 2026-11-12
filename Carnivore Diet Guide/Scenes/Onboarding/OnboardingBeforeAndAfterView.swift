@@ -13,17 +13,15 @@ struct OnboardingBeforeAndAfterView: View {
     
     static let subscriberBullets = [
         "Confident in their dietary choices",
-        "Knowledgable of the latest research",
+        "Knowledgeable of the latest research",
         "More likely to reach their health goals",
-        "Members of an active community of carivores",
         "Able to access premium articles and recipes"
     ]
-    
+
     static let nonSubscriberBullets = [
         "Unsure of the best foods to eat",
         "Wonders about the latest research",
         "Less likely to reach their health goals",
-        "Searching for their carivore tribe",
         "Unable to access premium articles and recipes",
     ]
     

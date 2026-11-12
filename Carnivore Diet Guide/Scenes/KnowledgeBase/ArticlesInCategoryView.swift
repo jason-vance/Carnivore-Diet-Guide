@@ -30,15 +30,6 @@ struct ArticlesInCategoryView: View {
             .eraseToAnyPublisher()
     }
     
-    @State private var showAds: Bool = false
-    private var showAdsPublisher: AnyPublisher<Bool,Never> {
-        (iocContainer~>SubscriptionLevelProvider.self)
-            .subscriptionLevelPublisher
-            .map { $0 == SubscriptionLevelProvider.SubscriptionLevel.none }
-            .receive(on: RunLoop.main)
-            .eraseToAnyPublisher()
-    }
-    
     private var displayArticles: [Article] {
         var articles = allArticles
             .sorted { $0.publicationDate > $1.publicationDate }
@@ -73,13 +64,14 @@ struct ArticlesInCategoryView: View {
                 action: { }
             )
             .padding(.horizontal)
-            if showAds { AdRow() }
+            PremiumCTARow(placement: .articleList, size: .small)
+                .padding(.horizontal)
+                .padding(.vertical, 8)
             Container()
                 .padding(.horizontal)
         }
         .alert(alertMessage, isPresented: $showAlert) {}
         .onReceive(articlePublisher) { allArticles = $0 }
-        .onReceive(showAdsPublisher) { showAds = $0 }
     }
     
     @ViewBuilder func Container() -> some View {

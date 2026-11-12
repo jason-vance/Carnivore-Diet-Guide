@@ -14,6 +14,8 @@ class UserProfileViewModel: ObservableObject {
     @Published public var userData: UserData = .empty
     @Published public var isMe: Bool? = nil
     @Published public var isAdmin: Bool = false
+    @Published public var isPublisher: Bool = false
+    public var canCreateContent: Bool { isAdmin || isPublisher }
     public var screenTitle: String { userData.username?.value ?? String(localized: "User Profile") }
     public var profileImageUrl: URL? { userData.profileImageUrl }
 
@@ -21,21 +23,25 @@ class UserProfileViewModel: ObservableObject {
     private let userDataProvider: UserDataProvider
     private let userDataSaver: UserDataSaver
     private let isAdminChecker: IsAdminChecker
-    
+    private let isPublisherChecker: IsPublisherChecker
+
     private var subs: Set<AnyCancellable> = []
-    
+
     init(
         currentUserIdProvider: CurrentUserIdProvider,
         userDataProvider: UserDataProvider,
         userDataSaver: UserDataSaver,
-        isAdminChecker: IsAdminChecker
+        isAdminChecker: IsAdminChecker,
+        isPublisherChecker: IsPublisherChecker
     ) {
         self.currentUserIdProvider = currentUserIdProvider
         self.userDataProvider = userDataProvider
         self.userDataSaver = userDataSaver
         self.isAdminChecker = isAdminChecker
-        
+        self.isPublisherChecker = isPublisherChecker
+
         checkIsAdmin()
+        checkIsPublisher()
     }
     
     public func listenForUserData(userId: String) {
@@ -55,7 +61,16 @@ class UserProfileViewModel: ObservableObject {
             self.isAdmin = isAdmin
         }
     }
-    
+
+    func checkIsPublisher() {
+        Task {
+            guard let userId = currentUserIdProvider.currentUserId else { return }
+            guard let isPublisher = try? await isPublisherChecker.isPublisher(userId: userId) else { return }
+            self.isPublisher = isPublisher
+        }
+    }
+
+
     private func receive(userData: UserData) {
         self.userData = userData
     }

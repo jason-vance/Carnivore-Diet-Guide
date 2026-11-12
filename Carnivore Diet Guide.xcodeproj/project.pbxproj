@@ -80,7 +80,6 @@
 		568BAB1E2E909A9A0061E440 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB1D2E909A9A0061E440 /* Kingfisher */; };
 		568BAB212E909AA90061E440 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB202E909AA90061E440 /* MarkdownUI */; };
 		568BAB242E909B230061E440 /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB232E909B230061E440 /* SwinjectAutoregistration */; };
-		568BAB272E909B410061E440 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB262E909B410061E440 /* GoogleMobileAds */; };
 		568BAB2A2E909C7F0061E440 /* ValueOf in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB292E909C7F0061E440 /* ValueOf */; };
 		568BAB2D2E909C980061E440 /* SwiftUIFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB2C2E909C980061E440 /* SwiftUIFlowLayout */; };
 		568BAB302E909D440061E440 /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB2F2E909D440061E440 /* YPImagePicker */; };
@@ -378,7 +377,6 @@
 				568BAB2D2E909C980061E440 /* SwiftUIFlowLayout in Frameworks */,
 				568BAB1B2E909A2A0061E440 /* FirebaseStorage in Frameworks */,
 				568BAB172E909A2A0061E440 /* FirebaseAuth in Frameworks */,
-				568BAB272E909B410061E440 /* GoogleMobileAds in Frameworks */,
 				568BAB212E909AA90061E440 /* MarkdownUI in Frameworks */,
 				568BAB2A2E909C7F0061E440 /* ValueOf in Frameworks */,
 				568BAB192E909A2A0061E440 /* FirebaseFirestore in Frameworks */,
@@ -894,7 +892,6 @@
 				568BAB1D2E909A9A0061E440 /* Kingfisher */,
 				568BAB202E909AA90061E440 /* MarkdownUI */,
 				568BAB232E909B230061E440 /* SwinjectAutoregistration */,
-				568BAB262E909B410061E440 /* GoogleMobileAds */,
 				568BAB292E909C7F0061E440 /* ValueOf */,
 				568BAB2C2E909C980061E440 /* SwiftUIFlowLayout */,
 				568BAB2F2E909D440061E440 /* YPImagePicker */,
@@ -953,7 +950,6 @@
 				568BAB1C2E909A9A0061E440 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				568BAB1F2E909AA90061E440 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				568BAB222E909B230061E440 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */,
-				568BAB252E909B410061E440 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				568BAB282E909C7F0061E440 /* XCRemoteSwiftPackageReference "valueof" */,
 				568BAB2B2E909C980061E440 /* XCRemoteSwiftPackageReference "swiftui-flow-layout" */,
 				568BAB2E2E909D440061E440 /* XCRemoteSwiftPackageReference "YPImagePicker" */,
@@ -1467,14 +1463,6 @@
 				minimumVersion = 2.9.1;
 			};
 		};
-		568BAB252E909B410061E440 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 12.12.0;
-			};
-		};
 		568BAB282E909C7F0061E440 /* XCRemoteSwiftPackageReference "valueof" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://bitbucket.org/jasonvance77/valueof";
@@ -1536,11 +1524,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 568BAB222E909B230061E440 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */;
 			productName = SwinjectAutoregistration;
-		};
-		568BAB262E909B410061E440 /* GoogleMobileAds */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 568BAB252E909B410061E440 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
-			productName = GoogleMobileAds;
 		};
 		568BAB292E909C7F0061E440 /* ValueOf */ = {
 			isa = XCSwiftPackageProductDependency;

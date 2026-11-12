@@ -18,7 +18,8 @@ struct ExtraOptionsButton: View {
     
     @State private var showAlert: Bool = false
     @State private var alertMessage: String = ""
-    
+    @State private var showSignInPrompt: Bool = false
+
     private let userIdProvider = iocContainer~>CurrentUserIdProvider.self
     private let resourceReporter = iocContainer~>ResourceReporter.self
     private let resourceDeleter = iocContainer~>ResourceDeleter.self
@@ -80,6 +81,10 @@ struct ExtraOptionsButton: View {
             ResourceMenuButtonLabel(sfSymbol: "ellipsis")
         }
         .alert(alertMessage, isPresented: $showAlert) {}
+        .signInPrompt(
+            isPresented: $showSignInPrompt,
+            reason: String(localized: "Sign in to report content so it can be reviewed.")
+        )
         .confirmationDialog(
             "\"\(resource.title)\"\n\nAre you sure you want to delete this? Once deleted, it can not be recovered.",
             isPresented: $showDeleteDialog,
@@ -92,7 +97,11 @@ struct ExtraOptionsButton: View {
     
     @ViewBuilder func ReportResourceButton() -> some View {
         Button {
-            reportResource()
+            if userIdProvider.currentUserId == nil {
+                showSignInPrompt = true
+            } else {
+                reportResource()
+            }
         } label: {
             Label("Report", systemImage: "megaphone")
         }

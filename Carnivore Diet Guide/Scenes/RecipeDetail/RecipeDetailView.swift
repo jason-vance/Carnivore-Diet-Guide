@@ -23,7 +23,6 @@ struct RecipeDetailView: View {
     @State private var recipe: Recipe?
     @State private var isWorking: Bool = false
     
-    @State private var showAds: Bool = false
     @State private var showMarketing: Bool? = nil
     @State private var showRecipeFailedToFetch: Bool = false
     @State private var showRecipeNoLongerAvailable: Bool = false
@@ -93,7 +92,6 @@ struct RecipeDetailView: View {
                 fetchRecipe(withId: newRecipeId)
             }
             .onReceive(isSubscribedPublisher) { isSubscribed in
-                showAds = !isSubscribed
                 showMarketing = !isSubscribed && (recipe?.isPremium == true)
             }
             .alert("The recipe could not be fetched", isPresented: $showRecipeFailedToFetch) {
@@ -114,7 +112,10 @@ struct RecipeDetailView: View {
                 if let recipe = recipe, !isWorking && showMarketing != nil {
                     ScrollView {
                         VStack(spacing: 0) {
-                            if showAds { AdRow() }
+                            PremiumCTARow(placement: .recipeDetail, size: .small)
+                                .padding(.horizontal)
+                                .padding(.top, 8)
+                                .padding(.bottom, 16)
                             RecipeView(recipe: recipe)
                                 .onAppear { markAsViewed() }
                                 .onAppear { updateRecipeDataIfNecessary() }
@@ -122,7 +123,6 @@ struct RecipeDetailView: View {
                                     isWorking = true
                                     showRecipeNoLongerAvailable = true
                                 }
-                                .padding(.top, showAds ? 16 : 0)
                         }
                     }
                 } else {

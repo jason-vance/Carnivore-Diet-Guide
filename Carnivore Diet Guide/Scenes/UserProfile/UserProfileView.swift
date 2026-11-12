@@ -23,7 +23,8 @@ struct UserProfileView: View {
         currentUserIdProvider: iocContainer~>CurrentUserIdProvider.self,
         userDataProvider: iocContainer~>UserDataProvider.self,
         userDataSaver: iocContainer~>UserDataSaver.self,
-        isAdminChecker: iocContainer~>IsAdminChecker.self
+        isAdminChecker: iocContainer~>IsAdminChecker.self,
+        isPublisherChecker: iocContainer~>IsPublisherChecker.self
     )
     
     @State private var navigationPath = NavigationPath()
@@ -38,22 +39,13 @@ struct UserProfileView: View {
     
     @FocusState private var focusedField: Field?
     
-    @State private var showPosts: Bool = false
+    @State private var showCreateContent: Bool = false
     @State private var showEditProfile: Bool = false
     @State private var showSettings: Bool = false
     @State private var showAdmin: Bool = false
     
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
-    
-    @State private var showAds: Bool = false
-    private var showAdsPublisher: AnyPublisher<Bool,Never> {
-        (iocContainer~>SubscriptionLevelProvider.self)
-            .subscriptionLevelPublisher
-            .receive(on: RunLoop.main)
-            .map { $0 == SubscriptionLevelProvider.SubscriptionLevel.none }
-            .eraseToAnyPublisher()
-    }
     
     private func show(errorMessage: String) {
         showError = true
@@ -75,9 +67,13 @@ struct UserProfileView: View {
                 TopBar()
                 ScrollView {
                     VStack {
-                        if showAds { AdRow() }
-                        PicPostsAndOtherStats()
-                            .padding(.top, showAds ? 0 : 16)
+                        if model.isMe == true {
+                            PremiumCTARow(placement: .profile, size: .small)
+                                .padding(.horizontal)
+                                .padding(.top, 16)
+                        }
+                        ProfileHeader()
+                            .padding(.top, 16)
                         ProfileControls()
                             .padding(.bottom)
                         BioField()
@@ -91,7 +87,6 @@ struct UserProfileView: View {
         }
         .background(Color.background)
         .alert(errorMessage, isPresented: $showError) {}
-        .onReceive(showAdsPublisher) { showAds = $0 }
         .onChange(of: userId, initial: true) { _, newUserId in
             model.listenForUserData(userId: newUserId)
         }
@@ -130,11 +125,10 @@ struct UserProfileView: View {
         }
     }
     
-    @ViewBuilder func PicPostsAndOtherStats() -> some View {
+    @ViewBuilder func ProfileHeader() -> some View {
         VStack {
             HStack {
                 ProfileImage()
-                PostCountButton()
                 Spacer()
             }
             if let fullName = model.userData.fullName {
@@ -160,12 +154,29 @@ struct UserProfileView: View {
     @ViewBuilder func ControlsForMyProfile() -> some View {
         HStack {
             EditProfileButton()
+            if model.canCreateContent {
+                CreateContentButton()
+            }
             if model.isAdmin {
                 AdminButton()
             }
             Spacer()
         }
         .padding(.horizontal)
+    }
+
+    @ViewBuilder func CreateContentButton() -> some View {
+        Button {
+            showCreateContent = true
+        } label: {
+            UserProfileButtonLabel(
+                text: String(localized: "Create"),
+                imageName: "plus.circle.fill"
+            )
+        }
+        .fullScreenCover(isPresented: $showCreateContent) {
+            CreateContentView()
+        }
     }
     
     @ViewBuilder func ControlsForOthersProfile() -> some View {
@@ -188,18 +199,6 @@ struct UserProfileView: View {
             padding: .borderWidthMedium
         )
         .containerRelativeFrame(.horizontal, count: 4, spacing: 0)
-    }
-    
-    @ViewBuilder func PostCountButton() -> some View {
-        Button {
-            showPosts = true
-        } label: {
-            PostCountStatView(userId: userId)
-        }
-        .containerRelativeFrame(.horizontal, count: 4, spacing: 0)
-        .fullScreenCover(isPresented: $showPosts) {
-            PostsView(userData: model.userData)
-        }
     }
     
     @ViewBuilder func UserProfileButtonLabel(text: String, imageName: String) -> some View {

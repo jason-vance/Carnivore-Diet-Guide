@@ -18,15 +18,6 @@ struct FeedView: View {
         feedItemProvider: iocContainer~>FeedViewContentProvider.self
     )
     
-    @State private var showAds: Bool = false
-    private var showAdsPublisher: AnyPublisher<Bool,Never> {
-        (iocContainer~>SubscriptionLevelProvider.self)
-            .subscriptionLevelPublisher
-            .map { $0 == SubscriptionLevelProvider.SubscriptionLevel.none }
-            .receive(on: RunLoop.main)
-            .eraseToAnyPublisher()
-    }
-    
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
@@ -39,13 +30,11 @@ struct FeedView: View {
             .background(Color.background)
             .refreshable { model.refreshNewsFeed() }
             .onAppear { UIRefreshControl.appearance().tintColor = .accent }
-            .onReceive(showAdsPublisher) { showAds = $0 }
         }
     }
     
     @ViewBuilder func Feed() -> some View {
         LazyVStack {
-            if showAds { AdRow() }
             ForEach(model.feedItems) { feedItem in
                 NavigationLink {
                     FeedItemDetailView(feedItem)
@@ -56,7 +45,7 @@ struct FeedView: View {
             }
             LoadNextFeedItemsView()
         }
-        .padding(showAds ? .bottom : .vertical)
+        .padding(.vertical)
         .overlay(alignment: .bottom) {
             if !model.canFetchMoreFeedItems {
                 Image(systemName: "flag.checkered.2.crossed")

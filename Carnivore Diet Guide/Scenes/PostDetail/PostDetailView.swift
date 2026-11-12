@@ -24,15 +24,6 @@ struct PostDetailView: View {
     
     @State private var showPostFailedToFetch: Bool = false
     
-    @State private var showAds: Bool = false
-    private var showAdsPublisher: AnyPublisher<Bool,Never> {
-        (iocContainer~>SubscriptionLevelProvider.self)
-            .subscriptionLevelPublisher
-            .map { $0 == SubscriptionLevelProvider.SubscriptionLevel.none }
-            .receive(on: RunLoop.main)
-            .eraseToAnyPublisher()
-    }
-    
     init(postId: String) {
         self.post = nil
         self.postId = postId
@@ -77,10 +68,8 @@ struct PostDetailView: View {
             if let post = post, !isWorking {
                 ScrollView {
                     VStack(spacing: 0) {
-                        if showAds { AdRow() }
                         PostView(post: post)
                             .onAppear { markAsViewed() }
-                            .padding(.top, showAds ? 16 : 0)
                     }
                 }
             } else {
@@ -92,7 +81,6 @@ struct PostDetailView: View {
         .onChange(of: postId, initial: true) { oldPostId, newPostId in
             fetchPost(withId: newPostId)
         }
-        .onReceive(showAdsPublisher) { showAds = $0 }
         .alert("The post could not be fetched", isPresented: $showPostFailedToFetch) {
             Button("OK", role: .cancel) {
                 dismiss()

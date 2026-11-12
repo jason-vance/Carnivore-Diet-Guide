@@ -15,8 +15,9 @@ struct HomeView: View {
     @StateObject private var model = HomeViewModel()
     @State private var selectedTab: HomeMenuBar.HomeMenuTab = .knowledge
     
-    private var currentUserId: String {
-        (iocContainer~>CurrentUserIdProvider.self).currentUserId!
+    /// Nil for guests.
+    private var currentUserId: String? {
+        (iocContainer~>CurrentUserIdProvider.self).currentUserId
     }
     
     private func logScreenView(_ selectedTab: HomeMenuBar.HomeMenuTab) {
@@ -25,21 +26,20 @@ struct HomeView: View {
         var screenName = ""
         var screenClass: Any = KnowledgeBaseView.self
         switch selectedTab {
-        case .feed:
-            screenName = "FeedView"
-            screenClass = FeedView.self
         case .knowledge:
-            screenName = "KnowledgeBaseView"
-            screenClass = KnowledgeBaseView.self
-        case .createPost:
             screenName = "KnowledgeBaseView"
             screenClass = KnowledgeBaseView.self
         case .recipes:
             screenName = "RecipesView"
             screenClass = RecipesView.self
         case .profile:
-            screenName = "UserProfileView"
-            screenClass = UserProfileView.self
+            if currentUserId == nil {
+                screenName = "GuestProfileView"
+                screenClass = GuestProfileView.self
+            } else {
+                screenName = "UserProfileView"
+                screenClass = UserProfileView.self
+            }
         }
         
         analytics.logScreenView(screenName: screenName, screenClass: screenClass)
@@ -50,12 +50,16 @@ struct HomeView: View {
             ZStack {
                 KnowledgeBaseView()
                     .opacity(selectedTab == .knowledge ? 1.0 : 0.0)
-                FeedView()
-                    .opacity(selectedTab == .feed ? 1.0 : 0.0)
                 RecipesView()
                     .opacity(selectedTab == .recipes ? 1.0 : 0.0)
-                UserProfileView(userId: currentUserId)
-                    .opacity(selectedTab == .profile ? 1.0 : 0.0)
+                Group {
+                    if let currentUserId {
+                        UserProfileView(userId: currentUserId)
+                    } else {
+                        GuestProfileView()
+                    }
+                }
+                .opacity(selectedTab == .profile ? 1.0 : 0.0)
             }
             HomeMenuBar(selectedTab: $selectedTab, profileImageUrl: $model.userProfileImageUrl)
         }

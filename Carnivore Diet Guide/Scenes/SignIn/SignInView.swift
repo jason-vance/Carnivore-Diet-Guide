@@ -33,6 +33,16 @@ struct SignInView: View {
         }
     }
     
+    private func continueAsGuest() {
+        Task {
+            do {
+                try await authProvider.signInAsGuest()
+            } catch {
+                show(errorMessage: String(localized: "Unable to continue as a guest: \(error.localizedDescription)"))
+            }
+        }
+    }
+
     var body: some View {
         VStack {
             Spacer()
@@ -52,7 +62,10 @@ struct SignInView: View {
     
     @ViewBuilder func SignInControls() -> some View {
         if userAuthState == .loggedOut {
-            SignInButton()
+            VStack(spacing: 0) {
+                SignInButton()
+                ContinueAsGuestButton()
+            }
         } else {
             ProgressSpinner()
         }
@@ -81,6 +94,19 @@ struct SignInView: View {
         .signInWithAppleButtonStyle(.white)
         .frame(height: 48)
         .padding()
+    }
+
+    @ViewBuilder func ContinueAsGuestButton() -> some View {
+        Button {
+            continueAsGuest()
+        } label: {
+            Text("Continue as Guest")
+                .font(.headline)
+                .foregroundStyle(Color.background)
+                .frame(maxWidth: .infinity, minHeight: 44)
+        }
+        .padding(.horizontal)
+        .padding(.bottom)
     }
     
     @ViewBuilder func ProgressSpinner() -> some View {

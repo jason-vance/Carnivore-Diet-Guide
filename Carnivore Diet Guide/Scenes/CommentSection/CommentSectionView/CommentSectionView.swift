@@ -25,7 +25,8 @@ struct CommentSectionView: View {
     @State private var commentText: String = ""
     @FocusState private var isCommentFieldFocused: Bool
     @State private var showSendButton: Bool = false
-    
+    @State private var showSignInPrompt: Bool = false
+
     @State var showError: Bool = false
     @State var errorMessage: String = ""
     
@@ -105,6 +106,35 @@ struct CommentSectionView: View {
     }
     
     @ViewBuilder func CommentControls() -> some View {
+        if (iocContainer~>CurrentUserIdProvider.self).currentUserId == nil {
+            GuestCommentControls()
+        } else {
+            SignedInCommentControls()
+        }
+    }
+
+    /// Guests can read comments but need an account to post one.
+    @ViewBuilder func GuestCommentControls() -> some View {
+        Button {
+            showSignInPrompt = true
+        } label: {
+            Text("Sign in to comment")
+                .font(.subheadline.bold())
+                .foregroundStyle(Color.accentColor)
+                .frame(maxWidth: .infinity, minHeight: controlSize)
+                .background {
+                    RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                        .stroke(Color.accentColor, lineWidth: 1)
+                }
+        }
+        .padding()
+        .signInPrompt(
+            isPresented: $showSignInPrompt,
+            reason: String(localized: "Sign in to join the conversation.")
+        )
+    }
+
+    @ViewBuilder func SignedInCommentControls() -> some View {
         HStack(alignment: .bottom, spacing: 8) {
             VStack(spacing: 2) {
                 if let proxyUserId = commentProxyContainer.proxyUserId {

@@ -29,15 +29,6 @@ struct ContentAgnosticArticlesView: View {
     private let articleFetcher = iocContainer~>ArticleCollectionFetcher.self
     private let articleLibrary = iocContainer~>ArticleLibrary.self
     
-    @State private var showAds: Bool = false
-    private var showAdsPublisher: AnyPublisher<Bool,Never> {
-        (iocContainer~>SubscriptionLevelProvider.self)
-            .subscriptionLevelPublisher
-            .receive(on: RunLoop.main)
-            .map { $0 == SubscriptionLevelProvider.SubscriptionLevel.none }
-            .eraseToAnyPublisher()
-    }
-    
     private func fetchArticles() {
         isWorking = true
         self.articles = []
@@ -75,19 +66,16 @@ struct ContentAgnosticArticlesView: View {
             .alert(alertMessage, isPresented: $showAlert) {}
             .onChange(of: category, initial: true) { _, _ in fetchArticles() }
             .onChange(of: timeFrame, initial: false) { _, _ in fetchArticles() }
-            .onReceive(showAdsPublisher) { showAds = $0 }
     }
-    
+
     @ViewBuilder func Container() -> some View {
         VStack(spacing: 0) {
             TimeFramePicker(timeFrame: $timeFrame)
                 .padding(.horizontal)
-                .padding(.bottom, showAds ? 0 : 24)
-            if showAds {
-                AdRow()
-                    .padding(.top, 16)
-                    .padding(.bottom, 24)
-            }
+                .padding(.bottom, 24)
+            PremiumCTARow(placement: .articleList, size: .small)
+                .padding(.horizontal)
+                .padding(.bottom, 24)
             if articles.isEmpty && !isWorking {
                 EmptyArticlesView()
             } else {

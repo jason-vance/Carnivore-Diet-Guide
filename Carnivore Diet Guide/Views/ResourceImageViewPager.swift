@@ -19,7 +19,9 @@ struct ResourceImageViewPager: View {
         }
         .tabViewStyle(PageTabViewStyle())
         .aspectRatio(1, contentMode: .fill)
-        .background(Color.text)
+        // Placeholder color while the image loads. Kept out of the safe area so it doesn't paint a
+        // dark band beside the image under iPhone Duo's side status bar.
+        .background(Color.text, ignoresSafeAreaEdges: [])
     }
 }
 

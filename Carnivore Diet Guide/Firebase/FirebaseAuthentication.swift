@@ -34,18 +34,35 @@ class FirebaseAuthenticationProvider {
     private func listenForAuthStateChanges() {
         authStateChangeListenerHandle = Auth.auth().addStateDidChangeListener { auth, user in
             DispatchQueue.main.async { [weak self] in
-                if let user = user {
-                    self?.currentUser = user
-                    self?.currentUserId = user.uid
-                    self?.userAuthState = .loggedIn
-                    FirebaseAnalytics.Analytics.setUserID(user.uid)
-                } else {
-                    self?.currentUser = nil
-                    self?.currentUserId = nil
-                    self?.userAuthState = .loggedOut
-                    FirebaseAnalytics.Analytics.setUserID(nil)
-                }
+                self?.apply(user: user)
             }
+        }
+    }
+
+    /// A guest is a Firebase anonymous user: signed in as far as Firestore rules are concerned, but
+    /// `currentUserId` stays nil so everything tied to an account (favorites, comments, profile)
+    /// treats them as not signed in.
+    @MainActor
+    private func apply(user: User?) {
+        currentUser = user
+        if let user, !user.isAnonymous {
+            currentUserId = user.uid
+            userAuthState = .loggedIn
+            FirebaseAnalytics.Analytics.setUserID(user.uid)
+        } else {
+            currentUserId = nil
+            userAuthState = user == nil ? .loggedOut : .guest
+            FirebaseAnalytics.Analytics.setUserID(nil)
+        }
+    }
+
+    func signInAsGuest() async throws {
+        await MainActor.run { userAuthState = .working }
+        do {
+            try await Auth.auth().signInAnonymously()
+        } catch {
+            await MainActor.run { apply(user: Auth.auth().currentUser) }
+            throw error
         }
     }
     
@@ -75,17 +92,41 @@ class FirebaseAuthenticationProvider {
             throw TextError("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
         }
         
-        DispatchQueue.main.sync {
-            self.userAuthState = .working
-        }
-        
         // Initialize a Firebase credential, including the user's full name.
         let credential = OAuthProvider.appleCredential(
             withIDToken: idTokenString,
             rawNonce: nil,
             fullName: appleIDCredential.fullName)
-        
-        try await Auth.auth().signIn(with: credential)
+
+        if let guest = Auth.auth().currentUser, guest.isAnonymous {
+            try await upgradeGuest(guest, with: credential)
+            return
+        }
+
+        await MainActor.run { userAuthState = .working }
+        do {
+            try await Auth.auth().signIn(with: credential)
+        } catch {
+            // The auth state listener doesn't fire on failure, so put the state back ourselves.
+            await MainActor.run { apply(user: Auth.auth().currentUser) }
+            throw error
+        }
+    }
+
+    /// Turns a guest's anonymous account into an Apple account, keeping its uid. If this Apple ID
+    /// already has an account, signs in to that one instead and the anonymous account is abandoned.
+    private func upgradeGuest(_ guest: User, with credential: AuthCredential) async throws {
+        do {
+            let result = try await guest.link(with: credential)
+            // Linking keeps the same user, so the auth state listener doesn't fire.
+            await MainActor.run { apply(user: result.user) }
+        } catch let error as NSError where error.code == AuthErrorCode.credentialAlreadyInUse.rawValue {
+            // Apple identity tokens are single use; Firebase hands back a fresh credential for this case.
+            guard let existingAccountCredential = error.userInfo[AuthErrors.userInfoUpdatedCredentialKey] as? AuthCredential else {
+                throw error
+            }
+            try await Auth.auth().signIn(with: existingAccountCredential)
+        }
     }
     
     private func reathenticate(withAuthorization authorization: ASAuthorization) async throws {

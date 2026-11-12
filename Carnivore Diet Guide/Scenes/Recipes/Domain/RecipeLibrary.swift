@@ -91,7 +91,7 @@ class RecipeLibrary {
     }
     
     private func onUpdate(authState: UserAuthState) {
-        isLoggedIn = (authState == .loggedIn)
+        isLoggedIn = authState.canReadContent
         fetchRecipes()
     }
     

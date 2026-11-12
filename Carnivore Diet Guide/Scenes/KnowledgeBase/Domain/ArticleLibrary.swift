@@ -91,7 +91,7 @@ class ArticleLibrary {
     }
     
     private func onUpdate(authState: UserAuthState) {
-        isLoggedIn = (authState == .loggedIn)
+        isLoggedIn = authState.canReadContent
         fetchArticles()
     }
     

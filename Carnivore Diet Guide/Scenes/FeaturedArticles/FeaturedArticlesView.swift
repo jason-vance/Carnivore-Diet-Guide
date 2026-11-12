@@ -25,15 +25,6 @@ struct FeaturedArticlesView: View {
     private let featuredArticlesFetcher = iocContainer~>FeaturedArticlesFetcher.self
     private let notificationService = iocContainer~>NotificationService.self
     
-    @State private var showAds: Bool = false
-    private var showAdsPublisher: AnyPublisher<Bool,Never> {
-        (iocContainer~>SubscriptionLevelProvider.self)
-            .subscriptionLevelPublisher
-            .receive(on: RunLoop.main)
-            .map { $0 == SubscriptionLevelProvider.SubscriptionLevel.none }
-            .eraseToAnyPublisher()
-    }
-    
     @State private var welcomeSection: FeaturedArticles.Section?
     
     private func resetAppBadgeValue() {
@@ -101,7 +92,6 @@ struct FeaturedArticlesView: View {
             .onAppear { fetchWelcomeArticle() }
             .onAppear { fetchFeaturedArticles() }
             .onAppear { resetAppBadgeValue() }
-            .onReceive(showAdsPublisher) { showAds = $0 }
     }
     
     @ViewBuilder func Container() -> some View {
@@ -123,8 +113,9 @@ struct FeaturedArticlesView: View {
                 FeaturedContentSection(welcomeSection)
                     .padding(.horizontal)
             }
+            PremiumCTARow(placement: .featuredArticles, size: .medium)
+                .padding(.horizontal)
             ForEach(content.sections) { section in
-                if showAds { AdRow() }
                 FeaturedContentSection(section)
                     .padding(.horizontal)
             }

@@ -12,25 +12,17 @@ struct HomeMenuBar: View {
     public static let height: CGFloat = 44
     
     enum HomeMenuTab {
-        case feed
         case knowledge
-        case createPost
         case recipes
         case profile
     }
-    
+
     @Binding public var selectedTab: HomeMenuTab
     @Binding public var profileImageUrl: URL?
-    
-    @State private var showCreatePost: Bool = false
-    
+
     var body: some View {
         HStack {
             KnowledgeMenuItem()
-            Spacer()
-            FeedMenuItem()
-            Spacer()
-            CreatePostMenuItem()
             Spacer()
             RecipesMenuItem()
             Spacer()
@@ -48,21 +40,6 @@ struct HomeMenuBar: View {
         MenuItem(.knowledge, text: String(localized: "Home"), image: { MenuItemImage(image) }) {
             selectedTab = .knowledge
         }
-    }
-    
-    @ViewBuilder func FeedMenuItem() -> some View {
-        let image = selectedTab == .feed ? "person.3.fill" : "person.3"
-        MenuItem(.feed, text: String(localized: "Community"), image: { MenuItemImage(image) }) {
-            selectedTab = .feed
-        }
-    }
-    
-    @ViewBuilder func CreatePostMenuItem() -> some View {
-        let image = selectedTab == .createPost ? "plus.circle.fill" : "plus.circle"
-        MenuItem(.createPost, text: String(localized: "Create"), image: { MenuItemImage(image) }) {
-            showCreatePost = true
-        }
-        .fullScreenCover(isPresented: $showCreatePost) { CreateContentView() }
     }
     
     @ViewBuilder func RecipesMenuItem() -> some View {
@@ -113,7 +90,7 @@ struct HomeMenuBar: View {
 }
 
 #Preview {
-    StatefulPreviewContainer(HomeMenuBar.HomeMenuTab.feed) { selectedTab in
+    StatefulPreviewContainer(HomeMenuBar.HomeMenuTab.knowledge) { selectedTab in
         Rectangle()
             .overlay(alignment: .bottom) {
                 HomeMenuBar(

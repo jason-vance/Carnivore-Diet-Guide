@@ -17,21 +17,37 @@ struct FavoriteButton: View {
         favoriter: iocContainer~>ResourceFavoriter.self
     )
     
+    @State private var showSignInPrompt = false
+
+    private var isGuest: Bool {
+        (iocContainer~>CurrentUserIdProvider.self).currentUserId == nil
+    }
+
     private var sfSymbol: String {
         let isMarkedAsFavorite = model.isMarkedAsFavorite == true
         return isMarkedAsFavorite ? "heart.fill" : "heart.slash"
     }
-    
+
     var body: some View {
         Button {
-            model.toggleFavorite(resource: resource)
+            if isGuest {
+                showSignInPrompt = true
+            } else {
+                model.toggleFavorite(resource: resource)
+            }
         } label: {
             ResourceMenuButtonLabel(sfSymbol: sfSymbol)
         }
-        .disabled(model.isMarkedAsFavorite == nil || model.isWorking)
+        .disabled(!isGuest && (model.isMarkedAsFavorite == nil || model.isWorking))
         .onAppear {
-            model.listenToFavoriteStatus(of: resource)
+            if !isGuest {
+                model.listenToFavoriteStatus(of: resource)
+            }
         }
+        .signInPrompt(
+            isPresented: $showSignInPrompt,
+            reason: String(localized: "Sign in to save your favorite articles and recipes.")
+        )
     }
 }
 

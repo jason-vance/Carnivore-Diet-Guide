@@ -7,7 +7,6 @@
 
 import SwiftUI
 import FirebaseCore
-import GoogleMobileAds
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(

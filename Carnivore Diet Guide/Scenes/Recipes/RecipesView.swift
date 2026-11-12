@@ -48,22 +48,14 @@ struct RecipesView: View {
         return recipes
     }
     
-    @State private var showAds: Bool = false
-    private var showAdsPublisher: AnyPublisher<Bool,Never> {
-        (iocContainer~>SubscriptionLevelProvider.self)
-            .subscriptionLevelPublisher
-            .map { $0 == SubscriptionLevelProvider.SubscriptionLevel.none }
-            .receive(on: RunLoop.main)
-            .eraseToAnyPublisher()
-    }
-    
     var body: some View {
         NavigationStack(path: $navigationPath) {
             VStack(spacing: 0) {
                 ScreenTitleBar(String(localized: "Recipes"))
                 SearchArea()
                 ScrollView {
-                    if showAds { AdRow() }
+                    PremiumCTARow(placement: .recipes, size: .small)
+                        .padding([.horizontal, .top])
                     ListContent()
                         .padding()
                 }
@@ -75,7 +67,6 @@ struct RecipesView: View {
             }
         }
         .onReceive(recipePublisher) { allRecipes = $0 }
-        .onReceive(showAdsPublisher) { showAds = $0 }
     }
     
     @ViewBuilder func SearchArea() -> some View {
