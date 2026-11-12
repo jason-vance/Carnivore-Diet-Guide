@@ -94,6 +94,7 @@ struct OnboardingPaywallView: View {
                     }
                     VStack(spacing: 8) {
                         SellingPoint("Access all premium content")
+                        SellingPoint("The full 30-day guided program")
                         SellingPoint("Achieve your health goals faster")
                         SellingPoint("Premium articles and guides")
                         SellingPoint("Cook up premium recipes")

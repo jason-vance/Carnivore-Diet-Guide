@@ -12,6 +12,10 @@ protocol Analytics {
     func logNutrientLoggerPromoTapped(placement: String)
     func logPremiumCTATapped(placement: PremiumCTAPlacement)
     func logReviewRequested(contentReadCount: Int)
+    func logProgramStarted(startDay: Int, hasGoal: Bool)
+    func logProgramCheckIn(day: Int, symptomCount: Int)
+    func logProgramTaskCompleted(day: Int)
+    func logProgramLockedDayTapped(day: Int)
 }
 
 class MockAnalytics: Analytics {
@@ -19,4 +23,8 @@ class MockAnalytics: Analytics {
     func logNutrientLoggerPromoTapped(placement: String) { }
     func logPremiumCTATapped(placement: PremiumCTAPlacement) { }
     func logReviewRequested(contentReadCount: Int) { }
+    func logProgramStarted(startDay: Int, hasGoal: Bool) { }
+    func logProgramCheckIn(day: Int, symptomCount: Int) { }
+    func logProgramTaskCompleted(day: Int) { }
+    func logProgramLockedDayTapped(day: Int) { }
 }

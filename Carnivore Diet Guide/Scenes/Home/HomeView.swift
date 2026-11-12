@@ -13,6 +13,7 @@ struct HomeView: View {
     private let defaultPadding: CGFloat = 8
 
     @StateObject private var model = HomeViewModel()
+    @ObservedObject private var programStore = iocContainer~>ProgramStore.self
     @State private var selectedTab: HomeMenuBar.HomeMenuTab = .knowledge
     
     /// Nil for guests.
@@ -29,6 +30,9 @@ struct HomeView: View {
         case .knowledge:
             screenName = "KnowledgeBaseView"
             screenClass = KnowledgeBaseView.self
+        case .program:
+            screenName = "ThirtyDayProgramView"
+            screenClass = ThirtyDayProgramView.self
         case .recipes:
             screenName = "RecipesView"
             screenClass = RecipesView.self
@@ -50,6 +54,8 @@ struct HomeView: View {
             ZStack {
                 KnowledgeBaseView()
                     .opacity(selectedTab == .knowledge ? 1.0 : 0.0)
+                ThirtyDayProgramView()
+                    .opacity(selectedTab == .program ? 1.0 : 0.0)
                 RecipesView()
                     .opacity(selectedTab == .recipes ? 1.0 : 0.0)
                 Group {
@@ -66,6 +72,11 @@ struct HomeView: View {
         .ignoresSafeArea(.keyboard)
         .alert(model.alertMessage, isPresented: $model.showAlert) {}
         .onChange(of: selectedTab, initial: true) { _, tab in logScreenView(tab) }
+        .onChange(of: programStore.pendingOpenFromReminder, initial: true) { _, shouldOpen in
+            guard shouldOpen else { return }
+            selectedTab = .program
+            programStore.pendingOpenFromReminder = false
+        }
     }
     
     @ViewBuilder func TabItemLabel(text: String, image: String) -> some View {

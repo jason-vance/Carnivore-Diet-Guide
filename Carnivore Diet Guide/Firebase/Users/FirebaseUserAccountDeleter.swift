@@ -21,6 +21,8 @@ class FirebaseUserAccountDeleter: UserAccountDeleter {
         if userData.profileImageUrl != nil {
             try await profilePicStorage.deleteProfileImage(for: currentUserId)
         }
+        // Subcollections aren't deleted with their parent doc, so remove 30 Days check-ins explicitly.
+        try await ProgramStore.instance.deleteAccountProgress(userId: currentUserId)
         try await userRepo.deleteUserDoc(withId: currentUserId)
         try await auth.deleteUser(authorization: authorization)
     }

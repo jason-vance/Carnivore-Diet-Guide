@@ -21,6 +21,8 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(NotificationService.self, initializer: NotificationService.init)
     iocContainer.autoregister(SubscriptionLevelProvider.self, initializer: { SubscriptionLevelProvider.instance })
     iocContainer.autoregister(ResourceOnDeviceWasViewedFlagger.self, initializer: ResourceOnDeviceWasViewedFlagger.getInstance)
+    let programStore = ProgramStore.preview(progress: nil)
+    iocContainer.autoregister(ProgramStore.self, initializer: { programStore })
 
     //Resources
     iocContainer.autoregister(ResourceFavoriter.self, initializer: { ResourceFavoriter.forPreviews })

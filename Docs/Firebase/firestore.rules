@@ -1,0 +1,188 @@
+rules_version = '2';
+
+// Paste into Firebase console → Firestore Database → Rules. Changes from the rules live before 2.6/2.7:
+//   - isAccountUser(): guests (anonymous sign-in) can still read everything they could before, but every
+//     write now needs a real account. Guests are signed in as far as Firebase is concerned, so
+//     request.auth != null alone would let them write through the API.
+//   - Users/{userId}/Programs/{programId}: First 30 Days progress and check-ins. Only the account itself
+//     can read or write it (not admins: it's health information).
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Admin
+
+    match /Admin/{userId} {
+      allow read: if loggedIn();
+    }
+
+    // Publishers
+
+    match /Publishers/{userId} {
+      allow read: if loggedIn();
+      allow write: if requesterIsAdmin();
+    }
+
+    // FeaturedArticles
+
+    match /FeaturedArticles/{featuredArticlesId} {
+      allow read: if loggedIn();
+      allow create: if requesterIsAdmin() && request.time < incomingData().publicationDate;
+    }
+
+    // Users
+
+    match /Users/{userId} {
+      allow read: if loggedIn();
+      allow write: if (isAccountUser() && belongsToRequester(userId)) || requesterIsAdmin();
+    }
+
+    // First 30 Days progress
+
+    match /Users/{userId}/Programs/{programId} {
+      allow read, write: if isAccountUser() && belongsToRequester(userId);
+    }
+
+    // ResourceActivities
+
+    match /ResourceActivities/{activityId} {
+      allow read: if loggedIn();
+      allow create: if (isAccountUser() && requesterUserId() == incomingData().userId) || requesterIsAdmin();
+      allow delete: if isAccountUser() && requesterUserId() == existingData().userId;
+    }
+
+    // ResourceCategories
+
+    match /ResourceCategories/{categoryId} {
+      allow read: if loggedIn();
+    }
+
+    // Recipes
+
+    match /Recipes/{recipeId} {
+      allow create: if requesterIsPublisher() && (requesterIsAuthor() || requesterIsAdmin()) && request.time < incomingData().publicationDate;
+      allow delete: if requesterUserId() == existingData().author;
+      allow read: if loggedIn();
+    }
+
+    match /Recipes/{recipeId}/Favoriters/{userId} {
+      allow read: if loggedIn();
+      allow write: if (isAccountUser() && belongsToRequester(userId)) || requesterIsAdmin();
+    }
+
+    match /Recipes/{recipeId}/Comments/{commentId} {
+      allow read: if loggedIn();
+      allow create: if (isAccountUser() && requesterUserId() == incomingData().userId) || requesterIsAdmin();
+      allow delete: if requesterUserId() == existingData().userId || requesterIsAdmin();
+    }
+
+    // RecipeActivities
+
+    match /RecipeActivity/{activityId} {
+      allow read: if loggedIn();
+      allow create: if isAccountUser() && requesterUserId() == incomingData().userId;
+      allow delete: if isAccountUser() && requesterUserId() == existingData().userId;
+    }
+
+    // ReportedItems
+
+    match /ReportedItems/{itemId} {
+      allow write: if isAccountUser() && belongsToRequester(incomingData().reporterId);
+    }
+
+    // FeedItems
+
+    match /FeedItems/{itemId} {
+      allow create: if (isAccountUser() && requesterUserId() == incomingData().creatorUserId) || requesterIsAdmin();
+      allow delete: if requesterUserId() == existingData().creatorUserId;
+      allow read: if loggedIn();
+    }
+
+    // Posts
+
+    match /Posts/{postId} {
+      allow create: if (isAccountUser() && requesterUserId() == incomingData().author) || requesterIsAdmin();
+      allow delete: if requesterUserId() == existingData().author;
+      allow read: if loggedIn();
+    }
+
+    match /Posts/{postId}/Favoriters/{userId} {
+      allow read: if loggedIn();
+      allow write: if (isAccountUser() && belongsToRequester(userId)) || requesterIsAdmin();
+    }
+
+    match /Posts/{postId}/Comments/{commentId} {
+      allow read: if loggedIn();
+      allow create: if (isAccountUser() && requesterUserId() == incomingData().userId) || requesterIsAdmin();
+      allow delete: if requesterUserId() == existingData().userId || requesterIsAdmin();
+    }
+
+    // Articles
+
+    match /Articles/{articleId} {
+      allow create: if requesterIsPublisher() && (requesterIsAuthor() || requesterIsAdmin()) && request.time < incomingData().publicationDate;
+      allow update: if requesterIsAdmin();
+      allow delete: if requesterUserId() == existingData().author;
+      allow read: if loggedIn();
+    }
+
+    match /Articles/{articleId}/Favoriters/{userId} {
+      allow read: if loggedIn();
+      allow write: if (isAccountUser() && belongsToRequester(userId)) || requesterIsAdmin();
+    }
+
+    match /Articles/{articleId}/Comments/{commentId} {
+      allow read: if loggedIn();
+      allow create: if (isAccountUser() && requesterUserId() == incomingData().userId) || requesterIsAdmin();
+      allow delete: if requesterUserId() == existingData().userId || requesterIsAdmin();
+    }
+
+    // Misc
+
+    // Anyone signed in, including guests. Use for reads.
+    function loggedIn() {
+      return request.auth.uid != null
+    }
+
+    // Signed in with a real account (Sign in with Apple), not as a guest. Use for writes.
+    function isAccountUser() {
+      return request.auth != null
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+
+    function requesterUserId() {
+      return request.auth.uid
+    }
+
+    function requesterIsAuthor() {
+      return requesterUserId() == incomingData().author;
+    }
+
+    function requesterIsAdmin() {
+      return exists(/databases/$(database)/documents/Admin/$(request.auth.uid));
+    }
+
+    function requesterIsPublisher() {
+      return exists(/databases/$(database)/documents/Publishers/$(request.auth.uid));
+    }
+
+    function belongsToRequester(userId) {
+      return request.auth.uid == userId
+    }
+
+    // [READ] Data that exists on the Firestore document
+    function existingData() {
+      return resource.data;
+    }
+
+    // [WRITE] Data that is sent to a Firestore document
+    function incomingData() {
+      return request.resource.data;
+    }
+
+  }
+}

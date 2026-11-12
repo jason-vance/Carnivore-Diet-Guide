@@ -18,15 +18,30 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         DailyUserEngagementService.registerLaunchHandler()
         setupToolbars()
         setup(iocContainer: iocContainer)
+        // Start listening for sign-in changes now, so program progress syncs even before the 30 Days tab is opened.
+        _ = ProgramStore.instance
         return true
     }
-    
+
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         completionHandler(.banner)
+    }
+
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        if response.notification.request.identifier.hasPrefix(ProgramReminderScheduler.identifierPrefix) {
+            DispatchQueue.main.async {
+                ProgramStore.instance.pendingOpenFromReminder = true
+            }
+        }
+        completionHandler()
     }
     
     fileprivate func setupToolbars() {

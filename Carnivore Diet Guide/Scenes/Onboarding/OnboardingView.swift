@@ -69,6 +69,9 @@ struct OnboardingView: View {
     }
     
     private func saveWhyCarnivore() {
+        // Guests have no profile to save it to; the 30 Days setup reads it from here.
+        UserDefaults.standard.set(whyCarnivore?.value, forKey: ProgramStartView.onboardingGoalKey)
+
         guard let userId = currentUserIdProvider.currentUserId else {
             return
         }

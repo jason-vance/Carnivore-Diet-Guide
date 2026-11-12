@@ -26,6 +26,7 @@ func setup(iocContainer: Container) {
     iocContainer.autoregister(NotificationService.self, initializer: NotificationService.init)
     iocContainer.autoregister(SubscriptionLevelProvider.self, initializer: { SubscriptionLevelProvider.instance })
     iocContainer.autoregister(ResourceOnDeviceWasViewedFlagger.self, initializer: ResourceOnDeviceWasViewedFlagger.getInstance)
+    iocContainer.autoregister(ProgramStore.self, initializer: { ProgramStore.instance })
 
     //Resources
     iocContainer.autoregister(ResourceFavoriter.self, initializer: { ResourceFavoriter.forProd })

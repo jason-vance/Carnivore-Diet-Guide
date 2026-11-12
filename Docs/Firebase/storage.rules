@@ -1,0 +1,49 @@
+rules_version = '2';
+
+// Paste into Firebase console → Storage → Rules. Change from the rules live before 2.6/2.7: uploads need a
+// real account (isAccountUser), so guests can still load images but can't upload any.
+
+// Craft rules based on data in your Firestore database
+// allow write: if firestore.get(
+//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    match /{allPaths=**} {
+      allow read: if loggedIn();
+    }
+
+    match /ProfileImages/{userId}/{file} {
+      allow write: if (isAccountUser() && requesterUserId() == userId) || requesterIsAdmin();
+    }
+
+    match /PostImages/{userId}/{postId} {
+      allow delete: if (isAccountUser() && requesterUserId() == userId) || requesterIsAdmin()
+    }
+
+    match /PostImages/{userId}/{postId}/{file} {
+      allow write: if (isAccountUser() && requesterUserId() == userId) || requesterIsAdmin()
+      allow delete: if (isAccountUser() && requesterUserId() == userId) || requesterIsAdmin()
+    }
+
+    // Anyone signed in, including guests. Use for reads.
+    function loggedIn() {
+      return request.auth.uid != null
+    }
+
+    // Signed in with a real account (Sign in with Apple), not as a guest. Use for writes.
+    function isAccountUser() {
+      return request.auth != null
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+
+    function requesterUserId() {
+      return request.auth.uid
+    }
+
+    function requesterIsAdmin() {
+      return firestore.exists(/databases/(default)/documents/Admin/$(request.auth.uid));
+    }
+
+  }
+}

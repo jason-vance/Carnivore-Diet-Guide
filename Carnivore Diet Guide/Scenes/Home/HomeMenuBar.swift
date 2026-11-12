@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwinjectAutoregistration
 
 struct HomeMenuBar: View {
     
@@ -13,6 +14,7 @@ struct HomeMenuBar: View {
     
     enum HomeMenuTab {
         case knowledge
+        case program
         case recipes
         case profile
     }
@@ -20,9 +22,19 @@ struct HomeMenuBar: View {
     @Binding public var selectedTab: HomeMenuTab
     @Binding public var profileImageUrl: URL?
 
+    @ObservedObject private var programStore = iocContainer~>ProgramStore.self
+    @ObservedObject private var subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
+
+    /// A dot on the 30 Days tab when today's check-in is waiting.
+    private var showProgramBadge: Bool {
+        programStore.needsCheckInToday(isSubscribed: subscriptionManager.subscriptionLevel == .carnivorePlus)
+    }
+
     var body: some View {
         HStack {
             KnowledgeMenuItem()
+            Spacer()
+            ProgramMenuItem()
             Spacer()
             RecipesMenuItem()
             Spacer()
@@ -42,6 +54,25 @@ struct HomeMenuBar: View {
         }
     }
     
+    @ViewBuilder func ProgramMenuItem() -> some View {
+        let image = selectedTab == .program ? "list.bullet.clipboard.fill" : "list.bullet.clipboard"
+        MenuItem(.program, text: String(localized: "30 Days"), image: {
+            MenuItemImage(image)
+                .overlay(alignment: .topTrailing) {
+                    if showProgramBadge {
+                        Circle()
+                            .foregroundStyle(Color.accentColor)
+                            .frame(width: 8, height: 8)
+                            .offset(x: 4, y: -2)
+                            .accessibilityHidden(true)
+                    }
+                }
+        }) {
+            selectedTab = .program
+        }
+        .accessibilityValue(showProgramBadge ? Text("Check-in waiting") : Text(""))
+    }
+
     @ViewBuilder func RecipesMenuItem() -> some View {
         let image = selectedTab == .recipes ? "frying.pan.fill" : "frying.pan"
         MenuItem(.recipes, text: String(localized: "Recipes"), image: { MenuItemImage(image) }) {
@@ -90,13 +121,17 @@ struct HomeMenuBar: View {
 }
 
 #Preview {
-    StatefulPreviewContainer(HomeMenuBar.HomeMenuTab.knowledge) { selectedTab in
-        Rectangle()
-            .overlay(alignment: .bottom) {
-                HomeMenuBar(
-                    selectedTab: selectedTab,
-                    profileImageUrl: .constant(UserData.sample.profileImageUrl)
-                )
-            }
+    PreviewContainerWithSetup {
+        setupMockIocContainer(iocContainer)
+    } content: {
+        StatefulPreviewContainer(HomeMenuBar.HomeMenuTab.knowledge) { selectedTab in
+            Rectangle()
+                .overlay(alignment: .bottom) {
+                    HomeMenuBar(
+                        selectedTab: selectedTab,
+                        profileImageUrl: .constant(UserData.sample.profileImageUrl)
+                    )
+                }
+        }
     }
 }

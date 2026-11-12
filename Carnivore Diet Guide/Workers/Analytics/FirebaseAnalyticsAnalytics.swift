@@ -39,4 +39,32 @@ class FirebaseAnalyticsAnalytics: Analytics {
             parameters: ["content_read_count": contentReadCount]
         )
     }
+
+    func logProgramStarted(startDay: Int, hasGoal: Bool) {
+        FirebaseAnalytics.Analytics.logEvent(
+            "program_started",
+            parameters: ["start_day": startDay, "has_goal": hasGoal ? 1 : 0]
+        )
+    }
+
+    func logProgramCheckIn(day: Int, symptomCount: Int) {
+        FirebaseAnalytics.Analytics.logEvent(
+            "program_check_in",
+            parameters: ["day": day, "symptom_count": symptomCount]
+        )
+    }
+
+    func logProgramTaskCompleted(day: Int) {
+        FirebaseAnalytics.Analytics.logEvent(
+            "program_task_completed",
+            parameters: ["day": day]
+        )
+    }
+
+    func logProgramLockedDayTapped(day: Int) {
+        FirebaseAnalytics.Analytics.logEvent(
+            "program_locked_day_tapped",
+            parameters: ["day": day]
+        )
+    }
 }

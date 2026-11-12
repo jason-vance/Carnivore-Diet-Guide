@@ -169,6 +169,7 @@ struct SettingsView: View {
     @ViewBuilder func NotificationsToggleButton() -> some View {
         Button {
             notificationService.shouldSendNotifications.toggle()
+            iocContainer.resolve(ProgramStore.self)?.rescheduleReminders()
             withAnimation(.snappy) {
                 notificationsAreOn = notificationService.shouldSendNotifications
             }

@@ -141,6 +141,7 @@ struct MarketingView: View {
                         SubSubheadline()
                     }
                     .padding(.horizontal)
+                    FullProgram()
                     ExclusiveArticles()
                     PremiumRecipes()
                     FirstWeekIsFree2()
@@ -242,6 +243,22 @@ struct MarketingView: View {
         }
     }
     
+    @ViewBuilder func FullProgram() -> some View {
+        VStack(spacing: 8) {
+            HStack {
+                Text("The Full 30-Day Program")
+                    .font(.headline)
+                Spacer()
+            }
+            HStack {
+                Text("Your first month, day by day: a short lesson, one task and what's normal for every day, with check-ins that show how your energy, digestion, sleep and cravings change. Week 1 is free; Carnivore+ unlocks days 8 to 30.")
+                    .font(.body)
+                Spacer()
+            }
+        }
+        .padding(.horizontal)
+    }
+
     @ViewBuilder func ExclusiveArticles() -> some View {
         VStack {
             HStack {

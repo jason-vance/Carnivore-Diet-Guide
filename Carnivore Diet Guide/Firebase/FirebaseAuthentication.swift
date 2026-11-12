@@ -118,6 +118,9 @@ class FirebaseAuthenticationProvider {
     private func upgradeGuest(_ guest: User, with credential: AuthCredential) async throws {
         do {
             let result = try await guest.link(with: credential)
+            // Firestore rules only let real accounts write, so make sure the next request carries the
+            // Apple sign-in token rather than the cached anonymous one.
+            _ = try? await result.user.getIDTokenResult(forcingRefresh: true)
             // Linking keeps the same user, so the auth state listener doesn't fire.
             await MainActor.run { apply(user: result.user) }
         } catch let error as NSError where error.code == AuthErrorCode.credentialAlreadyInUse.rawValue {
