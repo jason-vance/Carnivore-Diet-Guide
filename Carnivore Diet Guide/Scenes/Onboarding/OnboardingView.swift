@@ -78,14 +78,6 @@ struct OnboardingView: View {
         }
     }
     
-    private func promptForReview() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-                SKStoreReviewController.requestReview(in: scene)
-            }
-        }
-    }
-    
     private func logScreenView(_ screenName: String, screenClass: Any) {
         guard let analytics = iocContainer.resolve(Analytics.self) else { return }
         analytics.logScreenView(screenName: screenName, screenClass: screenClass)
@@ -135,7 +127,7 @@ struct OnboardingView: View {
             .foregroundStyle(Color.accentColor)
             .ignoresSafeArea()
             .onAppear { dismiss() }
-            .onAppear { promptForReview() }
+            // No rating prompt here: it waits until the user has actually read something (see ReviewRequestTrigger).
     }
 }
 

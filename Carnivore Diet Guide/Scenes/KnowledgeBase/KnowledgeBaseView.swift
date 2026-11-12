@@ -33,6 +33,7 @@ struct KnowledgeBaseView: View {
                 ArticleDetailView(article: article)
             }
         }
+        .requestsReviewOnReturn(navigationDepth: navigationPath.count)
     }
     
     @ViewBuilder func TopBar() -> some View {

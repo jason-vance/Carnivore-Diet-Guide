@@ -67,6 +67,8 @@ struct RecipeDetailView: View {
 
     private func markAsViewed() {
         guard let recipe = recipe else { return }
+        ContentReadLog.shared.recordRead(resourceId: recipe.id)
+
         guard let userId = userIdProvider.currentUserId else { return }
         guard recipe.author != userId else { return }
         

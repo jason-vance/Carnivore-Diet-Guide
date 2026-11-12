@@ -11,10 +11,12 @@ protocol Analytics {
     func logScreenView(screenName: String, screenClass: Any)
     func logNutrientLoggerPromoTapped(placement: String)
     func logPremiumCTATapped(placement: PremiumCTAPlacement)
+    func logReviewRequested(contentReadCount: Int)
 }
 
 class MockAnalytics: Analytics {
     func logScreenView(screenName: String, screenClass: Any) { }
     func logNutrientLoggerPromoTapped(placement: String) { }
     func logPremiumCTATapped(placement: PremiumCTAPlacement) { }
+    func logReviewRequested(contentReadCount: Int) { }
 }

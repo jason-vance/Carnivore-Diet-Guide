@@ -32,4 +32,11 @@ class FirebaseAnalyticsAnalytics: Analytics {
             parameters: ["placement": placement.rawValue]
         )
     }
+
+    func logReviewRequested(contentReadCount: Int) {
+        FirebaseAnalytics.Analytics.logEvent(
+            "review_requested",
+            parameters: ["content_read_count": contentReadCount]
+        )
+    }
 }

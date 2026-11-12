@@ -67,6 +67,7 @@ struct RecipesView: View {
             }
         }
         .onReceive(recipePublisher) { allRecipes = $0 }
+        .requestsReviewOnReturn(navigationDepth: navigationPath.count)
     }
     
     @ViewBuilder func SearchArea() -> some View {

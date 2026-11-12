@@ -13,8 +13,8 @@ Meat Based & Nutrient Dense
 ## Keywords (99/100 chars)
 keto,ketogenic,kito,paleo,nutrition,animal,based,carb,fat,protein,calorie,fodmap,health,weight,loss
 
-## Promotional Text (0/170 chars)
-N/A
+## Promotional Text (147/170 chars)
+Now ad-free, and no account needed to browse. Hundreds of carnivore articles and recipes, from your first week on meat to fasting and electrolytes.
 
 ## Description
 Ready to fuel your body with the ultimate carnivore diet? The Carnivore Diet Guide is your one-stop app for everything meat! Whether you're just starting your journey or you’re already living the carnivore life, this app offers the tools and knowledge you need to succeed.
@@ -35,9 +35,13 @@ Download now and start your carnivore journey today!
 
 Terms of Use: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
 
-## What's New (v3.11)
-* UX improvements
-* Minor bug fixes
+## What's New (v2.6)
+* Browse without an account: tap Continue as Guest. Sign in any time to save favorites and join the comments.
+* No more ads.
+* We've retired the Community tab to focus on articles and recipes.
+* Meet Nutrient Logger, our free companion app that shows the vitamins and minerals in what you eat. Find it at the end of any article.
+* Clearer Carnivore+ screens, with Restore Purchases and subscription fixes.
+* Optimized for iPhone Duo.
 
 ## Subscriptions
 - Carnivore+ Monthly - $7.99

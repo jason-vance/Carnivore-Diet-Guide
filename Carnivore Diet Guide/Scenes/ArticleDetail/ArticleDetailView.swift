@@ -70,7 +70,8 @@ struct ArticleDetailView: View {
         guard let article = article else { return }
         
         onDeviceWasViewedFlagger.flagAsViewed(resource: .init(article))
-        
+        ContentReadLog.shared.recordRead(resourceId: article.id)
+
         guard let userId = userIdProvider.currentUserId else { return }
         guard article.author != userId else { return }
         
