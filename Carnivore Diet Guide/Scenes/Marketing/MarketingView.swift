@@ -160,6 +160,9 @@ struct MarketingView: View {
                         .foregroundStyle(Color.text.opacity(0.1))
                         .offset(x: 150, y: 250)
                 }
+                // The first circle is offset up over the top bar. Without this it sits above the
+                // close button and swallows its taps.
+                .allowsHitTesting(false)
             }
         }
         .background(Color.background)

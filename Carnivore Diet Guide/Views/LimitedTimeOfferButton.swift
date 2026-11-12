@@ -89,7 +89,12 @@ struct LimitedTimeOfferButton: View {
                     .font(.title.bold())
                     .fontWidth(.condensed)
                     .foregroundStyle(Color.accentColor)
-                    .opacity(animateTimer ? 0.3 : 1.0)
+                    // The pulse animates only the timer's opacity. When it covered the whole card,
+                    // the repeating animation also caught the card's first layout and replayed it
+                    // forever, so the background kept growing out of the top-left corner.
+                    .animation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true)) { content in
+                        content.opacity(animateTimer ? 0.3 : 1.0)
+                    }
             }
             .padding(.horizontal)
             .padding(.vertical, 8)
@@ -105,11 +110,6 @@ struct LimitedTimeOfferButton: View {
             .padding(.horizontal)
             .padding(.bottom, 4)
             .padding(.top, 12)
-            .animation(
-                .easeInOut(duration: 1.0)
-                .repeatForever(autoreverses: true),
-                value: animateTimer
-            )
             .onAppear { animateTimer = true }
         }
         .fullScreenCover(isPresented: $showMarketingView) {
