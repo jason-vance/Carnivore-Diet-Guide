@@ -63,8 +63,20 @@ struct FirestoreProgramProgressDoc: Codable {
         var sleep: Int?
         var cravings: Int?
         var symptoms: [String]?
+        /// Nil when the check-in predates the food question; empty for a strict day.
+        var addedFoods: [String]?
+        /// Keyed by tracker id.
+        var trackerRatings: [String: Int]?
         var note: String?
         var loggedAt: Date?
+    }
+
+    struct Tracker: Codable {
+        var id: String?
+        var name: String?
+        var createdAt: Date?
+        var removedAt: Date?
+        var updatedAt: Date?
     }
 
     var startDate: Date?
@@ -72,6 +84,7 @@ struct FirestoreProgramProgressDoc: Codable {
     var completedDays: [Int]?
     /// Keyed by day number as a string, since Firestore map keys must be strings.
     var checkIns: [String: CheckIn]?
+    var trackers: [Tracker]?
     var updatedAt: Date?
 
     static func from(_ progress: ProgramProgress) -> FirestoreProgramProgressDoc {
@@ -86,10 +99,21 @@ struct FirestoreProgramProgressDoc: Codable {
                     sleep: checkIn.sleep,
                     cravings: checkIn.cravings,
                     symptoms: checkIn.symptoms.map(\.rawValue).sorted(),
+                    addedFoods: checkIn.addedFoods?.map(\.rawValue).sorted(),
+                    trackerRatings: checkIn.trackerRatings,
                     note: checkIn.note,
                     loggedAt: checkIn.loggedAt
                 ))
             }),
+            trackers: progress.trackers.map { tracker in
+                Tracker(
+                    id: tracker.id,
+                    name: tracker.name,
+                    createdAt: tracker.createdAt,
+                    removedAt: tracker.removedAt,
+                    updatedAt: tracker.updatedAt
+                )
+            },
             updatedAt: progress.updatedAt
         )
     }
@@ -113,6 +137,8 @@ struct FirestoreProgramProgressDoc: Codable {
                 cravings: cravings,
                 // Unknown symptoms from a newer app version are dropped rather than failing the whole doc.
                 symptoms: Set((doc.symptoms ?? []).compactMap(ProgramSymptom.init(rawValue:))),
+                addedFoods: Self.addedFoods(from: doc.addedFoods),
+                trackerRatings: doc.trackerRatings?.filter { ProgramMetric.ratingRange.contains($0.value) },
                 note: doc.note,
                 loggedAt: doc.loggedAt ?? startDate
             )
@@ -123,8 +149,27 @@ struct FirestoreProgramProgressDoc: Codable {
             goal: goal,
             completedDays: Set(completedDays ?? []),
             checkIns: checkInsByDay,
+            trackers: (trackers ?? []).compactMap { doc in
+                guard let id = doc.id, let name = doc.name else { return nil }
+                let createdAt = doc.createdAt ?? startDate
+                return ProgramTracker(
+                    id: id,
+                    name: name,
+                    createdAt: createdAt,
+                    removedAt: doc.removedAt,
+                    updatedAt: doc.updatedAt ?? createdAt
+                )
+            },
             updatedAt: updatedAt ?? startDate
         )
+    }
+
+    /// Unknown foods from a newer app version are dropped. If that leaves nothing from a list that wasn't empty,
+    /// the day is treated as unrecorded rather than misread as strict.
+    static func addedFoods(from rawValues: [String]?) -> Set<ProgramFoodGroup>? {
+        guard let rawValues else { return nil }
+        let known = Set(rawValues.compactMap(ProgramFoodGroup.init(rawValue:)))
+        return known.isEmpty && !rawValues.isEmpty ? nil : known
     }
 }
 

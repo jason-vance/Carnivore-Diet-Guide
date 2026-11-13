@@ -128,6 +128,27 @@ final class ProgramStore: ObservableObject {
         commit(progress)
     }
 
+    /// Returns nil if the name can't be used. See `ProgramProgress.problem(withTrackerName:renaming:)`.
+    @discardableResult
+    func addTracker(named name: String, now: Date = .now) -> ProgramTracker? {
+        guard var progress, let tracker = progress.addTracker(named: name, now: now) else { return nil }
+        commit(progress, now: now)
+        return tracker
+    }
+
+    @discardableResult
+    func renameTracker(id: String, to name: String, now: Date = .now) -> Bool {
+        guard var progress, progress.renameTracker(id: id, to: name, now: now) else { return false }
+        commit(progress, now: now)
+        return true
+    }
+
+    func removeTracker(id: String, now: Date = .now) {
+        guard var progress else { return }
+        progress.removeTracker(id: id, now: now)
+        commit(progress, now: now)
+    }
+
     /// Deletes all progress, on this device and in the account.
     func restart() {
         commit(nil)

@@ -134,7 +134,7 @@ struct ProgramDayView: View {
             if let goal = progress.goal {
                 GoalReminder(goal)
             }
-            ProgramTrendsView(progress: progress)
+            ProgramTrendsView(progress: progress, includesTrackers: isSubscribed)
         }
 
         if !articles.isEmpty {
@@ -178,15 +178,19 @@ struct ProgramDayView: View {
             ProgramCardHeading(title: String(localized: "Check-in"), systemImage: "heart.text.square")
             if let checkIn {
                 ProgramFlowLayout(spacing: 6) {
-                    ForEach(ProgramMetric.allCases) { metric in
-                        let rating = checkIn.rating(for: metric)
-                        Text("\(metric.title): \(metric.label(forRating: rating))")
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(Color.text)
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 6)
-                            .background { Capsule().foregroundStyle(Color.text.opacity(0.08)) }
+                    ForEach(store.progress?.measures(includingTrackers: isSubscribed) ?? []) { measure in
+                        if let rating = measure.rating(in: checkIn) {
+                            Text("\(measure.title): \(measure.label(forRating: rating))")
+                                .font(.caption.weight(.semibold))
+                                .foregroundStyle(Color.text)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 6)
+                                .background { Capsule().foregroundStyle(Color.text.opacity(0.08)) }
+                        }
                     }
+                }
+                if let addedFoods = checkIn.addedFoods {
+                    FoodsSummary(addedFoods)
                 }
                 if let note = checkIn.note {
                     Text(note)
@@ -203,7 +207,7 @@ struct ProgramDayView: View {
                 }
                 .padding(.top, 4)
             } else {
-                Text("Ten seconds: rate your energy, digestion, sleep and cravings so you can see how you're changing.")
+                Text("Ten seconds: rate your energy, digestion, sleep and cravings, and note what you ate, so you can see how you're changing.")
                     .foregroundStyle(Color.text)
                     .fixedSize(horizontal: false, vertical: true)
                 Button {
@@ -212,6 +216,26 @@ struct ProgramDayView: View {
                     ProgramPrimaryButtonLabel(title: String(localized: "Check In"), systemImage: "plus")
                 }
                 .padding(.top, 4)
+            }
+        }
+    }
+
+    /// How strict the day was, then anything eaten besides meat, fish and eggs.
+    @ViewBuilder private func FoodsSummary(_ addedFoods: Set<ProgramFoodGroup>) -> some View {
+        ProgramFlowLayout(spacing: 6) {
+            Label(ProgramStrictness(addedFoods: addedFoods).title, systemImage: "fork.knife")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(Color.accentColor)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background { Capsule().foregroundStyle(Color.accentColor.opacity(0.12)) }
+            ForEach(ProgramFoodGroup.allCases.filter { addedFoods.contains($0) }) { food in
+                Text(food.title)
+                    .font(.caption)
+                    .foregroundStyle(Color.text)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background { Capsule().foregroundStyle(Color.text.opacity(0.08)) }
             }
         }
     }

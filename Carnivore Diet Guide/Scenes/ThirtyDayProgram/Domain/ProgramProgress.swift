@@ -15,6 +15,8 @@ struct ProgramProgress: Codable, Equatable {
     var goal: String?
     var completedDays: Set<Int>
     var checkIns: [Int: ProgramCheckIn]
+    /// What the user rates each day besides the built-in four, removed ones included. See `ProgramTracker`.
+    var trackers: [ProgramTracker] = []
     var updatedAt: Date
 
     func checkIn(forDay day: Int) -> ProgramCheckIn? {
@@ -34,11 +36,25 @@ struct ProgramProgress: Codable, Equatable {
 }
 
 extension ProgramProgress {
+    /// Written out so progress saved before trackers existed still loads.
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        startDate = try container.decode(Date.self, forKey: .startDate)
+        goal = try container.decodeIfPresent(String.self, forKey: .goal)
+        completedDays = try container.decode(Set<Int>.self, forKey: .completedDays)
+        checkIns = try container.decode([Int: ProgramCheckIn].self, forKey: .checkIns)
+        trackers = try container.decodeIfPresent([ProgramTracker].self, forKey: .trackers) ?? []
+        updatedAt = try container.decode(Date.self, forKey: .updatedAt)
+    }
+}
+
+extension ProgramProgress {
 
     /// Combines this device's progress with what's stored for the account.
     ///
-    /// When both runs started on the same day they're the same run, so completed tasks are unioned and
-    /// each day keeps its most recent check-in. Different start days mean the user restarted somewhere,
+    /// When both runs started on the same day they're the same run, so completed tasks are unioned,
+    /// each day keeps its most recent check-in and each tracker its most recent change. Different start days
+    /// mean the user restarted somewhere,
     /// and the most recently updated run wins.
     static func merge(local: ProgramProgress?, remote: ProgramProgress?, calendar: Calendar = .current) -> ProgramProgress? {
         guard let local else { return remote }
@@ -57,6 +73,7 @@ extension ProgramProgress {
             if let existing = merged.checkIns[day], existing.loggedAt >= checkIn.loggedAt { continue }
             merged.checkIns[day] = checkIn
         }
+        merged.trackers = mergedTrackers(merged.trackers, other.trackers)
         if merged.goal == nil {
             merged.goal = other.goal
         }
@@ -72,10 +89,24 @@ struct ProgramCheckIn: Codable, Equatable {
     var sleep: Int
     var cravings: Int
     var symptoms: Set<ProgramSymptom>
+    /// What the user ate besides meat, fish, eggs and animal fats. Empty means a strict day. Nil on check-ins
+    /// saved before the app asked, which should be left out of anything that compares days by diet.
+    var addedFoods: Set<ProgramFoodGroup>? = nil
+    /// Ratings for the user's own trackers, keyed by tracker id. Ratings for removed trackers are kept.
+    var trackerRatings: [String: Int]? = nil
     var note: String?
     var loggedAt: Date
 
     static let maxNoteLength = 280
+
+    /// How strict the day was, or nil if the check-in predates the food question.
+    var strictness: ProgramStrictness? {
+        addedFoods.map(ProgramStrictness.init(addedFoods:))
+    }
+
+    func rating(forTracker id: String) -> Int? {
+        trackerRatings?[id]
+    }
 
     func rating(for metric: ProgramMetric) -> Int {
         switch metric {
@@ -124,6 +155,78 @@ enum ProgramMetric: String, CaseIterable, Codable, Identifiable {
         let labels = ratingLabels
         let index = min(max(rating, 1), labels.count) - 1
         return labels[index]
+    }
+}
+
+/// Foods beyond meat, fish, eggs and animal fats, logged with each check-in so later insights can compare how
+/// the user felt on stricter and looser days ("your digestion was worse on days with vegetables").
+///
+/// The raw values are stored on the device and in the account, so don't rename them.
+enum ProgramFoodGroup: String, CaseIterable, Codable, Identifiable {
+    case dairy
+    case coffeeOrTea
+    case spicesOrSauces
+    case vegetables
+    case fruitOrHoney
+    case nutsOrSeeds
+    case grains
+    case sweets
+    case alcohol
+    case processedFood
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .dairy: return String(localized: "Dairy")
+        case .coffeeOrTea: return String(localized: "Coffee or tea")
+        case .spicesOrSauces: return String(localized: "Spices or sauces")
+        case .vegetables: return String(localized: "Vegetables")
+        case .fruitOrHoney: return String(localized: "Fruit or honey")
+        case .nutsOrSeeds: return String(localized: "Nuts or seeds")
+        case .grains: return String(localized: "Bread or grains")
+        case .sweets: return String(localized: "Sugar or sweets")
+        case .alcohol: return String(localized: "Alcohol")
+        case .processedFood: return String(localized: "Processed food")
+        }
+    }
+
+    /// The loosest level a day reaches when it includes this food.
+    var strictness: ProgramStrictness {
+        switch self {
+        case .dairy, .coffeeOrTea, .spicesOrSauces: return .withExtras
+        case .vegetables, .fruitOrHoney, .nutsOrSeeds: return .somePlants
+        case .grains, .sweets, .alcohol, .processedFood: return .offCarnivore
+        }
+    }
+}
+
+/// How strictly carnivore a day was, from strictest to loosest. A day takes the loosest level of anything eaten.
+enum ProgramStrictness: Int, CaseIterable, Comparable, Codable {
+    /// Only meat, fish, eggs and animal fats.
+    case strict
+    /// Carnivore plus common extras: dairy, coffee or tea, spices and sauces.
+    case withExtras
+    /// Some vegetables, fruit, honey, nuts or seeds.
+    case somePlants
+    /// Grains, sugar, alcohol or processed food.
+    case offCarnivore
+
+    init(addedFoods: Set<ProgramFoodGroup>) {
+        self = addedFoods.map(\.strictness).max() ?? .strict
+    }
+
+    static func < (lhs: ProgramStrictness, rhs: ProgramStrictness) -> Bool {
+        lhs.rawValue < rhs.rawValue
+    }
+
+    var title: String {
+        switch self {
+        case .strict: return String(localized: "Strict carnivore")
+        case .withExtras: return String(localized: "Carnivore plus extras")
+        case .somePlants: return String(localized: "Some plant foods")
+        case .offCarnivore: return String(localized: "Off carnivore")
+        }
     }
 }
 

@@ -65,24 +65,30 @@ enum ProgramSchedule {
     }
 }
 
-/// How a metric has moved: the average of the first few check-ins against the average of the latest few.
+/// How a measure has moved: the average of the first few ratings against the average of the latest few.
 struct ProgramTrend: Equatable {
-    let metric: ProgramMetric
+    /// The `ProgramMeasure` id.
+    let measureId: String
     let from: Double
     let to: Double
 
     var change: Double { to - from }
 
-    /// Needs at least two check-ins. Compares single check-ins until there are six, then the first and last three.
     static func trend(for metric: ProgramMetric, in progress: ProgramProgress) -> ProgramTrend? {
-        let ratings = progress.orderedCheckIns.map { Double($0.checkIn.rating(for: metric)) }
+        trend(for: .metric(metric), in: progress)
+    }
+
+    /// Needs at least two ratings. Compares single ratings until there are six, then the first and last three.
+    /// Check-ins that didn't rate a tracker are skipped.
+    static func trend(for measure: ProgramMeasure, in progress: ProgramProgress) -> ProgramTrend? {
+        let ratings = progress.orderedCheckIns.compactMap { measure.rating(in: $0.checkIn) }.map(Double.init)
         guard ratings.count >= 2 else { return nil }
 
         let sampleSize = ratings.count >= 6 ? 3 : 1
         let first = ratings.prefix(sampleSize)
         let last = ratings.suffix(sampleSize)
         return .init(
-            metric: metric,
+            measureId: measure.id,
             from: first.reduce(0, +) / Double(first.count),
             to: last.reduce(0, +) / Double(last.count)
         )

@@ -100,7 +100,7 @@ struct ThirtyDayProgramView: View {
             } else {
                 TodayCard(progress, currentDay: currentDay)
             }
-            ProgramTrendsView(progress: progress)
+            ProgramTrendsView(progress: progress, includesTrackers: isSubscribed)
             ForEach(FirstThirtyDays.weeks) { week in
                 WeekSection(week, progress: progress, currentDay: currentDay)
             }
@@ -325,7 +325,7 @@ struct ProgramIntroView: View {
                 Feature(icon: "book", title: String(localized: "A short lesson each day"), detail: String(localized: "Salt, fat, cravings, digestion, eating out, and more, in the order you'll need them."))
                 Feature(icon: "checkmark.circle", title: String(localized: "One small task"), detail: String(localized: "Something concrete to do today, from stocking your fridge to trying liver."))
                 Feature(icon: "stethoscope", title: String(localized: "What's normal right now"), detail: String(localized: "Headaches in the first week, loose stools while your gut adjusts, and what usually fixes them."))
-                Feature(icon: "chart.line.uptrend.xyaxis", title: String(localized: "A 10-second check-in"), detail: String(localized: "Rate your energy, digestion, sleep and cravings, and watch them change."))
+                Feature(icon: "chart.line.uptrend.xyaxis", title: String(localized: "A 10-second check-in"), detail: String(localized: "Rate your energy, digestion, sleep and cravings, note what you ate, and watch how you change."))
             }
 
             if !isSubscribed {

@@ -254,7 +254,7 @@ struct MarketingView: View {
                 Spacer()
             }
             HStack {
-                Text("Your first month, day by day: a short lesson, one task and what's normal for every day, with check-ins that show how your energy, digestion, sleep and cravings change. Week 1 is free; Carnivore+ unlocks days 8 to 30.")
+                Text("Your first month, day by day: a short lesson, one task and what's normal for every day, with check-ins that show how your energy, digestion, sleep and cravings change. Add your own trackers too, like your sinuses or joints. Week 1 is free; Carnivore+ unlocks days 8 to 30.")
                     .font(.body)
                 Spacer()
             }

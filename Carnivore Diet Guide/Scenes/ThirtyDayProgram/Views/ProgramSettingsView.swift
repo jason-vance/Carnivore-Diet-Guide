@@ -8,10 +8,11 @@
 import SwiftUI
 import SwinjectAutoregistration
 
-/// Reminder time, which day the user is on, their goal, and starting over.
+/// Reminder time, which day the user is on, their goal, their own trackers, and starting over.
 struct ProgramSettingsView: View {
 
     @ObservedObject private var store = iocContainer~>ProgramStore.self
+    @ObservedObject private var subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
     @Environment(\.dismiss) private var dismiss
 
     @State private var remindersOn = false
@@ -20,6 +21,10 @@ struct ProgramSettingsView: View {
     @State private var goal = ""
     @State private var showRestartConfirmation = false
     @State private var showPermissionDenied = false
+    @State private var showTrackers = false
+    @State private var showMarketing = false
+
+    private var isSubscribed: Bool { subscriptionManager.subscriptionLevel == .carnivorePlus }
 
     private func load() {
         let settings = store.reminderSettings
@@ -126,6 +131,8 @@ struct ProgramSettingsView: View {
                         }
                     }
 
+                    TrackersSection()
+
                     Button(role: .destructive) {
                         showRestartConfirmation = true
                     } label: {
@@ -152,12 +159,59 @@ struct ProgramSettingsView: View {
             }
             Button("Cancel", role: .cancel) { }
         } message: {
-            Text("Your check-ins and completed tasks will be deleted. This can't be undone.")
+            Text("Your check-ins, trackers and completed tasks will be deleted. This can't be undone.")
+        }
+        .sheet(isPresented: $showTrackers) {
+            ProgramTrackersView()
+                .presentationBackground(Color.background)
+        }
+        .fullScreenCover(isPresented: $showMarketing) {
+            MarketingView()
         }
         .alert("Notifications are off", isPresented: $showPermissionDenied) {
             Button("OK", role: .cancel) { }
         } message: {
             Text("To get daily reminders, allow notifications for Carnivore Diet Guide in the Settings app.")
+        }
+    }
+
+    /// Tracker changes save as they're made, separately from this screen's Save button.
+    @ViewBuilder private func TrackersSection() -> some View {
+        let trackers = store.progress?.activeTrackers ?? []
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .firstTextBaseline) {
+                Text("Your trackers")
+                    .font(.headline)
+                    .foregroundStyle(Color.text)
+                Spacer()
+                if !isSubscribed {
+                    Label("Carnivore+", systemImage: "lock.fill")
+                        .font(.caption.weight(.bold))
+                        .foregroundStyle(Color.text.opacity(0.6))
+                }
+            }
+            Text(isSubscribed && !trackers.isEmpty
+                 ? trackers.map(\.name).formatted(.list(type: .and))
+                 : String(localized: "Rate anything else each day, like your sinuses or joints, and see it charted next to the rest."))
+                .font(.subheadline)
+                .foregroundStyle(Color.text.opacity(0.7))
+                .fixedSize(horizontal: false, vertical: true)
+            Button {
+                if isSubscribed {
+                    showTrackers = true
+                } else {
+                    iocContainer.resolve(Analytics.self)?.logProgramTrackersLockedTapped(source: .settings)
+                    showMarketing = true
+                }
+            } label: {
+                ProgramSecondaryButtonLabel(
+                    title: !isSubscribed
+                        ? String(localized: "Unlock with Carnivore+")
+                        : trackers.isEmpty ? String(localized: "Add a Tracker") : String(localized: "Change Trackers"),
+                    systemImage: !isSubscribed ? "lock.fill" : trackers.isEmpty ? "plus" : "slider.horizontal.3"
+                )
+            }
+            .buttonStyle(.plain)
         }
     }
 }
