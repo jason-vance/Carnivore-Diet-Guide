@@ -24,6 +24,9 @@ final class ProgramStore: ObservableObject {
     @Published private(set) var reminderSettings: ProgramReminderSettings
     /// Set when the user opens a program reminder. HomeView switches to the program tab and clears it.
     @Published var pendingOpenFromReminder: Bool = false
+    /// Set when the user opens an evening reminder: the day to check in on. The 30 Days tab opens that check-in
+    /// and clears it.
+    @Published var pendingCheckInFromReminder: Int?
 
     private let localStore: ProgramLocalStore
     private let repository: ProgramProgressRepository
@@ -154,19 +157,36 @@ final class ProgramStore: ObservableObject {
         commit(nil)
     }
 
-    /// Turning reminders on asks for notification permission. Returns false if the user declined.
+    /// Turning either reminder on asks for notification permission. Returns false if the user declined, in which
+    /// case both are saved as off.
     @discardableResult
-    func setReminders(isEnabled: Bool, hour: Int, minute: Int) async -> Bool {
+    func setReminders(_ settings: ProgramReminderSettings) async -> Bool {
+        var settings = settings
         var granted = true
-        if isEnabled {
+        if settings.isEnabled {
             granted = await reminderScheduler.requestAuthorization()
         }
+        if !granted {
+            settings.morning.isEnabled = false
+            settings.evening.isEnabled = false
+        }
         await MainActor.run {
-            reminderSettings = .init(isEnabled: isEnabled && granted, hour: hour, minute: minute)
+            reminderSettings = settings
             reminderSettings.save()
             rescheduleReminders()
         }
         return granted
+    }
+
+    /// Called when the user taps a program reminder. Both kinds open the 30 Days tab, and an evening one also
+    /// opens that day's check-in.
+    func openReminder(identifier: String) {
+        guard let reminder = ProgramReminderScheduler.reminder(fromIdentifier: identifier) else { return }
+        iocContainer.resolve(Analytics.self)?.logProgramReminderOpened(day: reminder.day, kind: reminder.kind)
+        if reminder.kind == .evening {
+            pendingCheckInFromReminder = reminder.day
+        }
+        pendingOpenFromReminder = true
     }
 
     /// Call when the app comes to the foreground, so reminders roll forward and respect the Settings toggle.

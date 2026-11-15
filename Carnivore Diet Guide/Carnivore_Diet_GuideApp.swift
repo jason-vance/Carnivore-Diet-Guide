@@ -36,9 +36,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-        if response.notification.request.identifier.hasPrefix(ProgramReminderScheduler.identifierPrefix) {
+        let identifier = response.notification.request.identifier
+        if identifier.hasPrefix(ProgramReminderScheduler.identifierPrefix) {
             DispatchQueue.main.async {
-                ProgramStore.instance.pendingOpenFromReminder = true
+                ProgramStore.instance.openReminder(identifier: identifier)
             }
         }
         completionHandler()

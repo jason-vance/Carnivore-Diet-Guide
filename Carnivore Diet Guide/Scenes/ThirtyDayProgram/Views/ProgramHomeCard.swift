@@ -22,9 +22,8 @@ struct ProgramHomeCard: View {
 
     /// Refreshed whenever the app comes back to the foreground, so the card moves on to the next day overnight.
     @State private var now: Date = .now
-    /// The day whose check-in sheet is open. The sheet is driven by this value, not a separate flag, so it
-    /// always opens on the day that was tapped.
-    @State private var checkInDay: CheckInDay?
+    /// The day whose check-in sheet is open.
+    @State private var checkInRoute: ProgramCheckInRoute?
 
     private var isSubscribed: Bool { subscriptionManager.subscriptionLevel == .carnivorePlus }
 
@@ -35,7 +34,7 @@ struct ProgramHomeCard: View {
 
     private func checkIn(_ dayNumber: Int) {
         iocContainer.resolve(Analytics.self)?.logProgramHomeCardTapped(day: dayNumber, action: .checkIn, isCheckedIn: false)
-        checkInDay = CheckInDay(number: dayNumber)
+        checkInRoute = ProgramCheckInRoute(day: dayNumber)
     }
 
     var body: some View {
@@ -59,15 +58,10 @@ struct ProgramHomeCard: View {
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { now = .now }
         }
-        .sheet(item: $checkInDay) { day in
-            ProgramCheckInView(dayNumber: day.number)
+        .sheet(item: $checkInRoute) { route in
+            ProgramCheckInView(dayNumber: route.day)
                 .presentationBackground(Color.background)
         }
-    }
-
-    private struct CheckInDay: Identifiable {
-        let number: Int
-        var id: Int { number }
     }
 
     @ViewBuilder private func LargeReminder(_ dayNumber: Int) -> some View {

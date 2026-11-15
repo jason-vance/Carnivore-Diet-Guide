@@ -21,6 +21,7 @@ protocol Analytics {
     func logProgramTrackerAdded(isSuggestion: Bool, activeCount: Int)
     func logProgramTrackerRemoved(activeCount: Int)
     func logProgramTrackersLockedTapped(source: ProgramTrackersSource)
+    func logProgramReminderOpened(day: Int, kind: ProgramReminderKind)
 }
 
 /// What the user tapped on the First 30 Days card on Home.
@@ -48,4 +49,5 @@ class MockAnalytics: Analytics {
     func logProgramTrackerAdded(isSuggestion: Bool, activeCount: Int) { }
     func logProgramTrackerRemoved(activeCount: Int) { }
     func logProgramTrackersLockedTapped(source: ProgramTrackersSource) { }
+    func logProgramReminderOpened(day: Int, kind: ProgramReminderKind) { }
 }

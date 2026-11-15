@@ -95,4 +95,11 @@ class FirebaseAnalyticsAnalytics: Analytics {
             parameters: ["source": source.rawValue]
         )
     }
+
+    func logProgramReminderOpened(day: Int, kind: ProgramReminderKind) {
+        FirebaseAnalytics.Analytics.logEvent(
+            "program_reminder_opened",
+            parameters: ["day": day, "kind": kind.rawValue]
+        )
+    }
 }

@@ -32,3 +32,10 @@ struct ProgramWeek: Identifiable, Hashable {
 struct ProgramDayRoute: Hashable {
     let day: Int
 }
+
+/// Drives a check-in sheet. Presenting from a value rather than a separate flag means the sheet always opens on
+/// the day that was asked for.
+struct ProgramCheckInRoute: Identifiable {
+    let day: Int
+    var id: Int { day }
+}

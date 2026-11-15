@@ -8,7 +8,7 @@
 import SwiftUI
 import SwinjectAutoregistration
 
-/// Sets up the program: which day the user is on, their goal, and an optional daily reminder.
+/// Sets up the program: which day the user is on, their goal, and the optional morning and evening reminders.
 struct ProgramStartView: View {
 
     /// The goal typed during onboarding, kept for guests (signed-in users have it on their profile too).
@@ -21,7 +21,8 @@ struct ProgramStartView: View {
     @State private var currentDay = 2
     @State private var goal = ""
     @State private var remindersOn = true
-    @State private var reminderTime = Calendar.current.date(bySettingHour: 8, minute: 0, second: 0, of: .now) ?? .now
+    @State private var morningTime = ProgramReminderSettings.defaultMorning.time()
+    @State private var eveningTime = ProgramReminderSettings.defaultEvening.time()
     @State private var isStarting = false
 
     private func prefillGoal() {
@@ -46,10 +47,13 @@ struct ProgramStartView: View {
         store.start(onDay: day, goal: goal)
         iocContainer.resolve(Analytics.self)?.logProgramStarted(startDay: day, hasGoal: !goal.trimmingCharacters(in: .whitespaces).isEmpty)
 
-        let components = Calendar.current.dateComponents([.hour, .minute], from: reminderTime)
+        let settings = ProgramReminderSettings(
+            morning: .init(isEnabled: true, time: morningTime),
+            evening: .init(isEnabled: true, time: eveningTime)
+        )
         Task {
             if remindersOn {
-                await store.setReminders(isEnabled: true, hour: components.hour ?? 8, minute: components.minute ?? 0)
+                await store.setReminders(settings)
             }
             await MainActor.run { dismiss() }
         }
@@ -197,17 +201,21 @@ struct ProgramStartView: View {
         VStack(alignment: .leading, spacing: 8) {
             Toggle(isOn: $remindersOn.animation(.snappy)) {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Daily reminder")
+                    Text("Daily reminders")
                         .font(.headline)
                         .foregroundStyle(Color.text)
-                    Text("A nudge with each day's task.")
+                    Text("A morning heads-up on what to watch for, and an evening nudge to check in.")
                         .font(.caption)
                         .foregroundStyle(Color.text.opacity(0.6))
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .tint(Color.accentColor)
             if remindersOn {
-                DatePicker("Time", selection: $reminderTime, displayedComponents: .hourAndMinute)
+                DatePicker("Morning", selection: $morningTime, displayedComponents: .hourAndMinute)
+                    .foregroundStyle(Color.text)
+                    .tint(Color.accentColor)
+                DatePicker("Evening", selection: $eveningTime, displayedComponents: .hourAndMinute)
                     .foregroundStyle(Color.text)
                     .tint(Color.accentColor)
             }

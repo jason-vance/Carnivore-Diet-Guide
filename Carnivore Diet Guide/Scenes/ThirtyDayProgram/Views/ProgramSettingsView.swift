@@ -8,15 +8,17 @@
 import SwiftUI
 import SwinjectAutoregistration
 
-/// Reminder time, which day the user is on, their goal, their own trackers, and starting over.
+/// Reminder times, which day the user is on, their goal, their own trackers, and starting over.
 struct ProgramSettingsView: View {
 
     @ObservedObject private var store = iocContainer~>ProgramStore.self
     @ObservedObject private var subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
     @Environment(\.dismiss) private var dismiss
 
-    @State private var remindersOn = false
-    @State private var reminderTime: Date = .now
+    @State private var morningOn = false
+    @State private var morningTime: Date = .now
+    @State private var eveningOn = false
+    @State private var eveningTime: Date = .now
     @State private var currentDay = 1
     @State private var goal = ""
     @State private var showRestartConfirmation = false
@@ -28,8 +30,10 @@ struct ProgramSettingsView: View {
 
     private func load() {
         let settings = store.reminderSettings
-        remindersOn = settings.isEnabled
-        reminderTime = Calendar.current.date(bySettingHour: settings.hour, minute: settings.minute, second: 0, of: .now) ?? .now
+        morningOn = settings.morning.isEnabled
+        morningTime = settings.morning.time()
+        eveningOn = settings.evening.isEnabled
+        eveningTime = settings.evening.time()
         currentDay = store.currentDay() ?? 1
         goal = store.progress?.goal ?? ""
     }
@@ -42,19 +46,20 @@ struct ProgramSettingsView: View {
             store.update(goal: goal)
         }
 
-        let components = Calendar.current.dateComponents([.hour, .minute], from: reminderTime)
-        let hour = components.hour ?? 8
-        let minute = components.minute ?? 0
-        let settings = store.reminderSettings
-        guard settings.isEnabled != remindersOn || settings.hour != hour || settings.minute != minute else {
+        let settings = ProgramReminderSettings(
+            morning: .init(isEnabled: morningOn, time: morningTime),
+            evening: .init(isEnabled: eveningOn, time: eveningTime)
+        )
+        guard settings != store.reminderSettings else {
             dismiss()
             return
         }
         Task {
-            let granted = await store.setReminders(isEnabled: remindersOn, hour: hour, minute: minute)
+            let granted = await store.setReminders(settings)
             await MainActor.run {
-                if remindersOn && !granted {
-                    remindersOn = false
+                if settings.isEnabled && !granted {
+                    morningOn = false
+                    eveningOn = false
                     showPermissionDenied = true
                 } else {
                     dismiss()
@@ -82,16 +87,22 @@ struct ProgramSettingsView: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Toggle("Daily reminder", isOn: $remindersOn.animation(.snappy))
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Daily reminders")
                             .font(.headline)
                             .foregroundStyle(Color.text)
-                            .tint(Color.accentColor)
-                        if remindersOn {
-                            DatePicker("Time", selection: $reminderTime, displayedComponents: .hourAndMinute)
-                                .foregroundStyle(Color.text)
-                                .tint(Color.accentColor)
-                        }
+                        ReminderRow(
+                            title: String(localized: "Morning"),
+                            detail: String(localized: "What to watch for today"),
+                            isOn: $morningOn,
+                            time: $morningTime
+                        )
+                        ReminderRow(
+                            title: String(localized: "Evening"),
+                            detail: String(localized: "A nudge to check in"),
+                            isOn: $eveningOn,
+                            time: $eveningTime
+                        )
                     }
 
                     VStack(alignment: .leading, spacing: 8) {
@@ -172,6 +183,28 @@ struct ProgramSettingsView: View {
             Button("OK", role: .cancel) { }
         } message: {
             Text("To get daily reminders, allow notifications for Carnivore Diet Guide in the Settings app.")
+        }
+    }
+
+    @ViewBuilder private func ReminderRow(title: String, detail: String, isOn: Binding<Bool>, time: Binding<Date>) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Toggle(isOn: isOn.animation(.snappy)) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title)
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(Color.text)
+                    Text(detail)
+                        .font(.caption)
+                        .foregroundStyle(Color.text.opacity(0.6))
+                }
+            }
+            .tint(Color.accentColor)
+            if isOn.wrappedValue {
+                DatePicker(String(localized: "\(title) time"), selection: time, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .tint(Color.accentColor)
+            }
         }
     }
 

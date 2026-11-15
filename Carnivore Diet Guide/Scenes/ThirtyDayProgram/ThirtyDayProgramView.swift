@@ -20,8 +20,17 @@ struct ThirtyDayProgramView: View {
     @State private var showStart = false
     @State private var showSettings = false
     @State private var showMarketing = false
+    @State private var checkInRoute: ProgramCheckInRoute?
 
     private var isSubscribed: Bool { subscriptionManager.subscriptionLevel == .carnivorePlus }
+
+    /// An evening reminder opens its day's check-in, as long as the user can still open that day.
+    private func openCheckInFromReminder(_ day: Int?) {
+        guard let day else { return }
+        store.pendingCheckInFromReminder = nil
+        guard store.access(forDay: day, isSubscribed: isSubscribed) == .available else { return }
+        checkInRoute = ProgramCheckInRoute(day: day)
+    }
 
     private func showPaywall(forDay day: Int) {
         iocContainer.resolve(Analytics.self)?.logProgramLockedDayTapped(day: day)
@@ -66,6 +75,13 @@ struct ThirtyDayProgramView: View {
         }
         .fullScreenCover(isPresented: $showMarketing) {
             MarketingView()
+        }
+        .sheet(item: $checkInRoute) { route in
+            ProgramCheckInView(dayNumber: route.day)
+                .presentationBackground(Color.background)
+        }
+        .onChange(of: store.pendingCheckInFromReminder, initial: true) { _, day in
+            openCheckInFromReminder(day)
         }
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }

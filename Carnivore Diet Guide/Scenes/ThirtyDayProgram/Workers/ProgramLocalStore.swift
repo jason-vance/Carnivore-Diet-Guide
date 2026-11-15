@@ -54,24 +54,68 @@ class ProgramLocalStore {
 }
 
 /// Daily reminder preferences. Kept on the device only, since reminders are scheduled per device.
+///
+/// There are two a day: a morning one with what to watch for that day, and an evening one to check in.
 struct ProgramReminderSettings: Codable, Equatable {
-    var isEnabled: Bool
-    var hour: Int
-    var minute: Int
 
-    static let `default` = ProgramReminderSettings(isEnabled: false, hour: 8, minute: 0)
+    struct Reminder: Codable, Equatable {
+        var isEnabled: Bool
+        var hour: Int
+        var minute: Int
+    }
 
-    private static let key = "programReminderSettings"
+    var morning: Reminder
+    var evening: Reminder
+
+    var isEnabled: Bool { morning.isEnabled || evening.isEnabled }
+
+    static let defaultMorning = Reminder(isEnabled: false, hour: 8, minute: 0)
+    static let defaultEvening = Reminder(isEnabled: false, hour: 20, minute: 0)
+    static let `default` = ProgramReminderSettings(morning: defaultMorning, evening: defaultEvening)
+
+    func reminder(_ kind: ProgramReminderKind) -> Reminder {
+        switch kind {
+        case .morning: return morning
+        case .evening: return evening
+        }
+    }
+
+    private static let key = "programReminderSettings.v2"
+    /// Earlier builds had a single daily reminder, saved here as {isEnabled, hour, minute}.
+    private static let legacyKey = "programReminderSettings"
 
     static func load(from defaults: UserDefaults = .standard) -> ProgramReminderSettings {
-        guard let data = defaults.data(forKey: key),
-              let settings = try? JSONDecoder().decode(ProgramReminderSettings.self, from: data)
-        else { return .default }
-        return settings
+        if let data = defaults.data(forKey: key),
+           let settings = try? JSONDecoder().decode(ProgramReminderSettings.self, from: data) {
+            return settings
+        }
+        if let data = defaults.data(forKey: legacyKey),
+           let legacy = try? JSONDecoder().decode(Reminder.self, from: data) {
+            // The old reminder becomes the morning one, and anyone who had it on gets the evening one too.
+            return ProgramReminderSettings(
+                morning: legacy,
+                evening: Reminder(isEnabled: legacy.isEnabled, hour: defaultEvening.hour, minute: defaultEvening.minute)
+            )
+        }
+        return .default
     }
 
     func save(to defaults: UserDefaults = .standard) {
         guard let data = try? JSONEncoder().encode(self) else { return }
         defaults.set(data, forKey: Self.key)
+        defaults.removeObject(forKey: Self.legacyKey)
+    }
+}
+
+extension ProgramReminderSettings.Reminder {
+    /// From a time picker's date. Only the hour and minute are kept.
+    init(isEnabled: Bool, time: Date, calendar: Calendar = .current) {
+        let components = calendar.dateComponents([.hour, .minute], from: time)
+        self.init(isEnabled: isEnabled, hour: components.hour ?? 0, minute: components.minute ?? 0)
+    }
+
+    /// Today at the reminder's time, for a time picker.
+    func time(calendar: Calendar = .current, now: Date = .now) -> Date {
+        calendar.date(bySettingHour: hour, minute: minute, second: 0, of: now) ?? now
     }
 }
