@@ -128,6 +128,21 @@ class ProgramReminderScheduler {
         }
     }
 
+    /// When a reminder of this kind would next go off with these settings, or nil if none would in the next two weeks.
+    static func nextFireDate(
+        _ kind: ProgramReminderKind,
+        progress: ProgramProgress?,
+        settings: ProgramReminderSettings,
+        isSubscribed: Bool,
+        now: Date,
+        calendar: Calendar
+    ) -> Date? {
+        requests(progress: progress, settings: settings, isSubscribed: isSubscribed, notificationsAllowed: true, now: now, calendar: calendar)
+            .filter { reminder(fromIdentifier: $0.identifier)?.kind == kind }
+            .compactMap { ($0.trigger as? UNCalendarNotificationTrigger).flatMap { calendar.date(from: $0.dateComponents) } }
+            .min()
+    }
+
     /// The evening text stays general, since notifications show on the lock screen and tracker names can be private.
     private static func content(kind: ProgramReminderKind, dayNumber: Int, isLocked: Bool) -> UNNotificationContent {
         let programDay = FirstThirtyDays.day(dayNumber)

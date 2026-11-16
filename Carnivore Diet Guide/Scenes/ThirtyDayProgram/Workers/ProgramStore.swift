@@ -178,6 +178,18 @@ final class ProgramStore: ObservableObject {
         return granted
     }
 
+    /// When a reminder of this kind would next go off with these settings, for showing in settings before they're saved.
+    func nextReminderDate(_ kind: ProgramReminderKind, settings: ProgramReminderSettings, now: Date = .now) -> Date? {
+        ProgramReminderScheduler.nextFireDate(
+            kind,
+            progress: progress,
+            settings: settings,
+            isSubscribed: isSubscribed,
+            now: now,
+            calendar: calendar
+        )
+    }
+
     /// Called when the user taps a program reminder. Both kinds open the 30 Days tab, and an evening one also
     /// opens that day's check-in.
     func openReminder(identifier: String) {

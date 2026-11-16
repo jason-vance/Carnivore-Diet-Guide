@@ -28,6 +28,39 @@ struct ProgramSettingsView: View {
 
     private var isSubscribed: Bool { subscriptionManager.subscriptionLevel == .carnivorePlus }
 
+    /// Says when the evening reminder comes next if it won't come tonight, so a time picked for later today
+    /// doesn't look broken. It's skipped once today's check-in is done.
+    private var eveningNote: String? {
+        guard eveningOn,
+              let progress = store.progress,
+              let today = store.currentDay(),
+              !store.isFinished(),
+              store.access(forDay: today, isSubscribed: isSubscribed) == .available
+        else { return nil }
+
+        let calendar = Calendar.current
+        let settings = ProgramReminderSettings(
+            morning: .init(isEnabled: morningOn, time: morningTime),
+            evening: .init(isEnabled: true, time: eveningTime)
+        )
+        let next = store.nextReminderDate(.evening, settings: settings)
+        if let next, calendar.isDateInToday(next) { return nil }
+
+        let isCheckedIn = progress.checkIn(forDay: today) != nil
+        guard let next else {
+            return isCheckedIn
+                ? String(localized: "Today's check-in is done, so there's no evening reminder tonight.")
+                : String(localized: "That time has passed today, so there's no evening reminder tonight.")
+        }
+        let time = next.formatted(date: .omitted, time: .shortened)
+        let when = calendar.isDateInTomorrow(next)
+            ? String(localized: "tomorrow at \(time)")
+            : String(localized: "\(next.formatted(.dateTime.weekday(.wide))) at \(time)")
+        return isCheckedIn
+            ? String(localized: "Today's check-in is done, so your next evening reminder is \(when).")
+            : String(localized: "That time has passed today, so your next evening reminder is \(when).")
+    }
+
     private func load() {
         let settings = store.reminderSettings
         morningOn = settings.morning.isEnabled
@@ -101,7 +134,8 @@ struct ProgramSettingsView: View {
                             title: String(localized: "Evening"),
                             detail: String(localized: "A nudge to check in"),
                             isOn: $eveningOn,
-                            time: $eveningTime
+                            time: $eveningTime,
+                            note: eveningNote
                         )
                     }
 
@@ -186,7 +220,13 @@ struct ProgramSettingsView: View {
         }
     }
 
-    @ViewBuilder private func ReminderRow(title: String, detail: String, isOn: Binding<Bool>, time: Binding<Date>) -> some View {
+    @ViewBuilder private func ReminderRow(
+        title: String,
+        detail: String,
+        isOn: Binding<Bool>,
+        time: Binding<Date>,
+        note: String? = nil
+    ) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Toggle(isOn: isOn.animation(.snappy)) {
                 VStack(alignment: .leading, spacing: 2) {
@@ -204,6 +244,12 @@ struct ProgramSettingsView: View {
                     .labelsHidden()
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .tint(Color.accentColor)
+                if let note {
+                    Label(note, systemImage: "info.circle")
+                        .font(.caption)
+                        .foregroundStyle(Color.text.opacity(0.6))
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
         }
     }
