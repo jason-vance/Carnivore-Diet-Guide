@@ -70,6 +70,7 @@ struct RecipesView: View {
             allRecipes = $0
             LazySearchKeywords.prepare($0.map(\.searchKeywords))
         }
+        .logsSearch(searchText, of: .recipe) { filteredRecipes.count }
         .requestsReviewOnReturn(navigationDepth: navigationPath.count)
     }
     

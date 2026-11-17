@@ -147,7 +147,7 @@ struct ProgramCheckInView: View {
                 .presentationBackground(Color.background)
         }
         .fullScreenCover(isPresented: $showMarketing) {
-            MarketingView()
+            MarketingView(source: .programTrackers(.checkIn))
         }
         .onAppear {
             iocContainer.resolve(Analytics.self)?.logScreenView(screenName: "ProgramCheckInView", screenClass: ProgramCheckInView.self)

@@ -34,7 +34,7 @@ struct OnboardingPaywallView: View {
         Task {
             isPurchasing = true
             do {
-                let _ = try await subscriptionManager.purchase(productId: productId)
+                let _ = try await subscriptionManager.purchase(productId: productId, source: .onboarding)
             } catch {
                 if let subError = error as? SubscriptionError {
                     errorMessage = subError.message
@@ -50,7 +50,7 @@ struct OnboardingPaywallView: View {
     private func handleOfferCodeCompletion() {
         Task {
             isPurchasing = true
-            let _ = await subscriptionManager.isSubscribed()
+            await subscriptionManager.offerCodeSheetClosed(source: .onboarding)
             isPurchasing = false
         }
     }
@@ -59,7 +59,7 @@ struct OnboardingPaywallView: View {
         Task {
             isPurchasing = true
             do {
-                try await subscriptionManager.restorePurchases()
+                try await subscriptionManager.restorePurchases(source: .onboarding)
                 let isSubscribed = await subscriptionManager.isSubscribed()
                 if !isSubscribed {
                     showNothingToRestore = true
@@ -112,6 +112,7 @@ struct OnboardingPaywallView: View {
                         SubscribeButtons()
                     }
                     Button {
+                        iocContainer.resolve(Analytics.self)?.logPaywallDismissed(source: .onboarding)
                         onboardingStep = onboardingStep.skip
                     } label: {
                         Text("Maybe Later")
@@ -133,6 +134,7 @@ struct OnboardingPaywallView: View {
             }
         }
         .onAppear { subscriptionManager.limitedTimeOfferStartDate = .now }
+        .onAppear { iocContainer.resolve(Analytics.self)?.logPaywallShown(source: .onboarding) }
         .onReceive(subscriptionManager.$discountProducts) { p in products = p }
         .onReceive(subscriptionManager.$productsLoadState) { productsLoadState = $0 }
         .alert(

@@ -68,6 +68,12 @@ struct RecipeDetailView: View {
     private func markAsViewed() {
         guard let recipe = recipe else { return }
         ContentReadLog.shared.recordRead(resourceId: recipe.id)
+        iocContainer.resolve(Analytics.self)?.logContentViewed(
+            type: .recipe,
+            id: recipe.id,
+            title: recipe.title,
+            isPremium: recipe.isPremium
+        )
 
         guard let userId = userIdProvider.currentUserId else { return }
         guard recipe.author != userId else { return }
@@ -107,7 +113,7 @@ struct RecipeDetailView: View {
     
     @ViewBuilder func Container() -> some View {
         if showMarketing == true {
-            MarketingView()
+            MarketingView(source: .premiumRecipe)
         } else {
             VStack(spacing: 0) {
                 NavigationBar()

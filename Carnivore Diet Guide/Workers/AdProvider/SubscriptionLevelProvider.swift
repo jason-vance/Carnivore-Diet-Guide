@@ -8,6 +8,7 @@
 import Foundation
 import StoreKit
 import SwiftUI
+import SwinjectAutoregistration
 
 enum SubscriptionError: Error {
     case productNotFound
@@ -195,14 +196,26 @@ class SubscriptionLevelProvider: ObservableObject {
         }
     }
     
-    func purchase(productId: String? = nil) async throws -> Bool {
-        let productId = productId ?? Self.allProductIds.first!
-        guard let product = products[productId] else {
-            throw SubscriptionError.productNotFound
+    /// `source` is what opened the paywall, logged with the outcome so subscriptions can be traced to it.
+    func purchase(productId: String, source: PaywallSource) async throws -> Bool {
+        let analytics = iocContainer.resolve(Analytics.self)
+        analytics?.logPurchaseTapped(productId: productId, source: source)
+        func fail(_ reason: PurchaseFailureReason, _ error: Error) -> Error {
+            analytics?.logPurchaseFailed(productId: productId, source: source, reason: reason)
+            return error
         }
-        
-        let result = try await product.purchase()
-        
+
+        guard let product = products[productId] else {
+            throw fail(.productNotFound, SubscriptionError.productNotFound)
+        }
+
+        let result: Product.PurchaseResult
+        do {
+            result = try await product.purchase()
+        } catch {
+            throw fail(.storeError, error)
+        }
+
         switch result {
         case .success(let verification):
             // Check if the transaction is verified
@@ -210,29 +223,43 @@ class SubscriptionLevelProvider: ObservableObject {
             case .verified(let transaction):
                 // Update the user's subscription status
                 await set(subscriptionLevel: .carnivorePlus)
+                analytics?.logTransaction(transaction)
+                analytics?.logPurchaseCompleted(productId: productId, source: source)
                 await transaction.finish()
                 return true
             case .unverified:
-                throw SubscriptionError.verificationFailed
+                throw fail(.verificationFailed, SubscriptionError.verificationFailed)
             }
         case .userCancelled:
+            analytics?.logPurchaseCancelled(productId: productId, source: source)
             // Leave the level alone: an existing subscriber who opens the paywall and cancels must keep Carnivore+.
             return false
         case .pending:
-            throw SubscriptionError.pending
+            throw fail(.pending, SubscriptionError.pending)
         @unknown default:
-            throw SubscriptionError.unknown
+            throw fail(.unknown, SubscriptionError.unknown)
         }
     }
-    
-    func restorePurchases() async throws {
+
+    func restorePurchases(source: PaywallSource) async throws {
         try? await AppStore.sync()
-        await set(subscriptionLevel: await isSubscribed() ? .carnivorePlus : .none)
+        let isSubscribed = await isSubscribed()
+        iocContainer.resolve(Analytics.self)?.logPurchasesRestored(source: source, found: isSubscribed)
+        await set(subscriptionLevel: isSubscribed ? .carnivorePlus : .none)
     }
-    
+
+    /// Called once the offer code sheet closes. Logs a redemption if the user now subscribes. The subscription
+    /// itself arrives through `Transaction.updates`.
+    func offerCodeSheetClosed(source: PaywallSource) async {
+        if await isSubscribed() {
+            iocContainer.resolve(Analytics.self)?.logOfferCodeRedeemed(source: source)
+        }
+    }
+
     @MainActor
     func set(subscriptionLevel: SubscriptionLevel) {
         self.subscriptionLevel = subscriptionLevel
         UserDefaults.standard.set(subscriptionLevel.rawValue, forKey: subscriptionLevelKey)
+        iocContainer.resolve(Analytics.self)?.setIsSubscriber(subscriptionLevel == .carnivorePlus)
     }
 }

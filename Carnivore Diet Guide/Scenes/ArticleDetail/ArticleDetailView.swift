@@ -71,6 +71,12 @@ struct ArticleDetailView: View {
         
         onDeviceWasViewedFlagger.flagAsViewed(resource: .init(article))
         ContentReadLog.shared.recordRead(resourceId: article.id)
+        iocContainer.resolve(Analytics.self)?.logContentViewed(
+            type: .article,
+            id: article.id,
+            title: article.title,
+            isPremium: article.isPremium
+        )
 
         guard let userId = userIdProvider.currentUserId else { return }
         guard article.author != userId else { return }
@@ -110,7 +116,7 @@ struct ArticleDetailView: View {
     
     @ViewBuilder func Container() -> some View {
         if showMarketing == true {
-            MarketingView()
+            MarketingView(source: .premiumArticle)
         } else {
             VStack(spacing: 0) {
                 NavigationBar()

@@ -96,7 +96,7 @@ struct ProgramDayView: View {
                 .presentationBackground(Color.background)
         }
         .fullScreenCover(isPresented: $showMarketing) {
-            MarketingView()
+            MarketingView(source: .programLockedDay)
         }
         .onAppear {
             iocContainer.resolve(Analytics.self)?.logScreenView(screenName: "ProgramDayView", screenClass: ProgramDayView.self)

@@ -211,7 +211,7 @@ struct ProgramSettingsView: View {
                 .presentationBackground(Color.background)
         }
         .fullScreenCover(isPresented: $showMarketing) {
-            MarketingView()
+            MarketingView(source: .programTrackers(.settings))
         }
         .alert("Notifications are off", isPresented: $showPermissionDenied) {
             Button("OK", role: .cancel) { }

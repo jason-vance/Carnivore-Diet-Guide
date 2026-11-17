@@ -113,7 +113,7 @@ struct LimitedTimeOfferButton: View {
             .onAppear { animateTimer = true }
         }
         .fullScreenCover(isPresented: $showMarketingView) {
-            MarketingView()
+            MarketingView(source: .limitedTimeOffer)
         }
     }
 }

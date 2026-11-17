@@ -75,6 +75,9 @@ struct ArticlesInCategoryView: View {
             allArticles = $0
             LazySearchKeywords.prepare($0.map(\.searchKeywords))
         }
+        .logsSearch(searchText, of: .article, category: category == .all ? nil : category.name) {
+            displayArticles.count
+        }
     }
     
     @ViewBuilder func Container() -> some View {

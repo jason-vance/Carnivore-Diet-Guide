@@ -42,7 +42,7 @@ struct PremiumCTARow: View {
             }
             .buttonStyle(.plain)
             .fullScreenCover(isPresented: $showMarketingView) {
-                MarketingView()
+                MarketingView(source: .premiumCTA(placement))
             }
         }
     }

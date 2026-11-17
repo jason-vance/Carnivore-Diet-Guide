@@ -155,6 +155,9 @@ final class ProgramStore: ObservableObject {
 
     /// Deletes all progress, on this device and in the account.
     func restart() {
+        if let progress, let day = currentDay() {
+            iocContainer.resolve(Analytics.self)?.logProgramRestarted(day: day, checkInCount: progress.checkIns.count)
+        }
         commit(nil)
     }
 
@@ -175,6 +178,9 @@ final class ProgramStore: ObservableObject {
             reminderSettings = settings
             reminderSettings.save()
             rescheduleReminders()
+            let analytics = iocContainer.resolve(Analytics.self)
+            if !granted { analytics?.logNotificationPermissionDenied() }
+            analytics?.logProgramRemindersChanged(settings)
         }
         return granted
     }
@@ -263,8 +269,26 @@ final class ProgramStore: ObservableObject {
         NotificationCenter.default
             .publisher(for: UIApplication.willEnterForegroundNotification)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in self?.rescheduleReminders() }
+            .sink { [weak self] _ in
+                self?.rescheduleReminders()
+                self?.logFinishIfNeeded()
+            }
             .store(in: &subscriptions)
+        DispatchQueue.main.async { [weak self] in self?.logFinishIfNeeded() }
+    }
+
+    private static let finishLoggedKey = "programFinishLoggedForStartDate"
+
+    /// Logs the end of the program the first time the app is open after day 30, once per run through it.
+    private func logFinishIfNeeded(now: Date = .now) {
+        guard let progress, isFinished(now: now) else { return }
+        let startDate = progress.startDate.timeIntervalSince1970
+        guard UserDefaults.standard.double(forKey: Self.finishLoggedKey) != startDate else { return }
+        UserDefaults.standard.set(startDate, forKey: Self.finishLoggedKey)
+        iocContainer.resolve(Analytics.self)?.logProgramFinished(
+            checkInCount: progress.checkIns.count,
+            tasksDone: progress.completedDays.count
+        )
     }
 
     private func onAuthStateChanged(_ state: UserAuthState) {

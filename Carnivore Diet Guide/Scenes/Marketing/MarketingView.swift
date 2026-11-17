@@ -14,6 +14,8 @@ struct MarketingView: View {
     
     @Environment(\.presentationMode) private var presentationMode
     
+    /// What opened the paywall. It's logged with everything the user does here.
+    private let source: PaywallSource
     private let subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
     
     private let showcaseArticleIds: [String] = [
@@ -37,6 +39,10 @@ struct MarketingView: View {
     @State private var showNothingToRestore = false
     @State private var errorMessage: String?
     @State private var showError = false
+
+    init(source: PaywallSource) {
+        self.source = source
+    }
 
     // Products are mirrored into @State (see the onReceive calls in body) because
     // SubscriptionLevelProvider is not observed: reading its properties directly meant the
@@ -65,7 +71,7 @@ struct MarketingView: View {
         Task {
             isPurchasing = true
             do {
-                let _ = try await subscriptionManager.purchase(productId: productId)
+                let _ = try await subscriptionManager.purchase(productId: productId, source: source)
             } catch {
                 if let subError = error as? SubscriptionError {
                     errorMessage = subError.message
@@ -81,7 +87,7 @@ struct MarketingView: View {
     private func handleOfferCodeCompletion() {
         Task {
             isPurchasing = true
-            let _ = await subscriptionManager.isSubscribed()
+            await subscriptionManager.offerCodeSheetClosed(source: source)
             isPurchasing = false
         }
     }
@@ -90,7 +96,7 @@ struct MarketingView: View {
         Task {
             isPurchasing = true
             do {
-                try await subscriptionManager.restorePurchases()
+                try await subscriptionManager.restorePurchases(source: source)
                 let isSubscribed = await subscriptionManager.isSubscribed()
                 if !isSubscribed {
                     showNothingToRestore = true
@@ -127,6 +133,10 @@ struct MarketingView: View {
     private func logScreenView() {
         guard let analytics = iocContainer.resolve(Analytics.self) else { return }
         analytics.logScreenView(screenName: "MarketingView", screenClass: MarketingView.self)
+        // Subscribers who land here are sent straight back (see the onChange in body), so they didn't see it.
+        if subscriptionManager.subscriptionLevel != .carnivorePlus {
+            analytics.logPaywallShown(source: source)
+        }
     }
 
     var body: some View {
@@ -196,6 +206,7 @@ struct MarketingView: View {
     
     @ViewBuilder func CancelButton() -> some View {
         Button {
+            iocContainer.resolve(Analytics.self)?.logPaywallDismissed(source: source)
             dismiss()
         } label: {
             ResourceMenuButtonLabel(sfSymbol: "xmark")
@@ -412,5 +423,5 @@ struct MarketingView: View {
 }
 
 #Preview {
-    MarketingView()
+    MarketingView(source: .limitedTimeOffer)
 }

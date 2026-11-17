@@ -74,7 +74,7 @@ struct ThirtyDayProgramView: View {
                 .presentationBackground(Color.background)
         }
         .fullScreenCover(isPresented: $showMarketing) {
-            MarketingView()
+            MarketingView(source: .programLockedDay)
         }
         .sheet(item: $checkInRoute) { route in
             ProgramCheckInView(dayNumber: route.day)
