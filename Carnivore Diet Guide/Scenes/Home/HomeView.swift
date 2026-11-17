@@ -90,10 +90,10 @@ struct HomeView: View {
             openedTabs.insert(tab)
             logScreenView(tab)
         }
-        .onChange(of: programStore.pendingOpenFromReminder, initial: true) { _, shouldOpen in
+        .onChange(of: programStore.pendingOpenProgramTab, initial: true) { _, shouldOpen in
             guard shouldOpen else { return }
             selectedTab = .program
-            programStore.pendingOpenFromReminder = false
+            programStore.pendingOpenProgramTab = false
         }
     }
     

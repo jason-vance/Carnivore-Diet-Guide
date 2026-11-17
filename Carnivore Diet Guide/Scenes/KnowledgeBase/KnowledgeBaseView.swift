@@ -22,7 +22,7 @@ struct KnowledgeBaseView: View {
                 LimitedTimeOfferButton()
                 ScrollView() {
                     VStack(spacing: 0) {
-                        ProgramHomeCard(navigationPath: $navigationPath)
+                        ProgramHomeCard()
                             .padding(.horizontal)
                             .padding(.top, 12)
                         CategoryPicker()
@@ -34,9 +34,6 @@ struct KnowledgeBaseView: View {
             .background(Color.background)
             .navigationDestination(for: Article.self) { article in
                 ArticleDetailView(article: article)
-            }
-            .navigationDestination(for: ProgramDayRoute.self) { route in
-                ProgramDayView(dayNumber: route.day)
             }
         }
         .requestsReviewOnReturn(navigationDepth: navigationPath.count)

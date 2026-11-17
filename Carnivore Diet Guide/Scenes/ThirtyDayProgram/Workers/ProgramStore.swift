@@ -23,8 +23,11 @@ final class ProgramStore: ObservableObject {
 
     @Published private(set) var progress: ProgramProgress?
     @Published private(set) var reminderSettings: ProgramReminderSettings
-    /// Set when the user opens a program reminder. HomeView switches to the program tab and clears it.
-    @Published var pendingOpenFromReminder: Bool = false
+    /// Set when something outside the 30 Days tab, such as a reminder or the Home card, should open it. HomeView
+    /// switches to the tab and clears it.
+    @Published var pendingOpenProgramTab: Bool = false
+    /// Set when the user taps the Home card: the day to show. The 30 Days tab opens that day and clears it.
+    @Published var pendingDayToOpen: Int?
     /// Set when the user opens an evening reminder: the day to check in on. The 30 Days tab opens that check-in
     /// and clears it.
     @Published var pendingCheckInFromReminder: Int?
@@ -205,7 +208,13 @@ final class ProgramStore: ObservableObject {
         if reminder.kind == .evening {
             pendingCheckInFromReminder = reminder.day
         }
-        pendingOpenFromReminder = true
+        pendingOpenProgramTab = true
+    }
+
+    /// Switches to the 30 Days tab and opens `day` there.
+    func openDay(_ day: Int) {
+        pendingDayToOpen = day
+        pendingOpenProgramTab = true
     }
 
     /// Runs every time the app comes to the foreground, so reminders roll forward and respect the Settings toggle.

@@ -32,6 +32,13 @@ struct ThirtyDayProgramView: View {
         checkInRoute = ProgramCheckInRoute(day: day)
     }
 
+    /// The Home card opens its day here, replacing whatever this tab had open so Back leads to the overview.
+    private func openDayFromHome(_ day: Int?) {
+        guard let day else { return }
+        store.pendingDayToOpen = nil
+        navigationPath = NavigationPath([ProgramDayRoute(day: day)])
+    }
+
     private func showPaywall(forDay day: Int) {
         iocContainer.resolve(Analytics.self)?.logProgramLockedDayTapped(day: day)
         showMarketing = true
@@ -82,6 +89,9 @@ struct ThirtyDayProgramView: View {
         }
         .onChange(of: store.pendingCheckInFromReminder, initial: true) { _, day in
             openCheckInFromReminder(day)
+        }
+        .onChange(of: store.pendingDayToOpen, initial: true) { _, day in
+            openDayFromHome(day)
         }
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }

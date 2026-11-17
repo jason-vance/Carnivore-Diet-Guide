@@ -11,10 +11,9 @@ import SwinjectAutoregistration
 /// The First 30 Days reminder at the top of Home, shown only while the user is partway through the program.
 ///
 /// Until they've checked in today it's a large card with a Check In button that opens the check-in right here.
-/// After that, or on a day that needs Carnivore+, it shrinks to a one-line row. Either way, tapping the day opens it.
+/// After that, or on a day that needs Carnivore+, it shrinks to a one-line row. Either way, tapping the day opens it
+/// on the 30 Days tab.
 struct ProgramHomeCard: View {
-
-    @Binding var navigationPath: NavigationPath
 
     @ObservedObject private var store = iocContainer~>ProgramStore.self
     @ObservedObject private var subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
@@ -29,7 +28,7 @@ struct ProgramHomeCard: View {
 
     private func openDay(_ dayNumber: Int, isCheckedIn: Bool) {
         iocContainer.resolve(Analytics.self)?.logProgramHomeCardTapped(day: dayNumber, action: .openDay, isCheckedIn: isCheckedIn)
-        navigationPath.append(ProgramDayRoute(day: dayNumber))
+        store.openDay(dayNumber)
     }
 
     private func checkIn(_ dayNumber: Int) {
@@ -151,7 +150,7 @@ struct ProgramHomeCard: View {
         let store = ProgramStore.preview(progress: .sample(currentDay: 5))
         iocContainer.autoregister(ProgramStore.self) { store }
     } content: {
-        ProgramHomeCard(navigationPath: .constant(NavigationPath()))
+        ProgramHomeCard()
             .padding()
             .background(Color.background)
     }
@@ -165,7 +164,7 @@ struct ProgramHomeCard: View {
         let store = ProgramStore.preview(progress: progress)
         iocContainer.autoregister(ProgramStore.self) { store }
     } content: {
-        ProgramHomeCard(navigationPath: .constant(NavigationPath()))
+        ProgramHomeCard()
             .padding()
             .background(Color.background)
     }
