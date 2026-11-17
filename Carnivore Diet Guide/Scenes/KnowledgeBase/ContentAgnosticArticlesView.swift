@@ -103,6 +103,7 @@ struct ContentAgnosticArticlesView: View {
                     } label: {
                         ArticleItemView(article)
                     }
+                    .buttonStyle(.pressable)
                 }
             }
             .padding(.horizontal)

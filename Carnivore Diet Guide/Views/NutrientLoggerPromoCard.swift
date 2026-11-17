@@ -61,7 +61,7 @@ struct NutrientLoggerPromoCard: View {
                     .stroke(Color.accentColor, style: .init(lineWidth: 2))
             }
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.pressable)
     }
 }
 

@@ -170,6 +170,10 @@ class FirebaseAnalyticsAnalytics: Analytics {
         log("program_finished", ["check_in_count": checkInCount, "tasks_done": tasksDone])
     }
 
+    func logProgramMilestoneShown(day: Int) {
+        log("program_milestone_shown", ["day": day])
+    }
+
     func logProgramRestarted(day: Int, checkInCount: Int) {
         log("program_restarted", ["day": day, "check_in_count": checkInCount])
     }

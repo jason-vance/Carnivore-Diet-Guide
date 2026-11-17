@@ -17,6 +17,12 @@ struct ProgramCheckInView: View {
     @ObservedObject private var store = iocContainer~>ProgramStore.self
     @ObservedObject private var subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Namespace private var ratingNamespace
+
+    /// What the Save button says once tapped, while the sheet closes.
+    @State private var savedTitle: String?
+    @State private var saveSparks = 0
 
     /// Keyed by `ProgramMeasure` id. Also holds ratings for trackers that aren't shown (removed ones, or all of
     /// them after Carnivore+ lapses) so editing a check-in doesn't drop them.
@@ -81,7 +87,7 @@ struct ProgramCheckInView: View {
     }
 
     private func save() {
-        guard isComplete else { return }
+        guard isComplete, savedTitle == nil else { return }
         let trimmedNote = note.trimmingCharacters(in: .whitespacesAndNewlines)
         let isFirstCheckIn = store.progress?.checkIn(forDay: dayNumber) == nil
         let builtInIds = Set(ProgramMetric.allCases.map(\.rawValue))
@@ -107,7 +113,24 @@ struct ProgramCheckInView: View {
             }.count
             iocContainer.resolve(Analytics.self)?.logProgramCheckIn(day: dayNumber, symptomCount: symptoms.count, trackerCount: ratedTrackerCount)
         }
-        dismiss()
+
+        // The day's first check-in sizzles before the sheet closes. Editing one just confirms.
+        withAnimation(.snappy) {
+            savedTitle = isFirstCheckIn ? String(localized: "Checked In") : String(localized: "Saved")
+        }
+        if isFirstCheckIn {
+            Haptics.sizzle()
+            saveSparks += 1
+        } else {
+            Haptics.tap()
+        }
+        Task {
+            try? await Task.sleep(for: .milliseconds(isFirstCheckIn && !reduceMotion ? 800 : 400))
+            if isFirstCheckIn {
+                store.celebrateCheckIn(day: dayNumber)
+            }
+            dismiss()
+        }
     }
 
     var body: some View {
@@ -133,14 +156,25 @@ struct ProgramCheckInView: View {
                         .foregroundStyle(Color.text.opacity(0.6))
                 }
                 Button(action: save) {
-                    ProgramPrimaryButtonLabel(title: String(localized: "Save Check-in"))
+                    ProgramPrimaryButtonLabel(
+                        title: savedTitle ?? String(localized: "Save Check-in"),
+                        systemImage: savedTitle == nil ? nil : "checkmark"
+                    )
+                    .contentTransition(.interpolate)
                 }
                 .disabled(!isComplete)
                 .opacity(isComplete ? 1 : 0.5)
+                // Not disabled, which would grey out the "Checked In" moment.
+                .allowsHitTesting(savedTitle == nil)
+                .overlay {
+                    SizzleSparks(trigger: saveSparks, count: 22, spread: 0.9)
+                        .frame(height: 220)
+                }
             }
             .padding()
         }
         .background(Color.background)
+        .interactiveDismissDisabled(savedTitle != nil)
         .onAppear(perform: loadExisting)
         .sheet(isPresented: $showTrackers) {
             ProgramTrackersView()
@@ -193,6 +227,7 @@ struct ProgramCheckInView: View {
                 ForEach(Array(ProgramMetric.ratingRange), id: \.self) { rating in
                     let isSelected = selected == rating
                     Button {
+                        Haptics.rating(rating)
                         withAnimation(.snappy) { ratings[measure.id] = rating }
                     } label: {
                         Text("\(rating)")
@@ -200,8 +235,16 @@ struct ProgramCheckInView: View {
                             .foregroundStyle(isSelected ? Color.background : Color.text)
                             .frame(maxWidth: .infinity, minHeight: 44)
                             .background {
-                                RoundedRectangle(cornerRadius: .cornerRadiusSmall, style: .continuous)
-                                    .foregroundStyle(isSelected ? Color.accentColor : Color.text.opacity(0.08))
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: .cornerRadiusSmall, style: .continuous)
+                                        .foregroundStyle(Color.text.opacity(0.08))
+                                    // One highlight per row that glides to the number picked.
+                                    if isSelected {
+                                        RoundedRectangle(cornerRadius: .cornerRadiusSmall, style: .continuous)
+                                            .foregroundStyle(Color.accentColor)
+                                            .matchedGeometryEffect(id: measure.id, in: ratingNamespace)
+                                    }
+                                }
                             }
                     }
                     .buttonStyle(.plain)
@@ -300,6 +343,7 @@ struct ProgramCheckInView: View {
 
     @ViewBuilder private func Chip(_ title: String, isSelected: Bool, action: @escaping () -> Void) -> some View {
         Button {
+            Haptics.select()
             withAnimation(.snappy, action)
         } label: {
             Text(title)
@@ -328,6 +372,7 @@ struct ProgramCheckInView: View {
                 ForEach(ProgramSymptom.allCases) { symptom in
                     let isSelected = symptoms.contains(symptom)
                     Button {
+                        Haptics.select()
                         withAnimation(.snappy) {
                             if isSelected { symptoms.remove(symptom) } else { symptoms.insert(symptom) }
                         }

@@ -10,7 +10,10 @@ import SwiftUI
 struct OnboardingWelcomeView: View {
     
     @Binding var onboardingStep: OnboardingView.OnboardingStep
-    
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var revealsSellingPoints = false
+
     var body: some View {
         VStack {
             HStack {
@@ -38,20 +41,24 @@ struct OnboardingWelcomeView: View {
                 SellingPoint(
                     "Great Guides",
                     review : "Great for beginners",
-                    reviewAuthor: "R Dizzie"
+                    reviewAuthor: "R Dizzie",
+                    index: 0
                 )
                 SellingPoint(
                     "Awesome Articles",
                     review : "Such a great app for having carnivore diet. I ll use it everyday",
-                    reviewAuthor: "Lello9800"
+                    reviewAuthor: "Lello9800",
+                    index: 1
                 )
                 SellingPoint(
                     "Rockin' Recipes",
                     review : "I love trying out the recipes in this app",
-                    reviewAuthor: "mario495"
+                    reviewAuthor: "mario495",
+                    index: 2
                 )
             }
             .padding(.top, 4)
+            .onAppear { revealsSellingPoints = true }
             Spacer()
             HStack {
                 Text("Are you excited to join us?")
@@ -61,6 +68,7 @@ struct OnboardingWelcomeView: View {
                 Spacer()
             }
             Button {
+                Haptics.tap()
                 onboardingStep = onboardingStep.next
             } label: {
                 Text("I'm Excited!")
@@ -77,7 +85,13 @@ struct OnboardingWelcomeView: View {
         .background(Color.background)
     }
     
-    @ViewBuilder private func SellingPoint(_ text: String, review: String, reviewAuthor: String) -> some View {
+    /// Each selling point slides in after the last, and its stars pop in one by one.
+    private func revealAnimation(index: Int, delay: Double = 0) -> Animation? {
+        guard !reduceMotion else { return nil }
+        return .spring(response: 0.4, dampingFraction: 0.7).delay(0.3 + Double(index) * 0.25 + delay)
+    }
+
+    @ViewBuilder private func SellingPoint(_ text: String, review: String, reviewAuthor: String, index: Int) -> some View {
         HStack(alignment: .top) {
             Image(systemName: "circle")
                 .font(.caption2.bold())
@@ -90,17 +104,25 @@ struct OnboardingWelcomeView: View {
                         .multilineTextAlignment(.leading)
                     Spacer()
                 }
-                Review(review, author: reviewAuthor)
+                Review(review, author: reviewAuthor, index: index)
             }
         }
+        .opacity(revealsSellingPoints ? 1 : 0)
+        .offset(y: revealsSellingPoints ? 0 : 16)
+        .animation(revealAnimation(index: index), value: revealsSellingPoints)
     }
-    
-    @ViewBuilder private func Review(_ text: String, author: String) -> some View {
+
+    @ViewBuilder private func Review(_ text: String, author: String, index: Int) -> some View {
         VStack(alignment: .leading) {
             HStack(spacing: 1) {
-                ForEach(0..<5, id: \.self) { _ in
+                ForEach(0..<5, id: \.self) { star in
                     Image(systemName: "star.fill")
                         .foregroundStyle(Color.accentColor)
+                        .scaleEffect(revealsSellingPoints ? 1 : 0.2)
+                        .animation(
+                            revealAnimation(index: index, delay: 0.15 + Double(star) * 0.06)?.speed(1.4),
+                            value: revealsSellingPoints
+                        )
                 }
                 Text("- \(author)")
                     .font(.caption.bold())

@@ -18,6 +18,8 @@ struct FavoriteButton: View {
     )
     
     @State private var showSignInPrompt = false
+    /// Bumped when the resource becomes a favorite.
+    @State private var favoriteSparks = 0
 
     private var isGuest: Bool {
         (iocContainer~>CurrentUserIdProvider.self).currentUserId == nil
@@ -37,8 +39,19 @@ struct FavoriteButton: View {
             }
         } label: {
             ResourceMenuButtonLabel(sfSymbol: sfSymbol)
+                .symbolEffect(.bounce, value: favoriteSparks)
+                .overlay {
+                    SizzleSparks(trigger: favoriteSparks, count: 10, spread: 0.35)
+                        .frame(width: 100, height: 100)
+                }
         }
         .disabled(!isGuest && (model.isMarkedAsFavorite == nil || model.isWorking))
+        // Only a change from not-a-favorite, so loading the status when the screen opens stays quiet.
+        .onChange(of: model.isMarkedAsFavorite) { wasFavorite, isFavorite in
+            guard wasFavorite == false, isFavorite == true else { return }
+            Haptics.tap()
+            favoriteSparks += 1
+        }
         .onAppear {
             if !isGuest {
                 model.listenToFavoriteStatus(of: resource)

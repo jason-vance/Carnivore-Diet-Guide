@@ -195,6 +195,7 @@ struct FeaturedArticlesView: View {
             ArticleItemView(article)
                 .articleStyle(style)
         }
+        .buttonStyle(.pressable)
     }
 }
 

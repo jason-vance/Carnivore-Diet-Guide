@@ -39,6 +39,7 @@ struct CommentSectionView: View {
                 toResource: resource,
                 commentProxyContainer: commentProxyContainer
             )
+            Haptics.tap()
             isCommentFieldFocused = false
             commentText = ""
             return .success

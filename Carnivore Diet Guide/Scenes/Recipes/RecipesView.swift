@@ -108,6 +108,7 @@ struct RecipesView: View {
                     } label: {
                         RecipeItemView(recipe)
                     }
+                    .buttonStyle(.pressable)
                 }
             }
         }
@@ -126,6 +127,7 @@ struct RecipesView: View {
                 } label: {
                     RecipeItemView(recipe)
                 }
+                .buttonStyle(.pressable)
             }
         }
     }

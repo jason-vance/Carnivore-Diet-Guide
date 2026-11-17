@@ -9,14 +9,16 @@ import SwiftUI
 import SwinjectAutoregistration
 
 struct ResourceCategoryPicker: View {
-    
+
     @Binding public var selectedCategory: Resource.Category
     @State public var resourceType: Resource.ResourceType
-    
+
     @State private var categories: [Resource.Category] = Resource.Category.contentAgnosticCategories
-    
+    /// Shared by the chips so the highlight glides from one to the next.
+    @Namespace private var highlightNamespace
+
     private let categoryProvider = iocContainer~>ResourceCategoryProvider.self
-    
+
     private func fetchCategories() {
         Task {
             do {
@@ -28,20 +30,30 @@ struct ResourceCategoryPicker: View {
             }
         }
     }
-    
+
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                ForEach(categories) { category in
-                    Button {
-                        withAnimation(.snappy) { selectedCategory = category }
-                    } label: {
-                        ResourceCategoryView(category)
-                            .highlighted(selectedCategory == category)
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(categories) { category in
+                        Button {
+                            if selectedCategory != category {
+                                Haptics.select()
+                            }
+                            withAnimation(.snappy) { selectedCategory = category }
+                        } label: {
+                            ResourceCategoryView(category)
+                                .highlighted(selectedCategory == category, glidingIn: highlightNamespace)
+                        }
+                        .id(category.id)
                     }
                 }
+                .padding()
             }
-            .padding()
+            // Brings a chip that was half off the edge into view once it's picked.
+            .onChange(of: selectedCategory) { _, category in
+                withAnimation(.snappy) { proxy.scrollTo(category.id, anchor: .center) }
+            }
         }
         .onAppear {
             fetchCategories()

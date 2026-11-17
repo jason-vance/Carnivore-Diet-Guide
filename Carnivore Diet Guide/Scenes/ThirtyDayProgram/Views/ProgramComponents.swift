@@ -94,6 +94,46 @@ struct ProgramSecondaryButtonLabel: View {
     }
 }
 
+/// How far through the 30 days the user is. It fills from empty when it appears, then moves as days pass.
+struct ProgramProgressBar: View {
+
+    let day: Int
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var shownDay: Double = 0
+
+    private var fraction: Double {
+        min(max(shownDay / Double(ProgramSchedule.length), 0), 1)
+    }
+
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .foregroundStyle(Color.text.opacity(0.1))
+                Capsule()
+                    .foregroundStyle(Color.accentColor.gradient)
+                    .frame(width: max(geometry.size.height, geometry.size.width * fraction))
+                    .opacity(shownDay > 0 ? 1 : 0)
+            }
+        }
+        .frame(height: 6)
+        .onAppear {
+            guard !reduceMotion else {
+                shownDay = Double(day)
+                return
+            }
+            withAnimation(.easeOut(duration: 0.9).delay(0.2)) { shownDay = Double(day) }
+        }
+        .onChange(of: day) { _, newValue in
+            withAnimation(.snappy) { shownDay = Double(newValue) }
+        }
+        .accessibilityElement()
+        .accessibilityLabel(Text("Progress"))
+        .accessibilityValue(Text("Day \(day) of 30"))
+    }
+}
+
 /// Lays out views left to right and wraps onto new lines, for chips.
 struct ProgramFlowLayout: Layout {
 

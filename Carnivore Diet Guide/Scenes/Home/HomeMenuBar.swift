@@ -25,6 +25,9 @@ struct HomeMenuBar: View {
     @ObservedObject private var programStore = iocContainer~>ProgramStore.self
     @ObservedObject private var subscriptionManager = iocContainer~>SubscriptionLevelProvider.self
 
+    /// Taps per tab, to bounce its icon.
+    @State private var taps: [HomeMenuTab: Int] = [:]
+
     /// A dot on the 30 Days tab when today's check-in is waiting.
     private var showProgramBadge: Bool {
         programStore.needsCheckInToday(isSubscribed: subscriptionManager.subscriptionLevel == .carnivorePlus)
@@ -93,11 +96,16 @@ struct HomeMenuBar: View {
         onSelected: @escaping () -> ()
     ) -> some View {
         Button {
+            if selectedTab != tab {
+                Haptics.select()
+            }
+            taps[tab, default: 0] += 1
             onSelected()
         } label: {
             VStack(spacing: 0) {
                 image()
                     .frame(width: 32, height: 32)
+                    .symbolEffect(.bounce.down, value: taps[tab, default: 0])
                 MenuItemText(text)
             }
             .foregroundStyle(Color.text)

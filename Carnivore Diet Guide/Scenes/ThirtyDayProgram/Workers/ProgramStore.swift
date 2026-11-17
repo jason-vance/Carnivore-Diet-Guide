@@ -28,6 +28,8 @@ final class ProgramStore: ObservableObject {
     @Published var pendingOpenProgramTab: Bool = false
     /// Set when the user taps the Home card: the day to show. The 30 Days tab opens that day and clears it.
     @Published var pendingDayToOpen: Int?
+    /// Set after the first check-in on a review day. HomeView celebrates it and clears it.
+    @Published var pendingMilestone: ProgramMilestone?
     /// Set when the user opens an evening reminder: the day to check in on. The 30 Days tab opens that check-in
     /// and clears it.
     @Published var pendingCheckInFromReminder: Int?
@@ -121,6 +123,17 @@ final class ProgramStore: ObservableObject {
         guard var progress else { return }
         progress.checkIns[day] = checkIn
         commit(progress)
+    }
+
+    /// Called after a day's first check-in. The end of each week and day 30 are milestones, each celebrated once
+    /// per run through the program.
+    func celebrateCheckIn(day: Int, defaults: UserDefaults = .standard) {
+        guard let progress, ProgramSchedule.reviewDays.contains(day) else { return }
+        let key = "programMilestoneShown.\(Int(progress.startDate.timeIntervalSince1970)).\(day)"
+        guard !defaults.bool(forKey: key) else { return }
+        defaults.set(true, forKey: key)
+        pendingMilestone = ProgramMilestone(day: day, checkInCount: progress.checkIns.count, tasksDone: progress.completedDays.count)
+        iocContainer.resolve(Analytics.self)?.logProgramMilestoneShown(day: day)
     }
 
     func setCurrentDay(_ day: Int, now: Date = .now) {

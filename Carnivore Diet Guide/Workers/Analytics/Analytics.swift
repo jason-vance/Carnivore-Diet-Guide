@@ -52,6 +52,8 @@ protocol Analytics {
     /// Logged once the program is past day 30. The counts tell people who saw it through from people who
     /// stopped early and still use the app.
     func logProgramFinished(checkInCount: Int, tasksDone: Int)
+    /// The celebration after checking in on day 7, 14, 21 or 30.
+    func logProgramMilestoneShown(day: Int)
     func logProgramRestarted(day: Int, checkInCount: Int)
     func logProgramRemindersChanged(_ settings: ProgramReminderSettings)
     func logNotificationPermissionDenied()
@@ -135,6 +137,7 @@ class MockAnalytics: Analytics {
     func logProgramTrackersLockedTapped(source: ProgramTrackersSource) { }
     func logProgramReminderOpened(day: Int, kind: ProgramReminderKind) { }
     func logProgramFinished(checkInCount: Int, tasksDone: Int) { }
+    func logProgramMilestoneShown(day: Int) { }
     func logProgramRestarted(day: Int, checkInCount: Int) { }
     func logProgramRemindersChanged(_ settings: ProgramReminderSettings) { }
     func logNotificationPermissionDenied() { }

@@ -47,6 +47,7 @@ struct OnboardingGoalReviewView: View {
             Affirmations()
             Spacer()
             Button {
+                Haptics.sizzle()
                 onboardingStep = onboardingStep.next
             } label: {
                 Text("Here's to a better me!")
@@ -61,6 +62,14 @@ struct OnboardingGoalReviewView: View {
         }
         .padding()
         .background(Color.background)
+        .task {
+            // A soft tick as each bubble arrives, like a message coming in. Matches the delays in Affirmations.
+            for index in Self.textItems.indices {
+                try? await Task.sleep(for: .milliseconds(index == 0 ? 600 : 500))
+                guard !Task.isCancelled else { return }
+                Haptics.tap()
+            }
+        }
     }
     
     @ViewBuilder private func Affirmations() -> some View {

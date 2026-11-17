@@ -101,6 +101,7 @@ struct ArticlesInCategoryView: View {
                 } label: {
                     ArticleItemView(article)
                 }
+                .buttonStyle(.pressable)
             }
         }
     }

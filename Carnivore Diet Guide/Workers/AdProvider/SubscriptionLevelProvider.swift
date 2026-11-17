@@ -5,6 +5,7 @@
 //  Created by Jason Vance on 9/12/24.
 //
 
+import Combine
 import Foundation
 import StoreKit
 import SwiftUI
@@ -59,6 +60,10 @@ class SubscriptionLevelProvider: ObservableObject {
     
     @Published public private(set) var subscriptionLevel: SubscriptionLevel = .none
     var subscriptionLevelPublisher: Published<SubscriptionLevel>.Publisher { $subscriptionLevel }
+
+    /// Fires when the user subscribes in the app, through a purchase or an offer code, so it can be celebrated.
+    /// Restores and renewals don't count.
+    let newSubscriptionPublisher = PassthroughSubject<Void, Never>()
     
     @Published var fullPriceProducts: [String: Product] = [:]
     @Published var discountProducts: [String: Product] = [:]
@@ -226,6 +231,7 @@ class SubscriptionLevelProvider: ObservableObject {
                 analytics?.logTransaction(transaction)
                 analytics?.logPurchaseCompleted(productId: productId, source: source)
                 await transaction.finish()
+                newSubscriptionPublisher.send()
                 return true
             case .unverified:
                 throw fail(.verificationFailed, SubscriptionError.verificationFailed)
@@ -253,6 +259,7 @@ class SubscriptionLevelProvider: ObservableObject {
     func offerCodeSheetClosed(source: PaywallSource) async {
         if await isSubscribed() {
             iocContainer.resolve(Analytics.self)?.logOfferCodeRedeemed(source: source)
+            newSubscriptionPublisher.send()
         }
     }
 

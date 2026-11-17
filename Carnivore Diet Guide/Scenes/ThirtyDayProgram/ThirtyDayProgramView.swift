@@ -138,8 +138,7 @@ struct ThirtyDayProgramView: View {
             Text(isFinished ? String(localized: "30 of 30 days") : String(localized: "Day \(currentDay) of 30"))
                 .font(.largeTitle.bold())
                 .foregroundStyle(Color.text)
-            ProgressView(value: Double(isFinished ? ProgramSchedule.length : currentDay), total: Double(ProgramSchedule.length))
-                .tint(Color.accentColor)
+            ProgramProgressBar(day: isFinished ? ProgramSchedule.length : currentDay)
             if let goal = progress.goal {
                 Text("Your why: \u{201C}\(goal)\u{201D}")
                     .font(.subheadline)
@@ -217,6 +216,8 @@ struct ThirtyDayProgramView: View {
         Label(title, systemImage: isDone ? "checkmark.circle.fill" : "circle")
             .font(.caption.weight(.semibold))
             .foregroundStyle(isDone ? Color.accentColor : Color.text.opacity(0.6))
+            .contentTransition(.symbolEffect(.replace))
+            .animation(.snappy, value: isDone)
     }
 
     @ViewBuilder private func WeekSection(_ week: ProgramWeek, progress: ProgramProgress, currentDay: Int) -> some View {

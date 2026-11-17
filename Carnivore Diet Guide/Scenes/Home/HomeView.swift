@@ -18,6 +18,28 @@ struct HomeView: View {
     /// Tabs are built the first time they're opened, then kept so each one stays where the user left it. Building
     /// all four at launch froze the app for a second or more before it responded.
     @State private var openedTabs: Set<HomeMenuBar.HomeMenuTab> = []
+    /// The big moment being celebrated over everything else.
+    @State private var celebration: Celebration?
+
+    private enum Celebration: Equatable {
+        case milestone(ProgramMilestone)
+        case carnivorePlusWelcome
+    }
+
+    /// Waits a moment so whatever was on screen (the check-in sheet, a paywall) has finished closing.
+    private func celebrate(_ newCelebration: Celebration) {
+        Task {
+            try? await Task.sleep(for: .milliseconds(newCelebration == .carnivorePlusWelcome ? 700 : 450))
+            withAnimation(.easeIn(duration: 0.2)) { celebration = newCelebration }
+        }
+    }
+
+    private func endCelebration() {
+        if case .milestone(let milestone) = celebration, milestone.isFinish {
+            selectedTab = .program
+        }
+        withAnimation(.easeOut(duration: 0.25)) { celebration = nil }
+    }
 
     private func isBuilt(_ tab: HomeMenuBar.HomeMenuTab) -> Bool {
         tab == selectedTab || openedTabs.contains(tab)
@@ -94,6 +116,27 @@ struct HomeView: View {
             guard shouldOpen else { return }
             selectedTab = .program
             programStore.pendingOpenProgramTab = false
+        }
+        // An overlay rather than a sheet, so it can't collide with a sheet or paywall that's closing.
+        .overlay {
+            switch celebration {
+            case .milestone(let milestone):
+                ProgramMilestoneView(milestone: milestone, onDone: endCelebration)
+                    .transition(.opacity)
+            case .carnivorePlusWelcome:
+                CarnivorePlusWelcomeView(onDone: endCelebration)
+                    .transition(.opacity)
+            case nil:
+                EmptyView()
+            }
+        }
+        .onChange(of: programStore.pendingMilestone, initial: true) { _, pending in
+            guard let pending else { return }
+            programStore.pendingMilestone = nil
+            celebrate(.milestone(pending))
+        }
+        .onReceive((iocContainer~>SubscriptionLevelProvider.self).newSubscriptionPublisher.receive(on: RunLoop.main)) {
+            celebrate(.carnivorePlusWelcome)
         }
     }
     

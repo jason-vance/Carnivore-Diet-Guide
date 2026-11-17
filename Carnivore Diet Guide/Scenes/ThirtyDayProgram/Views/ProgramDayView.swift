@@ -21,6 +21,8 @@ struct ProgramDayView: View {
     @State private var symptomArticles: [String: Article] = [:]
     @State private var showCheckIn = false
     @State private var showMarketing = false
+    /// Bumped when the task is marked done.
+    @State private var taskSparks = 0
 
     private var day: ProgramDay { FirstThirtyDays.day(dayNumber) }
     private var week: ProgramWeek { FirstThirtyDays.week(containing: dayNumber) }
@@ -54,7 +56,11 @@ struct ProgramDayView: View {
         let newValue = !isTaskDone
         store.setTask(day: dayNumber, isDone: newValue)
         if newValue {
+            Haptics.sizzle()
+            taskSparks += 1
             iocContainer.resolve(Analytics.self)?.logProgramTaskCompleted(day: dayNumber)
+        } else {
+            Haptics.tap()
         }
     }
 
@@ -151,16 +157,21 @@ struct ProgramDayView: View {
                 .foregroundStyle(Color.text)
                 .fixedSize(horizontal: false, vertical: true)
             Button(action: toggleTask) {
-                Label(
-                    isTaskDone ? String(localized: "Done") : String(localized: "Mark as done"),
-                    systemImage: isTaskDone ? "checkmark.circle.fill" : "circle"
-                )
+                Label {
+                    Text(isTaskDone ? String(localized: "Done") : String(localized: "Mark as done"))
+                } icon: {
+                    Image(systemName: isTaskDone ? "checkmark.circle.fill" : "circle")
+                        .contentTransition(.symbolEffect(.replace))
+                        .symbolEffect(.bounce, value: taskSparks)
+                        .overlay {
+                            SizzleSparks(trigger: taskSparks, count: 14, spread: 0.5)
+                                .frame(width: 120, height: 120)
+                        }
+                }
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(Color.accentColor)
-                .contentTransition(.symbolEffect(.replace))
             }
             .padding(.top, 4)
-            .sensoryFeedback(.success, trigger: isTaskDone) { _, isDone in isDone }
         }
     }
 
@@ -298,7 +309,7 @@ struct ProgramDayView: View {
                     ArticleItemView(article)
                         .articleStyle(.horizontal)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.pressable)
             }
         }
     }

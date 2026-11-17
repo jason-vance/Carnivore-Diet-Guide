@@ -40,7 +40,7 @@ struct PremiumCTARow: View {
             } label: {
                 content
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.pressable)
             .fullScreenCover(isPresented: $showMarketingView) {
                 MarketingView(source: .premiumCTA(placement))
             }

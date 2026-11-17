@@ -44,6 +44,7 @@ struct ProgramStartView: View {
     private func start() {
         isStarting = true
         let day = alreadyStarted ? currentDay : 1
+        Haptics.sear()
         store.start(onDay: day, goal: goal)
         iocContainer.resolve(Analytics.self)?.logProgramStarted(startDay: day, hasGoal: !goal.trimmingCharacters(in: .whitespaces).isEmpty)
 

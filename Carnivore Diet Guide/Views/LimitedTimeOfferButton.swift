@@ -41,8 +41,9 @@ struct LimitedTimeOfferButton: View {
         let remaining = targetDate.timeIntervalSince(now)
         
         if remaining > 0 {
-            // We have time left, so format it
-            timeRemaining = format(duration: remaining)
+            // We have time left, so format it. Animated so the digits roll as they count down.
+            let formatted = format(duration: remaining)
+            withAnimation(.snappy) { timeRemaining = formatted }
         } else {
             // Countdown has finished
             timeRemaining = "00:00:00"
@@ -88,7 +89,9 @@ struct LimitedTimeOfferButton: View {
                 Text(timeRemaining)
                     .font(.title.bold())
                     .fontWidth(.condensed)
+                    .monospacedDigit()
                     .foregroundStyle(Color.accentColor)
+                    .contentTransition(.numericText(countsDown: true))
                     // The pulse animates only the timer's opacity. When it covered the whole card,
                     // the repeating animation also caught the card's first layout and replayed it
                     // forever, so the background kept growing out of the top-left corner.

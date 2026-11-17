@@ -23,12 +23,32 @@ struct ProgramHomeCard: View {
     @State private var now: Date = .now
     /// The day whose check-in sheet is open.
     @State private var checkInRoute: ProgramCheckInRoute?
+    /// Bumped when today's check-in is saved, to pop the check mark on the collapsed card.
+    @State private var checkInSparks = 0
+    /// Keeps the big card up while this card's check-in sheet closes, so the user sees it fold away.
+    @State private var holdsLargeCard = false
 
     private var isSubscribed: Bool { subscriptionManager.subscriptionLevel == .carnivorePlus }
+
+    private var isCheckedInToday: Bool {
+        guard let progress = store.progress else { return false }
+        return progress.checkIn(forDay: ProgramSchedule.currentDay(startDate: progress.startDate, now: now)) != nil
+    }
 
     private func openDay(_ dayNumber: Int, isCheckedIn: Bool) {
         iocContainer.resolve(Analytics.self)?.logProgramHomeCardTapped(day: dayNumber, action: .openDay, isCheckedIn: isCheckedIn)
         store.openDay(dayNumber)
+    }
+
+    /// After a check-in from this card, folds the big card into the small one, then pops its check mark.
+    private func foldAfterCheckIn() {
+        guard holdsLargeCard else { return }
+        Task {
+            try? await Task.sleep(for: .milliseconds(150))
+            withAnimation(.snappy) { holdsLargeCard = false }
+            try? await Task.sleep(for: .milliseconds(350))
+            checkInSparks += 1
+        }
     }
 
     private func checkIn(_ dayNumber: Int) {
@@ -44,7 +64,7 @@ struct ProgramHomeCard: View {
                 let isCheckedIn = progress.checkIn(forDay: dayNumber) != nil
 
                 Group {
-                    if access == .available && !isCheckedIn {
+                    if access == .available && (!isCheckedIn || holdsLargeCard) {
                         LargeReminder(dayNumber)
                     } else {
                         SmallReminder(dayNumber, isLocked: access != .available)
@@ -57,7 +77,19 @@ struct ProgramHomeCard: View {
         .onChange(of: scenePhase) { _, phase in
             if phase == .active { now = .now }
         }
-        .sheet(item: $checkInRoute) { route in
+        .onChange(of: isCheckedInToday) { wasCheckedIn, isCheckedIn in
+            guard isCheckedIn, !wasCheckedIn else { return }
+            if checkInRoute != nil {
+                // Checked in from this card: fold it once the sheet is out of the way.
+                holdsLargeCard = true
+            } else {
+                Task {
+                    try? await Task.sleep(for: .milliseconds(450))
+                    checkInSparks += 1
+                }
+            }
+        }
+        .sheet(item: $checkInRoute, onDismiss: foldAfterCheckIn) { route in
             ProgramCheckInView(dayNumber: route.day)
                 .presentationBackground(Color.background)
         }
@@ -78,8 +110,7 @@ struct ProgramHomeCard: View {
                             .foregroundStyle(Color.text)
                             .multilineTextAlignment(.leading)
                             .fixedSize(horizontal: false, vertical: true)
-                        ProgressView(value: Double(dayNumber), total: Double(ProgramSchedule.length))
-                            .tint(Color.accentColor)
+                        ProgramProgressBar(day: dayNumber)
                     }
                     Image(systemName: "chevron.right")
                         .font(.subheadline.weight(.semibold))
@@ -87,7 +118,7 @@ struct ProgramHomeCard: View {
                 }
                 .contentShape(Rectangle())
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.pressable)
             .accessibilityLabel(Text("Day \(dayNumber) of 30: \(day.title)"))
             .accessibilityHint(Text("Opens today's lesson"))
 
@@ -115,6 +146,11 @@ struct ProgramHomeCard: View {
                 Image(systemName: isLocked ? "lock.fill" : "checkmark.circle.fill")
                     .font(.title3)
                     .foregroundStyle(isLocked ? Color.text.opacity(0.5) : Color.accentColor)
+                    .symbolEffect(.bounce, value: checkInSparks)
+                    .overlay {
+                        SizzleSparks(trigger: checkInSparks, count: 12, spread: 0.45)
+                            .frame(width: 120, height: 120)
+                    }
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(isLocked ? String(localized: "Day \(dayNumber) of 30") : String(localized: "Day \(dayNumber) of 30 · Checked in"))
@@ -140,7 +176,7 @@ struct ProgramHomeCard: View {
             }
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.pressable)
     }
 }
 
