@@ -66,7 +66,10 @@ struct RecipesView: View {
                 RecipeDetailView(recipe: recipe)
             }
         }
-        .onReceive(recipePublisher) { allRecipes = $0 }
+        .onReceive(recipePublisher) {
+            allRecipes = $0
+            LazySearchKeywords.prepare($0.map(\.searchKeywords))
+        }
         .requestsReviewOnReturn(navigationDepth: navigationPath.count)
     }
     

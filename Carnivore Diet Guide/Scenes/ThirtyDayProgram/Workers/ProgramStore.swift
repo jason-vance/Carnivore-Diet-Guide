@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import SwinjectAutoregistration
+import UIKit
 
 /// The user's First 30 Days progress.
 ///
@@ -201,7 +202,7 @@ final class ProgramStore: ObservableObject {
         pendingOpenFromReminder = true
     }
 
-    /// Call when the app comes to the foreground, so reminders roll forward and respect the Settings toggle.
+    /// Runs every time the app comes to the foreground, so reminders roll forward and respect the Settings toggle.
     func rescheduleReminders(now: Date = .now) {
         reminderScheduler.reschedule(
             progress: progress,
@@ -256,6 +257,13 @@ final class ProgramStore: ObservableObject {
                 self?.isSubscribed = isSubscribed
                 self?.rescheduleReminders()
             }
+            .store(in: &subscriptions)
+
+        // Here rather than in the 30 Days tab, which isn't built until the user opens it.
+        NotificationCenter.default
+            .publisher(for: UIApplication.willEnterForegroundNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.rescheduleReminders() }
             .store(in: &subscriptions)
     }
 

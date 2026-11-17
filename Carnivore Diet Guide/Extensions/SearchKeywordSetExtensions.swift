@@ -13,20 +13,7 @@ extension Set<SearchKeyword> {
     }
     
     func relevanceTo(_ keywords: Set<SearchKeyword>) -> UInt {
-        print("OTHER KEYWORDS")
-        keywords.forEach {
-            print("\($0.text)")
-        }
-        
-        print("SELF KEYWORDS")
-        return filter {
-            let contains = keywords.contains($0)
-            print("\($0.text) \(contains)")
-            return contains
-        }
-        .reduce(0) {
-            print("\($1.text)")
-            return $0 + $1.score
-        }
+        filter { keywords.contains($0) }
+            .reduce(0) { $0 + $1.score }
     }
 }

@@ -32,7 +32,8 @@ struct Article: Identifiable, Hashable {
     let markdownContent: String
     let publicationDate: Date
     let categories: Set<Resource.Category>
-    let keywords: Set<SearchKeyword>
+    let searchKeywords: LazySearchKeywords
+    var keywords: Set<SearchKeyword> { searchKeywords.keywords }
     let citations: [Citation]
     
     init(
@@ -58,8 +59,9 @@ struct Article: Identifiable, Hashable {
         self.categories = categories
         self.citations = citations
         
-        let string = "\(title)\n\(summary.text)\n\(markdownContent.stripMarkdown())"
-        self.keywords = SearchKeyword.keywordsFrom(string: string)
+        self.searchKeywords = LazySearchKeywords {
+            "\(title)\n\(summary.text)\n\(markdownContent.stripMarkdown())"
+        }
     }
 }
 

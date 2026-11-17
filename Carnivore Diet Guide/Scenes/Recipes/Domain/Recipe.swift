@@ -39,7 +39,8 @@ struct Recipe: Identifiable {
     var markdownContent: String
     var publicationDate: Date
     var basicNutritionInfo: BasicNutritionInfo?
-    var keywords: Set<SearchKeyword>
+    let searchKeywords: LazySearchKeywords
+    var keywords: Set<SearchKeyword> { searchKeywords.keywords }
     
     init(
         id: String,
@@ -70,8 +71,9 @@ struct Recipe: Identifiable {
         self.publicationDate = publicationDate
         self.basicNutritionInfo = basicNutritionInfo
         
-        let string = "\(title)\n\(summary.text)\n\(markdownContent.stripMarkdown())"
-        self.keywords = SearchKeyword.keywordsFrom(string: string)
+        self.searchKeywords = LazySearchKeywords {
+            "\(title)\n\(summary.text)\n\(markdownContent.stripMarkdown())"
+        }
     }
 }
 

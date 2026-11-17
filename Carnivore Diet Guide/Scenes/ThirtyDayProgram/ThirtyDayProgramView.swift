@@ -86,7 +86,6 @@ struct ThirtyDayProgramView: View {
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }
             now = .now
-            store.rescheduleReminders()
         }
     }
 

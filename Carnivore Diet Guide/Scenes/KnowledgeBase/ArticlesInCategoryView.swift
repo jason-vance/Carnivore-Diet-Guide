@@ -71,7 +71,10 @@ struct ArticlesInCategoryView: View {
                 .padding(.horizontal)
         }
         .alert(alertMessage, isPresented: $showAlert) {}
-        .onReceive(articlePublisher) { allArticles = $0 }
+        .onReceive(articlePublisher) {
+            allArticles = $0
+            LazySearchKeywords.prepare($0.map(\.searchKeywords))
+        }
     }
     
     @ViewBuilder func Container() -> some View {
