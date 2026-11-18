@@ -126,7 +126,7 @@ struct OnboardingWelcomeView: View {
                 }
                 Text("- \(author)")
                     .font(.caption.bold())
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(Color.text.opacity(0.6))
                 Spacer()
             }
             Text("\"\(text)\"")

@@ -90,6 +90,8 @@ struct ProgramTrendsView: View {
                 }
             }
             .pickerStyle(.segmented)
+            // Keeps the control light in Dark Mode to match the card.
+            .environment(\.colorScheme, .light)
         } else {
             ScrollView(.horizontal) {
                 HStack(spacing: 8) {
@@ -116,6 +118,11 @@ struct ProgramTrendsView: View {
         }
     }
 
+    // The app's colors stay light in Dark Mode, but Charts' default axis colors follow it and turned
+    // white on the light card, so the axes use the app's text color.
+    private static let gridColor = Color.text.opacity(0.15)
+    private static let axisLabelColor = Color.text.opacity(0.6)
+
     @ViewBuilder private func TrendChart() -> some View {
         Chart {
             ForEach(points, id: \.day) { point in
@@ -138,16 +145,19 @@ struct ProgramTrendsView: View {
         .chartYAxis {
             AxisMarks(position: .leading, values: [1, 3, 5]) { value in
                 AxisGridLine()
+                    .foregroundStyle(Self.gridColor)
                 AxisValueLabel {
                     if let rating = value.as(Int.self) {
                         Text(measure.label(forRating: rating))
                     }
                 }
+                .foregroundStyle(Self.axisLabelColor)
             }
         }
         .chartXAxis {
             AxisMarks(values: dayTicks.map(Double.init)) { value in
                 AxisGridLine()
+                    .foregroundStyle(Self.gridColor)
                 // Labels start at their line and run right, so the last one would hang past the edge and
                 // Charts would drop it ("Day 10" went missing). It ends at its line instead.
                 AxisValueLabel(anchor: value.index == value.count - 1 ? .topTrailing : .top) {
@@ -155,6 +165,7 @@ struct ProgramTrendsView: View {
                         Text("Day \(Int(day))")
                     }
                 }
+                .foregroundStyle(Self.axisLabelColor)
             }
         }
         .frame(height: 160)

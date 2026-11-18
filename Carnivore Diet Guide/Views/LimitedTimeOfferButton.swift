@@ -83,7 +83,7 @@ struct LimitedTimeOfferButton: View {
                         .foregroundStyle(Color.text)
                     Text("Lock in 75% off Carnivore+")
                         .font(.subheadline)
-                        .foregroundStyle(Color.secondary)
+                        .foregroundStyle(Color.text.opacity(0.6))
                 }
                 Spacer()
                 Text(timeRemaining)
