@@ -34,6 +34,16 @@ class FirebaseRecipeRepository {
     }
     
     
+    /// Recipes dated after now, soonest first. The app hides these until their date.
+    func fetchScheduledRecipes() async throws -> [Recipe] {
+        try await recipesCollection
+            .whereField(publicationDateField, isGreaterThan: Date.now)
+            .order(by: publicationDateField)
+            .getDocuments()
+            .documents
+            .compactMap { try? $0.data(as: FirestoreRecipeDoc.self).toRecipe() }
+    }
+
     func create(
         recipe: Recipe
     ) async throws {

@@ -36,6 +36,17 @@ class FirebaseArticleRepository {
         try await articlesCollection.document(articleId).delete()
     }
     
+    /// Articles dated after now, soonest first. The app hides these until their date.
+    func fetchScheduledArticles() async throws -> [Article] {
+        let categories = try await getCategoryDict()
+        return try await articlesCollection
+            .whereField(publicationDateField, isGreaterThan: Date.now)
+            .order(by: publicationDateField)
+            .getDocuments()
+            .documents
+            .compactMap { try? $0.data(as: FirebaseArticleDoc.self).toArticle(categoryDict: categories) }
+    }
+
     func add(citations: [Article.Citation], toArticle article: Article) async throws {
         let citations = citations.map(\.url.absoluteString)
         

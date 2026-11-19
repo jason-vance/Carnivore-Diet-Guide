@@ -15,6 +15,7 @@ struct AdminView: View {
     
     @EnvironmentObject private var commentProxyContainer: CommentProxyContainer
     
+    @State private var showScheduledContent: Bool = false
     @State private var showFeaturedArticlesCreator: Bool = false
     @State private var showAddArticleCitations: Bool = false
     @State private var showSeedUserCreator: Bool = false
@@ -43,6 +44,7 @@ struct AdminView: View {
         VStack(spacing: 0) {
             TitleBar()
             List {
+                ContentSection()
                 CreateContentSection()
                 SettingsSection()
             }
@@ -69,6 +71,25 @@ struct AdminView: View {
         }
     }
     
+    @ViewBuilder func ContentSection() -> some View {
+        Section {
+            ScheduledContentButton()
+        } header: {
+            Text("Content")
+                .foregroundStyle(Color.text)
+        }
+    }
+
+    @ViewBuilder func ScheduledContentButton() -> some View {
+        Button("Scheduled Articles & Recipes") {
+            showScheduledContent = true
+        }
+        .listRowBackground(Color.background)
+        .fullScreenCover(isPresented: $showScheduledContent) {
+            ScheduledContentView()
+        }
+    }
+
     @ViewBuilder func CreateContentSection() -> some View {
         Section {
             FeaturedArticlesButton()
