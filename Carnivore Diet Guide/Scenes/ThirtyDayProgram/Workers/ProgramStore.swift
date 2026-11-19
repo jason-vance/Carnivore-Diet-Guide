@@ -33,13 +33,22 @@ final class ProgramStore: ObservableObject {
     /// Set when the user opens an evening reminder: the day to check in on. The 30 Days tab opens that check-in
     /// and clears it.
     @Published var pendingCheckInFromReminder: Int?
+    /// Set while the user is back with Carnivore+ after days they couldn't open, until they say whether they kept
+    /// eating carnivore. The 30 Days tab asks, and the Home card points there. See `ProgramWelcomeBack`.
+    @Published private(set) var welcomeBack: ProgramWelcomeBack?
+    /// Set when the Home card's welcome back is tapped. The 30 Days tab goes back to its overview, where the
+    /// question is, and clears it.
+    @Published var pendingShowOverview: Bool = false
 
     private let localStore: ProgramLocalStore
     private let repository: ProgramProgressRepository
     private let reminderScheduler: ProgramReminderScheduler
     private let calendar: Calendar
+    private let defaults: UserDefaults
 
     private var isSubscribed = false
+    /// Whether StoreKit has answered since launch. Until it has, `isSubscribed` is the last known value.
+    private var isSubscriptionConfirmed = false
     private var lastSettledAuthState: UserAuthState?
     /// The account progress is currently synced with. Nil for guests, signed-out users and before the first sync.
     private var syncedUserId: String?
@@ -60,12 +69,14 @@ final class ProgramStore: ObservableObject {
         localStore: ProgramLocalStore,
         repository: ProgramProgressRepository,
         reminderScheduler: ProgramReminderScheduler,
-        calendar: Calendar = .current
+        calendar: Calendar = .current,
+        defaults: UserDefaults = .standard
     ) {
         self.localStore = localStore
         self.repository = repository
         self.reminderScheduler = reminderScheduler
         self.calendar = calendar
+        self.defaults = defaults
         self.progress = localStore.load()
         self.reminderSettings = .load()
     }
@@ -169,11 +180,29 @@ final class ProgramStore: ObservableObject {
         commit(progress, now: now)
     }
 
+    /// Answers the welcome back. If they kept eating carnivore while away the calendar's day is right; if not,
+    /// they pick up the day after they left off. Their check-ins stay on the days they were made.
+    func answerWelcomeBack(stayedCarnivore: Bool, now: Date = .now) {
+        guard let welcomeBack else { return }
+        iocContainer.resolve(Analytics.self)?.logProgramWelcomeBackAnswered(
+            stayedCarnivore: stayedCarnivore,
+            leftOffDay: welcomeBack.leftOffDay,
+            calendarDay: welcomeBack.calendarDay
+        )
+        forgetLockedRun()
+        if stayedCarnivore {
+            refreshWelcomeBack(now: now)
+        } else {
+            setCurrentDay(welcomeBack.pickUpDay, now: now)
+        }
+    }
+
     /// Deletes all progress, on this device and in the account.
     func restart() {
         if let progress, let day = currentDay() {
             iocContainer.resolve(Analytics.self)?.logProgramRestarted(day: day, checkInCount: progress.checkIns.count)
         }
+        forgetLockedRun()
         commit(nil)
     }
 
@@ -230,6 +259,12 @@ final class ProgramStore: ObservableObject {
         pendingOpenProgramTab = true
     }
 
+    /// Switches to the 30 Days tab's overview, where the welcome back is.
+    func openWelcomeBack() {
+        pendingShowOverview = true
+        pendingOpenProgramTab = true
+    }
+
     /// Runs every time the app comes to the foreground, so reminders roll forward and respect the Settings toggle.
     func rescheduleReminders(now: Date = .now) {
         reminderScheduler.reschedule(
@@ -251,6 +286,7 @@ final class ProgramStore: ObservableObject {
         localStore.save(newProgress)
         upload(newProgress)
         rescheduleReminders(now: now)
+        refreshWelcomeBack(now: now)
     }
 
     private func upload(_ progress: ProgramProgress?) {
@@ -276,16 +312,17 @@ final class ProgramStore: ObservableObject {
             .sink { [weak self] state in self?.onAuthStateChanged(state) }
             .store(in: &subscriptions)
 
-        iocContainer.resolve(SubscriptionLevelProvider.self)?
-            .subscriptionLevelPublisher
-            .map { $0 == .carnivorePlus }
-            .removeDuplicates()
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] isSubscribed in
-                self?.isSubscribed = isSubscribed
-                self?.rescheduleReminders()
-            }
-            .store(in: &subscriptions)
+        if let subscriptionLevelProvider = iocContainer.resolve(SubscriptionLevelProvider.self) {
+            subscriptionLevelProvider.subscriptionLevelPublisher
+                .combineLatest(subscriptionLevelProvider.hasConfirmedLevelPublisher)
+                .map { level, isConfirmed in (level == .carnivorePlus, isConfirmed) }
+                .removeDuplicates(by: ==)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] isSubscribed, isConfirmed in
+                    self?.updateSubscription(isSubscribed: isSubscribed, isConfirmed: isConfirmed)
+                }
+                .store(in: &subscriptions)
+        }
 
         // Here rather than in the 30 Days tab, which isn't built until the user opens it.
         NotificationCenter.default
@@ -293,20 +330,87 @@ final class ProgramStore: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.rescheduleReminders()
-                self?.logFinishIfNeeded()
+                self?.refreshWelcomeBack()
             }
             .store(in: &subscriptions)
-        DispatchQueue.main.async { [weak self] in self?.logFinishIfNeeded() }
+    }
+
+    /// Called when the subscription level changes, or StoreKit confirms it.
+    func updateSubscription(isSubscribed: Bool, isConfirmed: Bool, now: Date = .now) {
+        self.isSubscribed = isSubscribed
+        isSubscriptionConfirmed = isConfirmed
+        rescheduleReminders(now: now)
+        refreshWelcomeBack(now: now)
+    }
+
+    // MARK: Welcome back
+
+    /// The start date of a run the app has seen past the free week without Carnivore+.
+    private static let lockedRunKey = "programLockedRunStartDate"
+    /// The start date of the run whose welcome back has been logged as shown.
+    private static let welcomeBackLoggedKey = "programWelcomeBackLoggedStartDate"
+
+    /// Notes when the program is locked (past the free week without Carnivore+), and once Carnivore+ is back,
+    /// works out whether to ask if they kept eating carnivore. Nothing happens until StoreKit has answered, so a
+    /// stale saved level can't make a subscriber look locked.
+    private func refreshWelcomeBack(now: Date = .now) {
+        defer { logFinishIfNeeded(now: now) }
+        guard let progress else {
+            setWelcomeBack(nil)
+            return
+        }
+        guard isSubscriptionConfirmed else { return }
+
+        let run = progress.startDate.timeIntervalSince1970
+        guard isSubscribed else {
+            let day = ProgramSchedule.elapsedDayNumber(startDate: progress.startDate, now: now, calendar: calendar)
+            if ProgramSchedule.requiresSubscription(day: day) {
+                defaults.set(run, forKey: Self.lockedRunKey)
+            }
+            setWelcomeBack(nil)
+            return
+        }
+        guard defaults.double(forKey: Self.lockedRunKey) == run else {
+            setWelcomeBack(nil)
+            return
+        }
+        guard let welcomeBack = ProgramWelcomeBack(progress: progress, now: now, calendar: calendar) else {
+            // Back before missing much, or already checked in since: nothing to ask.
+            forgetLockedRun()
+            setWelcomeBack(nil)
+            return
+        }
+        setWelcomeBack(welcomeBack)
+        if defaults.double(forKey: Self.welcomeBackLoggedKey) != run {
+            defaults.set(run, forKey: Self.welcomeBackLoggedKey)
+            iocContainer.resolve(Analytics.self)?.logProgramWelcomeBackShown(
+                leftOffDay: welcomeBack.leftOffDay,
+                calendarDay: welcomeBack.calendarDay
+            )
+        }
+    }
+
+    private func setWelcomeBack(_ welcomeBack: ProgramWelcomeBack?) {
+        if self.welcomeBack != welcomeBack {
+            self.welcomeBack = welcomeBack
+        }
+    }
+
+    private func forgetLockedRun() {
+        defaults.removeObject(forKey: Self.lockedRunKey)
+        defaults.removeObject(forKey: Self.welcomeBackLoggedKey)
     }
 
     private static let finishLoggedKey = "programFinishLoggedForStartDate"
 
-    /// Logs the end of the program the first time the app is open after day 30, once per run through it.
+    /// Logs the end of the program the first time the app is open after day 30, once per run through it. Only
+    /// with Carnivore+, since without it the user couldn't open days 8 to 30, and not while the welcome back is
+    /// waiting, since picking up again means they haven't finished.
     private func logFinishIfNeeded(now: Date = .now) {
-        guard let progress, isFinished(now: now) else { return }
+        guard let progress, isFinished(now: now), isSubscriptionConfirmed, isSubscribed, welcomeBack == nil else { return }
         let startDate = progress.startDate.timeIntervalSince1970
-        guard UserDefaults.standard.double(forKey: Self.finishLoggedKey) != startDate else { return }
-        UserDefaults.standard.set(startDate, forKey: Self.finishLoggedKey)
+        guard defaults.double(forKey: Self.finishLoggedKey) != startDate else { return }
+        defaults.set(startDate, forKey: Self.finishLoggedKey)
         iocContainer.resolve(Analytics.self)?.logProgramFinished(
             checkInCount: progress.checkIns.count,
             tasksDone: progress.completedDays.count
@@ -331,6 +435,7 @@ final class ProgramStore: ObservableObject {
                 progress = nil
                 localStore.save(nil)
                 reminderScheduler.cancelAll()
+                setWelcomeBack(nil)
             }
         }
         lastSettledAuthState = state
@@ -354,6 +459,7 @@ final class ProgramStore: ObservableObject {
                         self.progress = merged
                         self.localStore.save(merged)
                         self.rescheduleReminders()
+                        self.refreshWelcomeBack()
                     }
                     if let merged, merged != remote {
                         self.upload(merged)

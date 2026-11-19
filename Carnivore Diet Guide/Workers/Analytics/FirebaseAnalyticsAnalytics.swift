@@ -178,6 +178,22 @@ class FirebaseAnalyticsAnalytics: Analytics {
         log("program_restarted", ["day": day, "check_in_count": checkInCount])
     }
 
+    func logProgramWelcomeBackShown(leftOffDay: Int?, calendarDay: Int) {
+        log("program_welcome_back_shown", welcomeBackParameters(leftOffDay: leftOffDay, calendarDay: calendarDay))
+    }
+
+    func logProgramWelcomeBackAnswered(stayedCarnivore: Bool, leftOffDay: Int?, calendarDay: Int) {
+        var parameters = welcomeBackParameters(leftOffDay: leftOffDay, calendarDay: calendarDay)
+        parameters["stayed_carnivore"] = stayedCarnivore ? 1 : 0
+        log("program_welcome_back_answered", parameters)
+    }
+
+    /// 0 for a left-off day means they never checked in or did a task.
+    private func welcomeBackParameters(leftOffDay: Int?, calendarDay: Int) -> [String: Any] {
+        let leftOffDay = leftOffDay ?? 0
+        return ["left_off_day": leftOffDay, "calendar_day": calendarDay, "days_away": calendarDay - leftOffDay - 1]
+    }
+
     func logProgramRemindersChanged(_ settings: ProgramReminderSettings) {
         var parameters: [String: Any] = [
             "morning": settings.morning.isEnabled ? 1 : 0,

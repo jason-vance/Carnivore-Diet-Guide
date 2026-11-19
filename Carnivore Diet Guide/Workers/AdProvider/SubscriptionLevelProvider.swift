@@ -61,6 +61,11 @@ class SubscriptionLevelProvider: ObservableObject {
     @Published public private(set) var subscriptionLevel: SubscriptionLevel = .none
     var subscriptionLevelPublisher: Published<SubscriptionLevel>.Publisher { $subscriptionLevel }
 
+    /// False until StoreKit has answered since launch. Before that, `subscriptionLevel` is the level saved on the
+    /// device last time, which can be out of date (a lapsed subscription, or a fresh install).
+    @Published private(set) var hasConfirmedLevel = false
+    var hasConfirmedLevelPublisher: Published<Bool>.Publisher { $hasConfirmedLevel }
+
     /// Fires when the user subscribes in the app, through a purchase or an offer code, so it can be celebrated.
     /// Restores and renewals don't count.
     let newSubscriptionPublisher = PassthroughSubject<Void, Never>()
@@ -266,6 +271,7 @@ class SubscriptionLevelProvider: ObservableObject {
     @MainActor
     func set(subscriptionLevel: SubscriptionLevel) {
         self.subscriptionLevel = subscriptionLevel
+        hasConfirmedLevel = true
         UserDefaults.standard.set(subscriptionLevel.rawValue, forKey: subscriptionLevelKey)
         iocContainer.resolve(Analytics.self)?.setIsSubscriber(subscriptionLevel == .carnivorePlus)
     }

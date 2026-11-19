@@ -39,6 +39,19 @@ struct ThirtyDayProgramView: View {
         navigationPath = NavigationPath([ProgramDayRoute(day: day)])
     }
 
+    /// The Home card's welcome back opens the overview, where the question is.
+    private func showOverviewFromHome(_ shouldShow: Bool) {
+        guard shouldShow else { return }
+        store.pendingShowOverview = false
+        navigationPath = NavigationPath()
+    }
+
+    private func answerWelcomeBack(stayedCarnivore: Bool) {
+        withAnimation(.snappy) {
+            store.answerWelcomeBack(stayedCarnivore: stayedCarnivore)
+        }
+    }
+
     private func showPaywall(forDay day: Int) {
         iocContainer.resolve(Analytics.self)?.logProgramLockedDayTapped(day: day)
         showMarketing = true
@@ -93,6 +106,9 @@ struct ThirtyDayProgramView: View {
         .onChange(of: store.pendingDayToOpen, initial: true) { _, day in
             openDayFromHome(day)
         }
+        .onChange(of: store.pendingShowOverview, initial: true) { _, shouldShow in
+            showOverviewFromHome(shouldShow)
+        }
         .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }
             now = .now
@@ -120,7 +136,10 @@ struct ThirtyDayProgramView: View {
 
         VStack(alignment: .leading, spacing: 16) {
             Header(progress, currentDay: currentDay, isFinished: isFinished)
-            if isFinished {
+            if let welcomeBack = store.welcomeBack {
+                WelcomeBackCard(welcomeBack, progress: progress)
+                    .transition(.blurReplace)
+            } else if isFinished {
                 FinishedCard()
             } else {
                 TodayCard(progress, currentDay: currentDay)
@@ -192,6 +211,52 @@ struct ThirtyDayProgramView: View {
                 .padding(.top, 4)
             }
         }
+    }
+
+    /// In place of Today while the user is back from days they couldn't open, until they say which day they're on.
+    @ViewBuilder private func WelcomeBackCard(_ welcomeBack: ProgramWelcomeBack, progress: ProgramProgress) -> some View {
+        ProgramCard(tint: Color.accentColor, tintOpacity: 0.12) {
+            ProgramCardHeading(title: String(localized: "Welcome back"), systemImage: "hand.wave.fill")
+            Text(welcomeBack.leftOffDay.map { String(localized: "Have you stayed carnivore since Day \($0)?") }
+                 ?? String(localized: "Have you stayed carnivore since you started?"))
+                .font(.title2.bold())
+                .foregroundStyle(Color.text)
+                .fixedSize(horizontal: false, vertical: true)
+            Text(welcomeBackDetail(welcomeBack, progress: progress))
+                .font(.subheadline)
+                .foregroundStyle(Color.text.opacity(0.8))
+                .fixedSize(horizontal: false, vertical: true)
+            VStack(spacing: 10) {
+                Button {
+                    answerWelcomeBack(stayedCarnivore: true)
+                } label: {
+                    ProgramPrimaryButtonLabel(title: welcomeBack.isPastEnd
+                        ? String(localized: "Yes, I'm past Day 30")
+                        : String(localized: "Yes, I'm on Day \(welcomeBack.calendarDay)"))
+                }
+                Button {
+                    answerWelcomeBack(stayedCarnivore: false)
+                } label: {
+                    ProgramSecondaryButtonLabel(title: welcomeBack.leftOffDay == nil
+                        ? String(localized: "No, start at Day 1")
+                        : String(localized: "No, pick up at Day \(welcomeBack.pickUpDay)"))
+                }
+            }
+            .buttonStyle(.plain)
+            .padding(.top, 4)
+        }
+    }
+
+    private func welcomeBackDetail(_ welcomeBack: ProgramWelcomeBack, progress: ProgramProgress) -> String {
+        let why = welcomeBack.isPastEnd
+            ? String(localized: "Your 30 days have run out on the calendar, but you can pick up where you stopped.")
+            : String(localized: "Each day's notes follow how long you've been eating this way, so pick the day that fits.")
+        guard let leftOffDay = welcomeBack.leftOffDay else { return why }
+        // When they checked in, if they did, since the start date moves when someone picks up or changes their day.
+        let date = (progress.checkIn(forDay: leftOffDay)?.loggedAt
+            ?? ProgramSchedule.date(ofDay: leftOffDay, startDate: progress.startDate))
+            .formatted(.dateTime.weekday(.wide).month(.abbreviated).day())
+        return String(localized: "You left off on Day \(leftOffDay), \(date). \(why)")
     }
 
     @ViewBuilder private func FinishedCard() -> some View {

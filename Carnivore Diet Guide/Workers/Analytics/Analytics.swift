@@ -55,6 +55,11 @@ protocol Analytics {
     /// The celebration after checking in on day 7, 14, 21 or 30.
     func logProgramMilestoneShown(day: Int)
     func logProgramRestarted(day: Int, checkInCount: Int)
+    /// Back with Carnivore+ after days they couldn't open, asked whether they kept eating carnivore. Logged once
+    /// per time away. `leftOffDay` is nil if they never checked in or did a task.
+    func logProgramWelcomeBackShown(leftOffDay: Int?, calendarDay: Int)
+    /// Their answer: stay on the calendar's day, or pick up the day after they left off.
+    func logProgramWelcomeBackAnswered(stayedCarnivore: Bool, leftOffDay: Int?, calendarDay: Int)
     func logProgramRemindersChanged(_ settings: ProgramReminderSettings)
     func logNotificationPermissionDenied()
 }
@@ -102,6 +107,7 @@ enum AnalyticsContentType: String {
 enum ProgramHomeCardAction: String {
     case checkIn = "check_in"
     case openDay = "open_day"
+    case welcomeBack = "welcome_back"
 }
 
 /// Where the user tapped to add their own trackers.
@@ -139,6 +145,8 @@ class MockAnalytics: Analytics {
     func logProgramFinished(checkInCount: Int, tasksDone: Int) { }
     func logProgramMilestoneShown(day: Int) { }
     func logProgramRestarted(day: Int, checkInCount: Int) { }
+    func logProgramWelcomeBackShown(leftOffDay: Int?, calendarDay: Int) { }
+    func logProgramWelcomeBackAnswered(stayedCarnivore: Bool, leftOffDay: Int?, calendarDay: Int) { }
     func logProgramRemindersChanged(_ settings: ProgramReminderSettings) { }
     func logNotificationPermissionDenied() { }
 }

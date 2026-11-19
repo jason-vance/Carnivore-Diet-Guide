@@ -12,7 +12,8 @@ import SwinjectAutoregistration
 ///
 /// Until they've checked in today it's a large card with a Check In button that opens the check-in right here.
 /// After that, or on a day that needs Carnivore+, it shrinks to a one-line row. Either way, tapping the day opens it
-/// on the 30 Days tab.
+/// on the 30 Days tab. While the 30 Days tab is asking a returning user which day they're on, the row points there
+/// instead, even past day 30.
 struct ProgramHomeCard: View {
 
     @ObservedObject private var store = iocContainer~>ProgramStore.self
@@ -58,7 +59,9 @@ struct ProgramHomeCard: View {
 
     var body: some View {
         Group {
-            if let progress = store.progress, !ProgramSchedule.isFinished(startDate: progress.startDate, now: now) {
+            if let welcomeBack = store.welcomeBack {
+                WelcomeBackReminder(welcomeBack)
+            } else if let progress = store.progress, !ProgramSchedule.isFinished(startDate: progress.startDate, now: now) {
                 let dayNumber = ProgramSchedule.currentDay(startDate: progress.startDate, now: now)
                 let access = ProgramSchedule.access(day: dayNumber, currentDay: dayNumber, isSubscribed: isSubscribed)
                 let isCheckedIn = progress.checkIn(forDay: dayNumber) != nil
@@ -136,6 +139,43 @@ struct ProgramHomeCard: View {
             .buttonStyle(.plain)
             .padding(.top, 4)
         }
+    }
+
+    @ViewBuilder private func WelcomeBackReminder(_ welcomeBack: ProgramWelcomeBack) -> some View {
+        Button {
+            iocContainer.resolve(Analytics.self)?.logProgramHomeCardTapped(day: welcomeBack.calendarDay, action: .welcomeBack, isCheckedIn: false)
+            store.openWelcomeBack()
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "hand.wave.fill")
+                    .font(.title3)
+                    .foregroundStyle(Color.accentColor)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Welcome back to your 30 days")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(Color.text)
+                    Text("Which day are you on?")
+                        .font(.caption)
+                        .foregroundStyle(Color.text.opacity(0.6))
+                        .lineLimit(1)
+                }
+
+                Spacer(minLength: 8)
+
+                Image(systemName: "chevron.right")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(Color.text.opacity(0.6))
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background {
+                RoundedRectangle(cornerRadius: .cornerRadiusMedium, style: .continuous)
+                    .foregroundStyle(Color.accentColor.opacity(0.12))
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.pressable)
     }
 
     @ViewBuilder private func SmallReminder(_ dayNumber: Int, isLocked: Bool) -> some View {
