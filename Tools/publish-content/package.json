@@ -1,0 +1,21 @@
+{
+  "name": "publish-content",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Publishes articles and recipes from App Content to the Carnivore Diet Guide's Firebase project.",
+  "type": "module",
+  "bin": {
+    "publish-content": "./publish.js"
+  },
+  "scripts": {
+    "publish": "node --no-deprecation publish.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.10.0",
+    "sharp": "^0.34.5"
+  }
+}
