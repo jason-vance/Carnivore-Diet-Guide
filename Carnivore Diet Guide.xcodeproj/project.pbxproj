@@ -27,6 +27,7 @@
 		5622EADA2C755F8C00FE9C36 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A2C2B6CE9EF00C4C0DB /* UserData.swift */; };
 		5622EADB2C755F9200FE9C36 /* UserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A762B70DCFD00C4C0DB /* UserDataProvider.swift */; };
 		5622EADD2C755FAD00FE9C36 /* PersonName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A2F2B6CEA7000C4C0DB /* PersonName.swift */; };
+		04C967B5CD6B6D4A61D8710F /* ValueOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = C143948A809EC81D22E1DA33 /* ValueOf.swift */; };
 		56353B562B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56353B552B440C9900C4E972 /* Carnivore_Diet_GuideApp.swift */; };
 		56353B5A2B440C9B00C4E972 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56353B592B440C9B00C4E972 /* Assets.xcassets */; };
 		56353B5D2B440C9B00C4E972 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56353B5C2B440C9B00C4E972 /* Preview Assets.xcassets */; };
@@ -80,7 +81,6 @@
 		568BAB1E2E909A9A0061E440 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB1D2E909A9A0061E440 /* Kingfisher */; };
 		568BAB212E909AA90061E440 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB202E909AA90061E440 /* MarkdownUI */; };
 		568BAB242E909B230061E440 /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB232E909B230061E440 /* SwinjectAutoregistration */; };
-		568BAB2A2E909C7F0061E440 /* ValueOf in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB292E909C7F0061E440 /* ValueOf */; };
 		568BAB2D2E909C980061E440 /* SwiftUIFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB2C2E909C980061E440 /* SwiftUIFlowLayout */; };
 		568BAB302E909D440061E440 /* YPImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB2F2E909D440061E440 /* YPImagePicker */; };
 		568F727D2C7699B7005D16C6 /* FirebasePostImageStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568F727C2C7699B7005D16C6 /* FirebasePostImageStorage.swift */; };
@@ -134,6 +134,7 @@
 		56B88A2D2B6CE9EF00C4C0DB /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A2C2B6CE9EF00C4C0DB /* UserData.swift */; };
 		56B88A302B6CEA7000C4C0DB /* PersonName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A2F2B6CEA7000C4C0DB /* PersonName.swift */; };
 		56B88A342B6CEA8700C4C0DB /* EmailAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A332B6CEA8700C4C0DB /* EmailAddress.swift */; };
+		679A14E52E53FAE64E2C9AB5 /* ValueOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = C143948A809EC81D22E1DA33 /* ValueOf.swift */; };
 		56B88A392B6CED5600C4C0DB /* StatefulPreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A382B6CED5600C4C0DB /* StatefulPreviewContainer.swift */; };
 		56B88A572B6F27DE00C4C0DB /* UserOnboardingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A562B6F27DE00C4C0DB /* UserOnboardingState.swift */; };
 		56B88A592B6F2C2C00C4C0DB /* FirebaseUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A582B6F2C2C00C4C0DB /* FirebaseUserRepository.swift */; };
@@ -264,6 +265,7 @@
 		56B88A2C2B6CE9EF00C4C0DB /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		56B88A2F2B6CEA7000C4C0DB /* PersonName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonName.swift; sourceTree = "<group>"; };
 		56B88A332B6CEA8700C4C0DB /* EmailAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAddress.swift; sourceTree = "<group>"; };
+		C143948A809EC81D22E1DA33 /* ValueOf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueOf.swift; sourceTree = "<group>"; };
 		56B88A382B6CED5600C4C0DB /* StatefulPreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulPreviewContainer.swift; sourceTree = "<group>"; };
 		56B88A562B6F27DE00C4C0DB /* UserOnboardingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOnboardingState.swift; sourceTree = "<group>"; };
 		56B88A582B6F2C2C00C4C0DB /* FirebaseUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserRepository.swift; sourceTree = "<group>"; };
@@ -378,7 +380,6 @@
 				568BAB1B2E909A2A0061E440 /* FirebaseStorage in Frameworks */,
 				568BAB172E909A2A0061E440 /* FirebaseAuth in Frameworks */,
 				568BAB212E909AA90061E440 /* MarkdownUI in Frameworks */,
-				568BAB2A2E909C7F0061E440 /* ValueOf in Frameworks */,
 				568BAB192E909A2A0061E440 /* FirebaseFirestore in Frameworks */,
 				568BAB1E2E909A9A0061E440 /* Kingfisher in Frameworks */,
 			);
@@ -603,6 +604,7 @@
 				568F73462C824D98005D16C6 /* SearchKeyword.swift */,
 				565CFEBA2C87D46000CBEEAC /* SearchResult.swift */,
 				56D470AE2C8BA1C500F48A64 /* TimeFrame.swift */,
+				C143948A809EC81D22E1DA33 /* ValueOf.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -892,7 +894,6 @@
 				568BAB1D2E909A9A0061E440 /* Kingfisher */,
 				568BAB202E909AA90061E440 /* MarkdownUI */,
 				568BAB232E909B230061E440 /* SwinjectAutoregistration */,
-				568BAB292E909C7F0061E440 /* ValueOf */,
 				568BAB2C2E909C980061E440 /* SwiftUIFlowLayout */,
 				568BAB2F2E909D440061E440 /* YPImagePicker */,
 			);
@@ -950,7 +951,6 @@
 				568BAB1C2E909A9A0061E440 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				568BAB1F2E909AA90061E440 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				568BAB222E909B230061E440 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */,
-				568BAB282E909C7F0061E440 /* XCRemoteSwiftPackageReference "valueof" */,
 				568BAB2B2E909C980061E440 /* XCRemoteSwiftPackageReference "swiftui-flow-layout" */,
 				568BAB2E2E909D440061E440 /* XCRemoteSwiftPackageReference "YPImagePicker" */,
 			);
@@ -1031,6 +1031,7 @@
 				568F73542C825A61005D16C6 /* ResourceCategory.swift in Sources */,
 				563BC6CD2B744C5D008F3C50 /* CollectionReferenceExtensions.swift in Sources */,
 				56B88A342B6CEA8700C4C0DB /* EmailAddress.swift in Sources */,
+				679A14E52E53FAE64E2C9AB5 /* ValueOf.swift in Sources */,
 				56E305682B4BF83C0098079A /* PreviewContainerWithSetup.swift in Sources */,
 				563BC7282B7D914D008F3C50 /* ResourceCommentActivityTracker.swift in Sources */,
 				56103D022CAC7AD900035D7B /* Analytics.swift in Sources */,
@@ -1128,6 +1129,7 @@
 				569A9AC52C9391640021F5EC /* UsernameTests.swift in Sources */,
 				567D1D852C958E2B00AC990A /* CarnivoreSince.swift in Sources */,
 				5622EADD2C755FAD00FE9C36 /* PersonName.swift in Sources */,
+				04C967B5CD6B6D4A61D8710F /* ValueOf.swift in Sources */,
 				56103CFC2CAB62D400035D7B /* LocalUserDataFetcher.swift in Sources */,
 				568F72862C781A05005D16C6 /* Post.swift in Sources */,
 				563BC7192B7CB67F008F3C50 /* CookTimeFormatter.swift in Sources */,
@@ -1463,14 +1465,6 @@
 				minimumVersion = 2.9.1;
 			};
 		};
-		568BAB282E909C7F0061E440 /* XCRemoteSwiftPackageReference "valueof" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://bitbucket.org/jasonvance77/valueof";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		568BAB2B2E909C980061E440 /* XCRemoteSwiftPackageReference "swiftui-flow-layout" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/globulus/swiftui-flow-layout.git";
@@ -1524,11 +1518,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 568BAB222E909B230061E440 /* XCRemoteSwiftPackageReference "SwinjectAutoregistration" */;
 			productName = SwinjectAutoregistration;
-		};
-		568BAB292E909C7F0061E440 /* ValueOf */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 568BAB282E909C7F0061E440 /* XCRemoteSwiftPackageReference "valueof" */;
-			productName = ValueOf;
 		};
 		568BAB2C2E909C980061E440 /* SwiftUIFlowLayout */ = {
 			isa = XCSwiftPackageProductDependency;

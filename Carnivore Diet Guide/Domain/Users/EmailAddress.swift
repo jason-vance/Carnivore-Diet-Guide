@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ValueOf
 
 class EmailAddress: ValueOf<String> {
     

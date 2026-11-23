@@ -1,5 +1,5 @@
 {
-  "originHash" : "72f20d40453633c991c44bd035e7fbd5d112a97f149e79398b7c40871541ac4f",
+  "originHash" : "3c87192b73d2c0161d73725ed9525915a1f752e00a36a304da203aa361f32beb",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -206,15 +206,6 @@
       "state" : {
         "revision" : "fd9ffae5f666d37b4b3c210af2e16a10598342e4",
         "version" : "2.9.1"
-      }
-    },
-    {
-      "identity" : "valueof",
-      "kind" : "remoteSourceControl",
-      "location" : "https://bitbucket.org/jasonvance77/valueof",
-      "state" : {
-        "branch" : "main",
-        "revision" : "fa695b4ddb441f16694e44ee01cc0f6e34d0e350"
       }
     },
     {

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ValueOf
 
 class PersonName: ValueOf<String> {
     
