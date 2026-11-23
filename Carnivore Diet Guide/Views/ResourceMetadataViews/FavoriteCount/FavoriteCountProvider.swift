@@ -7,15 +7,14 @@
 
 import Foundation
 
+/// Fetches how many people have liked a resource. `ResourceCountStore.favorites` keeps the counts.
 protocol FavoriteCountProvider {
-    var favoriteCountPublisher: Published<UInt>.Publisher { get }
-    func startListening(to resource: Resource)
+    func favoriteCount(of resource: Resource) async throws -> UInt
 }
 
 class MockFavoriteCountProvider: FavoriteCountProvider {
-    
-    @Published var favoriteCount: UInt = 0
-    var favoriteCountPublisher: Published<UInt>.Publisher { $favoriteCount }
-    
-    func startListening(to resource: Resource) {}
+
+    var favoriteCount: UInt = 0
+
+    func favoriteCount(of resource: Resource) async throws -> UInt { favoriteCount }
 }

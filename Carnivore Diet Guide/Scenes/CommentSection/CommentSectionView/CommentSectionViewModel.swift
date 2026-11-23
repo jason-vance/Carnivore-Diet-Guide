@@ -48,8 +48,9 @@ class CommentSectionViewModel: ObservableObject {
         )
         comments.append(comment)
         isSendingComment = false
-        
+
         addCommentActivity(onResource: resource)
+        Task { await ResourceCountStore.comments.adjust(resource, by: 1) }
     }
     
     func startListeningForComments(onResource resource: Resource) {

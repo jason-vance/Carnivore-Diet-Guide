@@ -77,29 +77,6 @@ class FirestoreFavoritersRepository {
         }
     }
     
-    func listenToFavoriteCountOf(
-        resource: Resource,
-        onUpdate: @escaping (UInt) -> (),
-        onError: ((Error) -> ())?
-    ) -> AnyCancellable {
-        let timer = Timer.scheduledTimer(
-            withTimeInterval: 60.0,
-            repeats: true
-        ) { _ in
-            Task {
-                do {
-                    let count = try await self.getFavoriteCountOf(resource: resource)
-                    onUpdate(count)
-                } catch {
-                    onError?(error)
-                }
-            }
-        }
-        timer.fire()
-        
-        return .init({ timer.invalidate() })
-    }
-    
     func getFavoriteCountOf(resource: Resource) async throws -> UInt {
         let count = try await favoritersCollection(forResource: resource)
             .count

@@ -36,11 +36,13 @@ class FavoriteButtonModel: ObservableObject {
     }
     
     public func toggleFavorite(resource: Resource) {
+        guard let wasFavorite = isMarkedAsFavorite else { return }
         isWorking = true
         Task {
             await favoriter.toggleFavorite(resource: resource)
             isMarkedAsFavorite?.toggle()
             isWorking = false
+            await ResourceCountStore.favorites.adjust(resource, by: wasFavorite ? -1 : 1)
         }
     }
 }

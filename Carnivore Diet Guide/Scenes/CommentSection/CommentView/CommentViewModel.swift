@@ -61,7 +61,8 @@ class CommentViewModel: ObservableObject {
                 guard let resource = resource else { throw TextError("`resource` was nil") }
 
                 try await commentDeleter.deleteComment(comment, onResource: resource)
-                
+                Task { await ResourceCountStore.comments.adjust(resource, by: -1) }
+
                 userImageUrl = nil
                 username = "[Deleted]"
                 commentText = "[Deleted]"

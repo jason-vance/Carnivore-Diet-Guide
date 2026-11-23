@@ -11,10 +11,12 @@ struct MetadataItemView: View {
     
     let text: String
     let icon: String?
-    
+    /// Shows the text as a gray placeholder, for a value that hasn't loaded yet.
+    var isPlaceholder: Bool = false
+
     @State private var textState: String = ""
     @State private var iconState: String?
-    
+
     var body: some View {
         HStack(spacing: 2) {
             if let icon = icon {
@@ -22,6 +24,7 @@ struct MetadataItemView: View {
             }
             Text(text)
                 .contentTransition(.numericText())
+                .redacted(reason: isPlaceholder ? .placeholder : [])
         }
         .foregroundColor(Color.text)
         .font(.caption)

@@ -6,27 +6,12 @@
 //
 
 import Foundation
-import Combine
 
 class FirebaseFavoriteCountProvider: FavoriteCountProvider {
-    
+
     private let favoritersRepo = FirestoreFavoritersRepository()
-    
-    @Published var favoriteCount: UInt = 0
-    var favoriteCountPublisher: Published<UInt>.Publisher { $favoriteCount }
-    
-    private var favoriteCountListener: AnyCancellable?
-    
-    public func startListening(to resource: Resource) {
-        favoriteCountListener = favoritersRepo.listenToFavoriteCountOf(resource: resource) { [weak self] count in
-            Task { await self?.setFavoriteCount(count) }
-        } onError: { error in
-            print("Failed to retrieve favorite count: \(error.localizedDescription)")
-        }
-    }
-    
-    @MainActor
-    private func setFavoriteCount(_ count: UInt) {
-        self.favoriteCount = count
+
+    func favoriteCount(of resource: Resource) async throws -> UInt {
+        try await favoritersRepo.getFavoriteCountOf(resource: resource)
     }
 }

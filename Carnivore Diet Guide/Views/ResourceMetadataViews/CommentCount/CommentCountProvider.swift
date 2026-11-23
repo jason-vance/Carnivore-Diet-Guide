@@ -7,16 +7,14 @@
 
 import Foundation
 
+/// Fetches how many comments a resource has. `ResourceCountStore.comments` keeps the counts.
 protocol CommentCountProvider {
-    var commentCountPublisher: Published<UInt>.Publisher { get }
-    func startListening(to resource: Resource)
+    func commentCount(of resource: Resource) async throws -> UInt
 }
 
 class MockCommentCountProvider: CommentCountProvider {
-    
-    @Published var commentCount: UInt = 0
-    var commentCountPublisher: Published<UInt>.Publisher { $commentCount }
-    
-    func startListening(to resource: Resource) {}
-}
 
+    var commentCount: UInt = 0
+
+    func commentCount(of resource: Resource) async throws -> UInt { commentCount }
+}

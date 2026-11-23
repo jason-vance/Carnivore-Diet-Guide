@@ -33,29 +33,6 @@ class FirebaseCommentRepository {
         }
     }
     
-    func listenToCommentCountOf(
-        resource: Resource,
-        onUpdate: @escaping (UInt) -> (),
-        onError: ((Error) -> ())?
-    ) -> AnyCancellable {
-        let timer = Timer.scheduledTimer(
-            withTimeInterval: 60.0,
-            repeats: true
-        ) { _ in
-            Task {
-                do {
-                    let count = try await self.getCommentCountOf(resource: resource)
-                    onUpdate(count)
-                } catch {
-                    onError?(error)
-                }
-            }
-        }
-        timer.fire()
-        
-        return .init({ timer.invalidate() })
-    }
-    
     func getCommentCountOf(resource: Resource) async throws -> UInt {
         let count = try await commentsCollection(forResource: resource)
             .count

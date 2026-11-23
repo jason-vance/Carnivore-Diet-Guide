@@ -6,27 +6,12 @@
 //
 
 import Foundation
-import Combine
 
 class FirebaseCommentCountProvider: CommentCountProvider {
-    
+
     private let commentsRepo = FirebaseCommentRepository()
-    
-    @Published var commentCount: UInt = 0
-    var commentCountPublisher: Published<UInt>.Publisher { $commentCount }
-    
-    private var commentCountListener: AnyCancellable?
-    
-    public func startListening(to resource: Resource) {
-        commentCountListener = commentsRepo.listenToCommentCountOf(resource: resource) { [weak self] count in
-            Task { await self?.setCommentCount(count) }
-        } onError: { error in
-            print("Failed to retrieve comment count: \(error.localizedDescription)")
-        }
-    }
-    
-    @MainActor
-    private func setCommentCount(_ count: UInt) {
-        self.commentCount = count
+
+    func commentCount(of resource: Resource) async throws -> UInt {
+        try await commentsRepo.getCommentCountOf(resource: resource)
     }
 }
