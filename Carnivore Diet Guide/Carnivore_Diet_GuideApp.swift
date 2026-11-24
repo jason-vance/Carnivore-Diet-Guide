@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import GoogleSignIn
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(
@@ -15,6 +16,7 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     ) -> Bool {
         UNUserNotificationCenter.current().delegate = self
         FirebaseApp.configure()
+        FirebaseAuthenticationProvider.configureGoogleSignIn()
         DailyUserEngagementService.registerLaunchHandler()
         setupToolbars()
         setup(iocContainer: iocContainer)
@@ -67,6 +69,10 @@ struct Carnivore_Diet_GuideApp: App {
                 .environmentObject(SeedRecipeFavoriter.forProd)
                 .environmentObject(CommentProxyContainer.shared)
                 .environmentObject(ArticleCitationAdder.forProd)
+                .onOpenURL { url in
+                    // Google sign-in hands back to the app through this URL on older iOS versions.
+                    GIDSignIn.sharedInstance.handle(url)
+                }
         }
     }
 }

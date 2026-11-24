@@ -33,6 +33,16 @@ struct SignInView: View {
         }
     }
     
+    private func signInWithGoogle() {
+        Task {
+            do {
+                try await authProvider.signInWithGoogle()
+            } catch {
+                show(errorMessage: String(localized: "Unable to sign in: \(error.localizedDescription)"))
+            }
+        }
+    }
+
     private func continueAsGuest() {
         Task {
             do {
@@ -63,7 +73,11 @@ struct SignInView: View {
     @ViewBuilder func SignInControls() -> some View {
         if userAuthState == .loggedOut {
             VStack(spacing: 0) {
-                SignInButton()
+                VStack(spacing: 12) {
+                    SignInButton()
+                    GoogleSignInButton()
+                }
+                .padding()
                 ContinueAsGuestButton()
             }
         } else {
@@ -93,7 +107,13 @@ struct SignInView: View {
         }
         .signInWithAppleButtonStyle(.white)
         .frame(height: 48)
-        .padding()
+    }
+
+    @ViewBuilder func GoogleSignInButton() -> some View {
+        ContinueWithGoogleButton {
+            signInWithGoogle()
+        }
+        .frame(height: 48)
     }
 
     @ViewBuilder func ContinueAsGuestButton() -> some View {

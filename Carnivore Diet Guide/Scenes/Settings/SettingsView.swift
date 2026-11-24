@@ -53,15 +53,21 @@ struct SettingsView: View {
     }
     
     private func actuallyDeleteAccount(authResult: Result<ASAuthorization, Error>) {
+        switch authResult {
+        case .success(let authorization):
+            actuallyDeleteAccount(reauthentication: .apple(authorization))
+        case .failure(let error):
+            showConfirmDeleteAccountSheet = false
+            if (error as? ASAuthorizationError)?.code == .canceled { return }
+            show(errorMessage: "Account could not be deleted: \(error.localizedDescription)")
+        }
+    }
+
+    private func actuallyDeleteAccount(reauthentication: AccountReauthentication) {
         showConfirmDeleteAccountSheet = false
         Task {
-            do {        
-                switch authResult {
-                case .success(let authorization):
-                    try await accountDeleter.deleteCurrentUserAccount(authorization: authorization)
-                case .failure(let error):
-                    throw error
-                }
+            do {
+                try await accountDeleter.deleteCurrentUserAccount(reauthentication: reauthentication)
             } catch {
                 let errorMessage = "Account could not be deleted: \(error.localizedDescription)"
                 print(errorMessage)
@@ -139,12 +145,24 @@ struct SettingsView: View {
         .presentationBackground(.clear)
     }
     
+    /// Deleting needs a fresh sign-in, so offer each way this account signs in.
     @ViewBuilder func ReallyConfirmDeleteAccountButton() -> some View {
-        SignInWithAppleButton(.continue) { _ in
-        } onCompletion: { result in
-            actuallyDeleteAccount(authResult: result)
+        let signInMethods = accountDeleter.signInMethods
+        VStack(spacing: 12) {
+            if signInMethods.contains(.apple) || !signInMethods.contains(.google) {
+                SignInWithAppleButton(.continue) { _ in
+                } onCompletion: { result in
+                    actuallyDeleteAccount(authResult: result)
+                }
+                .frame(height: 48)
+            }
+            if signInMethods.contains(.google) {
+                ContinueWithGoogleButton {
+                    actuallyDeleteAccount(reauthentication: .google)
+                }
+                .frame(height: 48)
+            }
         }
-        .frame(height: 48)
         .padding(.vertical)
     }
     
