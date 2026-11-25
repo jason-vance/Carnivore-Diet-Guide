@@ -19,6 +19,8 @@ func setupMockIocContainer(_ iocContainer: Container) {
     iocContainer.autoregister(IsPublisherChecker.self, initializer: MockIsPublisherChecker.init)
     iocContainer.autoregister(DailyUserEngagementService.self, initializer: { DailyUserEngagementService.instance })
     iocContainer.autoregister(NotificationService.self, initializer: NotificationService.init)
+    let entitlementService = MockCarnivorePlusEntitlementService()
+    iocContainer.autoregister(CarnivorePlusEntitlementService.self, initializer: { entitlementService })
     iocContainer.autoregister(SubscriptionLevelProvider.self, initializer: { SubscriptionLevelProvider.instance })
     iocContainer.autoregister(ResourceOnDeviceWasViewedFlagger.self, initializer: ResourceOnDeviceWasViewedFlagger.getInstance)
     let programStore = ProgramStore.preview(progress: nil)

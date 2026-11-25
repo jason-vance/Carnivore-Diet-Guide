@@ -24,6 +24,7 @@ func setup(iocContainer: Container) {
     iocContainer.autoregister(IsPublisherChecker.self, initializer: FirebasePublishersRepository.init)
     iocContainer.autoregister(DailyUserEngagementService.self, initializer: { DailyUserEngagementService.instance })
     iocContainer.autoregister(NotificationService.self, initializer: NotificationService.init)
+    iocContainer.autoregister(CarnivorePlusEntitlementService.self, initializer: { FirebaseCarnivorePlusEntitlementService.instance })
     iocContainer.autoregister(SubscriptionLevelProvider.self, initializer: { SubscriptionLevelProvider.instance })
     iocContainer.autoregister(ResourceOnDeviceWasViewedFlagger.self, initializer: ResourceOnDeviceWasViewedFlagger.getInstance)
     iocContainer.autoregister(ProgramStore.self, initializer: { ProgramStore.instance })

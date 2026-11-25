@@ -80,6 +80,7 @@
 		568BAB1B2E909A2A0061E440 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB1A2E909A2A0061E440 /* FirebaseStorage */; };
 		568BAB1E2E909A9A0061E440 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB1D2E909A9A0061E440 /* Kingfisher */; };
 		68B7AC0BC1A1BCD24EAF71BD /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 50CDEA8639386DB43BA62F74 /* GoogleSignIn */; };
+		AE3C8DE836D0FEA59A330651 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 946F88FEADA6EF72D18235DC /* FirebaseFunctions */; };
 		568BAB212E909AA90061E440 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB202E909AA90061E440 /* MarkdownUI */; };
 		568BAB242E909B230061E440 /* SwinjectAutoregistration in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB232E909B230061E440 /* SwinjectAutoregistration */; };
 		568BAB2D2E909C980061E440 /* SwiftUIFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 568BAB2C2E909C980061E440 /* SwiftUIFlowLayout */; };
@@ -126,6 +127,9 @@
 		569A9AC52C9391640021F5EC /* UsernameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9AC42C9391640021F5EC /* UsernameTests.swift */; };
 		569A9ACD2C93A9A70021F5EC /* SubscriptionLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9ACC2C93A9A70021F5EC /* SubscriptionLevelProvider.swift */; };
 		569A9ACE2C93A9A70021F5EC /* SubscriptionLevelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569A9ACC2C93A9A70021F5EC /* SubscriptionLevelProvider.swift */; };
+		E5DB03320474ADEFDC8E340C /* CarnivorePlusEntitlementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493BA648D864B3302ABA1F0F /* CarnivorePlusEntitlementService.swift */; };
+		767CEA1523098DBB1213B01A /* CarnivorePlusEntitlementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493BA648D864B3302ABA1F0F /* CarnivorePlusEntitlementService.swift */; };
+		D8B1B696671F3AE6A5511C8C /* FirebaseCarnivorePlusEntitlementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676030B8FB2D1BEDF6537B06 /* FirebaseCarnivorePlusEntitlementService.swift */; };
 		56A6D0D22B835593003B27E5 /* FirebaseFeedItemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0D12B835593003B27E5 /* FirebaseFeedItemRepository.swift */; };
 		56A6D0D42B8355A7003B27E5 /* FirestoreFeedItemDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A6D0D32B8355A7003B27E5 /* FirestoreFeedItemDoc.swift */; };
 		56B88A092B6C4E6E00C4C0DB /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B88A082B6C4E6E00C4C0DB /* BundleExtensions.swift */; };
@@ -256,6 +260,8 @@
 		569A9AC12C9391390021F5EC /* Username.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Username.swift; sourceTree = "<group>"; };
 		569A9AC42C9391640021F5EC /* UsernameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameTests.swift; sourceTree = "<group>"; };
 		569A9ACC2C93A9A70021F5EC /* SubscriptionLevelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionLevelProvider.swift; sourceTree = "<group>"; };
+		493BA648D864B3302ABA1F0F /* CarnivorePlusEntitlementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarnivorePlusEntitlementService.swift; sourceTree = "<group>"; };
+		676030B8FB2D1BEDF6537B06 /* FirebaseCarnivorePlusEntitlementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCarnivorePlusEntitlementService.swift; sourceTree = "<group>"; };
 		56A6D0D12B835593003B27E5 /* FirebaseFeedItemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseFeedItemRepository.swift; sourceTree = "<group>"; };
 		56A6D0D32B8355A7003B27E5 /* FirestoreFeedItemDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreFeedItemDoc.swift; sourceTree = "<group>"; };
 		56B88A082B6C4E6E00C4C0DB /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
@@ -384,6 +390,7 @@
 				568BAB192E909A2A0061E440 /* FirebaseFirestore in Frameworks */,
 				568BAB1E2E909A9A0061E440 /* Kingfisher in Frameworks */,
 				68B7AC0BC1A1BCD24EAF71BD /* GoogleSignIn in Frameworks */,
+				AE3C8DE836D0FEA59A330651 /* FirebaseFunctions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,10 +404,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7B5092FE953C16E98D2F3539 /* Entitlements */ = {
+			isa = PBXGroup;
+			children = (
+				676030B8FB2D1BEDF6537B06 /* FirebaseCarnivorePlusEntitlementService.swift */,
+			);
+			path = Entitlements;
+			sourceTree = "<group>";
+		};
 		56025D1E2B6B005300F31A07 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
 				569A9ABE2C92E5650021F5EC /* Admin */,
+				7B5092FE953C16E98D2F3539 /* Entitlements */,
 				569A9ABB2C92DF760021F5EC /* Publishers */,
 				56D470D72C8FD5B200F48A64 /* FeaturedArticles */,
 				568F73602C82CB0E005D16C6 /* ResourceCategories */,
@@ -723,6 +739,7 @@
 			isa = PBXGroup;
 			children = (
 				569A9ACC2C93A9A70021F5EC /* SubscriptionLevelProvider.swift */,
+				493BA648D864B3302ABA1F0F /* CarnivorePlusEntitlementService.swift */,
 			);
 			path = AdProvider;
 			sourceTree = "<group>";
@@ -893,6 +910,7 @@
 				568BAB162E909A2A0061E440 /* FirebaseAuth */,
 				568BAB182E909A2A0061E440 /* FirebaseFirestore */,
 				568BAB1A2E909A2A0061E440 /* FirebaseStorage */,
+				946F88FEADA6EF72D18235DC /* FirebaseFunctions */,
 				50CDEA8639386DB43BA62F74 /* GoogleSignIn */,
 				568BAB1D2E909A9A0061E440 /* Kingfisher */,
 				568BAB202E909AA90061E440 /* MarkdownUI */,
@@ -1055,6 +1073,8 @@
 				56D470AF2C8BA1C500F48A64 /* TimeFrame.swift in Sources */,
 				56E305622B4BF77A0098079A /* DependencyConfigurator.swift in Sources */,
 				56B88A192B6C5FE400C4C0DB /* FirebaseAuthentication.swift in Sources */,
+				E5DB03320474ADEFDC8E340C /* CarnivorePlusEntitlementService.swift in Sources */,
+				D8B1B696671F3AE6A5511C8C /* FirebaseCarnivorePlusEntitlementService.swift in Sources */,
 				563BC6C82B7449E7008F3C50 /* FirebaseResourceActivityRepository.swift in Sources */,
 				56B88A742B70DCCE00C4C0DB /* FirestoreUserDataProvider.swift in Sources */,
 				568F72F12C7FB9F3005D16C6 /* AppVersion.swift in Sources */,
@@ -1144,6 +1164,7 @@
 				563BC6FA2B78BE3E008F3C50 /* DateExtensionsTests.swift in Sources */,
 				568F730D2C800DCE005D16C6 /* ResourceTagTests.swift in Sources */,
 				569A9ACE2C93A9A70021F5EC /* SubscriptionLevelProvider.swift in Sources */,
+				767CEA1523098DBB1213B01A /* CarnivorePlusEntitlementService.swift in Sources */,
 				568F72812C7700BD005D16C6 /* UIImageExtensions.swift in Sources */,
 				567D1D7C2C942F5000AC990A /* ArrayExtensions.swift in Sources */,
 				5622EABA2C70AC5300FE9C36 /* StringExtensions.swift in Sources */,
@@ -1496,6 +1517,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		946F88FEADA6EF72D18235DC /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 568BAB132E909A2A0061E440 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
 		50CDEA8639386DB43BA62F74 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6F76DBA77AE56A33A571A089 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;

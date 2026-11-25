@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 import SwinjectAutoregistration
 import _AuthenticationServices_SwiftUI
 
@@ -14,7 +15,8 @@ struct SettingsView: View {
     private let signOutService = iocContainer~>UserProfileSignOutService.self
     private let accountDeleter = iocContainer~>UserAccountDeleter.self
     private let notificationService = iocContainer~>NotificationService.self
-    
+    @ObservedObject private var subscriptionLevelProvider = iocContainer~>SubscriptionLevelProvider.self
+
     @Environment(\.dismiss) private var dismiss: DismissAction
     
     @State private var notificationsAreOn: Bool = false
@@ -26,7 +28,8 @@ struct SettingsView: View {
     @State private var showLogoutDialog: Bool = false
     @State private var showDeleteAccountDialog: Bool = false
     @State private var showConfirmDeleteAccountSheet: Bool = false
-    
+    @State private var showManageSubscriptions: Bool = false
+
     @State private var showError: Bool = false
     @State private var errorMessage: String = ""
     @State private var showSignInPrompt: Bool = false
@@ -85,6 +88,11 @@ struct SettingsView: View {
                     ResetArticleCacheButton()
                     ResetRecipeCacheButton()
                 }
+                if let source = subscriptionLevelProvider.carnivorePlusSource {
+                    Section("Carnivore+") {
+                        CarnivorePlusBillingRow(source: source)
+                    }
+                }
                 Section("Legal") {
                     TermsOfServiceButton()
                     PrivacyPolicyButton()
@@ -133,6 +141,13 @@ struct SettingsView: View {
                     .foregroundStyle(Color.text)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
+                if subscriptionLevelProvider.carnivorePlusSource != nil {
+                    Text("Deleting your account doesn't cancel Carnivore+. Cancel it where you subscribed if you don't want it to renew.")
+                        .font(.footnote)
+                        .foregroundStyle(Color.text.opacity(0.7))
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                }
                 ReallyConfirmDeleteAccountButton()
                 CancelDeleteAccountButton()
             }
@@ -256,6 +271,47 @@ struct SettingsView: View {
         }
     }
     
+    /// Where Carnivore+ is billed. A subscription from the web or the Android app is managed there, so this
+    /// only says where; it never links out to buy.
+    @ViewBuilder private func CarnivorePlusBillingRow(source: CarnivorePlusSource) -> some View {
+        switch source {
+        case .appStore:
+            Button {
+                showManageSubscriptions = true
+            } label: {
+                ProfileControlLabel(
+                    String(localized: "Manage Subscription"),
+                    icon: "creditcard.fill",
+                    showNavigationAccessories: false
+                )
+            }
+            .listRowBackground(Color.background)
+            .manageSubscriptionsSheet(isPresented: $showManageSubscriptions)
+        case .stripe:
+            CarnivorePlusBilledElsewhereRow(
+                String(localized: "Billed through the web"),
+                detail: String(localized: "Manage your subscription by signing in at carnivoredietguide.com.")
+            )
+        case .googlePlay:
+            CarnivorePlusBilledElsewhereRow(
+                String(localized: "Billed through Google Play"),
+                detail: String(localized: "Manage your subscription in the Play Store on your Android device.")
+            )
+        }
+    }
+
+    @ViewBuilder private func CarnivorePlusBilledElsewhereRow(_ title: String, detail: String) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ProfileControlLabel(title, icon: "creditcard.fill", showNavigationAccessories: false)
+            Text(detail)
+                .font(.footnote)
+                .foregroundStyle(Color.text.opacity(0.7))
+                .padding(.leading, 32)
+                .padding(.bottom, 8)
+        }
+        .listRowBackground(Color.background)
+    }
+
     @ViewBuilder private func TermsOfServiceButton() -> some View {
         Button {
             showTermsOfService = true
